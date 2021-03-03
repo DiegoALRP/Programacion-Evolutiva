@@ -18,6 +18,8 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import org.math.plot.Plot2DPanel;
+
 import java.awt.Component;
 import java.awt.Dimension;
 
@@ -27,7 +29,7 @@ import java.awt.FlowLayout;
 import java.awt.TextField;
 import java.awt.Label;
 
-public class iu {
+public class panelPrincipal {
 
 	private JFrame frame;
 	private JTextField n;
@@ -41,7 +43,7 @@ public class iu {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					iu window = new iu();
+					panelPrincipal window = new panelPrincipal();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,7 +55,7 @@ public class iu {
 	/**
 	 * Create the application.
 	 */
-	public iu() {
+	public panelPrincipal() {
 		initialize();
 	}
 
@@ -186,13 +188,14 @@ public class iu {
 		TitledBorder title_elite = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Élite");
 		elite_panel.setBorder(title_elite);
 		
-		////////////////////////////////////////////////
-		
+		////////////////////////////////////////////////		GRAFICA
 
+
+		graficas gr = new graficas();
+		frame.getContentPane().add(gr.getPlot(), BorderLayout.CENTER);
 		
-		JPanel graficas = new JPanel();
-		frame.getContentPane().add(graficas, BorderLayout.CENTER);
-		
+		////////////////////////////////////////////////		
+
 		JPanel problemas = new JPanel();
 		frame.getContentPane().add(problemas, BorderLayout.NORTH);
 		
