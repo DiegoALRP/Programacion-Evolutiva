@@ -1,5 +1,10 @@
 package algoritmoGenetico.seleccion;
 
-public abstract class Seleccion {
+import java.util.ArrayList;
 
+import algoritmoGenetico.individuos.Individuo;
+
+public abstract class Seleccion {
+	
+	protected abstract ArrayList<Individuo> seleccionar(ArrayList<Individuo> individuos);
 }

@@ -1,13 +1,14 @@
 package algoritmoGenetico.individuos;
 
-public class IndividuoFuncion1 extends Individuo {
+import java.util.ArrayList;
+
+public class IndividuoFuncion1 extends Individuo<Boolean> {
 
 	@Override
-	protected int[] bin2Dec(boolean[] array) {
+	protected double bin2Dec(ArrayList<Boolean> array) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
-
 	@Override
 	protected double getFitness() {
 		// TODO Auto-generated method stub
@@ -19,5 +20,4 @@ public class IndividuoFuncion1 extends Individuo {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }
