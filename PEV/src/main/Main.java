@@ -1,5 +1,6 @@
 package main;
 
+//import java.lan
 public class Main {
 
 	public static void main(String[] args) {
@@ -11,6 +12,9 @@ public class Main {
 		
 		System.out.println(Math.log10(((max - min)/precision)+1)/Math.log10(2));
 		
+		int dec = Integer.parseInt("1010", 2);
+		
+		System.out.println("Num: " + dec);
 	}
 
 }
