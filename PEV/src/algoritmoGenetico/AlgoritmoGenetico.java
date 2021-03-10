@@ -28,22 +28,22 @@ public class AlgoritmoGenetico {
 		// ind1.inicializaIndividuo();
 		// System.out.println(ind1.getFitness());
 		
-		/*List<Individuo> poblacion = new ArrayList<Individuo>();
+		List<Individuo> poblacion = new ArrayList<Individuo>();
 		for(int i=0;i<5;i++) {
 			IndividuoFuncion1 ind1 = new IndividuoFuncion1();
 			ind1.inicializaIndividuo();
 			poblacion.add(ind1);
-		}*/
-		
-		/*Seleccion ruleta = new SeleccionRuleta(poblacion);
-		ruleta.seleccionar(poblacion);*/
+		}
+	
+		Seleccion ruleta = new SeleccionRuleta(poblacion);
+		ruleta.seleccionar(poblacion);
 	}
 	
 	public <T> void start() {
 		
 		ArrayList<Individuo<Boolean>> poblacion = new ArrayList<Individuo<Boolean>>();
 		for(int i=0;i<5;i++) {
-			Individuo<Boolean> ind1 = new IndividuoFuncion1<Boolean>();
+			Individuo ind1 = new IndividuoFuncion1();
 			ind1.inicializaIndividuo();
 			poblacion.add(ind1);
 		}
@@ -51,7 +51,7 @@ public class AlgoritmoGenetico {
 		CruceMonopunto cruce = new CruceMonopunto(0.6);
 		cruce.cruza(poblacion);
 		
-		MutacionBasica mutacion = new MutacionBasica(0.1);
+		MutacionBasica mutacion = new MutacionBasica(0.2);
 		mutacion.mutaPoblacionBoolean(poblacion);
 	}
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class IndividuoFuncion1<T> extends Individuo<Boolean> {
+public class IndividuoFuncion1 extends Individuo<Boolean> {
 
 	
 	public IndividuoFuncion1(){

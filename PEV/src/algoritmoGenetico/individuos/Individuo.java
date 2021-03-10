@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class Individuo<T> {
+public abstract class Individuo<E> {
 
 	protected double[] min;
 	protected double[] max;
 	protected double[] fenotipo;
 	protected int[] longitud;
-	protected ArrayList<T> cromosoma;
+	protected ArrayList<E> cromosoma;
 	
 	
 	protected double aptitud;
@@ -27,8 +27,8 @@ public abstract class Individuo<T> {
 	public abstract double getFenotipo(int longitudGen, double min, double max);
 	
 	//Diego
-	public abstract ArrayList<T> getCromosoma();	//Obtiene el cromosoma del individuo
-	public abstract void setCromosoma(ArrayList<T> individuo);
+	public abstract ArrayList<E> getCromosoma();	//Obtiene el cromosoma del individuo
+	public abstract void setCromosoma(ArrayList<E> individuo);
 	public abstract int getLongitudCromosoma();		//Obtiene la longitud del cromosoma del individuo
 	public abstract StringBuilder printCromosoma();
 }
