@@ -1,5 +1,6 @@
 package algoritmoGenetico.individuos;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -10,7 +11,7 @@ public abstract class Individuo<E> {
 	protected double[] max;
 	protected double[] fenotipo;
 	protected int[] longitud;
-	protected List<E> cromosoma;
+	protected ArrayList<E> cromosoma;
 	
 	
 	protected double aptitud;
@@ -34,4 +35,10 @@ public abstract class Individuo<E> {
 	}
 	
 
+	
+	//Diego
+	public abstract ArrayList<E> getCromosoma();	//Obtiene el cromosoma del individuo
+	public abstract void setCromosoma(ArrayList<E> individuo);
+	public abstract int getLongitudCromosoma();		//Obtiene la longitud del cromosoma del individuo
+	public abstract StringBuilder printCromosoma();
 }

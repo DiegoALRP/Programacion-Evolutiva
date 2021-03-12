@@ -59,8 +59,60 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
 			cromosoma.add(ran.nextBoolean());
 		}
 		aptitud = calculateFitness();
+		return genMin + real * ((genMax - genMin)/(Math.pow(2,longitudGen)-1));
 	}
 	
-	 
+	/*public double getFenotipoDiego() {
+		String gen = "";
+		for(int i = 0; i < this.longitud[0];i++) {
+			if(cromosoma.get(i)) {		
+				gen += "1";
+			} else {
+				gen += "0";
+			}
+		}
+		double real = Integer.parseInt(gen,2);
+		return genMin + real * ((genMax - genMin)/(Math.pow(2,longitudTotal)-1));
+	}*/
+
+	@Override
+	public double getFitness() {
+		return aptitud;
+	}
+	
+	public ArrayList<Boolean> getCromosoma(){
+		
+		return this.cromosoma;
+	}
+
+	@Override
+	public int getLongitudCromosoma() {
+		
+		return this.longitudTotal;
+	}
+	
+	@Override
+	public StringBuilder printCromosoma() {
+		
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < this.longitudTotal; i++) {
+			
+			if (this.cromosoma.get(i)) {
+				sb.append(1);
+			}
+			else {
+				sb.append(0);
+			}
+		}
+		
+		return sb;
+	}
+
+	@Override
+	public void setCromosoma(ArrayList<Boolean> individuo) {
+		
+		this.cromosoma.clear();
+		this.cromosoma.addAll(individuo);
+	}
 
 }
