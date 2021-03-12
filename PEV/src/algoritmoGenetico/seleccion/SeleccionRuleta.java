@@ -12,12 +12,13 @@ public class SeleccionRuleta extends Seleccion {
 	private double prob;
 	private int pos_super;
 
-	public SeleccionRuleta(List<Individuo> poblacion) {
+	@Override
+	public List<Individuo> seleccionar(List<Individuo> poblacion) {
 		
 		double aptitudes = 0.0;
 		double acum = 0.0;
-		puntAcumulada = new double[poblacion.size()];
 		pos_super = 0;
+		puntAcumulada = new double[poblacion.size()];
 		
 		for(Individuo ind : poblacion) {
 			aptitudes += ind.getFitness();
@@ -27,9 +28,6 @@ public class SeleccionRuleta extends Seleccion {
 			acum += poblacion.get(i).getFitness() / aptitudes;
 			puntAcumulada[i] = acum;
 		}
-	}
-	@Override
-	public List<Individuo> seleccionar(List<Individuo> poblacion) {
 		
 		ArrayList<Individuo> seleccionados = new ArrayList<Individuo>(poblacion.size());
 		
