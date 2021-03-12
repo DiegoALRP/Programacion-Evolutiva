@@ -8,6 +8,6 @@ public abstract class Mutacion {
 	
 	protected double probMutacion;
 	
-	public abstract void mutaPoblacionBoolean(ArrayList<Individuo<Boolean>> poblacion);
+	public abstract void mutaPoblacionBoolean(ArrayList<Individuo<Boolean>> poblacion, double probMutacion);
 	protected abstract void mutaIndividuoBoolean(Individuo<Boolean> individuo);
 }

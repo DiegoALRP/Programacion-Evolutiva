@@ -7,13 +7,10 @@ import algoritmoGenetico.individuos.Individuo;
 
 public class MutacionBasica extends Mutacion {
 
-	public MutacionBasica(double probMutacion) {
+	@Override
+	public void mutaPoblacionBoolean(ArrayList<Individuo<Boolean>> poblacion, double probMutacion) {
 		
 		this.probMutacion = probMutacion;
-	}
-
-	@Override
-	public void mutaPoblacionBoolean(ArrayList<Individuo<Boolean>> poblacion) {
 		
 		Random rand = new Random();
 		for (int i = 0; i < poblacion.size(); i++) {
