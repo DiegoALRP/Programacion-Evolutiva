@@ -44,7 +44,7 @@ public class AlgoritmoGenetico {
 	
 	public <T> void start() {
 		
-		ArrayList<Individuo<Boolean>> poblacion = new ArrayList<Individuo<Boolean>>();
+		/*ArrayList<Individuo<Boolean>> poblacion = new ArrayList<Individuo<Boolean>>();
 		for(int i=0;i<5;i++) {
 			Individuo ind1 = new IndividuoFuncion1();
 			ind1.inicializaIndividuo();
@@ -55,6 +55,6 @@ public class AlgoritmoGenetico {
 		cruce.cruza(poblacion);
 		
 		MutacionBasica mutacion = new MutacionBasica(0.2);
-		mutacion.mutaPoblacionBoolean(poblacion);
+		mutacion.mutaPoblacionBoolean(poblacion);*/
 	}
 }
