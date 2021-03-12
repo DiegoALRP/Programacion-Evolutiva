@@ -26,9 +26,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
 		longitud[1] = tamGen(min[1], max[1]);
 		longitudTotal = longitud[0] + longitud[1];
 		
-		cromosoma = new ArrayList<Boolean>(longitudTotal);
-		
-		
+		cromosoma = new ArrayList<Boolean>(longitudTotal);	
 	}
 	
 	@Override
@@ -41,20 +39,6 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
 		return aptitud;
 	}
 
-	@Override
-	public int tamGen(double minGen, double maxGen) {
-		double longitud = (Math.log10(((maxGen - minGen) / precision) + 1) / Math.log10(2));
-		return (int) Math.ceil(longitud) ;
-	}
-
-	@Override
-	public void inicializaIndividuo() {
-		for(int i = 0; i < longitudTotal; i++) {
-			Random ran = new Random();
-			cromosoma.add(ran.nextBoolean());
-		}
-		aptitud = calculateFitness();
-	}
 
 	@Override
 	public double getFenotipo(int longitudGen, double genMin, double genMax) {
@@ -67,12 +51,14 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
 			}
 		}
 		double real = Integer.parseInt(gen,2);
-		return genMin + real * ((genMax - genMin)/(Math.pow(2,longitudTotal)-1));
+		return genMin + real * (genMax - genMin)/(Math.pow(2,longitudTotal)-1);
 	}
-
-	@Override
-	public double getFitness() {
-		return aptitud;
+	public void inicializaIndividuo() {
+		for(int i = 0; i < longitudTotal; i++) {
+			Random ran = new Random();
+			cromosoma.add(ran.nextBoolean());
+		}
+		aptitud = calculateFitness();
 	}
 	
 	 

@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
@@ -20,6 +21,14 @@ import javax.swing.border.TitledBorder;
 
 import org.math.plot.Plot2DPanel;
 
+import algoritmoGenetico.AlgoritmoGenetico;
+import algoritmoGenetico.cruces.Cruce;
+import algoritmoGenetico.cruces.FactoriaCruces;
+import algoritmoGenetico.mutaciones.FactoriaMutaciones;
+import algoritmoGenetico.mutaciones.Mutacion;
+import algoritmoGenetico.seleccion.FactoriaSelecciones;
+import algoritmoGenetico.seleccion.Seleccion;
+
 import java.awt.Component;
 import java.awt.Dimension;
 
@@ -27,6 +36,8 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import java.awt.FlowLayout;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Label;
 
 public class panelPrincipal {
@@ -34,29 +45,25 @@ public class panelPrincipal {
 	private JFrame frame;
 	private JTextField n;
 	private JTextField nGeneraciones;
+	
+	private int tamPoblacion;
+	private int numGeneraciones;
+	private double precision;
+	private double elite;
+	private double porcCruce;
+	private double porcMutacion;
+	private String seleccion;
+	private String cruce;
+	private String mutacion;
+	private String funcion;
 
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					panelPrincipal window = new panelPrincipal();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
 	 */
 	public panelPrincipal() {
 		initialize();
+		frame.setVisible(true);
 	}
 
 	/**
@@ -73,6 +80,8 @@ public class panelPrincipal {
 		frame.getContentPane().add(controles, BorderLayout.WEST);
 		controles.setLayout(new GridLayout(10, 1, 10, 10));
 		
+		////////////////////////////////////////////////		POBLACION 
+
 		JPanel poblacion_panel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) poblacion_panel.getLayout();
 		flowLayout.setAlignment(FlowLayout.RIGHT);
@@ -85,7 +94,15 @@ public class panelPrincipal {
 		poblacion_panel.add(n);
 		n.setColumns(10);
 		controles.add(poblacion_panel);
-		
+		n.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tamPoblacion = Integer.parseInt(n.getText());
+				
+			}
+		});
+		////////////////////////////////////////////////		GENERACIONES 
 		JPanel generaciones = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) generaciones.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.RIGHT);
@@ -98,7 +115,15 @@ public class panelPrincipal {
 		generaciones.add(nGeneraciones);
 		nGeneraciones.setColumns(10);
 		controles.add(generaciones);
-		
+		nGeneraciones.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				numGeneraciones = Integer.parseInt(nGeneraciones.getText());
+				
+			}
+		});
+		////////////////////////////////////////////////		PRECISION
 		JPanel error_panel = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) error_panel.getLayout();
 		flowLayout_2.setAlignment(FlowLayout.RIGHT);
@@ -107,10 +132,19 @@ public class panelPrincipal {
 		error_panel.add(errorlbl);
 		
 		JTextField textField_error = new JTextField();
-		textField_error.setText("0");
+		textField_error.setText("0,0001");
 		error_panel.add(textField_error);
 		textField_error.setColumns(10);
 		controles.add(error_panel);
+		
+		textField_error.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				precision = Integer.parseInt(textField_error.getText());
+				
+			}
+		});
 		////////////////////////////////////////////////		SELECCION 
 		JPanel seleccion_panel = new JPanel();
 		controles.add(seleccion_panel);
@@ -120,7 +154,8 @@ public class panelPrincipal {
 		seleccion_panel.add(lblSeleccion);
 		
 		JComboBox metodoSeleccion = new JComboBox();
-		metodoSeleccion.setModel(new DefaultComboBoxModel(new String[] {"Método de la ruleta", "Universal Estoc\u00E1stico", "Torneo", "Truncamiento", "Restos"}));
+		
+		metodoSeleccion.setModel(new DefaultComboBoxModel(new String[] {"Metodo de la ruleta", "Universal Estocastico", "Torneo", "Truncamiento", "Restos"}));
 		seleccion_panel.add(metodoSeleccion);
 		
 		TitledBorder title_Seleccion = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Selección");
@@ -128,6 +163,15 @@ public class panelPrincipal {
 		
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		seleccion_panel.add(horizontalStrut);
+		
+		metodoSeleccion.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				seleccion = metodoSeleccion.getSelectedItem().toString();
+				
+			}
+		});
 		
 		////////////////////////////////////////////////		CRUCE 
 		JPanel cruce_panel = new JPanel();
@@ -138,7 +182,7 @@ public class panelPrincipal {
 		cruce_panel.add(lblCruce);
 		
 		JComboBox metodoCruce = new JComboBox();
-		metodoCruce.setModel(new DefaultComboBoxModel(new String[] {"Monopunto", "Discreto Uniforme", "Aritmético", "BLX-alpha "}));
+		metodoCruce.setModel(new DefaultComboBoxModel(new String[] {"Monopunto", "Discreto Uniforme"}));
 		cruce_panel.add(metodoCruce);
 		
 		JLabel lblporcentajeCruce = new JLabel("% cruce");
@@ -150,6 +194,22 @@ public class panelPrincipal {
 		
 		TitledBorder title_cruce = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Cruce");
 		cruce_panel.setBorder(title_cruce);
+		
+		metodoCruce.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cruce = metodoCruce.getSelectedItem().toString();	
+			}
+		});
+		
+		textField_cruce.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				porcCruce = Integer.parseInt(textField_cruce.getText());	
+			}
+		});
 		
 		////////////////////////////////////////////////		MUTACION 
 		JPanel mutacion_panel = new JPanel();
@@ -173,6 +233,23 @@ public class panelPrincipal {
 		TitledBorder borde_mutacion = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Mutacion básica");
 		mutacion_panel.setBorder(borde_mutacion);
 		
+		metodoMutacion.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mutacion = metodoMutacion.getSelectedItem().toString();
+				
+			}
+		});
+		
+		textField_mutacion.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				porcMutacion = Integer.parseInt(textField_mutacion.getText());		
+			}
+		});
+		
 		////////////////////////////////////////////////		ÉLITE 
 		JPanel elite_panel = new JPanel();
 		controles.add(elite_panel);
@@ -187,6 +264,31 @@ public class panelPrincipal {
 		
 		TitledBorder title_elite = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Élite");
 		elite_panel.setBorder(title_elite);
+		
+		textField_elite.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				elite = Integer.parseInt(textField_elite.getText());
+				
+			}
+		});
+		
+		JButton resetear = new JButton("Resetear");
+		JButton ejecutar = new JButton("Ejecutar");
+		controles.add(ejecutar);
+		controles.add(resetear);
+		ejecutar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Seleccion metodoSeleccion = FactoriaSelecciones.getAlgoritmoDeSeleccion(cruce, numGeneraciones);
+				Cruce metodoCruce = FactoriaCruces.getAlgoritmoDeCruce(cruce, numGeneraciones);
+				Mutacion metodoMutacion = FactoriaMutaciones.getAlgoritmoDeMutacion(mutacion, numGeneraciones);
+				AlgoritmoGenetico AG = new AlgoritmoGenetico(tamPoblacion, numGeneraciones, precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite);
+				
+			}
+		});
 		
 		////////////////////////////////////////////////		GRAFICA
 
@@ -207,6 +309,20 @@ public class panelPrincipal {
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Funcion 1", "Funcion Sch\u00FCbert", "Funcion H\u00F6lder table", "Funci\u00F3n Michalewicz"}));
+		comboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				funcion = comboBox.getSelectedItem().toString();
+				if(comboBox.getSelectedItem().toString().equals("Función Michalewicz")) {
+					metodoCruce.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme", "Aritmetico", "BLX-alpha"}));
+					metodoMutacion.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica", "Mutacion Uniforme"})); 
+				} else {
+					metodoCruce.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme"}));
+					metodoMutacion.setModel(new DefaultComboBoxModel(new String[] {"Mutacion basica"})); 
+				}
+			}
+		});
 		problemas.add(comboBox);
 		
 

@@ -12,4 +12,6 @@ public abstract class Cruce<E> {
 	
 	protected abstract ArrayList<Individuo<E>> seleccionadosCruce(ArrayList<Individuo<E>> poblacion);
 	protected abstract ArrayList<Individuo<E>> cruza(ArrayList<Individuo<E>> poblacion);
+	
+
 }

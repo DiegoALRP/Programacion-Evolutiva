@@ -3,8 +3,10 @@ package algoritmoGenetico;
 import java.util.ArrayList;
 import java.util.List;
 
+import algoritmoGenetico.cruces.Cruce;
 import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.IndividuoFuncion1;
+import algoritmoGenetico.mutaciones.Mutacion;
 import algoritmoGenetico.seleccion.Seleccion;
 import algoritmoGenetico.seleccion.SeleccionRuleta;
 
@@ -20,7 +22,8 @@ public class AlgoritmoGenetico {
 	 * crear poblacion inicial
 	 * 
 	 */
-	public AlgoritmoGenetico() {
+	public AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, double precision, Seleccion metodoSeleccion, Cruce metodoCruce, 
+			double porcCruce, Mutacion metodoMutacion, double porcMutacion, double elite) {
 		
 		// IndividuoFuncion1 ind1 = new IndividuoFuncion1();
 		// ind1.inicializaIndividuo();
@@ -33,7 +36,6 @@ public class AlgoritmoGenetico {
 			poblacion.add(ind1);
 		}
 		
-		Seleccion ruleta = new SeleccionRuleta(poblacion);
-		ruleta.seleccionar(poblacion);
+		metodoSeleccion.seleccionar(poblacion);
 	}
 }
