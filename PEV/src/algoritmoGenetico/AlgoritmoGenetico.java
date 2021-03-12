@@ -51,7 +51,7 @@ public class AlgoritmoGenetico {
 			poblacion.add(ind1);
 		}
 		
-		Seleccion torneo = new SeleccionTorneo();
+		Seleccion torneo = new SeleccionTorneo(tamPoblacion);
 		torneo.seleccionar(poblacion);
 	}
 	
