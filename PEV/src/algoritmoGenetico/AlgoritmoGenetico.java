@@ -57,4 +57,14 @@ public class AlgoritmoGenetico {
 		MutacionBasica mutacion = new MutacionBasica(0.2);
 		mutacion.mutaPoblacionBoolean(poblacion);*/
 	}
+	
+	public double[] getMejorAbsoluto() {
+		return mejorAbsoluto;
+	}
+	public double[] getMejorGeneracion() {
+		return mejorGeneracion;
+	}
+	public double[] getMediaGeneracion() {
+		return mediaGeneracion;
+	}
 }

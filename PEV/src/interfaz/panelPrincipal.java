@@ -90,7 +90,7 @@ public class panelPrincipal {
 		poblacion_panel.add(lblNewLabel_1);
 		
 		n = new JTextField();
-		n.setText("0");
+		n.setText("100");
 		poblacion_panel.add(n);
 		n.setColumns(10);
 		controles.add(poblacion_panel);
@@ -111,7 +111,7 @@ public class panelPrincipal {
 		generaciones.add(lblNewLabel_2);
 		
 		nGeneraciones = new JTextField();
-		nGeneraciones.setText("0");
+		nGeneraciones.setText("100");
 		generaciones.add(nGeneraciones);
 		nGeneraciones.setColumns(10);
 		controles.add(generaciones);
@@ -153,10 +153,10 @@ public class panelPrincipal {
 		JLabel lblSeleccion = new JLabel("Tipo de selección");
 		seleccion_panel.add(lblSeleccion);
 		
-		JComboBox metodoSeleccion = new JComboBox();
+		JComboBox Seleccion_cbox = new JComboBox();
 		
-		metodoSeleccion.setModel(new DefaultComboBoxModel(new String[] {"Metodo de la ruleta", "Universal Estocastico", "Torneo", "Truncamiento", "Restos"}));
-		seleccion_panel.add(metodoSeleccion);
+		Seleccion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Metodo de la ruleta", "Universal Estocastico", "Torneo", "Truncamiento", "Restos"}));
+		seleccion_panel.add(Seleccion_cbox);
 		
 		TitledBorder title_Seleccion = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Selección");
 		seleccion_panel.setBorder(title_Seleccion);
@@ -164,14 +164,6 @@ public class panelPrincipal {
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		seleccion_panel.add(horizontalStrut);
 		
-		metodoSeleccion.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				seleccion = metodoSeleccion.getSelectedItem().toString();
-				
-			}
-		});
 		
 		////////////////////////////////////////////////		CRUCE 
 		JPanel cruce_panel = new JPanel();
@@ -181,27 +173,21 @@ public class panelPrincipal {
 		JLabel lblCruce = new JLabel("Tipo de cruce");
 		cruce_panel.add(lblCruce);
 		
-		JComboBox metodoCruce = new JComboBox();
-		metodoCruce.setModel(new DefaultComboBoxModel(new String[] {"Monopunto", "Discreto Uniforme"}));
-		cruce_panel.add(metodoCruce);
+		JComboBox Cruce_cbox = new JComboBox();
+		Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto", "Discreto Uniforme"}));
+		cruce_panel.add(Cruce_cbox);
 		
 		JLabel lblporcentajeCruce = new JLabel("% cruce");
 		cruce_panel.add(lblporcentajeCruce);
 		
 		JTextField textField_cruce = new JTextField();
+		textField_cruce.setText("0.6");
 		cruce_panel.add(textField_cruce);
 		textField_cruce.setColumns(10);
 		
 		TitledBorder title_cruce = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Cruce");
 		cruce_panel.setBorder(title_cruce);
 		
-		metodoCruce.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				cruce = metodoCruce.getSelectedItem().toString();	
-			}
-		});
 		
 		textField_cruce.addActionListener(new ActionListener() {
 			
@@ -219,28 +205,20 @@ public class panelPrincipal {
 		JLabel lbltipoMutacion = new JLabel("Tipo de mutacion");
 		mutacion_panel.add(lbltipoMutacion);
 		
-		JComboBox metodoMutacion = new JComboBox();
-		metodoMutacion.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica"}));
-		mutacion_panel.add(metodoMutacion);
+		JComboBox Mutacion_cbox = new JComboBox();
+		Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica"}));
+		mutacion_panel.add(Mutacion_cbox);
 		
 		JLabel lblporcentajeMutacion = new JLabel("% Mutacion");
 		mutacion_panel.add(lblporcentajeMutacion);
 		
 		JTextField textField_mutacion = new JTextField();
+		textField_mutacion.setText("0.1");
 		mutacion_panel.add(textField_mutacion);
 		textField_mutacion.setColumns(10);
 		
 		TitledBorder borde_mutacion = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Mutacion básica");
 		mutacion_panel.setBorder(borde_mutacion);
-		
-		metodoMutacion.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mutacion = metodoMutacion.getSelectedItem().toString();
-				
-			}
-		});
 		
 		textField_mutacion.addActionListener(new ActionListener() {
 			
@@ -259,6 +237,7 @@ public class panelPrincipal {
 		elite_panel.add(porcentajeElite);
 		
 		JTextField textField_elite = new JTextField();
+		textField_elite.setText("0.02");
 		elite_panel.add(textField_elite);
 		textField_elite.setColumns(10);
 		
@@ -273,6 +252,12 @@ public class panelPrincipal {
 				
 			}
 		});
+
+		////////////////////////////////////////////////		GRAFICA
+		graficas gr = new graficas(numGeneraciones);
+		frame.getContentPane().add(gr.getPlot(), BorderLayout.CENTER);
+		
+		////////////////////////////////////////////////
 		
 		JButton resetear = new JButton("Resetear");
 		JButton ejecutar = new JButton("Ejecutar");
@@ -282,20 +267,13 @@ public class panelPrincipal {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Seleccion metodoSeleccion = FactoriaSelecciones.getAlgoritmoDeSeleccion(cruce, numGeneraciones);
-				Cruce metodoCruce = FactoriaCruces.getAlgoritmoDeCruce(cruce, numGeneraciones);
-				Mutacion metodoMutacion = FactoriaMutaciones.getAlgoritmoDeMutacion(mutacion, numGeneraciones);
+				Seleccion metodoSeleccion = FactoriaSelecciones.getAlgoritmoDeSeleccion(Seleccion_cbox.getSelectedItem().toString(), numGeneraciones);
+				Cruce metodoCruce = FactoriaCruces.getAlgoritmoDeCruce(Cruce_cbox.getSelectedItem().toString(), numGeneraciones);
+				Mutacion metodoMutacion = FactoriaMutaciones.getAlgoritmoDeMutacion(Mutacion_cbox.getSelectedItem().toString(), numGeneraciones);
 				AlgoritmoGenetico AG = new AlgoritmoGenetico(tamPoblacion, numGeneraciones, precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite);
-				
+				gr.actualiza(numGeneraciones, AG.getMejorAbsoluto(), AG.getMejorGeneracion(), AG.getMediaGeneracion());
 			}
 		});
-		
-		////////////////////////////////////////////////		GRAFICA
-
-
-		graficas gr = new graficas();
-		frame.getContentPane().add(gr.getPlot(), BorderLayout.CENTER);
-		
 		////////////////////////////////////////////////		
 
 		JPanel problemas = new JPanel();
@@ -315,11 +293,11 @@ public class panelPrincipal {
 			public void actionPerformed(ActionEvent e) {
 				funcion = comboBox.getSelectedItem().toString();
 				if(comboBox.getSelectedItem().toString().equals("Función Michalewicz")) {
-					metodoCruce.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme", "Aritmetico", "BLX-alpha"}));
-					metodoMutacion.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica", "Mutacion Uniforme"})); 
+					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme", "Aritmetico", "BLX-alpha"}));
+					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica", "Mutacion Uniforme"})); 
 				} else {
-					metodoCruce.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme"}));
-					metodoMutacion.setModel(new DefaultComboBoxModel(new String[] {"Mutacion basica"})); 
+					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme"}));
+					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutacion basica"})); 
 				}
 			}
 		});
