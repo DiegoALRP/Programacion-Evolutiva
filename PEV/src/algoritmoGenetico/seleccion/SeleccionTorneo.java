@@ -16,11 +16,11 @@ public class SeleccionTorneo extends Seleccion {
 	}
 
 	@Override
-	public <T> List<Individuo<T>> seleccionar(List<Individuo<T>> poblacion) {
+	public List<Individuo> seleccionar(List<Individuo> poblacion) {
 	
 		tamPoblacion = poblacion.size();
-		ArrayList<Individuo<T>> nuevaPoblacion = new ArrayList<Individuo<T>>();
-		ArrayList<Individuo<T>> candidatos = new ArrayList<Individuo<T>>();
+		ArrayList<Individuo> nuevaPoblacion = new ArrayList<Individuo>();
+		ArrayList<Individuo> candidatos = new ArrayList<Individuo>();
 		Random rand = new Random();
 		
 		int count = 0;
@@ -32,7 +32,7 @@ public class SeleccionTorneo extends Seleccion {
 				candidatos.add(poblacion.get(rand.nextInt(tamPoblacion)));
 			}
 			
-			competenciaTorneo(candidatos, nuevaPoblacion);
+			//competenciaTorneo(candidatos, nuevaPoblacion);
 		}
 		
 		return null;
