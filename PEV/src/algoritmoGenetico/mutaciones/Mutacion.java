@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 import algoritmoGenetico.individuos.Individuo;
 
-public abstract class Mutacion<E> {
+public abstract class Mutacion {
 	
 	protected double probMutacion;
 	
-	protected abstract ArrayList<Individuo<E>> muta(ArrayList<Individuo<E>> individuos);
+	public abstract void mutaPoblacionBoolean(ArrayList<Individuo<Boolean>> poblacion, double probMutacion);
+	protected abstract void mutaIndividuoBoolean(Individuo<Boolean> individuo);
 }

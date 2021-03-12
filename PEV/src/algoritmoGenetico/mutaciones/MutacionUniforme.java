@@ -2,12 +2,20 @@ package algoritmoGenetico.mutaciones;
 
 import java.util.ArrayList;
 
+import algoritmoGenetico.individuos.Individuo;
+
 public class MutacionUniforme extends Mutacion{
 
 	@Override
-	protected ArrayList muta(ArrayList individuos) {
+	public void mutaPoblacionBoolean(ArrayList<Individuo<Boolean>> poblacion, double probMutacion) {
 		// TODO Auto-generated method stub
-		return null;
+		
+	}
+
+	@Override
+	protected void mutaIndividuoBoolean(Individuo<Boolean> individuo) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,33 +1,36 @@
 package interfaz;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.*;
 import org.math.plot.*;
 
 public class graficas{
 	
 	private Plot2DPanel plot;
+	double[] x;
 	
-	graficas(){
-		double[] x = { 1, 2, 3, 4, 5, 6 };
-		double[] y = { 45, 89, 6, 32, 63, 12 };
+	graficas(int numGeneraciones){
 		
+		x = new double[numGeneraciones];
 		plot = new Plot2DPanel();
-		
-		// define the legend position
 		plot.addLegend("SOUTH");
-		// add a line plot to the PlotPanel
 		
-		plot.addLinePlot("my plot", x, y);
-		
-		// put the PlotPanel in a JFrame like a JPanel
-		//JFrame frame = new JFrame("a plot panel");
-		//frame.setSize(100, 100);
-		//frame.setContentPane(plot);
-		//frame.setVisible(true);
 	}
 	
 	public Plot2DPanel getPlot() {
 		return this.plot;
+	}
+
+	public void actualiza(int numGeneraciones, double[] mejorAbsoluto, double[] mejorGeneracion, double[] mediaGeneracion) {
+		
+		x = new double[numGeneraciones];
+		
+		plot.addLinePlot("Mejor absoluto", x, mejorAbsoluto);
+		plot.addLinePlot("Mejor generacion", x, mejorGeneracion);
+		plot.addLinePlot("Media generacion", x, mediaGeneracion);
+		
 	}
 
 }

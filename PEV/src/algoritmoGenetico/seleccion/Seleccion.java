@@ -7,5 +7,5 @@ import algoritmoGenetico.individuos.Individuo;
 
 public abstract class Seleccion {
 	
-	public abstract List<Individuo> seleccionar(List<Individuo> individuos);
+	public abstract List<Individuo> seleccionar(List<Individuo> poblacion);
 }
