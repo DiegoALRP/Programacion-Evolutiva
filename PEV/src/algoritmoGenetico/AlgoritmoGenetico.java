@@ -11,9 +11,11 @@ import algoritmoGenetico.mutaciones.Mutacion;
 import algoritmoGenetico.mutaciones.MutacionBasica;
 import algoritmoGenetico.seleccion.Seleccion;
 import algoritmoGenetico.seleccion.SeleccionRuleta;
+import algoritmoGenetico.seleccion.SeleccionTorneo;
 
 public class AlgoritmoGenetico {
 
+	//Nota, dejar estas variables como array de doubles, no hacerlo como ArrayList
 	private double[] mejorAbsoluto;		//Array con el mejor absoluto (a lo largo de todas las generaciones)
 	private double[] mejorGeneracion;	//Array con el mejor fitness de una generacion
 	private double[] mediaGeneracion;	//Array con la media de fitness de cada generacion
@@ -40,11 +42,22 @@ public class AlgoritmoGenetico {
 	
 		Seleccion ruleta = new SeleccionRuleta(poblacion);
 		ruleta.seleccionar(poblacion);*/
+		
+		List<Individuo> poblacion = new ArrayList<Individuo>();
+		for (int i = 0; i < 2; i++) {
+			
+			Individuo ind1 = new IndividuoFuncion1();
+			ind1.inicializaIndividuo();
+			poblacion.add(ind1);
+		}
+		
+		Seleccion torneo = new SeleccionTorneo();
+		torneo.seleccionar(poblacion);
 	}
 	
 	public <T> void start() {
 		
-		ArrayList<Individuo<Boolean>> poblacion = new ArrayList<Individuo<Boolean>>();
+		/*ArrayList<Individuo<Boolean>> poblacion = new ArrayList<Individuo<Boolean>>();
 		for(int i=0;i<5;i++) {
 			Individuo ind1 = new IndividuoFuncion1();
 			ind1.inicializaIndividuo();
@@ -55,6 +68,17 @@ public class AlgoritmoGenetico {
 		cruce.cruza(poblacion);
 		
 		MutacionBasica mutacion = new MutacionBasica(0.2);
-		mutacion.mutaPoblacionBoolean(poblacion);
+		mutacion.mutaPoblacionBoolean(poblacion);*/
+		
+		/*List<Individuo> poblacion = new ArrayList<Individuo>();
+		for (int i = 0; i < 2; i++) {
+			
+			Individuo ind1 = new IndividuoFuncion1();
+			ind1.inicializaIndividuo();
+			poblacion.add(ind1);
+		}
+		
+		Seleccion torneo = new SeleccionTorneo();
+		torneo.seleccionar(poblacion);*/
 	}
 }

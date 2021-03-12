@@ -23,22 +23,35 @@ public class SeleccionTorneo extends Seleccion {
 		ArrayList<Individuo> candidatos = new ArrayList<Individuo>();
 		Random rand = new Random();
 		
+		System.out.println("Poblacion Inicial");
+		for (int i = 0; i < tamPoblacion; i++) {
+			
+			System.out.println("Individuo: " + i + " " + poblacion.get(i).printCromosoma() + " Fitness " + poblacion.get(i).getFitness());
+		}
+		
 		int count = 0;
 		while (count < tamPoblacion) {
 			
 			candidatos.clear();
 			for (int i = 0; i < tamTorneo; i++) {
 				
-				candidatos.add(poblacion.get(rand.nextInt(tamPoblacion)));
+				//candidatos.add(poblacion.get(rand.nextInt(tamPoblacion)));
+				candidatos.add(poblacion.get(i));
 			}
 			
-			//competenciaTorneo(candidatos, nuevaPoblacion);
+			competenciaTorneo(candidatos, nuevaPoblacion);
+		}
+		
+		System.out.println("Poblacion Final");
+		for (int i = 0; i < tamPoblacion; i++) {
+			
+			System.out.println("Individuo: " + i + " " + nuevaPoblacion.get(i).printCromosoma() + " Fitness " + nuevaPoblacion.get(i).getFitness());
 		}
 		
 		return null;
 	}
 	
-	public <T> Individuo<T> competenciaTorneo(ArrayList<Individuo<T>> candidatos, ArrayList<Individuo<T>> nuevaPoblacion){
+	public void competenciaTorneo(ArrayList<Individuo> candidatos, ArrayList<Individuo> nuevaPoblacion){
 		
 		double maxFitness = 0;
 		int indexBestIndividual = 0;
@@ -54,7 +67,7 @@ public class SeleccionTorneo extends Seleccion {
 			}
 		}
 		
-		return null;
+		nuevaPoblacion.add(candidatos.get(indexBestIndividual));
 	}
 
 }

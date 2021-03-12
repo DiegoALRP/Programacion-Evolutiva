@@ -49,5 +49,4 @@ public class SeleccionRuleta extends Seleccion {
 			puntAcumulada[i] = acum;
 		}
 	}
-
 }

@@ -79,6 +79,8 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
 
 	@Override
 	public double getFitness() {
+		
+		calculateFitness();
 		return aptitud;
 	}
 	
