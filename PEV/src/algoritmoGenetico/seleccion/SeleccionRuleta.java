@@ -11,23 +11,13 @@ public class SeleccionRuleta extends Seleccion {
 	private double[] puntAcumulada;		//Puntuacion Acumulada
 	private double prob;
 	private int pos_super;
-
+	private double aptitudes;
+	private double acum;
+	
 	@Override
 	public List<Individuo> seleccionar(List<Individuo> poblacion) {
 		
-		double aptitudes = 0.0;
-		double acum = 0.0;
-		pos_super = 0;
-		puntAcumulada = new double[poblacion.size()];
-		
-		for(Individuo ind : poblacion) {
-			aptitudes += ind.getFitness();
-		}
-		
-		for(int i = 0; i < poblacion.size(); i++) {
-			acum += poblacion.get(i).getFitness() / aptitudes;
-			puntAcumulada[i] = acum;
-		}
+		inicializaAptitudes(poblacion);
 		
 		ArrayList<Individuo> seleccionados = new ArrayList<Individuo>(poblacion.size());
 		
@@ -42,6 +32,22 @@ public class SeleccionRuleta extends Seleccion {
 			pos_super = 0;
 		}
 		return seleccionados;
+	}
+	public void inicializaAptitudes(List<Individuo> poblacion) {
+		
+		aptitudes = 0.0;
+		acum = 0.0;
+		pos_super = 0;
+		puntAcumulada = new double[poblacion.size()];
+		
+		for(Individuo ind : poblacion) {
+			aptitudes += ind.getFitness();
+		}
+		
+		for(int i = 0; i < poblacion.size(); i++) {
+			acum += poblacion.get(i).getFitness() / aptitudes;
+			puntAcumulada[i] = acum;
+		}
 	}
 
 }
