@@ -8,7 +8,7 @@ import algoritmoGenetico.individuos.Individuo;
 public class CruceUniforme extends Cruce {
 
 	@Override
-	public <T> void cruza(ArrayList<Individuo<T>> poblacion) {
+	public <T> void cruza(ArrayList<Individuo<T>> poblacion, double probCruce) {
 		// TODO Auto-generated method stub
 
 		this.num_selec_cruce = 0;

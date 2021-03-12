@@ -12,7 +12,7 @@ public abstract class Cruce {
 	protected int num_selec_cruce;	//Numero de individuos seleccionados para cruzar
 	protected int tamPoblacion;
 	
-	public abstract <T> void cruza(ArrayList<Individuo<T>> poblacion);
+	public abstract <T> void cruza(ArrayList<Individuo<T>> poblacion, double probCruce);
 	protected abstract <T> void cruzaPadres(Individuo<T> padre1, Individuo<T> padre2);
 	protected abstract <T> void seleccionaIndividuos(ArrayList<Individuo<T>> poblacion);
 	

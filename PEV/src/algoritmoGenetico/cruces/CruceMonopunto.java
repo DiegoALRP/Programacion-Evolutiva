@@ -6,19 +6,13 @@ import java.util.Random;
 import algoritmoGenetico.individuos.Individuo;
 
 public class CruceMonopunto extends Cruce {
-
-	public CruceMonopunto(double probCruce) {
+	
+	@Override
+	public <T> void cruza(ArrayList<Individuo<T>> poblacion, double probCruce) {
 		
 		this.num_selec_cruce = 0;
 		this.probCruce = probCruce;
 		this.selec_cruce = new ArrayList<Integer>();
-	}
-	
-	@Override
-	public <T> void cruza(ArrayList<Individuo<T>> poblacion) {
-		
-		this.num_selec_cruce = 0;
-		this.selec_cruce.clear();
 		
 		this.seleccionaIndividuos(poblacion);
 		

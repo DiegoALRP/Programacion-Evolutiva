@@ -11,7 +11,7 @@ public class SeleccionTorneo extends Seleccion {
 	private final int tamTorneo = 2;
 	private int tamPoblacion;
 	
-	public SeleccionTorneo() {
+	public SeleccionTorneo(int participantes) {
 		
 	}
 

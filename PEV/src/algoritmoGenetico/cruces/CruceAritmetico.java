@@ -11,7 +11,7 @@ public class CruceAritmetico extends Cruce {
 	 * Nota esta clase solo funciona con funcion 4
 	 */
 	@Override
-	public <T> void cruza(ArrayList<Individuo<T>> poblacion) {
+	public <T> void cruza(ArrayList<Individuo<T>> poblacion, double probCruce) {
 		// TODO Auto-generated method stub
 
 		this.num_selec_cruce = 0;
