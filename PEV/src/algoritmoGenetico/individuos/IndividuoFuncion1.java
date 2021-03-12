@@ -53,7 +53,8 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
 			Random ran = new Random();
 			cromosoma.add(ran.nextBoolean());
 		}
-		aptitud = calculateFitness();
+		//aptitud = calculateFitness();
+		calculateFitness();
 	}
 
 	@Override
@@ -67,7 +68,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
 			}
 		}
 		double real = Integer.parseInt(gen,2);
-		return genMin + real * ((genMax - genMin)/(Math.pow(2,longitudTotal)-1));
+		return genMin + real * ((genMax - genMin)/(Math.pow(2,longitudGen)-1));
 	}
 	
 	/*public double getFenotipoDiego() {

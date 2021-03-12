@@ -14,5 +14,5 @@ public abstract class Cruce {
 	
 	public abstract <T> void cruza(ArrayList<Individuo<T>> poblacion);
 	protected abstract <T> void cruzaPadres(Individuo<T> padre1, Individuo<T> padre2);
-	protected abstract <T> void seleccionIndividuos(ArrayList<Individuo<T>> poblacion);
+	protected abstract <T> void seleccionaIndividuos(ArrayList<Individuo<T>> poblacion);
 }

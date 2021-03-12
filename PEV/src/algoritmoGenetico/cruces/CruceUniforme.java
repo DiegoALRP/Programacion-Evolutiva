@@ -5,25 +5,16 @@ import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 
-public class CruceMonopunto extends Cruce {
+public class CruceUniforme extends Cruce {
 
-	public CruceMonopunto(double probCruce) {
-		
-		this.num_selec_cruce = 0;
-		this.probCruce = probCruce;
-		this.selec_cruce = new ArrayList<Integer>();
-	}
-	
 	@Override
 	public <T> void cruza(ArrayList<Individuo<T>> poblacion) {
-		
+		// TODO Auto-generated method stub
+
 		this.num_selec_cruce = 0;
 		this.selec_cruce.clear();
 		
 		this.seleccionaIndividuos(poblacion);
-		
-		Random rand = new Random();
-		this.punto_cruce = rand.nextInt(this.tamPoblacion - 2) + 1;
 		
 		System.out.println("Antes:\n");
 		for (int i = 0; i < poblacion.size(); i++) {
@@ -44,10 +35,11 @@ public class CruceMonopunto extends Cruce {
 			System.out.println(poblacion.get(i).printCromosoma() + "\n");
 		}
 	}
-	
+
 	@Override
 	protected <T> void cruzaPadres(Individuo<T> padre1, Individuo<T> padre2) {
-		
+		// TODO Auto-generated method stub
+
 		ArrayList<T> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<T> cromoPadre2 = padre2.getCromosoma();
 		
@@ -62,12 +54,15 @@ public class CruceMonopunto extends Cruce {
 		
 		int longitudCromo = padre1.getLongitudCromosoma();
 		
-		int longi = this.punto_cruce;
-		while (longi < longitudCromo) {
+		int i = 0;
+		Random rand = new Random();
+		while (i < longitudCromo) {
 			
-			cromoHijo1.set(longi, cromoPadre2.get(longi));
-			cromoHijo2.set(longi, cromoPadre1.get(longi));
-			longi++;
+			if (rand.nextDouble() < this.probCruce) {
+				cromoHijo1.set(i, cromoPadre2.get(i));
+				cromoHijo2.set(i, cromoPadre1.get(i));
+			}
+			i++;
 		}
 		
 		padre1.setCromosoma(cromoHijo1);
@@ -78,12 +73,12 @@ public class CruceMonopunto extends Cruce {
 		
 		if (fitnessA1 < fitnessB1) padre1.setCromosoma(cromoPadre1);
 		if (fitnessA2 < fitnessB2) padre2.setCromosoma(cromoPadre2);
-		
-		
 	}
 
+	@Override
 	protected <T> void seleccionaIndividuos(ArrayList<Individuo<T>> poblacion) {
-		
+		// TODO Auto-generated method stub
+
 		this.tamPoblacion = poblacion.size();
 		Random rand = new Random();
 		
@@ -102,4 +97,5 @@ public class CruceMonopunto extends Cruce {
 			this.selec_cruce.remove(num_selec_cruce);
 		}
 	}
+
 }

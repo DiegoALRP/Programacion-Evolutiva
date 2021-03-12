@@ -28,15 +28,15 @@ public class AlgoritmoGenetico {
 		// ind1.inicializaIndividuo();
 		// System.out.println(ind1.getFitness());
 		
-		List<Individuo> poblacion = new ArrayList<Individuo>();
-		for(int i=0;i<5;i++) {
+		/*List<Individuo> poblacion = new ArrayList<Individuo>();
+		for(int i=0;i<20;i++) {
 			IndividuoFuncion1 ind1 = new IndividuoFuncion1();
 			ind1.inicializaIndividuo();
 			poblacion.add(ind1);
 		}
 	
 		Seleccion ruleta = new SeleccionRuleta(poblacion);
-		ruleta.seleccionar(poblacion);
+		ruleta.seleccionar(poblacion);*/
 	}
 	
 	public <T> void start() {

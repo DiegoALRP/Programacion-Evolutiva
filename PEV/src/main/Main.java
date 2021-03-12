@@ -9,8 +9,10 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		AlgoritmoGenetico aG = new AlgoritmoGenetico();
-		aG.start();
+		/*AlgoritmoGenetico aG = new AlgoritmoGenetico();
+		aG.start();*/
+		
+		//System.out.println((true && false));
 	}
 
 }
