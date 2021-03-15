@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import algoritmoGenetico.individuos.FactoriaIndividuo;
 import algoritmoGenetico.individuos.Individuo;
 
 public class SeleccionTorneo extends Seleccion {
@@ -20,7 +21,6 @@ public class SeleccionTorneo extends Seleccion {
 	
 		tamPoblacion = poblacion.size();
 		ArrayList<Individuo> nuevaPoblacion = new ArrayList<Individuo>();
-		ArrayList<Individuo> noSeleccionados = new ArrayList<Individuo>();
 		ArrayList<Individuo> candidatos = new ArrayList<Individuo>();
 		Random rand = new Random();
 		
@@ -65,7 +65,7 @@ public class SeleccionTorneo extends Seleccion {
 		return null;
 	}
 	
-	public void competenciaTorneo(ArrayList<Individuo> candidatos, ArrayList<Individuo> nuevaPoblacion, ArrayList<Individuo> noSeleccionados){
+	public void competenciaTorneo(ArrayList<Individuo> candidatos, ArrayList<Individuo> nuevaPoblacion){
 		
 		double maxFitness = 0;
 		int indexBestIndividual = 0;
@@ -91,8 +91,14 @@ public class SeleccionTorneo extends Seleccion {
 			}
 		}
 		
-		noSeleccionados.add(candidatos.get(indexPeorIndividuo));
-		nuevaPoblacion.add(candidatos.get(indexBestIndividual));
+		Individuo mejorIndividuo = candidatos.get(indexBestIndividual);
+		Individuo nuevoIndividuo = FactoriaIndividuo.getIndividuo(mejorIndividuo.getId());
+		ArrayList cromoPadre1 = mejorIndividuo.getCromosoma();
+		ArrayList cromoHijo1 = new ArrayList();
+		cromoHijo1.addAll(cromoPadre1);
+		nuevoIndividuo.setCromosoma(cromoHijo1);
+		
+		nuevaPoblacion.add(nuevoIndividuo);
 	}
 
 }

@@ -9,6 +9,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 	
 	public IndividuoFuncion1(){
 		
+		this.id = "Funcion1";
 		min = new double[2];	// Inicializar colecciones
 		max = new double[2];
 		longitud = new int[2];

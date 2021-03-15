@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.Random;
 
 
-public abstract class Individuo<E> implements Cloneable{
+public abstract class Individuo<E> {
 
+	protected String id;
 	protected double[] min;
 	protected double[] max;
 	protected double[] fenotipo;
@@ -41,4 +42,9 @@ public abstract class Individuo<E> implements Cloneable{
 	public abstract void setCromosoma(ArrayList<E> individuo);
 	public abstract int getLongitudCromosoma();		//Obtiene la longitud del cromosoma del individuo
 	public abstract StringBuilder printCromosoma();
+	
+	public String getId() {
+		
+		return this.id;
+	}
 }
