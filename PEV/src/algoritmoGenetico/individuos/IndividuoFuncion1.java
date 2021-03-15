@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class IndividuoFuncion1 extends Individuo<Boolean> {
+public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 
 	
 	public IndividuoFuncion1(){
@@ -79,6 +79,8 @@ public class IndividuoFuncion1 extends Individuo<Boolean> {
 
 	@Override
 	public double getFitness() {
+		
+		calculateFitness();
 		return aptitud;
 	}
 	

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 
-public abstract class Individuo<E> {
+public abstract class Individuo<E> implements Cloneable{
 
 	protected double[] min;
 	protected double[] max;
