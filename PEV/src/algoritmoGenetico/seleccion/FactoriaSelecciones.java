@@ -10,9 +10,9 @@ public class FactoriaSelecciones {
 			case "Torneo":
 				return new SeleccionTorneo(participantes);
 			case "Torneo Probabilistico":
-				return new SeleccionTorneoProb(participantes);
+				return new SeleccionTruncamiento(participantes);
 			case "Ranking":
-				return new SeleccionRanking();
+				return new SeleccionRestos();
 			default:
 				return new SeleccionRuleta();
 		}
