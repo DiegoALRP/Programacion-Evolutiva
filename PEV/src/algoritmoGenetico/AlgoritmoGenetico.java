@@ -44,7 +44,7 @@ public class AlgoritmoGenetico {
 		ruleta.seleccionar(poblacion);*/
 		
 		List<Individuo> poblacion = new ArrayList<Individuo>();
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 6; i++) {
 			
 			Individuo ind1 = new IndividuoFuncion1();
 			ind1.inicializaIndividuo();

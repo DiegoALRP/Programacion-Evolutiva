@@ -19,8 +19,8 @@ public class SeleccionTorneo extends Seleccion {
 	@Override
 	public List<Individuo> seleccionar(List<Individuo> poblacion) {
 	
-		tamPoblacion = poblacion.size();
-		ArrayList<Individuo> nuevaPoblacion = new ArrayList<Individuo>();
+		tamPoblacion = poblacion.size(); //Cogemos el tamaño de la población
+		ArrayList<Individuo> nuevaPoblacion = new ArrayList<Individuo>();	//Creamos un ArrayList para la nueva población
 		ArrayList<Individuo> candidatos = new ArrayList<Individuo>();
 		Random rand = new Random();
 		
@@ -36,30 +36,17 @@ public class SeleccionTorneo extends Seleccion {
 			candidatos.clear();
 			for (int i = 0; i < tamTorneo; i++) {
 				
-				//candidatos.add(poblacion.get(rand.nextInt(tamPoblacion)));
-				candidatos.add(poblacion.get(i));
+				candidatos.add(poblacion.get(rand.nextInt(tamPoblacion)));
 			}
 			
 			competenciaTorneo(candidatos, nuevaPoblacion);
 			count++;
 		}
 		
-		ArrayList<Individuo> nuevaPoblacion1 = new ArrayList<Individuo>();
-		nuevaPoblacion1.addAll(nuevaPoblacion);
-		
-		System.out.println("Muta primer individuo:");
-		
-		ArrayList<Boolean> mod = new ArrayList<Boolean>();
-		for (int i = 0; i < nuevaPoblacion.get(0).getLongitudCromosoma(); i++) {
-			
-			mod.add(false);
-		}
-		nuevaPoblacion1.get(0).setCromosoma(mod);
-		
 		System.out.println("Poblacion Final");
 		for (int i = 0; i < tamPoblacion; i++) {
 			
-			System.out.println("Individuo: " + i + " " + nuevaPoblacion1.get(i).printCromosoma() + " Fitness " + nuevaPoblacion1.get(i).getFitness());
+			System.out.println("Individuo: " + i + " " + nuevaPoblacion.get(i).printCromosoma() + " Fitness " + nuevaPoblacion.get(i).getFitness());
 		}
 		
 		return null;
@@ -69,7 +56,6 @@ public class SeleccionTorneo extends Seleccion {
 		
 		double maxFitness = 0;
 		int indexBestIndividual = 0;
-		int indexPeorIndividuo = 0;
 		
 		for (int i = 0; i < tamTorneo; i++) {
 			
@@ -81,18 +67,10 @@ public class SeleccionTorneo extends Seleccion {
 				indexBestIndividual = i;
 			}
 		}
-		for (int i = 0; i < tamTorneo; i++) {
-			
-			double fitness = candidatos.get(i).getFitness();
-			
-			if (fitness <= maxFitness) {
-				
-				indexPeorIndividuo = i;
-			}
-		}
 		
 		Individuo mejorIndividuo = candidatos.get(indexBestIndividual);
 		Individuo nuevoIndividuo = FactoriaIndividuo.getIndividuo(mejorIndividuo.getId());
+		
 		ArrayList cromoPadre1 = mejorIndividuo.getCromosoma();
 		ArrayList cromoHijo1 = new ArrayList();
 		cromoHijo1.addAll(cromoPadre1);
