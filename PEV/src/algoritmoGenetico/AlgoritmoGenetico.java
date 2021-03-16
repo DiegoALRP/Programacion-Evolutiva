@@ -51,8 +51,10 @@ public class AlgoritmoGenetico {
 			poblacion.add(ind1);
 		}
 		
-		Seleccion torneo = new SeleccionTorneo(tamPoblacion);
-		torneo.seleccionar(poblacion);
+		Seleccion ruleta = new SeleccionRuleta();
+		ruleta.seleccionar(poblacion);
+		/*Seleccion torneo = new SeleccionTorneo(tamPoblacion);
+		torneo.seleccionar(poblacion);*/
 	}
 	
 	public <T> void start() {

@@ -49,7 +49,7 @@ public class SeleccionTorneo extends Seleccion {
 			System.out.println("Individuo: " + i + " " + nuevaPoblacion.get(i).printCromosoma() + " Fitness " + nuevaPoblacion.get(i).getFitness());
 		}
 		
-		return null;
+		return nuevaPoblacion;
 	}
 	
 	public void competenciaTorneo(ArrayList<Individuo> candidatos, ArrayList<Individuo> nuevaPoblacion){

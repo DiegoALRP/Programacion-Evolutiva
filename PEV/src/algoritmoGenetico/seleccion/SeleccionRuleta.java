@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import algoritmoGenetico.individuos.FactoriaIndividuo;
 import algoritmoGenetico.individuos.Individuo;
 
 public class SeleccionRuleta extends Seleccion {
@@ -19,7 +20,7 @@ public class SeleccionRuleta extends Seleccion {
 		
 		inicializaAptitudes(poblacion);
 		
-		ArrayList<Individuo> seleccionados = new ArrayList<Individuo>(poblacion.size());
+		ArrayList<Individuo> nuevaPoblacion = new ArrayList<Individuo>(poblacion.size());
 		
 		for(int i = 0; i < poblacion.size(); i++) {
 			
@@ -27,12 +28,15 @@ public class SeleccionRuleta extends Seleccion {
 			while(pos_super < poblacion.size() && prob > puntAcumulada[pos_super]) {
 				pos_super++;
 			}
-			seleccionados.add(poblacion.get(pos_super));
-			System.out.println(poblacion.get(pos_super).getFitness());
+			
+			addIndividual(poblacion, nuevaPoblacion);
+			System.out.println("Individuo: " + poblacion.get(pos_super).printCromosoma() + " Fitness: " + poblacion.get(pos_super).getFitness());
 			pos_super = 0;
 		}
-		return seleccionados;
+		
+		return nuevaPoblacion;
 	}
+	
 	public void inicializaAptitudes(List<Individuo> poblacion) {
 		
 		aptitudes = 0.0;
@@ -48,5 +52,27 @@ public class SeleccionRuleta extends Seleccion {
 			acum += poblacion.get(i).getFitness() / aptitudes;
 			puntAcumulada[i] = acum;
 		}
+	}
+	
+	/**
+	 * Copia el individuo seleccionado (por el índice) de la poblacion inicial
+	 * a la nueva poblacion.
+	 * La copia es por valor
+	 * 
+	 * @param poblacion poblacion inicial
+	 * @param nuevaPoblacion nueva poblacion
+	 * @param index índice del individuo seleccionado
+	 */
+	public void addIndividual(List<Individuo> poblacion, ArrayList<Individuo> nuevaPoblacion) {
+		
+		Individuo indSeleccionado = poblacion.get(pos_super);
+		Individuo nuevoIndividuo = FactoriaIndividuo.getIndividuo(indSeleccionado.getId());
+	
+		ArrayList cromoPadre1 = indSeleccionado.getCromosoma();
+		ArrayList cromoHijo1 = new ArrayList();
+		cromoHijo1.addAll(cromoPadre1);
+		nuevoIndividuo.setCromosoma(cromoHijo1);
+		
+		nuevaPoblacion.add(nuevoIndividuo);
 	}
 }
