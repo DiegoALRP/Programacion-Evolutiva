@@ -44,15 +44,15 @@ public class AlgoritmoGenetico {
 		ruleta.seleccionar(poblacion);*/
 		
 		List<Individuo> poblacion = new ArrayList<Individuo>();
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 20; i++) {
 			
 			Individuo ind1 = new IndividuoFuncion1();
 			ind1.inicializaIndividuo();
 			poblacion.add(ind1);
 		}
 		
-		Seleccion ruleta = new SeleccionRuleta();
-		ruleta.seleccionar(poblacion);
+		/*Seleccion ruleta = new SeleccionRuleta();
+		ruleta.seleccionar(poblacion);*/
 		/*Seleccion torneo = new SeleccionTorneo(tamPoblacion);
 		torneo.seleccionar(poblacion);*/
 	}

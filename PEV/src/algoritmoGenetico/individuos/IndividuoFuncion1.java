@@ -14,6 +14,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 		max = new double[2];
 		longitud = new int[2];
 		fenotipo = new double[2];
+		numGenes = 2;
 		
 		min[0] = -3.000;		// primer gen
 		max[0] = 12.100;
@@ -32,11 +33,15 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 	
 	@Override
 	public double calculateFitness() {
-		fenotipo[0] = getFenotipo(longitud[0], min[0], max[0]);
+		/*fenotipo[0] = getFenotipo(longitud[0], min[0], max[0]);
 		fenotipo[1] = getFenotipo(longitud[1], min[1], max[1]);
+		System.out.println("x" + 0 + " fenotipo: " + fenotipo[0]);
+		System.out.println("x" + 1 + " fenotipo: " + fenotipo[1]);*/
 		//System.out.println(fenotipo[0]);
 		//System.out.println(fenotipo[1]);
+		calculateFenotipo();
 		aptitud = (21.5 + fenotipo[0] * Math.sin(4 * Math.PI * fenotipo[0]) + fenotipo[1] * Math.sin(20 * Math.PI * fenotipo[1])); 
+		System.out.println("Fitness: " + this.aptitud + "\n");
 		return aptitud;
 	}
 
@@ -52,7 +57,34 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 			}
 		}
 		double real = Integer.parseInt(gen,2);
-		return genMin + real * (genMax - genMin)/(Math.pow(2,longitudTotal)-1);
+		return genMin + real * (genMax - genMin)/(Math.pow(2,longitudGen)-1);
+	}
+	
+	public void calculateFenotipo() {
+		
+		int index = 0;
+		for (int i = 0; i < numGenes; i++) {
+			
+			StringBuilder gen = new StringBuilder();
+			
+			for (int k = 0; k < longitud[i]; k++) {
+				
+				if (cromosoma.get(index)) {
+					
+					gen.append('1');
+				}
+				else {
+					
+					gen.append('0');
+				}
+				
+				index++;
+			}
+			
+			double real = Integer.parseInt(gen.toString(),2);
+			fenotipo[i] = min[i] + real * (max[i] - min[i])/(Math.pow(2,longitud[i])-1);
+			System.out.println("x" + i + " fenotipo: " + fenotipo[i]);
+		}
 	}
 	
 	@Override
@@ -85,15 +117,10 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 		return aptitud;
 	}
 	
+	@Override
 	public ArrayList<Boolean> getCromosoma(){
 		
 		return this.cromosoma;
-	}
-
-	@Override
-	public int getLongitudCromosoma() {
-		
-		return this.longitudTotal;
 	}
 	
 	@Override
@@ -112,12 +139,4 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 		
 		return sb;
 	}
-
-	@Override
-	public void setCromosoma(ArrayList<Boolean> individuo) {
-		
-		this.cromosoma.clear();
-		this.cromosoma.addAll(individuo);
-	}
-
 }
