@@ -8,7 +8,7 @@ import algoritmoGenetico.individuos.Individuo;
 public class MutacionBasica extends Mutacion {
 
 	@Override
-	public void mutaPoblacionBoolean(ArrayList<Individuo<Boolean>> poblacion, double probMutacion) {
+	public void mutaPoblacionBoolean(ArrayList<Individuo> poblacion, double probMutacion) {
 		
 		this.probMutacion = probMutacion;
 		

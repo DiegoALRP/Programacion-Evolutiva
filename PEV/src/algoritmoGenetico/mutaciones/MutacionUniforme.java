@@ -7,7 +7,7 @@ import algoritmoGenetico.individuos.Individuo;
 public class MutacionUniforme extends Mutacion{
 
 	@Override
-	public void mutaPoblacionBoolean(ArrayList<Individuo<Boolean>> poblacion, double probMutacion) {
+	public void mutaPoblacionBoolean(ArrayList<Individuo> poblacion, double probMutacion) {
 		// TODO Auto-generated method stub
 		
 	}

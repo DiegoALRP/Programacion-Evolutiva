@@ -8,7 +8,7 @@ import algoritmoGenetico.individuos.Individuo;
 public class CruceMonopunto extends Cruce {
 	
 	@Override
-	public <T> void cruza(ArrayList<Individuo<T>> poblacion, double probCruce) {
+	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
 		this.num_selec_cruce = 0;
 		this.probCruce = probCruce;
@@ -40,18 +40,18 @@ public class CruceMonopunto extends Cruce {
 	}
 	
 	@Override
-	protected <T> void cruzaPadres(Individuo<T> padre1, Individuo<T> padre2) {
+	protected void cruzaPadres(Individuo padre1, Individuo padre2) {
 		
-		ArrayList<T> cromoPadre1 = padre1.getCromosoma();
-		ArrayList<T> cromoPadre2 = padre2.getCromosoma();
+		ArrayList cromoPadre1 = padre1.getCromosoma();
+		ArrayList cromoPadre2 = padre2.getCromosoma();
 		
 		double fitnessB1 = padre1.getFitness();
 		double fitnessB2 = padre2.getFitness();
 		
-		ArrayList<T> cromoHijo1 = new ArrayList<T>();
+		ArrayList cromoHijo1 = new ArrayList();
 		cromoHijo1.addAll(cromoPadre1);
 
-		ArrayList<T> cromoHijo2 = new ArrayList<T>();
+		ArrayList cromoHijo2 = new ArrayList();
 		cromoHijo2.addAll(cromoPadre2);
 		
 		int longitudCromo = padre1.getLongitudCromosoma();
@@ -76,7 +76,7 @@ public class CruceMonopunto extends Cruce {
 		
 	}
 
-	protected <T> void seleccionaIndividuos(ArrayList<Individuo<T>> poblacion) {
+	protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
 		
 		this.tamPoblacion = poblacion.size();
 		Random rand = new Random();
