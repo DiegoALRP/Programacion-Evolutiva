@@ -28,7 +28,8 @@ public class SeleccionRestos extends Seleccion{
 		
 		for(int i = 0; i < pik.length; i++) {
 			if(pik[i] > 1) {
-				seleccionados.add(poblacion.get(i));
+				//seleccionados.add(poblacion.get(i));
+				addIndividual(poblacion, seleccionados, i);
 				aux++;
 			}
 		}

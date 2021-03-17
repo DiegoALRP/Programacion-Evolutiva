@@ -7,6 +7,7 @@ public class FactoriaIndividuo {
 		switch(id) {
 			
 			case "Funcion1": return new IndividuoFuncion1();
+			//case "Funcion2": return
 			default: return new IndividuoFuncion1();
 		}
 	}

@@ -33,12 +33,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 	
 	@Override
 	public double calculateFitness() {
-		/*fenotipo[0] = getFenotipo(longitud[0], min[0], max[0]);
-		fenotipo[1] = getFenotipo(longitud[1], min[1], max[1]);
-		System.out.println("x" + 0 + " fenotipo: " + fenotipo[0]);
-		System.out.println("x" + 1 + " fenotipo: " + fenotipo[1]);*/
-		//System.out.println(fenotipo[0]);
-		//System.out.println(fenotipo[1]);
+		
 		calculateFenotipo();
 		aptitud = (21.5 + fenotipo[0] * Math.sin(4 * Math.PI * fenotipo[0]) + fenotipo[1] * Math.sin(20 * Math.PI * fenotipo[1])); 
 		System.out.println("Fitness: " + this.aptitud + "\n");
@@ -70,14 +65,11 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 			for (int k = 0; k < longitud[i]; k++) {
 				
 				if (cromosoma.get(index)) {
-					
 					gen.append('1');
 				}
 				else {
-					
 					gen.append('0');
 				}
-				
 				index++;
 			}
 			
@@ -96,19 +88,6 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 		//aptitud = calculateFitness();
 		calculateFitness();
 	}
-	
-	/*public double getFenotipoDiego() {
-		String gen = "";
-		for(int i = 0; i < this.longitud[0];i++) {
-			if(cromosoma.get(i)) {		
-				gen += "1";
-			} else {
-				gen += "0";
-			}
-		}
-		double real = Integer.parseInt(gen,2);
-		return genMin + real * ((genMax - genMin)/(Math.pow(2,longitudTotal)-1));
-	}*/
 
 	@Override
 	public double getFitness() {

@@ -31,8 +31,6 @@ public class IndividuoFuncion2 extends Individuo<Boolean> {
 	@Override
 	public double calculateFitness() {
 		
-		/*fenotipo[0] = getFenotipo(longitud[0], min[0], max[0]);
-		fenotipo[1] = getFenotipo(longitud[0], min[0], max[0]);*/
 		calculateFenotipo();
 		
 		double parte1 = 0;
