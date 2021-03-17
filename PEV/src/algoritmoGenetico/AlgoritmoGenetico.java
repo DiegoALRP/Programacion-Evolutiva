@@ -33,47 +33,87 @@ public class AlgoritmoGenetico {
 	public <T> AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, double precision, Seleccion metodoSeleccion, Cruce metodoCruce, 
 			double porcCruce, Mutacion metodoMutacion, double porcMutacion, double elite, String tipoIndividuo) {
 		
-		generacionActual = 0;
+		this.inicializaVariables(tamPoblacion, numGeneraciones);
+		
 		ArrayList<Individuo> poblacion = new ArrayList<Individuo>(tamPoblacion);
-		inicializaPoblacion(tamPoblacion, tipoIndividuo, poblacion);
+		this.inicializaPoblacion(tamPoblacion, tipoIndividuo, poblacion);
 		
 		
 		while (this.generacionActual < numGeneraciones) {
 			
-			//Evalua Poblacion
+			this.evaluar(tipoIndividuo, poblacion);
 			metodoSeleccion.seleccionar(poblacion);
-			//metodoCruce.cruza(poblacion, porcCruce);
-			//metodoMutacion.mutaPoblacionBoolean(poblacion, porcMutacion);
+			metodoCruce.cruza(poblacion, porcCruce);
+			
+			if (tipoIndividuo.equals("Funcion 1") || tipoIndividuo.equals("Funcion 2") || tipoIndividuo.equals("Funcion 3") || tipoIndividuo.equals("Funcion 4")) {
+				metodoMutacion.mutaPoblacionBoolean(poblacion, porcMutacion);
+			}
 			
 			this.generacionActual++;
 		}
-		//metodoSeleccion.seleccionar(poblacion)
 	}
 	
-	public void evaluar(String tipoIndividuo) {
+	public void inicializaVariables(int tamPoblacion, int numGeneraciones) {
 		
+		this.generacionActual = 0;
+		this.tamPoblacion = tamPoblacion;
 		
-		if (tipoIndividuo == "Funcion1") {	//Funcion1
+		this.mejorAbsoluto = new double[numGeneraciones];
+		this.mejorGeneracion = new double[numGeneraciones];
+		this.mediaGeneracion = new double[numGeneraciones];
+	}
+	
+	//TODO: hay problema con calcular la elite
+	public void evaluar(String tipoIndividuo, ArrayList<Individuo> poblacion) {
+		
+		ArrayList<Integer> mejoresIndividuos = new ArrayList<Integer>();
+		double mejorGeneracion;
+		
+		if (tipoIndividuo.equals("Funcion 1")) {	//Funcion1
 			
-			//max
-
+			mejorGeneracion = 0;
 			
-			/*for(poblacion){
-			 * 
-			 * //calculamos el mayor fitness
-			     *         calcular fitness
-			     *     calcualr mejorAbs...*/
+			for (Individuo ind : poblacion) {
+				
+				double fitness = ind.getFitness();
+				if (fitness > mejorGeneracion) {
+					
+					mejorGeneracion = fitness;
+					mejoresIndividuos.add(poblacion.indexOf(ind));
+				}
+				
+				this.mediaGeneracion[this.generacionActual] += fitness;
+			}
+			
+			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
+			
+			if (this.mejorGeneracion[this.generacionActual] > this.mejorAbsoluto[this.generacionActual]) {
+				
+				this.mejorAbsoluto[this.generacionActual] = this.mejorGeneracion[this.generacionActual];
+			}
 		}
 		else {	//Funciones 2, 3 y 4
 			
-			//min
-			/*for(poblacion){
-			 * 
-			 * //calculamos el menor fitness
-			     *         calcular fitness
-			     *     calcualr menorAbs...*/
+			mejorGeneracion = Double.MAX_VALUE;
 			
-			//Elitismo, peores
+			for (Individuo ind : poblacion) {
+				
+				double fitness = ind.getFitness();
+				if (fitness < mejorGeneracion) {
+					
+					mejorGeneracion = fitness;
+					mejoresIndividuos.add(poblacion.indexOf(ind));
+				}
+				
+				this.mediaGeneracion[this.generacionActual] += fitness;
+			}
+			
+			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
+			
+			if (this.mejorGeneracion[this.generacionActual] < this.mejorAbsoluto[this.generacionActual]) {
+				
+				this.mejorAbsoluto[this.generacionActual] = this.mejorGeneracion[this.generacionActual];
+			}
 		}
 		
 		//Desplazamos aptitud

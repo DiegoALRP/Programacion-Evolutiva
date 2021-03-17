@@ -35,7 +35,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 	public double calculateFitness() {
 		
 		calculateFenotipo();
-		aptitud = (21.5 + fenotipo[0] * Math.sin(4 * Math.PI * fenotipo[0]) + fenotipo[1] * Math.sin(20 * Math.PI * fenotipo[1])); 
+		aptitud = (21.5 + fenotipo[0] * Math.sin(4 * Math.PI * fenotipo[0]) + fenotipo[1] * Math.sin(20 * Math.PI * fenotipo[1]));
 		System.out.println("Fitness: " + this.aptitud + "\n");
 		return aptitud;
 	}
