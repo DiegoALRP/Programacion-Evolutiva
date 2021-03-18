@@ -64,4 +64,19 @@ public abstract class Individuo<E> {
 		
 		return this.id;
 	}
+	
+	public double getMinValue() {
+		
+		return this.min[0];
+	}
+	
+	public double getMaxValue() {
+		
+		return this.max[0];
+	}
+	
+	public int getNumGenes() {
+		
+		return this.numGenes;
+	}
 }
