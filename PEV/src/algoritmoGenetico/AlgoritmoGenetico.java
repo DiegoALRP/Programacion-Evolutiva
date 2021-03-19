@@ -40,7 +40,7 @@ public class AlgoritmoGenetico {
 		
 		
 		while (this.generacionActual < numGeneraciones) {
-			
+			System.out.println("Generacion : " + generacionActual);
 			this.evaluar(tipoIndividuo, poblacion);
 			metodoSeleccion.seleccionar(poblacion);
 			metodoCruce.cruza(poblacion, porcCruce);

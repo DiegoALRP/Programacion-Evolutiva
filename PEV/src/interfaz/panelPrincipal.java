@@ -46,12 +46,6 @@ public class panelPrincipal {
 	private JTextField n;
 	private JTextField nGeneraciones;
 	
-	private int tamPoblacion;
-	private int numGeneraciones;
-	private double precision;
-	private double elite;
-	private double porcCruce;
-	private double porcMutacion;
 	private String seleccion;
 	private String cruce;
 	private String mutacion;
@@ -94,14 +88,7 @@ public class panelPrincipal {
 		poblacion_panel.add(n);
 		n.setColumns(10);
 		controles.add(poblacion_panel);
-		n.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				tamPoblacion = Integer.parseInt(n.getText());
-				
-			}
-		});
+
 		////////////////////////////////////////////////		GENERACIONES 
 		JPanel generaciones = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) generaciones.getLayout();
@@ -115,14 +102,7 @@ public class panelPrincipal {
 		generaciones.add(nGeneraciones);
 		nGeneraciones.setColumns(10);
 		controles.add(generaciones);
-		nGeneraciones.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				numGeneraciones = Integer.parseInt(nGeneraciones.getText());
-				
-			}
-		});
+
 		////////////////////////////////////////////////		PRECISION
 		JPanel error_panel = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) error_panel.getLayout();
@@ -132,19 +112,11 @@ public class panelPrincipal {
 		error_panel.add(errorlbl);
 		
 		JTextField textField_error = new JTextField();
-		textField_error.setText("0,0001");
+		textField_error.setText("0.0001");
 		error_panel.add(textField_error);
 		textField_error.setColumns(10);
 		controles.add(error_panel);
-		
-		textField_error.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				precision = Integer.parseInt(textField_error.getText());
-				
-			}
-		});
+
 		////////////////////////////////////////////////		SELECCION 
 		JPanel seleccion_panel = new JPanel();
 		controles.add(seleccion_panel);
@@ -187,15 +159,7 @@ public class panelPrincipal {
 		
 		TitledBorder title_cruce = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Cruce");
 		cruce_panel.setBorder(title_cruce);
-		
-		
-		textField_cruce.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				porcCruce = Integer.parseInt(textField_cruce.getText());	
-			}
-		});
+
 		
 		////////////////////////////////////////////////		MUTACION 
 		JPanel mutacion_panel = new JPanel();
@@ -219,15 +183,7 @@ public class panelPrincipal {
 		
 		TitledBorder borde_mutacion = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Mutacion básica");
 		mutacion_panel.setBorder(borde_mutacion);
-		
-		textField_mutacion.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				porcMutacion = Integer.parseInt(textField_mutacion.getText());		
-			}
-		});
-		
+
 		////////////////////////////////////////////////		ÉLITE 
 		JPanel elite_panel = new JPanel();
 		controles.add(elite_panel);
@@ -243,18 +199,10 @@ public class panelPrincipal {
 		
 		TitledBorder title_elite = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Élite");
 		elite_panel.setBorder(title_elite);
-		
-		textField_elite.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				elite = Integer.parseInt(textField_elite.getText());
-				
-			}
-		});
+
 
 		////////////////////////////////////////////////		GRAFICA
-		graficas gr = new graficas(numGeneraciones);
+		graficas gr = new graficas(Integer.parseInt(nGeneraciones.getText()));
 		frame.getContentPane().add(gr.getPlot(), BorderLayout.CENTER);
 		
 		////////////////////////////////////////////////
@@ -284,11 +232,19 @@ public class panelPrincipal {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				int numGeneraciones = Integer.parseInt(nGeneraciones.getText());
+				double elite = Double.parseDouble(textField_elite.getText());
+				double porcCruce = Double.parseDouble(textField_cruce.getText());
+				double porcMutacion = Double.parseDouble(textField_mutacion.getText());
+				double precision = Double.parseDouble(textField_error.getText());
+				int tamPoblacion = Integer.parseInt(n.getText());
+				
 				Seleccion metodoSeleccion = FactoriaSelecciones.getAlgoritmoDeSeleccion(Seleccion_cbox.getSelectedItem().toString(), numGeneraciones);
 				Cruce metodoCruce = FactoriaCruces.getAlgoritmoDeCruce(Cruce_cbox.getSelectedItem().toString(), numGeneraciones);
 				Mutacion metodoMutacion = FactoriaMutaciones.getAlgoritmoDeMutacion(Mutacion_cbox.getSelectedItem().toString(), numGeneraciones);
 				String tipoIndividuo = individuo_cbox.getSelectedItem().toString();
-				AlgoritmoGenetico AG = new AlgoritmoGenetico(tamPoblacion, numGeneraciones, precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite, tipoIndividuo);
+				AlgoritmoGenetico AG = new AlgoritmoGenetico(tamPoblacion, Integer.parseInt(nGeneraciones.getText()), precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite, tipoIndividuo);
 				gr.actualiza(numGeneraciones, AG.getMejorAbsoluto(), AG.getMejorGeneracion(), AG.getMediaGeneracion());
 			}
 		});
