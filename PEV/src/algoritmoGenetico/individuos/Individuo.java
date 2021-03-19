@@ -32,6 +32,10 @@ public abstract class Individuo<E> {
 	public double getFitness() {
 		return aptitud;
 	}
+	public void setFitness(double newFitness) {
+		
+		this.aptitud = newFitness;
+	}
 	
 	public int tamGen(double minGen, double maxGen) {
 		double longitud = (Math.log10(((maxGen - minGen) / precision) + 1) / Math.log10(2));
@@ -59,5 +63,20 @@ public abstract class Individuo<E> {
 	public String getId() {
 		
 		return this.id;
+	}
+	
+	public double getMinValue() {
+		
+		return this.min[0];
+	}
+	
+	public double getMaxValue() {
+		
+		return this.max[0];
+	}
+	
+	public int getNumGenes() {
+		
+		return this.numGenes;
 	}
 }

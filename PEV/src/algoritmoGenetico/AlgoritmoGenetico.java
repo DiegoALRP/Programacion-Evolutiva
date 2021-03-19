@@ -68,6 +68,7 @@ public class AlgoritmoGenetico {
 		
 		ArrayList<Integer> mejoresIndividuos = new ArrayList<Integer>();
 		double mejorGeneracion;
+		double maxFitness = 0;
 		
 		if (tipoIndividuo.equals("Funcion 1")) {	//Funcion1
 			
@@ -105,6 +106,11 @@ public class AlgoritmoGenetico {
 					mejoresIndividuos.add(poblacion.indexOf(ind));
 				}
 				
+				if (fitness > maxFitness) {
+					
+					maxFitness = fitness;
+				}
+				
 				this.mediaGeneracion[this.generacionActual] += fitness;
 			}
 			
@@ -114,9 +120,16 @@ public class AlgoritmoGenetico {
 				
 				this.mejorAbsoluto[this.generacionActual] = this.mejorGeneracion[this.generacionActual];
 			}
+			
+			
 		}
 		
 		//Desplazamos aptitud
+		for (Individuo individuo : poblacion) {
+			
+			double newFitness = maxFitness - individuo.getFitness();
+			individuo.setFitness(newFitness);
+		}
 	}
 	
 	public double[] getMejorAbsoluto() {
