@@ -14,6 +14,10 @@ public class graficas{
 	graficas(int numGeneraciones){
 		
 		x = new double[numGeneraciones];
+		
+		for(int i=0;i<numGeneraciones;i++) {
+			x[i]=i;
+		}
 		plot = new Plot2DPanel();
 		plot.addLegend("SOUTH");
 		
@@ -25,7 +29,6 @@ public class graficas{
 
 	public void actualiza(int numGeneraciones, double[] mejorAbsoluto, double[] mejorGeneracion, double[] mediaGeneracion) {
 		
-		x = new double[numGeneraciones];
 		
 		plot.addLinePlot("Mejor absoluto", x, mejorAbsoluto);
 		plot.addLinePlot("Mejor generacion", x, mejorGeneracion);

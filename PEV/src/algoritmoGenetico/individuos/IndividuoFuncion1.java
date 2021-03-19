@@ -58,12 +58,12 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 	public void calculateFenotipo() {
 		int index = 0;
 		//System.out.println("Cromosoma: " + printCromosoma());
-		System.out.println(numGenes);
+		//System.out.println(numGenes);
 		for (int i = 0; i < numGenes; i++) {
 			StringBuilder gen = new StringBuilder();
-			System.out.println("Variable i :" + i);
+			//System.out.println("Variable i :" + i);
 			for (int k = 0; k < longitud[i]; k++) {
-				System.out.println("Variable index :" + index);
+				//System.out.println("Variable index :" + index);
 				if (cromosoma.get(index)) {
 					gen.append('1');
 				}
@@ -81,8 +81,8 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 	
 	@Override
 	public void inicializaIndividuo() {
+		Random ran = new Random();
 		for(int i = 0; i < longitudTotal; i++) {
-			Random ran = new Random();
 			cromosoma.add(ran.nextBoolean());
 		}
 		//aptitud = calculateFitness();
@@ -105,7 +105,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 	@Override
 	public StringBuilder printCromosoma() {
 		
-		/*StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < this.longitudTotal; i++) {
 			if (this.cromosoma.get(i)) {
 				sb.append(1);
@@ -114,8 +114,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 				sb.append(0);
 			}
 		}
-		
-		return sb;*/
-		return null;
+		System.out.println(sb);
+		return sb;
 	}
 }

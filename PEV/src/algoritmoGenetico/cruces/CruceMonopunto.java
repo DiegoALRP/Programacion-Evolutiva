@@ -68,11 +68,11 @@ public class CruceMonopunto extends Cruce {
 		padre1.setCromosoma(cromoHijo1);
 		padre2.setCromosoma(cromoHijo2);
 		
-		double fitnessA1 = padre1.getFitness();
-		double fitnessA2 = padre2.getFitness();
+		//double fitnessA1 = padre1.getFitness();
+		//double fitnessA2 = padre2.getFitness();
 		
-		if (fitnessA1 < fitnessB1) padre1.setCromosoma(cromoPadre1);
-		if (fitnessA2 < fitnessB2) padre2.setCromosoma(cromoPadre2);
+		//if (fitnessA1 < fitnessB1) padre1.setCromosoma(cromoPadre1);
+		//if (fitnessA2 < fitnessB2) padre2.setCromosoma(cromoPadre2);
 		
 		
 	}
