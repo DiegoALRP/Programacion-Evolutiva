@@ -13,30 +13,31 @@ public class CruceMonopunto extends Cruce {
 		this.num_selec_cruce = 0;
 		this.probCruce = probCruce;
 		this.selec_cruce = new ArrayList<Integer>();
+		this.tamPoblacion = poblacion.size();
 		
 		this.seleccionaIndividuos(poblacion);
 		
 		Random rand = new Random();
 		this.punto_cruce = rand.nextInt(this.tamPoblacion - 2) + 1;
 		
-		System.out.println("Antes:\n");
+		/*System.out.println("Antes:\n");
 		for (int i = 0; i < poblacion.size(); i++) {
 			
 			System.out.println(poblacion.get(i).printCromosoma() + "\n");
-		}
+		}*/
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
 			
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
 		}
 		
-		System.out.println("Punto de cruce: " + this.punto_cruce);
-		System.out.println("Numero de Seleccionados: " + this.num_selec_cruce);
+		//System.out.println("Punto de cruce: " + this.punto_cruce);
+		//sSystem.out.println("Numero de Seleccionados: " + this.num_selec_cruce);
 		
-		System.out.println("Despues:\n");
+		/*System.out.println("Despues:\n");
 		for (int i = 0; i < poblacion.size(); i++) {
 			
 			System.out.println(poblacion.get(i).printCromosoma() + "\n");
-		}
+		}*/
 	}
 	
 	@Override

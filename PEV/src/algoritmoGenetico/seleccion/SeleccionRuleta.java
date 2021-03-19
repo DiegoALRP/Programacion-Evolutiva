@@ -30,7 +30,7 @@ public class SeleccionRuleta extends Seleccion {
 			}
 			
 			addIndividual(poblacion, nuevaPoblacion);
-			System.out.println("Individuo: " + poblacion.get(pos_super).printCromosoma() + " Fitness: " + poblacion.get(pos_super).getFitness());
+			//System.out.println("Individuo: " + poblacion.get(pos_super).printCromosoma() + " Fitness: " + poblacion.get(pos_super).getFitness());
 			pos_super = 0;
 		}
 		

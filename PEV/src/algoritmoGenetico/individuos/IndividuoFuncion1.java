@@ -36,7 +36,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 		
 		calculateFenotipo();
 		aptitud = (21.5 + fenotipo[0] * Math.sin(4 * Math.PI * fenotipo[0]) + fenotipo[1] * Math.sin(20 * Math.PI * fenotipo[1]));
-		System.out.println("Fitness: " + this.aptitud + "\n");
+		//System.out.println("Fitness: " + this.aptitud + "\n");
 		return aptitud;
 	}
 
@@ -56,14 +56,14 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 	}
 	
 	public void calculateFenotipo() {
-		
 		int index = 0;
+		//System.out.println("Cromosoma: " + printCromosoma());
+		System.out.println(numGenes);
 		for (int i = 0; i < numGenes; i++) {
-			
 			StringBuilder gen = new StringBuilder();
-			
+			System.out.println("Variable i :" + i);
 			for (int k = 0; k < longitud[i]; k++) {
-				
+				System.out.println("Variable index :" + index);
 				if (cromosoma.get(index)) {
 					gen.append('1');
 				}
@@ -75,7 +75,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 			
 			double real = Integer.parseInt(gen.toString(),2);
 			fenotipo[i] = min[i] + real * (max[i] - min[i])/(Math.pow(2,longitud[i])-1);
-			System.out.println("x" + i + " fenotipo: " + fenotipo[i]);
+			//System.out.println("x" + i + " fenotipo: " + fenotipo[i]);
 		}
 	}
 	
@@ -105,9 +105,8 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 	@Override
 	public StringBuilder printCromosoma() {
 		
-		StringBuilder sb = new StringBuilder();
+		/*StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < this.longitudTotal; i++) {
-			
 			if (this.cromosoma.get(i)) {
 				sb.append(1);
 			}
@@ -116,6 +115,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 			}
 		}
 		
-		return sb;
+		return sb;*/
+		return null;
 	}
 }
