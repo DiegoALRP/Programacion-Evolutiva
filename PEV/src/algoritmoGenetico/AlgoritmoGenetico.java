@@ -5,6 +5,7 @@ import java.util.List;
 
 import algoritmoGenetico.cruces.Cruce;
 import algoritmoGenetico.cruces.CruceMonopunto;
+import algoritmoGenetico.individuos.FactoriaIndividuo;
 import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.IndividuoFuncion1;
 import algoritmoGenetico.mutaciones.Mutacion;
@@ -20,66 +21,115 @@ public class AlgoritmoGenetico {
 	private double[] mejorGeneracion;	//Array con el mejor fitness de una generacion
 	private double[] mediaGeneracion;	//Array con la media de fitness de cada generacion
 	
+	private int generacionActual;
+	
 	private int tamPoblacion;			//Tamanho de la poblacion
 	
+	//TODO: hacer desplazamiento de la aptitud
 	/*
 	 * crear poblacion inicial
 	 * 
 	 */
-	public AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, double precision, Seleccion metodoSeleccion, Cruce metodoCruce, 
-			double porcCruce, Mutacion metodoMutacion, double porcMutacion, double elite) {
+	public <T> AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, double precision, Seleccion metodoSeleccion, Cruce metodoCruce, 
+			double porcCruce, Mutacion metodoMutacion, double porcMutacion, double elite, String tipoIndividuo) {
 		
-		// IndividuoFuncion1 ind1 = new IndividuoFuncion1();
-		// ind1.inicializaIndividuo();
-		// System.out.println(ind1.getFitness());
+		this.inicializaVariables(tamPoblacion, numGeneraciones);
 		
-		/*List<Individuo> poblacion = new ArrayList<Individuo>();
-		for(int i=0;i<20;i++) {
-			IndividuoFuncion1 ind1 = new IndividuoFuncion1();
-			ind1.inicializaIndividuo();
-			poblacion.add(ind1);
-		}
-	
-		Seleccion ruleta = new SeleccionRuleta(poblacion);
-		ruleta.seleccionar(poblacion);*/
+		ArrayList<Individuo> poblacion = new ArrayList<Individuo>(tamPoblacion);
+		this.inicializaPoblacion(tamPoblacion, tipoIndividuo, poblacion);
 		
-		List<Individuo> poblacion = new ArrayList<Individuo>();
-		for (int i = 0; i < 2; i++) {
+		
+		while (this.generacionActual < numGeneraciones) {
 			
-			Individuo ind1 = new IndividuoFuncion1();
-			ind1.inicializaIndividuo();
-			poblacion.add(ind1);
+			this.evaluar(tipoIndividuo, poblacion);
+			metodoSeleccion.seleccionar(poblacion);
+			metodoCruce.cruza(poblacion, porcCruce);
+			
+			if (tipoIndividuo.equals("Funcion 1") || tipoIndividuo.equals("Funcion 2") || tipoIndividuo.equals("Funcion 3") || tipoIndividuo.equals("Funcion 4")) {
+				metodoMutacion.mutaPoblacionBoolean(poblacion, porcMutacion);
+			}
+			
+			this.generacionActual++;
 		}
-		
-		Seleccion torneo = new SeleccionTorneo(tamPoblacion);
-		torneo.seleccionar(poblacion);
 	}
 	
-	public <T> void start() {
+	public void inicializaVariables(int tamPoblacion, int numGeneraciones) {
 		
-		/*ArrayList<Individuo<Boolean>> poblacion = new ArrayList<Individuo<Boolean>>();
-		for(int i=0;i<5;i++) {
-			Individuo ind1 = new IndividuoFuncion1();
-			ind1.inicializaIndividuo();
-			poblacion.add(ind1);
-		}
+		this.generacionActual = 0;
+		this.tamPoblacion = tamPoblacion;
 		
-		CruceMonopunto cruce = new CruceMonopunto(0.6);
-		cruce.cruza(poblacion);
+		this.mejorAbsoluto = new double[numGeneraciones];
+		this.mejorGeneracion = new double[numGeneraciones];
+		this.mediaGeneracion = new double[numGeneraciones];
+	}
+	
+	//TODO: hay problema con calcular la elite
+	public void evaluar(String tipoIndividuo, ArrayList<Individuo> poblacion) {
 		
-		MutacionBasica mutacion = new MutacionBasica(0.2);
-		mutacion.mutaPoblacionBoolean(poblacion);*/
+		ArrayList<Integer> mejoresIndividuos = new ArrayList<Integer>();
+		double mejorGeneracion;
+		double maxFitness = 0;
 		
-		/*List<Individuo> poblacion = new ArrayList<Individuo>();
-		for (int i = 0; i < 2; i++) {
+		if (tipoIndividuo.equals("Funcion 1")) {	//Funcion1
 			
-			Individuo ind1 = new IndividuoFuncion1();
-			ind1.inicializaIndividuo();
-			poblacion.add(ind1);
+			mejorGeneracion = 0;
+			
+			for (Individuo ind : poblacion) {
+				
+				double fitness = ind.getFitness();
+				if (fitness > mejorGeneracion) {
+					
+					mejorGeneracion = fitness;
+					mejoresIndividuos.add(poblacion.indexOf(ind));
+				}
+				
+				this.mediaGeneracion[this.generacionActual] += fitness;
+			}
+			
+			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
+			
+			if (this.mejorGeneracion[this.generacionActual] > this.mejorAbsoluto[this.generacionActual]) {
+				
+				this.mejorAbsoluto[this.generacionActual] = this.mejorGeneracion[this.generacionActual];
+			}
+		}
+		else {	//Funciones 2, 3 y 4
+			
+			mejorGeneracion = Double.MAX_VALUE;
+			
+			for (Individuo ind : poblacion) {
+				
+				double fitness = ind.getFitness();
+				if (fitness < mejorGeneracion) {
+					
+					mejorGeneracion = fitness;
+					mejoresIndividuos.add(poblacion.indexOf(ind));
+				}
+				
+				if (fitness > maxFitness) {
+					
+					maxFitness = fitness;
+				}
+				
+				this.mediaGeneracion[this.generacionActual] += fitness;
+			}
+			
+			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
+			
+			if (this.mejorGeneracion[this.generacionActual] < this.mejorAbsoluto[this.generacionActual]) {
+				
+				this.mejorAbsoluto[this.generacionActual] = this.mejorGeneracion[this.generacionActual];
+			}
+			
+			
 		}
 		
-		Seleccion torneo = new SeleccionTorneo();
-		torneo.seleccionar(poblacion);*/
+		//Desplazamos aptitud
+		for (Individuo individuo : poblacion) {
+			
+			double newFitness = maxFitness - individuo.getFitness();
+			individuo.setFitness(newFitness);
+		}
 	}
 	
 	public double[] getMejorAbsoluto() {
@@ -90,5 +140,15 @@ public class AlgoritmoGenetico {
 	}
 	public double[] getMediaGeneracion() {
 		return mediaGeneracion;
+	}
+	
+	public void inicializaPoblacion(int tamPoblacion, String tipoIndividuo, ArrayList<Individuo> poblacion) {
+		
+		for (int i = 0; i < tamPoblacion; i++) {
+			
+			Individuo nuevoInd = FactoriaIndividuo.getIndividuo(tipoIndividuo);
+			nuevoInd.inicializaIndividuo();
+			poblacion.add(nuevoInd);
+		}
 	}
 }

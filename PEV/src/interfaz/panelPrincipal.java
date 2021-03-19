@@ -259,6 +259,23 @@ public class panelPrincipal {
 		
 		////////////////////////////////////////////////
 		
+		JComboBox individuo_cbox = new JComboBox();
+		individuo_cbox.setModel(new DefaultComboBoxModel(new String[] {"Funcion 1", "Funcion Sch\u00FCbert", "Funcion H\u00F6lder table", "Funci\u00F3n Michalewicz"}));
+		individuo_cbox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				funcion = individuo_cbox.getSelectedItem().toString();
+				if(individuo_cbox.getSelectedItem().toString().equals("Función Michalewicz")) {
+					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme", "Aritmetico", "BLX-alpha"}));
+					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica", "Mutacion Uniforme"})); 
+				} else {
+					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme"}));
+					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutacion basica"})); 
+				}
+			}
+		});
+		
 		JButton resetear = new JButton("Resetear");
 		JButton ejecutar = new JButton("Ejecutar");
 		controles.add(ejecutar);
@@ -270,7 +287,8 @@ public class panelPrincipal {
 				Seleccion metodoSeleccion = FactoriaSelecciones.getAlgoritmoDeSeleccion(Seleccion_cbox.getSelectedItem().toString(), numGeneraciones);
 				Cruce metodoCruce = FactoriaCruces.getAlgoritmoDeCruce(Cruce_cbox.getSelectedItem().toString(), numGeneraciones);
 				Mutacion metodoMutacion = FactoriaMutaciones.getAlgoritmoDeMutacion(Mutacion_cbox.getSelectedItem().toString(), numGeneraciones);
-				AlgoritmoGenetico AG = new AlgoritmoGenetico(tamPoblacion, numGeneraciones, precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite);
+				String tipoIndividuo = individuo_cbox.getSelectedItem().toString();
+				AlgoritmoGenetico AG = new AlgoritmoGenetico(tamPoblacion, numGeneraciones, precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite, tipoIndividuo);
 				gr.actualiza(numGeneraciones, AG.getMejorAbsoluto(), AG.getMejorGeneracion(), AG.getMediaGeneracion());
 			}
 		});
@@ -279,33 +297,10 @@ public class panelPrincipal {
 		JPanel problemas = new JPanel();
 		frame.getContentPane().add(problemas, BorderLayout.NORTH);
 		
-		JCheckBox chckbxIntroducir_variedad = new JCheckBox("Introducir variedad");
-		problemas.add(chckbxIntroducir_variedad);
-		
 		JLabel lblNewLabel = new JLabel("Problema");
 		problemas.add(lblNewLabel);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Funcion 1", "Funcion Sch\u00FCbert", "Funcion H\u00F6lder table", "Funci\u00F3n Michalewicz"}));
-		comboBox.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				funcion = comboBox.getSelectedItem().toString();
-				if(comboBox.getSelectedItem().toString().equals("Función Michalewicz")) {
-					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme", "Aritmetico", "BLX-alpha"}));
-					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica", "Mutacion Uniforme"})); 
-				} else {
-					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme"}));
-					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutacion basica"})); 
-				}
-			}
-		});
-		problemas.add(comboBox);
-		
-
-		
-		
+		problemas.add(individuo_cbox);
 	}
 
 }
