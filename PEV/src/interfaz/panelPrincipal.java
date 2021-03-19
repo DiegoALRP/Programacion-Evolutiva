@@ -233,6 +233,7 @@ public class panelPrincipal {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				
 				int numGeneraciones = Integer.parseInt(nGeneraciones.getText());
 				double elite = Double.parseDouble(textField_elite.getText());
 				double porcCruce = Double.parseDouble(textField_cruce.getText());
