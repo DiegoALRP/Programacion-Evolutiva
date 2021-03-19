@@ -29,10 +29,16 @@ public class graficas{
 
 	public void actualiza(int numGeneraciones, double[] mejorAbsoluto, double[] mejorGeneracion, double[] mediaGeneracion) {
 		
+		plot.removeAllPlots();
 		
 		plot.addLinePlot("Mejor absoluto", x, mejorAbsoluto);
 		plot.addLinePlot("Mejor generacion", x, mejorGeneracion);
 		plot.addLinePlot("Media generacion", x, mediaGeneracion);
+		
+		for(int i =0; i<mejorAbsoluto.length;i++) {
+			System.out.println(mejorAbsoluto[i]);
+		}
+		
 		
 	}
 

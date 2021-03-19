@@ -40,9 +40,8 @@ public class AlgoritmoGenetico {
 		
 		
 		while (this.generacionActual < numGeneraciones) {
-			System.out.println("//////////////////////////////////////");
-			System.out.println("Generacion : " + generacionActual);
-			print(poblacion);
+			//System.out.println("//////////////////////////////////////");
+			//System.out.println("Generacion : " + generacionActual);
 			this.evaluar(tipoIndividuo, poblacion);
 			metodoSeleccion.seleccionar(poblacion);
 			metodoCruce.cruza(poblacion, porcCruce);
@@ -77,7 +76,6 @@ public class AlgoritmoGenetico {
 			mejorGeneracion = 0;
 			int pivote = 0;
 			for (Individuo ind : poblacion) {
-				//System.out.println("Pivote : " + pivote);
 				pivote++;
 				double fitness = ind.getFitness();
 				if (fitness > mejorGeneracion) {
@@ -156,12 +154,6 @@ public class AlgoritmoGenetico {
 			Individuo nuevoInd = FactoriaIndividuo.getIndividuo(tipoIndividuo);
 			nuevoInd.inicializaIndividuo();
 			poblacion.add(nuevoInd);
-		}
-	}
-	private void print(List<Individuo> poblacion) {
-		for(int i = 0; i < poblacion.size(); i++ ) {
-			System.out.println("Cromosoma del individuo " + i + " : ");
-			poblacion.get(i).printCromosoma();
 		}
 	}
 }
