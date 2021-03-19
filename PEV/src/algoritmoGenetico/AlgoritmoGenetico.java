@@ -86,6 +86,8 @@ public class AlgoritmoGenetico {
 				this.mediaGeneracion[this.generacionActual] += fitness;
 			}
 			
+			this.mediaGeneracion[this.generacionActual] = this.mediaGeneracion[this.generacionActual] / this.tamPoblacion;
+			
 			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
 			
 			if (this.mejorGeneracion[this.generacionActual] > this.mejorAbsoluto[this.generacionActual]) {
@@ -113,6 +115,8 @@ public class AlgoritmoGenetico {
 				
 				this.mediaGeneracion[this.generacionActual] += fitness;
 			}
+			
+			this.mediaGeneracion[this.generacionActual] = this.mediaGeneracion[this.generacionActual] / this.tamPoblacion;
 			
 			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
 			
