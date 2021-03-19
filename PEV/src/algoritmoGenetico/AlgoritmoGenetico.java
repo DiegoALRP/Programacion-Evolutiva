@@ -2,6 +2,7 @@ package algoritmoGenetico;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import algoritmoGenetico.cruces.Cruce;
 import algoritmoGenetico.cruces.CruceMonopunto;
@@ -34,13 +35,14 @@ public class AlgoritmoGenetico {
 			double porcCruce, Mutacion metodoMutacion, double porcMutacion, double elite, String tipoIndividuo) {
 		
 		this.inicializaVariables(tamPoblacion, numGeneraciones);
-		
 		ArrayList<Individuo> poblacion = new ArrayList<Individuo>(tamPoblacion);
 		this.inicializaPoblacion(tamPoblacion, tipoIndividuo, poblacion);
 		
 		
 		while (this.generacionActual < numGeneraciones) {
+			System.out.println("//////////////////////////////////////");
 			System.out.println("Generacion : " + generacionActual);
+			print(poblacion);
 			this.evaluar(tipoIndividuo, poblacion);
 			metodoSeleccion.seleccionar(poblacion);
 			metodoCruce.cruza(poblacion, porcCruce);
@@ -73,9 +75,10 @@ public class AlgoritmoGenetico {
 		if (tipoIndividuo.equals("Funcion 1")) {	//Funcion1
 			
 			mejorGeneracion = 0;
-			
+			int pivote = 0;
 			for (Individuo ind : poblacion) {
-				
+				//System.out.println("Pivote : " + pivote);
+				pivote++;
 				double fitness = ind.getFitness();
 				if (fitness > mejorGeneracion) {
 					
@@ -85,6 +88,8 @@ public class AlgoritmoGenetico {
 				
 				this.mediaGeneracion[this.generacionActual] += fitness;
 			}
+			
+			this.mediaGeneracion[this.generacionActual] = this.mediaGeneracion[this.generacionActual] / this.tamPoblacion;
 			
 			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
 			
@@ -113,6 +118,8 @@ public class AlgoritmoGenetico {
 				
 				this.mediaGeneracion[this.generacionActual] += fitness;
 			}
+			
+			this.mediaGeneracion[this.generacionActual] = this.mediaGeneracion[this.generacionActual] / this.tamPoblacion;
 			
 			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
 			
@@ -149,6 +156,12 @@ public class AlgoritmoGenetico {
 			Individuo nuevoInd = FactoriaIndividuo.getIndividuo(tipoIndividuo);
 			nuevoInd.inicializaIndividuo();
 			poblacion.add(nuevoInd);
+		}
+	}
+	private void print(List<Individuo> poblacion) {
+		for(int i = 0; i < poblacion.size(); i++ ) {
+			System.out.println("Cromosoma del individuo " + i + " : ");
+			poblacion.get(i).printCromosoma();
 		}
 	}
 }
