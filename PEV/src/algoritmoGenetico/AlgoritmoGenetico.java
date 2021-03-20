@@ -1,10 +1,12 @@
 package algoritmoGenetico;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+
 
 import algoritmoGenetico.cruces.Cruce;
 import algoritmoGenetico.cruces.CruceMonopunto;
@@ -49,7 +51,7 @@ public class AlgoritmoGenetico {
 			metodoSeleccion.seleccionar(poblacion);
 			metodoCruce.cruza(poblacion, porcCruce);
 			
-			if (tipoIndividuo.equals("Funcion 1") || tipoIndividuo.equals("Funcion 2") || tipoIndividuo.equals("Funcion 3") || tipoIndividuo.equals("Funcion 4")) {
+			if (tipoIndividuo.equals("Funcion 1") || tipoIndividuo.equals("Funcion Schubert") || tipoIndividuo.equals("Funcion Holder table") || tipoIndividuo.equals("Funcion Michalewicz")) {
 				metodoMutacion.mutaPoblacionBoolean(poblacion, porcMutacion);
 			}
 			/*
@@ -75,7 +77,7 @@ public class AlgoritmoGenetico {
 	//TODO: hay problema con calcular la elite
 	public void evaluar(String tipoIndividuo, ArrayList<Individuo> poblacion, double porcElite) {
 		
-		generaElite(poblacion, porcElite);
+		generaElite(poblacion, porcElite, tipoIndividuo);
 		
 		ArrayList<Integer> mejoresIndividuos = new ArrayList<Integer>();
 		double mejorGeneracion;
@@ -84,14 +86,13 @@ public class AlgoritmoGenetico {
 		if (tipoIndividuo.equals("Funcion 1")) {	//Funcion1
 			
 			mejorGeneracion = 0;
-			int pivote = 0;
 			for (Individuo ind : poblacion) {
-				pivote++;
-				double fitness = ind.getFitness();
+				double fitness = ind.calculateFitness();
 				if (fitness > mejorGeneracion) {
 					
 					mejorGeneracion = fitness;
 					mejoresIndividuos.add(poblacion.indexOf(ind));
+					//
 				}
 				
 				this.mediaGeneracion[this.generacionActual] += fitness;
@@ -111,12 +112,12 @@ public class AlgoritmoGenetico {
 			}
 		}
 		else {	//Funciones 2, 3 y 4
-			
+			maxFitness = - Double.MAX_VALUE;
 			mejorGeneracion = Double.MAX_VALUE;
 			
 			for (Individuo ind : poblacion) {
 				
-				double fitness = ind.getFitness();
+				double fitness = ind.calculateFitness();
 				if (fitness < mejorGeneracion) {
 					
 					mejorGeneracion = fitness;
@@ -132,9 +133,7 @@ public class AlgoritmoGenetico {
 			}
 			
 			this.mediaGeneracion[this.generacionActual] = this.mediaGeneracion[this.generacionActual] / this.tamPoblacion;
-			
 			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
-			
 			if (this.generacionActual == 0 || this.mejorGeneracion[this.generacionActual] < this.mejorAbsoluto[this.generacionActual - 1]) {
 				
 				this.mejorAbsoluto[this.generacionActual] = this.mejorGeneracion[this.generacionActual];
@@ -172,19 +171,31 @@ public class AlgoritmoGenetico {
 		}
 	}
 	
-	public void generaElite(ArrayList<Individuo> poblacion, double porcElite) {
+	public void generaElite(List<Individuo> poblacion, double porcElite, String tipoIndividuo) {
 		
 		elite = new ArrayList<Individuo>();
+		List<Individuo> poblacionAuxiliar = new ArrayList<>();
+		poblacionAuxiliar.addAll(poblacion);
 		
-		Collections.sort(poblacion, new Comparator<Individuo>() { 		// ordena de mayor a menor
-			@Override
-			public int compare(Individuo o1, Individuo o2) {
-				return Double.compare(o2.getFitness(), o1.getFitness());
-			}
-			
-		});
+		if(tipoIndividuo == "Funcion 1") {
+			Collections.sort(poblacionAuxiliar, new Comparator<Individuo>() { 		// ordena de mayor a menor
+				@Override
+				public int compare(Individuo o1, Individuo o2) {
+					return Double.compare(o2.getFitness(), o1.getFitness());
+				}
+				
+			});
+		} else {
+			Collections.sort(poblacionAuxiliar, new Comparator<Individuo>() { 		// ordena de menor a mayor
+				@Override
+				public int compare(Individuo o1, Individuo o2) {
+					return Double.compare(o1.getFitness(), o2.getFitness());
+				}
+				
+			});
+		}
 		for(int i = 0; i < porcElite*poblacion.size(); i++) {
-			elite.add(poblacion.get(i));
+			elite.add(poblacionAuxiliar.get(i));
 		}
 		
 		for(int i = 0; i < elite.size(); i++) {
