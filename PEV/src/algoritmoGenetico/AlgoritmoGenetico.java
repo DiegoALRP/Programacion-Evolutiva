@@ -91,9 +91,13 @@ public class AlgoritmoGenetico {
 			
 			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
 			
-			if (this.mejorGeneracion[this.generacionActual] > this.mejorAbsoluto[this.generacionActual]) {
+			if (this.mejorGeneracion[this.generacionActual] > this.mejorAbsoluto[this.generacionActual] || this.generacionActual == 0) {
 				
 				this.mejorAbsoluto[this.generacionActual] = this.mejorGeneracion[this.generacionActual];
+			}
+			else {
+				
+				this.mejorAbsoluto[this.generacionActual] = this.mejorAbsoluto[this.generacionActual - 1];
 			}
 		}
 		else {	//Funciones 2, 3 y 4
@@ -121,19 +125,21 @@ public class AlgoritmoGenetico {
 			
 			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
 			
-			if (this.mejorGeneracion[this.generacionActual] < this.mejorAbsoluto[this.generacionActual]) {
+			if (this.mejorGeneracion[this.generacionActual] < this.mejorAbsoluto[this.generacionActual] || this.generacionActual == 0) {
 				
 				this.mejorAbsoluto[this.generacionActual] = this.mejorGeneracion[this.generacionActual];
 			}
+			else {
+				
+				this.mejorAbsoluto[this.generacionActual] = this.mejorAbsoluto[this.generacionActual - 1];
+			}
 			
-			
-		}
-		
-		//Desplazamos aptitud
-		for (Individuo individuo : poblacion) {
-			
-			double newFitness = maxFitness - individuo.getFitness();
-			individuo.setFitness(newFitness);
+			//Desplazamos aptitud
+			for (Individuo individuo : poblacion) {
+				
+				double newFitness = maxFitness - individuo.getFitness();
+				individuo.setFitness(newFitness);
+			}
 		}
 	}
 	
