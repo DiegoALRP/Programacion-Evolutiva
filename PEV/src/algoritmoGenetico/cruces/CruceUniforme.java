@@ -12,7 +12,7 @@ public class CruceUniforme extends Cruce {
 		// TODO Auto-generated method stub
 
 		this.num_selec_cruce = 0;
-		this.selec_cruce.clear();
+		this.selec_cruce = new ArrayList<Integer>();
 		
 		this.seleccionaIndividuos(poblacion);
 		

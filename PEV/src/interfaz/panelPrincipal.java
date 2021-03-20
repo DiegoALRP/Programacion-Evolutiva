@@ -177,7 +177,7 @@ public class panelPrincipal {
 		mutacion_panel.add(lblporcentajeMutacion);
 		
 		JTextField textField_mutacion = new JTextField();
-		textField_mutacion.setText("0.1");
+		textField_mutacion.setText("0.05");
 		mutacion_panel.add(textField_mutacion);
 		textField_mutacion.setColumns(10);
 		
@@ -208,7 +208,7 @@ public class panelPrincipal {
 		////////////////////////////////////////////////
 		
 		JComboBox individuo_cbox = new JComboBox();
-		individuo_cbox.setModel(new DefaultComboBoxModel(new String[] {"Funcion 1", "Funcion Sch\u00FCbert", "Funcion H\u00F6lder table", "Funci\u00F3n Michalewicz"}));
+		individuo_cbox.setModel(new DefaultComboBoxModel(new String[] {"Funcion 1", "Funcion Schubert", "Funcion Holder table", "Funcion Michalewicz"}));
 		individuo_cbox.addActionListener(new ActionListener() {
 			
 			@Override

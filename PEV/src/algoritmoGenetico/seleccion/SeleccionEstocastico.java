@@ -20,7 +20,7 @@ public class SeleccionEstocastico extends Seleccion{
 		ArrayList<Individuo> seleccionados = new ArrayList<Individuo>(poblacion.size());
 		
 		Random r = new Random();
-		double marca = r.nextInt(1/poblacion.size());
+		double marca = (1/poblacion.size()) * r.nextDouble();
 		double puntero;
 		
 		for(int i = 0; i < poblacion.size(); i++) {

@@ -46,11 +46,6 @@ public class IndividuoFuncion4 extends Individuo<Boolean> {
 		return aptitud;
 	}
 
-	@Override
-	public double getFenotipo(int longitudGen, double min, double max) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 	public void calculateFenotipo() {
 		
@@ -71,7 +66,7 @@ public class IndividuoFuncion4 extends Individuo<Boolean> {
 			
 			double real = Integer.parseInt(gen.toString(),2);
 			fenotipo[i] = min[0] + real * (max[0] - min[0])/(Math.pow(2,longitud[0])-1);
-			System.out.println("x" + i + " fenotipo: " + fenotipo[i]);
+			//System.out.println("x" + i + " fenotipo: " + fenotipo[i]);
 		}
 	}
 
