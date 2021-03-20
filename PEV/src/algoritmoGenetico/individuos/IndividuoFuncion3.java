@@ -37,7 +37,7 @@ public class IndividuoFuncion3 extends Individuo<Boolean> {
 		double x = fenotipo[0];
 		double y = fenotipo[1];
 		
-		double raiz = Math.pow(x, 2) + Math.pow(y, 2);
+		double raiz = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 		double exp = Math.abs(1 - (raiz/Math.PI));
 		double sinx = Math.sin(x);
 		double cosy = Math.cos(y);
@@ -88,8 +88,7 @@ public class IndividuoFuncion3 extends Individuo<Boolean> {
 
 	@Override
 	public ArrayList<Boolean> getCromosoma() {
-		// TODO Auto-generated method stub
-		return this.getCromosoma();
+		return this.cromosoma;
 	}
 
 	@Override
