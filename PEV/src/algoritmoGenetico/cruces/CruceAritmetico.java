@@ -15,11 +15,11 @@ public class CruceAritmetico extends Cruce {
 		// TODO Auto-generated method stub
 
 		this.num_selec_cruce = 0;
-		this.selec_cruce.clear();
+		this.selec_cruce = new ArrayList<Integer>();
+		this.probCruce = probCruce;
+		this.tamPoblacion = poblacion.size();
 		
 		this.seleccionaIndividuos(poblacion);
-		
-		Random rand = new Random();
 		
 		for (int i = 0; i < poblacion.size(); i += 2) {
 			
@@ -52,6 +52,8 @@ public class CruceAritmetico extends Cruce {
 			//alpha*cromoPadre1.get(i);
 			cromoHijo1.set(i, alpha*cromoPadre1.get(i) + (1 - alpha)*cromoPadre2.get(i));
 			cromoHijo2.set(i, alpha*cromoPadre2.get(i) + (1 - alpha)*cromoPadre1.get(i));
+			
+			i++;
 		}
 		
 		
