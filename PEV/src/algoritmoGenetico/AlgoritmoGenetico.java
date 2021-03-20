@@ -1,6 +1,8 @@
 package algoritmoGenetico;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -26,13 +28,14 @@ public class AlgoritmoGenetico {
 	
 	private int tamPoblacion;			//Tamanho de la poblacion
 	
+	private List<Individuo> elite;
 	//TODO: hacer desplazamiento de la aptitud
 	/*
 	 * crear poblacion inicial
 	 * 
 	 */
 	public <T> AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, double precision, Seleccion metodoSeleccion, Cruce metodoCruce, 
-			double porcCruce, Mutacion metodoMutacion, double porcMutacion, double elite, String tipoIndividuo) {
+			double porcCruce, Mutacion metodoMutacion, double porcMutacion, double porcElite, String tipoIndividuo) {
 		
 		this.inicializaVariables(tamPoblacion, numGeneraciones);
 		ArrayList<Individuo> poblacion = new ArrayList<Individuo>(tamPoblacion);
@@ -42,14 +45,19 @@ public class AlgoritmoGenetico {
 		while (this.generacionActual < numGeneraciones) {
 			//System.out.println("//////////////////////////////////////");
 			//System.out.println("Generacion : " + generacionActual);
-			this.evaluar(tipoIndividuo, poblacion);
+			this.evaluar(tipoIndividuo, poblacion, porcElite);
 			metodoSeleccion.seleccionar(poblacion);
 			metodoCruce.cruza(poblacion, porcCruce);
 			
 			if (tipoIndividuo.equals("Funcion 1") || tipoIndividuo.equals("Funcion 2") || tipoIndividuo.equals("Funcion 3") || tipoIndividuo.equals("Funcion 4")) {
 				metodoMutacion.mutaPoblacionBoolean(poblacion, porcMutacion);
 			}
-			
+			/*
+			 * else{
+			 * 
+			 * }
+			 */
+			poblacion.addAll(elite);
 			this.generacionActual++;
 		}
 	}
@@ -65,7 +73,9 @@ public class AlgoritmoGenetico {
 	}
 	
 	//TODO: hay problema con calcular la elite
-	public void evaluar(String tipoIndividuo, ArrayList<Individuo> poblacion) {
+	public void evaluar(String tipoIndividuo, ArrayList<Individuo> poblacion, double porcElite) {
+		
+		generaElite(poblacion, porcElite);
 		
 		ArrayList<Integer> mejoresIndividuos = new ArrayList<Integer>();
 		double mejorGeneracion;
@@ -91,7 +101,7 @@ public class AlgoritmoGenetico {
 			
 			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
 			
-			if (this.mejorGeneracion[this.generacionActual] > this.mejorAbsoluto[this.generacionActual] || this.generacionActual == 0) {
+			if (this.generacionActual == 0 || this.mejorGeneracion[this.generacionActual] > this.mejorAbsoluto[this.generacionActual - 1]) {
 				
 				this.mejorAbsoluto[this.generacionActual] = this.mejorGeneracion[this.generacionActual];
 			}
@@ -125,7 +135,7 @@ public class AlgoritmoGenetico {
 			
 			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
 			
-			if (this.mejorGeneracion[this.generacionActual] < this.mejorAbsoluto[this.generacionActual] || this.generacionActual == 0) {
+			if (this.generacionActual == 0 || this.mejorGeneracion[this.generacionActual] < this.mejorAbsoluto[this.generacionActual - 1]) {
 				
 				this.mejorAbsoluto[this.generacionActual] = this.mejorGeneracion[this.generacionActual];
 			}
@@ -156,10 +166,29 @@ public class AlgoritmoGenetico {
 	public void inicializaPoblacion(int tamPoblacion, String tipoIndividuo, ArrayList<Individuo> poblacion) {
 		
 		for (int i = 0; i < tamPoblacion; i++) {
-			
 			Individuo nuevoInd = FactoriaIndividuo.getIndividuo(tipoIndividuo);
 			nuevoInd.inicializaIndividuo();
 			poblacion.add(nuevoInd);
+		}
+	}
+	
+	public void generaElite(ArrayList<Individuo> poblacion, double porcElite) {
+		
+		elite = new ArrayList<Individuo>();
+		
+		Collections.sort(poblacion, new Comparator<Individuo>() { 		// ordena de mayor a menor
+			@Override
+			public int compare(Individuo o1, Individuo o2) {
+				return Double.compare(o2.getFitness(), o1.getFitness());
+			}
+			
+		});
+		for(int i = 0; i < porcElite*poblacion.size(); i++) {
+			elite.add(poblacion.get(i));
+		}
+		
+		for(int i = 0; i < elite.size(); i++) {
+			poblacion.remove(elite.get(i));
 		}
 	}
 }

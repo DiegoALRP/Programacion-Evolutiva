@@ -6,9 +6,11 @@ public class FactoriaIndividuo {
 		
 		switch(id) {
 			
-			case "Funcion1": return new IndividuoFuncion1();
-			//case "Funcion2": return
-			default: return new IndividuoFuncion1();
+		case "Funcion 1": return new IndividuoFuncion1();
+        case "Funcion Schubert": return new IndividuoFuncion2();
+        case "Funcion Holder table": return new IndividuoFuncion3();
+        case "Funcion Michalewicz": return new IndividuoFuncion4(6);
+        default: return new IndividuoFuncion1();
 		}
 	}
 }

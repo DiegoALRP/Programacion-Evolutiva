@@ -39,21 +39,6 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 		//System.out.println("Fitness: " + this.aptitud + "\n");
 		return aptitud;
 	}
-
-
-	@Override
-	public double getFenotipo(int longitudGen, double genMin, double genMax) {
-		String gen = "";
-		for(int i = 0; i < longitudGen;i++) {
-			if(cromosoma.get(i)) {		
-				gen += "1";
-			} else {
-				gen += "0";
-			}
-		}
-		double real = Integer.parseInt(gen,2);
-		return genMin + real * (genMax - genMin)/(Math.pow(2,longitudGen)-1);
-	}
 	
 	public void calculateFenotipo() {
 		int index = 0;
@@ -114,7 +99,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 				sb.append(0);
 			}
 		}
-		System.out.println(sb);
+		//System.out.println(sb);
 		return sb;
 	}
 }

@@ -26,7 +26,6 @@ public abstract class Individuo<E> {
 	//TODO: hacer funcion void (fitness)
 	public abstract double calculateFitness();
 	//TODO: poner funcion distinta de fenotipo
-	public abstract double getFenotipo(int longitudGen, double min, double max);
 	public abstract void inicializaIndividuo();
 	
 	public double getFitness() {
