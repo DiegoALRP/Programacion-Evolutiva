@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class IndividuoFuncion4Double extends Individuo<Double>{
 
-	public IndividuoFuncion4Double(int n) {
+	public IndividuoFuncion4Double(int n, double precision) {
 		
 		this.id = "Funcion Michalewicz (Reales)";
 		
@@ -18,7 +18,7 @@ public class IndividuoFuncion4Double extends Individuo<Double>{
 		min[0] = 0;
 		max[0] = Math.PI;
 		
-		precision = 0.001;
+		this.precision = precision;
 		
 		longitud[0] = 0;
 		longitudTotal = n;

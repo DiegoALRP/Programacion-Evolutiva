@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class IndividuoFuncion4 extends Individuo<Boolean> {
 
-	public IndividuoFuncion4(int n) {
+	public IndividuoFuncion4(int n, double precision) {
 		
 		this.id = "Funcion Michalewicz (Booleanos)";
 		
@@ -18,7 +18,7 @@ public class IndividuoFuncion4 extends Individuo<Boolean> {
 		min[0] = 0;
 		max[0] = Math.PI;
 		
-		precision = 0.001;
+		this.precision = precision;
 		
 		longitud[0] = tamGen(min[0], max[0]);
 		longitudTotal = longitud[0]*n;

@@ -29,17 +29,18 @@ public abstract class Individuo<E> {
 	public abstract void inicializaIndividuo();
 	
 	public abstract void calculateFenotipo();
-	public ArrayList<Double> getFenotipo() {
+	public String getFenotipo() {
 		
 		calculateFenotipo();
-		ArrayList<Double> fenotipoTotal = new ArrayList<Double>();
+		
+		StringBuilder sb = new StringBuilder();
 		
 		for (int i = 0; i < this.numGenes; i++) {
 			
-			fenotipoTotal.add(this.fenotipo[i]);
+			sb.append("Variable X" + (i+1) + " = " + this.fenotipo[i] + " ");
 		}
 		
-		return fenotipoTotal;
+		return sb.toString();
 	}
 	
 	public double getFitness() {
@@ -91,5 +92,10 @@ public abstract class Individuo<E> {
 	public int getNumGenes() {
 		
 		return this.numGenes;
+	}
+	
+	public double getPrecision() {
+		
+		return this.precision;
 	}
 }

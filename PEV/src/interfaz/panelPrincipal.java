@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.JTextComponent;
 
 import org.math.plot.Plot2DPanel;
 
@@ -267,6 +268,9 @@ public class panelPrincipal {
 		problemas.add(lblNewLabel);
 		
 		problemas.add(individuo_cbox);
+		
+		JLabel solucion = new JLabel("Soluion");
+		problemas.add(solucion);
 	}
 
 }
