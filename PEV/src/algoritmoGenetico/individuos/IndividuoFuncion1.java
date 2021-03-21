@@ -7,7 +7,7 @@ import java.util.Random;
 public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 
 	
-	public IndividuoFuncion1(){
+	public IndividuoFuncion1(double precision){
 		
 		this.id = "Funcion 1";
 		min = new double[2];	// Inicializar colecciones
@@ -22,7 +22,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 		min[1] = 4.100;			// segundo gen
 		max[1] = 5.800;
 		
-		precision = 0.0001;
+		this.precision = precision;
 		
 		longitud[0] = tamGen(min[0], max[0]);
 		longitud[1] = tamGen(min[1], max[1]);

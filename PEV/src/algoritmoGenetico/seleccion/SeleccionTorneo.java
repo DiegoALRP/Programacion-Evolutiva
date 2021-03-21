@@ -57,7 +57,7 @@ public class SeleccionTorneo extends Seleccion {
 		}
 		
 		Individuo mejorIndividuo = candidatos.get(indexBestIndividual);
-		Individuo nuevoIndividuo = FactoriaIndividuo.getIndividuo(mejorIndividuo.getId());
+		Individuo nuevoIndividuo = FactoriaIndividuo.getIndividuo(mejorIndividuo.getId(), mejorIndividuo.getPrecision());
 		
 		ArrayList cromoPadre1 = mejorIndividuo.getCromosoma();
 		ArrayList cromoHijo1 = new ArrayList();

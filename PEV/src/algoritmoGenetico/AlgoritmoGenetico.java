@@ -25,7 +25,7 @@ public class AlgoritmoGenetico {
 	private double[] mejorAbsoluto;		//Array con el mejor absoluto (a lo largo de todas las generaciones)
 	private double[] mejorGeneracion;	//Array con el mejor fitness de una generacion
 	private double[] mediaGeneracion;	//Array con la media de fitness de cada generacion
-	private ArrayList<Double> mejorSolucion;
+	private String mejorSolucion;
 	
 	private int generacionActual;
 	
@@ -42,7 +42,7 @@ public class AlgoritmoGenetico {
 		
 		this.inicializaVariables(tamPoblacion, numGeneraciones);
 		ArrayList<Individuo> poblacion = new ArrayList<Individuo>(tamPoblacion);
-		this.inicializaPoblacion(tamPoblacion, tipoIndividuo, poblacion);
+		this.inicializaPoblacion(tamPoblacion, tipoIndividuo, poblacion, precision);
 		
 		
 		while (this.generacionActual < numGeneraciones) {
@@ -62,11 +62,7 @@ public class AlgoritmoGenetico {
 			this.generacionActual++;
 		}
 		
-		System.out.println("Solucion: ");
-		for (int i = 0; i < this.mejorSolucion.size(); i++) {
-			
-			System.out.println(this.mejorSolucion.get(i));
-		}
+		System.out.println("Solucion: " + this.mejorSolucion);
 	}
 	
 	public void inicializaVariables(int tamPoblacion, int numGeneraciones) {
@@ -177,10 +173,10 @@ public class AlgoritmoGenetico {
 		return mediaGeneracion;
 	}
 	
-	public void inicializaPoblacion(int tamPoblacion, String tipoIndividuo, ArrayList<Individuo> poblacion) {
+	public void inicializaPoblacion(int tamPoblacion, String tipoIndividuo, ArrayList<Individuo> poblacion, double precision) {
 		
 		for (int i = 0; i < tamPoblacion; i++) {
-			Individuo nuevoInd = FactoriaIndividuo.getIndividuo(tipoIndividuo);
+			Individuo nuevoInd = FactoriaIndividuo.getIndividuo(tipoIndividuo, precision);
 			nuevoInd.inicializaIndividuo();
 			poblacion.add(nuevoInd);
 		}
