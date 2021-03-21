@@ -55,17 +55,14 @@ public class MutacionBasica extends Mutacion {
 
 	@Override
 	protected void mutaIndividuoDouble(Individuo<Double> individuo) {
-		// TODO Auto-generated method stub
+		
 		ArrayList<Double> cromo = individuo.getCromosoma();
 		
 		Random rand = new Random();
-		for (int i = 0; i < cromo.size(); i++) {
-			
-			double ran = rand.nextDouble();
-			if (ran < this.probMutacion) {
-				
-				cromo.set(i, cromo.get(i));
-			}
-		}
+		
+		double rangeMin = individuo.getMinValue();
+		double rangeMax = individuo.getMaxValue();
+		
+		cromo.set(rand.nextInt(individuo.getNumGenes()), rangeMin + (rangeMax - rangeMin) * rand.nextDouble());
 	}
 }
