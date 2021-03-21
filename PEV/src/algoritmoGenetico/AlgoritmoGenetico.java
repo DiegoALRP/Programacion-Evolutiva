@@ -131,7 +131,7 @@ public class AlgoritmoGenetico {
 					maxFitness = fitness;
 				}
 				
-				//System.out.println(ind.getFenotipo());
+				System.out.println(ind.getFenotipo());
 				if (this.generacionActual == 0 || fitness < this.mejorAbsoluto[this.generacionActual - 1]) {
 					
 					this.mejorSolucion = ind.getFenotipo();
