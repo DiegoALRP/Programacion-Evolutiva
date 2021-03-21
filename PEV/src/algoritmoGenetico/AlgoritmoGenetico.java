@@ -51,22 +51,21 @@ public class AlgoritmoGenetico {
 			metodoSeleccion.seleccionar(poblacion);
 			metodoCruce.cruza(poblacion, porcCruce);
 			
-			if (tipoIndividuo.equals("Funcion 1") || tipoIndividuo.equals("Funcion Schubert") || tipoIndividuo.equals("Funcion Holder table") || tipoIndividuo.equals("Funcion Michalewicz")) {
+			if (!tipoIndividuo.equals("Funcion Michalewicz (Reales)")) {
 				metodoMutacion.mutaPoblacionBoolean(poblacion, porcMutacion);
 			}
 			else {
 				metodoMutacion.mutaPoblacionDouble(poblacion, porcMutacion);
 			}
-			
 			poblacion.addAll(elite);
 			this.generacionActual++;
 		}
 		
-		System.out.println("Solucion: ");
+		/*System.out.println("Solucion: ");
 		for (int i = 0; i < this.mejorSolucion.size(); i++) {
 			
 			System.out.println(this.mejorSolucion.get(i));
-		}
+		}*/
 	}
 	
 	public void inicializaVariables(int tamPoblacion, int numGeneraciones) {
@@ -216,5 +215,14 @@ public class AlgoritmoGenetico {
 		for(int i = 0; i < elite.size(); i++) {
 			poblacion.remove(elite.get(i));
 		}
+	}
+	
+	public String getSolucion() {
+		String solucion = "";
+		for (int i = 0; i < this.mejorSolucion.size(); i++) {
+			solucion += "X" + i + " : " + mejorSolucion.get(i) + "      ";
+		}
+		System.out.println(solucion);
+		return solucion;
 	}
 }

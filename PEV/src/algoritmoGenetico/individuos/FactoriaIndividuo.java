@@ -12,6 +12,8 @@ public class FactoriaIndividuo {
         case "Funcion Michalewicz": return new IndividuoFuncion4(6);
         case "Funcion Michalewicz (Booleanos)": return new IndividuoFuncion4(6);
         case "Funcion Michalewicz (Reales)": return new IndividuoFuncion4(6);
+        case "Funcion Bukin" : return new IndividuoFuncionBukin();
+        case "Funcion Matyas" : return new IndividuoFuncionMatyas();
         default: return new IndividuoFuncion1();
 		}
 	}
