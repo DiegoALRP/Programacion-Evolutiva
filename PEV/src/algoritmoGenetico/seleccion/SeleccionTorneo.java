@@ -22,14 +22,8 @@ public class SeleccionTorneo extends Seleccion {
 		tamPoblacion = poblacion.size(); //Cogemos el tamaño de la población
 		ArrayList<Individuo> nuevaPoblacion = new ArrayList<Individuo>();	//Creamos un ArrayList para la nueva población
 		ArrayList<Individuo> candidatos = new ArrayList<Individuo>();
+		
 		Random rand = new Random();
-		
-		System.out.println("Poblacion Inicial");
-		for (int i = 0; i < tamPoblacion; i++) {
-			
-			System.out.println("Individuo: " + i + " " + poblacion.get(i).printCromosoma() + " Fitness " + poblacion.get(i).getFitness());
-		}
-		
 		int count = 0;
 		while (count < tamPoblacion) {
 			
@@ -41,12 +35,6 @@ public class SeleccionTorneo extends Seleccion {
 			
 			competenciaTorneo(candidatos, nuevaPoblacion);
 			count++;
-		}
-		
-		System.out.println("Poblacion Final");
-		for (int i = 0; i < tamPoblacion; i++) {
-			
-			System.out.println("Individuo: " + i + " " + nuevaPoblacion.get(i).printCromosoma() + " Fitness " + nuevaPoblacion.get(i).getFitness());
 		}
 		
 		return nuevaPoblacion;

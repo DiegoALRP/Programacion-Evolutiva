@@ -18,7 +18,6 @@ public class MutacionBasica extends Mutacion {
 			if (rand.nextDouble() < this.probMutacion) {
 				
 				mutaIndividuoBoolean(poblacion.get(i));
-				//System.out.println("Individuo a mutar: " + i);
 			}
 		}
 	}
@@ -31,11 +30,41 @@ public class MutacionBasica extends Mutacion {
 		for (int i = 0; i < cromo.size(); i++) {
 			
 			double ran = rand.nextDouble();
-			//System.out.println("random: " + ran);
+			
 			if (ran < this.probMutacion) {
 				
 				cromo.set(i, !cromo.get(i));
-				//System.out.println("Alelo mutado: " + i);
+			}
+		}
+	}
+
+	@Override
+	public void mutaPoblacionDouble(ArrayList<Individuo> poblacion, double probMutacion) {
+		
+		this.probMutacion = probMutacion;
+		
+		Random rand = new Random();
+		for (int i = 0; i < poblacion.size(); i++) {
+			
+			if (rand.nextDouble() < this.probMutacion) {
+				
+				mutaIndividuoBoolean(poblacion.get(i));
+			}
+		}
+	}
+
+	@Override
+	protected void mutaIndividuoDouble(Individuo<Double> individuo) {
+		// TODO Auto-generated method stub
+		ArrayList<Double> cromo = individuo.getCromosoma();
+		
+		Random rand = new Random();
+		for (int i = 0; i < cromo.size(); i++) {
+			
+			double ran = rand.nextDouble();
+			if (ran < this.probMutacion) {
+				
+				cromo.set(i, cromo.get(i));
 			}
 		}
 	}

@@ -16,23 +16,9 @@ public class CruceUniforme extends Cruce {
 		
 		this.seleccionaIndividuos(poblacion);
 		
-		System.out.println("Antes:\n");
-		for (int i = 0; i < poblacion.size(); i++) {
-			
-			System.out.println(poblacion.get(i).printCromosoma() + "\n");
-		}
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
 			
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
-		}
-		
-		System.out.println("Punto de cruce: " + this.punto_cruce);
-		System.out.println("Numero de Seleccionados: " + this.num_selec_cruce);
-		
-		System.out.println("Despues:\n");
-		for (int i = 0; i < poblacion.size(); i++) {
-			
-			System.out.println(poblacion.get(i).printCromosoma() + "\n");
 		}
 	}
 
@@ -68,16 +54,15 @@ public class CruceUniforme extends Cruce {
 		padre1.setCromosoma(cromoHijo1);
 		padre2.setCromosoma(cromoHijo2);
 		
-		double fitnessA1 = padre1.getFitness();
+		/*double fitnessA1 = padre1.getFitness();
 		double fitnessA2 = padre2.getFitness();
 		
 		if (fitnessA1 < fitnessB1) padre1.setCromosoma(cromoPadre1);
-		if (fitnessA2 < fitnessB2) padre2.setCromosoma(cromoPadre2);
+		if (fitnessA2 < fitnessB2) padre2.setCromosoma(cromoPadre2);*/
 	}
 
 	@Override
 	protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
-		// TODO Auto-generated method stub
 
 		this.tamPoblacion = poblacion.size();
 		Random rand = new Random();

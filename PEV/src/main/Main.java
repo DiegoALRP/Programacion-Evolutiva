@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Random;
+
 import algoritmoGenetico.AlgoritmoGenetico;
 import algoritmoGenetico.individuos.IndividuoFuncion1;
 import interfaz.panelPrincipal;

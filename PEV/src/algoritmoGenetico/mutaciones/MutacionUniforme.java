@@ -44,5 +44,4 @@ public class MutacionUniforme extends Mutacion{
 		// TODO Auto-generated method stub
 		
 	}
-
 }

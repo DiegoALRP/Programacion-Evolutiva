@@ -10,6 +10,8 @@ public class FactoriaIndividuo {
         case "Funcion Schubert": return new IndividuoFuncion2();
         case "Funcion Holder table": return new IndividuoFuncion3();
         case "Funcion Michalewicz": return new IndividuoFuncion4(6);
+        case "Funcion Michalewicz (Booleanos)": return new IndividuoFuncion4(6);
+        case "Funcion Michalewicz (Reales)": return new IndividuoFuncion4(6);
         default: return new IndividuoFuncion1();
 		}
 	}

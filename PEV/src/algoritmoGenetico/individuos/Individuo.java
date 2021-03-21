@@ -28,6 +28,20 @@ public abstract class Individuo<E> {
 	//TODO: poner funcion distinta de fenotipo
 	public abstract void inicializaIndividuo();
 	
+	public abstract void calculateFenotipo();
+	public ArrayList<Double> getFenotipo() {
+		
+		calculateFenotipo();
+		ArrayList<Double> fenotipoTotal = new ArrayList<Double>();
+		
+		for (int i = 0; i < this.numGenes; i++) {
+			
+			fenotipoTotal.add(this.fenotipo[i]);
+		}
+		
+		return fenotipoTotal;
+	}
+	
 	public double getFitness() {
 		return aptitud;
 	}
