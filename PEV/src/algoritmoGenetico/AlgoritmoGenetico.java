@@ -25,6 +25,7 @@ public class AlgoritmoGenetico {
 	private double[] mejorAbsoluto;		//Array con el mejor absoluto (a lo largo de todas las generaciones)
 	private double[] mejorGeneracion;	//Array con el mejor fitness de una generacion
 	private double[] mediaGeneracion;	//Array con la media de fitness de cada generacion
+	private ArrayList<Double> mejorSolucion;
 	
 	private int generacionActual;
 	
@@ -45,8 +46,7 @@ public class AlgoritmoGenetico {
 		
 		
 		while (this.generacionActual < numGeneraciones) {
-			//System.out.println("//////////////////////////////////////");
-			//System.out.println("Generacion : " + generacionActual);
+			
 			this.evaluar(tipoIndividuo, poblacion, porcElite);
 			metodoSeleccion.seleccionar(poblacion);
 			metodoCruce.cruza(poblacion, porcCruce);
@@ -54,13 +54,18 @@ public class AlgoritmoGenetico {
 			if (tipoIndividuo.equals("Funcion 1") || tipoIndividuo.equals("Funcion Schubert") || tipoIndividuo.equals("Funcion Holder table") || tipoIndividuo.equals("Funcion Michalewicz")) {
 				metodoMutacion.mutaPoblacionBoolean(poblacion, porcMutacion);
 			}
-			/*
-			 * else{
-			 * 
-			 * }
-			 */
+			else {
+				metodoMutacion.mutaPoblacionDouble(poblacion, porcMutacion);
+			}
+			
 			poblacion.addAll(elite);
 			this.generacionActual++;
+		}
+		
+		System.out.println("Solucion: ");
+		for (int i = 0; i < this.mejorSolucion.size(); i++) {
+			
+			System.out.println(this.mejorSolucion.get(i));
 		}
 	}
 	
@@ -74,10 +79,7 @@ public class AlgoritmoGenetico {
 		this.mediaGeneracion = new double[numGeneraciones];
 	}
 	
-	//TODO: hay problema con calcular la elite
 	public void evaluar(String tipoIndividuo, ArrayList<Individuo> poblacion, double porcElite) {
-		
-		generaElite(poblacion, porcElite, tipoIndividuo);
 		
 		ArrayList<Integer> mejoresIndividuos = new ArrayList<Integer>();
 		double mejorGeneracion;
@@ -92,7 +94,11 @@ public class AlgoritmoGenetico {
 					
 					mejorGeneracion = fitness;
 					mejoresIndividuos.add(poblacion.indexOf(ind));
-					//
+				}
+				
+				if (this.generacionActual == 0 || fitness > this.mejorAbsoluto[this.generacionActual - 1]) {
+					
+					this.mejorSolucion = ind.getFenotipo();
 				}
 				
 				this.mediaGeneracion[this.generacionActual] += fitness;
@@ -110,6 +116,8 @@ public class AlgoritmoGenetico {
 				
 				this.mejorAbsoluto[this.generacionActual] = this.mejorAbsoluto[this.generacionActual - 1];
 			}
+			
+			generaElite(poblacion, porcElite, tipoIndividuo);
 		}
 		else {	//Funciones 2, 3 y 4
 			maxFitness = - Double.MAX_VALUE;
@@ -129,6 +137,11 @@ public class AlgoritmoGenetico {
 					maxFitness = fitness;
 				}
 				
+				if (this.generacionActual == 0 || fitness < this.mejorAbsoluto[this.generacionActual - 1]) {
+					
+					this.mejorSolucion = ind.getFenotipo();
+				}
+				
 				this.mediaGeneracion[this.generacionActual] += fitness;
 			}
 			
@@ -142,6 +155,8 @@ public class AlgoritmoGenetico {
 				
 				this.mejorAbsoluto[this.generacionActual] = this.mejorAbsoluto[this.generacionActual - 1];
 			}
+			
+			generaElite(poblacion, porcElite, tipoIndividuo);
 			
 			//Desplazamos aptitud
 			for (Individuo individuo : poblacion) {

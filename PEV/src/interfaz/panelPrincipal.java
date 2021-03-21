@@ -208,7 +208,7 @@ public class panelPrincipal {
 		////////////////////////////////////////////////
 		
 		JComboBox individuo_cbox = new JComboBox();
-		individuo_cbox.setModel(new DefaultComboBoxModel(new String[] {"Funcion 1", "Funcion Schubert", "Funcion Holder table", "Funcion Michalewicz"}));
+		individuo_cbox.setModel(new DefaultComboBoxModel(new String[] {"Funcion 1", "Funcion Schubert", "Funcion Holder table", "Funcion Michalewicz (Booleanos)", "Funcion Michalewicz (Reales)"}));
 		individuo_cbox.addActionListener(new ActionListener() {
 			
 			@Override

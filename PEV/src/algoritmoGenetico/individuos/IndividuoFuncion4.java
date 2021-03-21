@@ -7,7 +7,7 @@ public class IndividuoFuncion4 extends Individuo<Boolean> {
 
 	public IndividuoFuncion4(int n) {
 		
-		this.id = "Funcion4";
+		this.id = "Funcion Michalewicz (Booleanos)";
 		
 		min = new double[1];
 		max = new double[1];
@@ -18,7 +18,7 @@ public class IndividuoFuncion4 extends Individuo<Boolean> {
 		min[0] = 0;
 		max[0] = Math.PI;
 		
-		precision = 0.0000001;
+		precision = 0.001;
 		
 		longitud[0] = tamGen(min[0], max[0]);
 		longitudTotal = longitud[0]*n;
@@ -46,7 +46,7 @@ public class IndividuoFuncion4 extends Individuo<Boolean> {
 		return aptitud;
 	}
 
-	
+	@Override
 	public void calculateFenotipo() {
 		
 		int index = 0;
