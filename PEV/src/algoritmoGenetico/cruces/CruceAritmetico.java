@@ -21,7 +21,7 @@ public class CruceAritmetico extends Cruce {
 		
 		this.seleccionaIndividuos(poblacion);
 		
-		for (int i = 0; i < poblacion.size(); i += 2) {
+		for (int i = 0; i < this.num_selec_cruce; i += 2) {
 			
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
 		}
@@ -51,7 +51,6 @@ public class CruceAritmetico extends Cruce {
 			double alpha = rand.nextDouble();
 			cromoHijo1.set(i, alpha*cromoPadre1.get(i) + (1 - alpha)*cromoPadre2.get(i));
 			cromoHijo2.set(i, alpha*cromoPadre2.get(i) + (1 - alpha)*cromoPadre1.get(i));
-			
 			i++;
 		}
 		

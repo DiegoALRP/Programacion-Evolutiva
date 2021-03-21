@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class IndividuoFuncion3 extends Individuo<Boolean> {
 	
-	public IndividuoFuncion3() {
+	public IndividuoFuncion3(double precision) {
 		
 		this.id = "Funcion Holder table";
 		
@@ -20,7 +20,7 @@ public class IndividuoFuncion3 extends Individuo<Boolean> {
 		min[1] = -10;
 		max[1] = 10;
 		
-		precision = 0.001;
+		this.precision = precision;
 		
 		longitud[0] = tamGen(min[0], max[0]);
 		longitud[1] = tamGen(min[1], max[1]);
