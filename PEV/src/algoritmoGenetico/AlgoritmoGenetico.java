@@ -172,6 +172,9 @@ public class AlgoritmoGenetico {
 	public double[] getMediaGeneracion() {
 		return mediaGeneracion;
 	}
+	public String getSolucion() {
+		return this.mejorSolucion;
+	}
 	
 	public void inicializaPoblacion(int tamPoblacion, String tipoIndividuo, ArrayList<Individuo> poblacion, double precision) {
 		
