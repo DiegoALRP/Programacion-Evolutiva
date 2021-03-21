@@ -72,7 +72,7 @@ public class panelPrincipal {
 		JPanel controles = new JPanel();
 		//controles.setBorder(BorderFactory.createLineBorder(Color.black));
 		frame.getContentPane().add(controles, BorderLayout.WEST);
-		controles.setLayout(new GridLayout(10, 1, 10, 10));
+		controles.setLayout(new GridLayout(12, 1, 10, 10));
 		
 		////////////////////////////////////////////////		POBLACION 
 
@@ -208,7 +208,7 @@ public class panelPrincipal {
 		////////////////////////////////////////////////
 		
 		JComboBox individuo_cbox = new JComboBox();
-		individuo_cbox.setModel(new DefaultComboBoxModel(new String[] {"Funcion 1", "Funcion Schubert", "Funcion Holder table", "Funcion Michalewicz (Booleanos)", "Funcion Michalewicz (Reales)"}));
+		individuo_cbox.setModel(new DefaultComboBoxModel(new String[] {"Funcion 1", "Funcion Schubert", "Funcion Holder table", "Funcion Michalewicz (Booleanos)", "Funcion Michalewicz (Reales)", "Funcion Bukin", "Funcion Matyas"}));
 		individuo_cbox.addActionListener(new ActionListener() {
 			
 			@Override
@@ -228,6 +228,14 @@ public class panelPrincipal {
 		JButton ejecutar = new JButton("Ejecutar");
 		controles.add(ejecutar);
 		controles.add(resetear);
+		
+		JLabel solucion = new JLabel("Solucion :");
+		JTextField textField_solucion = new JTextField();
+		textField_solucion.setText("");
+		controles.add(solucion);
+		controles.add(textField_solucion);
+
+		
 		ejecutar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -246,6 +254,7 @@ public class panelPrincipal {
 				Mutacion metodoMutacion = FactoriaMutaciones.getAlgoritmoDeMutacion(Mutacion_cbox.getSelectedItem().toString(), numGeneraciones);
 				String tipoIndividuo = individuo_cbox.getSelectedItem().toString();
 				AlgoritmoGenetico AG = new AlgoritmoGenetico(tamPoblacion, Integer.parseInt(nGeneraciones.getText()), precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite, tipoIndividuo);
+				textField_solucion.setText(AG.getSolucion());
 				gr.actualiza(numGeneraciones, AG.getMejorAbsoluto(), AG.getMejorGeneracion(), AG.getMediaGeneracion());
 			}
 		});
