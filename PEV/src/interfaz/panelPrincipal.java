@@ -260,7 +260,7 @@ public class panelPrincipal {
 				Cruce metodoCruce = FactoriaCruces.getAlgoritmoDeCruce(Cruce_cbox.getSelectedItem().toString(), numGeneraciones);
 				Mutacion metodoMutacion = FactoriaMutaciones.getAlgoritmoDeMutacion(Mutacion_cbox.getSelectedItem().toString(), numGeneraciones);
 				String tipoIndividuo = individuo_cbox.getSelectedItem().toString();
-				AG = new AlgoritmoGenetico(tamPoblacion, Integer.parseInt(nGeneraciones.getText()), precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite, tipoIndividuo);
+				AG = new AlgoritmoGenetico(tamPoblacion, numGeneraciones, precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite, tipoIndividuo);
 				//textField_solucion.setText(AG.getSolucion());
 				if (tipoIndividuo.equals("Funcion Michalewicz (Booleanos)") || tipoIndividuo.equals("Funcion Michalewicz (Reales)")) {
 					dimension.setSize(500, 500);
@@ -270,6 +270,24 @@ public class panelPrincipal {
 				solArea.setText(AG.getSolucion());
 				//solLabel.setText(AG.getSolucion());
 				gr.actualiza(numGeneraciones, AG.getMejorAbsoluto(), AG.getMejorGeneracion(), AG.getMediaGeneracion());
+			}
+		});
+		resetear.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				nGeneraciones.setText("100");
+				nGeneraciones.setText("100");
+				textField_elite.setText("0.02");
+				textField_cruce.setText("0.6");
+				textField_mutacion.setText("0.05");
+				textField_error.setText("0.0001");
+
+				Seleccion_cbox.setSelectedIndex(0);
+				Cruce_cbox.setSelectedIndex(0);
+				Mutacion_cbox.setSelectedIndex(0);
+				individuo_cbox.setSelectedIndex(0);
+				
 			}
 		});
 		////////////////////////////////////////////////		
