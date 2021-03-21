@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.JTextComponent;
@@ -51,6 +52,8 @@ public class panelPrincipal {
 	private String cruce;
 	private String mutacion;
 	private String funcion;
+	
+	private AlgoritmoGenetico AG;
 
 
 	/**
@@ -215,7 +218,7 @@ public class panelPrincipal {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				funcion = individuo_cbox.getSelectedItem().toString();
-				if(individuo_cbox.getSelectedItem().toString().equals("Función Michalewicz")) {
+				if(individuo_cbox.getSelectedItem().toString().equals("Funcion Michalewicz (Reales)")) {
 					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme", "Aritmetico", "BLX-alpha"}));
 					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica", "Mutacion Uniforme"})); 
 				} else {
@@ -231,10 +234,13 @@ public class panelPrincipal {
 		controles.add(resetear);
 		
 		JLabel solucion = new JLabel("Solucion :");
-		JTextField textField_solucion = new JTextField();
-		textField_solucion.setText("");
+		//JTextField textField_solucion = new JTextField();
+		JTextArea solArea = new JTextArea();
+		Dimension dimension = new Dimension();
 		controles.add(solucion);
-		controles.add(textField_solucion);
+		controles.add(solArea);
+		//controles.add(textField_solucion);
+		//controles.add(solLabel);
 
 		
 		ejecutar.addActionListener(new ActionListener() {
@@ -254,8 +260,15 @@ public class panelPrincipal {
 				Cruce metodoCruce = FactoriaCruces.getAlgoritmoDeCruce(Cruce_cbox.getSelectedItem().toString(), numGeneraciones);
 				Mutacion metodoMutacion = FactoriaMutaciones.getAlgoritmoDeMutacion(Mutacion_cbox.getSelectedItem().toString(), numGeneraciones);
 				String tipoIndividuo = individuo_cbox.getSelectedItem().toString();
-				AlgoritmoGenetico AG = new AlgoritmoGenetico(tamPoblacion, Integer.parseInt(nGeneraciones.getText()), precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite, tipoIndividuo);
-				textField_solucion.setText(AG.getSolucion());
+				AG = new AlgoritmoGenetico(tamPoblacion, Integer.parseInt(nGeneraciones.getText()), precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite, tipoIndividuo);
+				//textField_solucion.setText(AG.getSolucion());
+				if (tipoIndividuo.equals("Funcion Michalewicz (Booleanos)") || tipoIndividuo.equals("Funcion Michalewicz (Reales)")) {
+					dimension.setSize(500, 500);
+					//solArea.setMinimumSize(dimension);
+					solArea.setPreferredSize(dimension);
+				}
+				solArea.setText(AG.getSolucion());
+				//solLabel.setText(AG.getSolucion());
 				gr.actualiza(numGeneraciones, AG.getMejorAbsoluto(), AG.getMejorGeneracion(), AG.getMediaGeneracion());
 			}
 		});
@@ -268,9 +281,6 @@ public class panelPrincipal {
 		problemas.add(lblNewLabel);
 		
 		problemas.add(individuo_cbox);
-		
-		JLabel solucion = new JLabel("Soluion");
-		problemas.add(solucion);
 	}
 
 }

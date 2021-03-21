@@ -44,7 +44,6 @@ public class AlgoritmoGenetico {
 		ArrayList<Individuo> poblacion = new ArrayList<Individuo>(tamPoblacion);
 		this.inicializaPoblacion(tamPoblacion, tipoIndividuo, poblacion, precision);
 		
-		
 		while (this.generacionActual < numGeneraciones) {
 			
 			this.evaluar(tipoIndividuo, poblacion, porcElite);
@@ -132,10 +131,12 @@ public class AlgoritmoGenetico {
 					maxFitness = fitness;
 				}
 				
+				//System.out.println(ind.getFenotipo());
 				if (this.generacionActual == 0 || fitness < this.mejorAbsoluto[this.generacionActual - 1]) {
 					
 					this.mejorSolucion = ind.getFenotipo();
 				}
+				
 				
 				this.mediaGeneracion[this.generacionActual] += fitness;
 			}
@@ -214,14 +215,5 @@ public class AlgoritmoGenetico {
 		for(int i = 0; i < elite.size(); i++) {
 			poblacion.remove(elite.get(i));
 		}
-	}
-	
-	public String getSolucion() {
-		String solucion = "";
-		for (int i = 0; i < this.mejorSolucion.size(); i++) {
-			solucion += "X" + i + " : " + mejorSolucion.get(i) + "      ";
-		}
-		System.out.println(solucion);
-		return solucion;
 	}
 }

@@ -35,10 +35,26 @@ public abstract class Individuo<E> {
 		
 		StringBuilder sb = new StringBuilder();
 		
+		//sb.append("<html>");
 		for (int i = 0; i < this.numGenes; i++) {
 			
-			sb.append("Variable X" + (i+1) + " = " + this.fenotipo[i] + " ");
+			if (this.numGenes <= 2) {
+				sb.append("Variable X" + (i+1) + " = " + this.fenotipo[i] + "\n");
+			}
+			else {
+				if (i % 2 == 0) {
+					sb.append("Variable X" + (i+1) + " = " + this.fenotipo[i] + "	");
+				}
+				else {
+					sb.append("Variable X" + (i+1) + " = " + this.fenotipo[i] + "\n");
+				}
+			}
 		}
+		/*for (int i = 0; i < this.numGenes; i++) {
+			
+			sb.append("Variable X" + (i+1) + " = " + this.fenotipo[i] + "<br>");
+		}
+		sb.append("</html>");*/
 		
 		return sb.toString();
 	}

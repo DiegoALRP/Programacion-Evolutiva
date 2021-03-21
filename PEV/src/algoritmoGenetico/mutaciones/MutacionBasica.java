@@ -48,7 +48,7 @@ public class MutacionBasica extends Mutacion {
 			
 			if (rand.nextDouble() < this.probMutacion) {
 				
-				mutaIndividuoBoolean(poblacion.get(i));
+				mutaIndividuoDouble(poblacion.get(i));
 			}
 		}
 	}
