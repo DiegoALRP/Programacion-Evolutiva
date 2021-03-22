@@ -131,7 +131,7 @@ public class panelPrincipal {
 		
 		JComboBox Seleccion_cbox = new JComboBox();
 		
-		Seleccion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Metodo de la ruleta", "Universal Estocastico", "Torneo", "Truncamiento", "Restos"}));
+		Seleccion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Metodo de la ruleta", "Universal Estocastico", "Torneo Deterministico", "Torneo Probabilistico", "Truncamiento", "Restos"}));
 		seleccion_panel.add(Seleccion_cbox);
 		
 		TitledBorder title_Seleccion = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Selección");

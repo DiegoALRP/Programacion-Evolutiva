@@ -7,11 +7,13 @@ public class FactoriaSelecciones {
 				return new SeleccionRuleta();
 			case "Universal Estocastico":
 				return new SeleccionEstocastico();
-			case "Torneo":
+			case "Torneo Deterministico":
 				return new SeleccionTorneo(participantes);
 			case "Torneo Probabilistico":
+				return new SeleccionTorneoProbabilistico(participantes);
+			case "Truncamiento":
 				return new SeleccionTruncamiento();
-			case "Ranking":
+			case "Restos":
 				return new SeleccionRestos();
 			default:
 				return new SeleccionRuleta();
