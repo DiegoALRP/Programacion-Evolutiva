@@ -11,7 +11,7 @@ public abstract class Individuo<E> {
 	protected double[] min;
 	protected double[] max;
 	protected double[] fenotipo;
-	protected int numGenes;	//Agregado (Diego)
+	protected int numGenes;
 	protected int[] longitud;
 	protected ArrayList<E> cromosoma;
 	
@@ -36,7 +36,6 @@ public abstract class Individuo<E> {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		//sb.append("<html>");
 		for (int i = 0; i < this.numGenes; i++) {
 			
 			if (this.numGenes <= 2) {
@@ -51,11 +50,6 @@ public abstract class Individuo<E> {
 				}
 			}
 		}
-		/*for (int i = 0; i < this.numGenes; i++) {
-			
-			sb.append("Variable X" + (i+1) + " = " + this.fenotipo[i] + "<br>");
-		}
-		sb.append("</html>");*/
 		
 		return sb.toString();
 	}
@@ -63,9 +57,16 @@ public abstract class Individuo<E> {
 	public double getFitness() {
 		return aptitud;
 	}
+	public double getFitnessDesplazado() {
+		return this.aptitudDesplazada;
+	}
 	public void setFitness(double newFitness) {
 		
 		this.aptitud = newFitness;
+	}
+	public void setFitnessDesplazada(double newFitness) {
+		
+		this.aptitudDesplazada = newFitness;
 	}
 	
 	public int tamGen(double minGen, double maxGen) {
@@ -73,10 +74,7 @@ public abstract class Individuo<E> {
 		return (int) Math.ceil(longitud) ;
 	}
 
-	
-	//Diego
-	public abstract ArrayList<E> getCromosoma();	//Obtiene el cromosoma del individuo
-	//public abstract void setCromosoma(ArrayList<E> individuo);
+	public abstract ArrayList<E> getCromosoma();
 	public void setCromosoma(ArrayList<E> individuo) {
 		
 		this.cromosoma.clear();

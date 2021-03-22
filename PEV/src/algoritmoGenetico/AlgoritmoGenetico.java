@@ -32,11 +32,7 @@ public class AlgoritmoGenetico {
 	private int tamPoblacion;			//Tamanho de la poblacion
 	
 	private List<Individuo> elite;
-	//TODO: hacer desplazamiento de la aptitud
-	/*
-	 * crear poblacion inicial
-	 * 
-	 */
+	
 	public <T> AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, double precision, Seleccion metodoSeleccion, Cruce metodoCruce, 
 			double porcCruce, Mutacion metodoMutacion, double porcMutacion, double porcElite, String tipoIndividuo) {
 		
@@ -157,7 +153,7 @@ public class AlgoritmoGenetico {
 			for (Individuo individuo : poblacion) {
 				
 				double newFitness = maxFitness - individuo.getFitness();
-				individuo.setFitness(newFitness);
+				individuo.setFitnessDesplazada(newFitness);
 			}
 		}
 	}
