@@ -110,8 +110,10 @@ public class AlgoritmoGenetico {
 			generaElite(poblacion, porcElite, tipoIndividuo);
 		}
 		else {	//Funciones 2, 3 y 4
-			maxFitness = - Double.MAX_VALUE;
+			
+			maxFitness = -Double.MAX_VALUE;
 			mejorGeneracion = Double.MAX_VALUE;
+			String mejorFenotipo = "";
 			
 			for (Individuo ind : poblacion) {
 				
@@ -119,6 +121,7 @@ public class AlgoritmoGenetico {
 				if (fitness < mejorGeneracion) {
 					
 					mejorGeneracion = fitness;
+					mejorFenotipo = ind.getFenotipo() + "\n" + fitness;
 				}
 				
 				if (fitness > maxFitness) {
@@ -126,18 +129,16 @@ public class AlgoritmoGenetico {
 					maxFitness = fitness;
 				}
 				
-				System.out.println(ind.getFenotipo());
-				if (this.generacionActual == 0 || fitness < this.mejorAbsoluto[this.generacionActual - 1]) {
-					
-					this.mejorSolucion = ind.getFenotipo() + "\n" + fitness;
-				}
-				
-				
 				this.mediaGeneracion[this.generacionActual] += fitness;
 			}
 			
 			this.mediaGeneracion[this.generacionActual] = this.mediaGeneracion[this.generacionActual] / this.tamPoblacion;
 			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
+			
+			if (this.generacionActual == 0 || mejorGeneracion < this.mejorAbsoluto[this.generacionActual - 1]) {
+				
+				this.mejorSolucion = mejorFenotipo;
+			}
 			if (this.generacionActual == 0 || this.mejorGeneracion[this.generacionActual] < this.mejorAbsoluto[this.generacionActual - 1]) {
 				
 				this.mejorAbsoluto[this.generacionActual] = this.mejorGeneracion[this.generacionActual];

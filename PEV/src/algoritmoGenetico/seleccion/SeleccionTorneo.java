@@ -47,7 +47,7 @@ public class SeleccionTorneo extends Seleccion {
 		
 		for (int i = 0; i < tamTorneo; i++) {
 			
-			double fitness = candidatos.get(i).getFitness();
+			double fitness = candidatos.get(i).getFitnessDesplazado();
 			
 			if (fitness > maxFitness) {
 				

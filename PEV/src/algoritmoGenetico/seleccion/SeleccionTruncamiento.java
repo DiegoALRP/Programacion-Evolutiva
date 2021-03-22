@@ -28,7 +28,7 @@ public class SeleccionTruncamiento extends Seleccion{
 		Collections.sort(poblacion, new Comparator<Individuo>() {
 			@Override
 			public int compare(Individuo o1, Individuo o2) {
-				return Double.compare(o2.getFitness(), o1.getFitness());
+				return Double.compare(o2.getFitnessDesplazado(), o1.getFitnessDesplazado());
 			}
 			
 		});

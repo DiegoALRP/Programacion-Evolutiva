@@ -48,11 +48,11 @@ public class SeleccionEstocastico extends Seleccion{
 		puntAcumulada = new double[poblacion.size()];
 		
 		for(Individuo ind : poblacion) {
-			aptitudes += ind.getFitness();
+			aptitudes += ind.getFitnessDesplazado();
 		}
 		
 		for(int i = 0; i < poblacion.size(); i++) {
-			acum += poblacion.get(i).getFitness() / aptitudes;
+			acum += poblacion.get(i).getFitnessDesplazado() / aptitudes;
 			puntAcumulada[i] = acum;
 		}
 		

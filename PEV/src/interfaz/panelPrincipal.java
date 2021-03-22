@@ -263,7 +263,7 @@ public class panelPrincipal {
 				AG = new AlgoritmoGenetico(tamPoblacion, numGeneraciones, precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite, tipoIndividuo);
 				//textField_solucion.setText(AG.getSolucion());
 				if (tipoIndividuo.equals("Funcion Michalewicz (Booleanos)") || tipoIndividuo.equals("Funcion Michalewicz (Reales)")) {
-					dimension.setSize(500, 500);
+					dimension.setSize(500, 800);
 					//solArea.setMinimumSize(dimension);
 					solArea.setPreferredSize(dimension);
 				}

@@ -86,6 +86,11 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 	}
 	
 	@Override
+	public double getFitnessDesplazado() {
+		return this.aptitud;
+	}
+	
+	@Override
 	public ArrayList<Boolean> getCromosoma(){
 		
 		return this.cromosoma;

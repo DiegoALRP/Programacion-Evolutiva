@@ -35,30 +35,46 @@ public class CruceMonopunto extends Cruce {
 		ArrayList cromoPadre1 = padre1.getCromosoma();
 		ArrayList cromoPadre2 = padre2.getCromosoma();
 		
-		double fitnessB1 = padre1.getFitness();
-		double fitnessB2 = padre2.getFitness();
+		ArrayList cromoPadre1Aux = new ArrayList();
+		cromoPadre1Aux.addAll(cromoPadre1);
+		
+		ArrayList cromoPadre2Aux = new ArrayList();
+		cromoPadre2Aux.addAll(cromoPadre2);
+		
+		double fitnessP1 = padre1.getFitness();
+		double fitnessP2 = padre2.getFitness();
 		
 		ArrayList cromoHijo1 = new ArrayList();
-		cromoHijo1.addAll(cromoPadre1);
+		cromoHijo1.addAll(cromoPadre1Aux);
 
 		ArrayList cromoHijo2 = new ArrayList();
-		cromoHijo2.addAll(cromoPadre2);
+		cromoHijo2.addAll(cromoPadre2Aux);
 		
 		int longitudCromo = padre1.getLongitudCromosoma();
 		
 		int longi = this.punto_cruce;
 		while (longi < longitudCromo) {
 			
-			cromoHijo1.set(longi, cromoPadre2.get(longi));
-			cromoHijo2.set(longi, cromoPadre1.get(longi));
+			cromoHijo1.set(longi, cromoPadre2Aux.get(longi));
+			cromoHijo2.set(longi, cromoPadre1Aux.get(longi));
 			longi++;
 		}
 		
 		padre1.setCromosoma(cromoHijo1);
 		padre2.setCromosoma(cromoHijo2);
 		
-		//double fitnessA1 = padre1.getFitness();
-		//double fitnessA2 = padre2.getFitness();
+		double fitnessH1 = padre1.calculateFitness();
+		double fitnessH2 = padre2.calculateFitness();
+		
+		if(padre1.getId().equals("Funcion 1")) {
+			if (fitnessP1 > fitnessH1) padre1.setCromosoma(cromoPadre1Aux);
+			if (fitnessP2 > fitnessH2) padre2.setCromosoma(cromoPadre2Aux);
+		}
+		else {
+			
+			if (fitnessP1 < fitnessH1) padre1.setCromosoma(cromoPadre1Aux);
+			if (fitnessP2 < fitnessH2) padre2.setCromosoma(cromoPadre2Aux);
+		}
 		
 		//if (fitnessA1 < fitnessB1) padre1.setCromosoma(cromoPadre1);
 		//if (fitnessA2 < fitnessB2) padre2.setCromosoma(cromoPadre2);
@@ -74,9 +90,7 @@ public class CruceMonopunto extends Cruce {
 		for (int i = 0; i < tamPoblacion; i++) {
 			
 			if (rand.nextDouble() < this.probCruce) {
-				
-				
-				
+
 				if (this.num_selec_cruce % 2 == 1) {
 					
 					if (!poblacion.get(i).getCromosoma().equals(poblacion.get(this.selec_cruce.get(this.num_selec_cruce - 1)).getCromosoma())) {

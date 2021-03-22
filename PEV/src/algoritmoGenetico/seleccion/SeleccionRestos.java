@@ -58,12 +58,12 @@ public class SeleccionRestos extends Seleccion{
 		pik = new double[poblacion.size()];
 		
 		for(Individuo ind : poblacion) {
-			aptitudes += ind.getFitness();
+			aptitudes += ind.getFitnessDesplazado();
 		}
 		
 		for(int i = 0; i < poblacion.size(); i++) {
-			puntAcumulada[i] += poblacion.get(i).getFitness() / aptitudes;
-			pik[i] = ((poblacion.get(i).getFitness() / aptitudes)) * poblacion.size();
+			puntAcumulada[i] += poblacion.get(i).getFitnessDesplazado() / aptitudes;
+			pik[i] = ((poblacion.get(i).getFitnessDesplazado() / aptitudes)) * poblacion.size();
 		}
 	}
 	
