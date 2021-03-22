@@ -42,6 +42,8 @@ public class IndividuoFuncion2 extends Individuo<Boolean> {
 		}
 		
 		aptitud = parte1*parte2;
+		this.aptitudDesplazada = aptitud;
+		
 		return aptitud;
 	}
 	

@@ -43,6 +43,7 @@ public class IndividuoFuncion3 extends Individuo<Boolean> {
 		double cosy = Math.cos(y);
 		
 		aptitud = - Math.abs(sinx * cosy * Math.exp(exp));
+		this.aptitudDesplazada = aptitud;
 		
 		return aptitud;
 	}

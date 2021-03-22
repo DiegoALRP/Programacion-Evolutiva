@@ -43,6 +43,8 @@ public class IndividuoFuncion4Double extends Individuo<Double>{
 		}
 		
 		aptitud = -sumAcum;
+		this.aptitudDesplazada = aptitud;
+		
 		return aptitud;
 	}
 

@@ -35,6 +35,8 @@ public class IndividuoFuncionMatyas extends Individuo<Boolean>{
 		double x1 = fenotipo[0] * fenotipo[0];
 		double x2 = fenotipo[1] * fenotipo[1];
 		aptitud = 0.26*(x1 + x2) - 0.48 * fenotipo[0] * fenotipo[1];
+		this.aptitudDesplazada = aptitud;
+		
 		return aptitud;
 	}
 

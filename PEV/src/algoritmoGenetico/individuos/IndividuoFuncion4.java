@@ -43,6 +43,8 @@ public class IndividuoFuncion4 extends Individuo<Boolean> {
 		}
 		
 		aptitud = -sumAcum;
+		this.aptitudDesplazada = aptitud;
+		
 		return aptitud;
 	}
 

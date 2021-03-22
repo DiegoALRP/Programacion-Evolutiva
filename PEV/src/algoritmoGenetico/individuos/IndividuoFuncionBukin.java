@@ -35,6 +35,8 @@ public class IndividuoFuncionBukin extends Individuo<Boolean>{
 		
 		double abs = Math.abs(fenotipo[1] - 0.01 * fenotipo[0] * fenotipo[0]);
 		aptitud = 100 * Math.sqrt(abs) + 0.01 * Math.abs(fenotipo[0] + 10);
+		this.aptitudDesplazada = aptitud;
+		
 		return aptitud;
 	}
 

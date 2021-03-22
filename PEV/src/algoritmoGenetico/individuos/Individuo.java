@@ -17,6 +17,7 @@ public abstract class Individuo<E> {
 	
 	
 	protected double aptitud;
+	protected double aptitudDesplazada;
 	protected double precision;
 	protected double puntuacion;
 	protected double puntAcumulada;
