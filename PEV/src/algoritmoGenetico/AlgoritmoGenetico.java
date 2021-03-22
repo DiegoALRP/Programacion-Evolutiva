@@ -121,7 +121,13 @@ public class AlgoritmoGenetico {
 				if (fitness < mejorGeneracion) {
 					
 					mejorGeneracion = fitness;
-					mejorFenotipo = ind.getFenotipo() + "\n" + fitness;
+					
+					if (ind.getId().equals("Funcion Michalewicz (Reales)") || ind.getId().equals("Funcion Michalewicz (Booleanos)")) {
+						mejorFenotipo = ind.getFenotipo() + fitness;
+					}
+					else {
+						mejorFenotipo = ind.getFenotipo() + "\n" + fitness;
+					}
 				}
 				
 				if (fitness > maxFitness) {
