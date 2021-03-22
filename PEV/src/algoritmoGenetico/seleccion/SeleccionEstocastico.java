@@ -70,7 +70,7 @@ public class SeleccionEstocastico extends Seleccion{
 	public void addIndividual(List<Individuo> poblacion, ArrayList<Individuo> nuevaPoblacion, int index) {
 		
 		Individuo indSeleccionado = poblacion.get(index);
-		Individuo nuevoIndividuo = FactoriaIndividuo.getIndividuo(indSeleccionado.getId(), indSeleccionado.getPrecision());
+		Individuo nuevoIndividuo = FactoriaIndividuo.getIndividuo(indSeleccionado.getId(), indSeleccionado.getPrecision(), indSeleccionado.getNumGenes());
 	
 		ArrayList cromoPadre1 = indSeleccionado.getCromosoma();
 		ArrayList cromoHijo1 = new ArrayList();

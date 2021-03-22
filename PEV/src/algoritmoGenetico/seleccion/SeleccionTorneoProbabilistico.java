@@ -70,7 +70,7 @@ public class SeleccionTorneoProbabilistico extends Seleccion{
 			indSeleccionado = candidatos.get(indexWorstIndividual);
 		}
 		
-		Individuo nuevoIndividuo = FactoriaIndividuo.getIndividuo(indSeleccionado.getId(), indSeleccionado.getPrecision());
+		Individuo nuevoIndividuo = FactoriaIndividuo.getIndividuo(indSeleccionado.getId(), indSeleccionado.getPrecision() , indSeleccionado.getNumGenes());
 		
 		ArrayList cromoPadre1 = indSeleccionado.getCromosoma();
 		ArrayList cromoHijo1 = new ArrayList();

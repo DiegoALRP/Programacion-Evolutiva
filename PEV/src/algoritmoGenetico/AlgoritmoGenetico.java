@@ -34,11 +34,11 @@ public class AlgoritmoGenetico {
 	private List<Individuo> elite;
 	
 	public <T> AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, double precision, Seleccion metodoSeleccion, Cruce metodoCruce, 
-			double porcCruce, Mutacion metodoMutacion, double porcMutacion, double porcElite, String tipoIndividuo) {
+			double porcCruce, Mutacion metodoMutacion, double porcMutacion, double porcElite, String tipoIndividuo, int numN) {
 		
 		this.inicializaVariables(tamPoblacion, numGeneraciones);
 		ArrayList<Individuo> poblacion = new ArrayList<Individuo>(tamPoblacion);
-		this.inicializaPoblacion(tamPoblacion, tipoIndividuo, poblacion, precision);
+		this.inicializaPoblacion(tamPoblacion, tipoIndividuo, poblacion, precision, numN);
 		
 		while (this.generacionActual < numGeneraciones) {
 			
@@ -83,7 +83,7 @@ public class AlgoritmoGenetico {
 				if (fitness > mejorGeneracion) {
 					
 					mejorGeneracion = fitness;
-					mejorFenotipo = ind.getFenotipo() + "\n" + fitness;
+					mejorFenotipo = ind.getFenotipo() + "\nFitness: " + fitness;
 				}
 				
 				this.mediaGeneracion[this.generacionActual] += fitness;
@@ -123,10 +123,10 @@ public class AlgoritmoGenetico {
 					mejorGeneracion = fitness;
 					
 					if (ind.getId().equals("Funcion Michalewicz (Reales)") || ind.getId().equals("Funcion Michalewicz (Booleanos)")) {
-						mejorFenotipo = ind.getFenotipo() + fitness;
+						mejorFenotipo = ind.getFenotipo() + "Fitness: " + fitness;
 					}
 					else {
-						mejorFenotipo = ind.getFenotipo() + "\n" + fitness;
+						mejorFenotipo = ind.getFenotipo() + "\nFitness: " + fitness;
 					}
 				}
 				
@@ -178,10 +178,10 @@ public class AlgoritmoGenetico {
 		return this.mejorSolucion;
 	}
 	
-	public void inicializaPoblacion(int tamPoblacion, String tipoIndividuo, ArrayList<Individuo> poblacion, double precision) {
+	public void inicializaPoblacion(int tamPoblacion, String tipoIndividuo, ArrayList<Individuo> poblacion, double precision, int numN) {
 		
 		for (int i = 0; i < tamPoblacion; i++) {
-			Individuo nuevoInd = FactoriaIndividuo.getIndividuo(tipoIndividuo, precision);
+			Individuo nuevoInd = FactoriaIndividuo.getIndividuo(tipoIndividuo, precision, numN);
 			nuevoInd.inicializaIndividuo();
 			poblacion.add(nuevoInd);
 		}

@@ -211,6 +211,19 @@ public class panelPrincipal {
 		
 		////////////////////////////////////////////////
 		
+		JLabel paramN = new JLabel("		n: ");
+		JTextField paramNText = new JTextField();
+		paramNText.setText("6");
+		Dimension dimensionN = new Dimension(50, 20);
+		paramNText.setPreferredSize(dimensionN);
+		
+		
+		JPanel problemas = new JPanel();
+		frame.getContentPane().add(problemas, BorderLayout.NORTH);
+		
+		JLabel lblNewLabel = new JLabel("Problema");
+		problemas.add(lblNewLabel);
+		
 		JComboBox individuo_cbox = new JComboBox();
 		individuo_cbox.setModel(new DefaultComboBoxModel(new String[] {"Funcion 1", "Funcion Schubert", "Funcion Holder table", "Funcion Michalewicz (Booleanos)", "Funcion Michalewicz (Reales)", "Funcion Bukin", "Funcion Matyas"}));
 		individuo_cbox.addActionListener(new ActionListener() {
@@ -218,9 +231,14 @@ public class panelPrincipal {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				funcion = individuo_cbox.getSelectedItem().toString();
+				if (individuo_cbox.getSelectedItem().toString().equals("Funcion Michalewicz (Booleanos)") || individuo_cbox.getSelectedItem().toString().equals("Funcion Michalewicz (Reales)")) {
+					
+					problemas.add(paramN);
+					problemas.add(paramNText);
+				}
 				if(individuo_cbox.getSelectedItem().toString().equals("Funcion Michalewicz (Reales)")) {
 					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme", "Aritmetico", "BLX-alpha"}));
-					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica", "Mutacion Uniforme"})); 
+					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica", "Mutacion Uniforme"}));
 				} else {
 					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme"}));
 					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutacion basica"})); 
@@ -241,7 +259,8 @@ public class panelPrincipal {
 		controles.add(solArea);
 		//controles.add(textField_solucion);
 		//controles.add(solLabel);
-
+		
+		problemas.add(individuo_cbox);
 		
 		ejecutar.addActionListener(new ActionListener() {
 			
@@ -260,13 +279,16 @@ public class panelPrincipal {
 				Cruce metodoCruce = FactoriaCruces.getAlgoritmoDeCruce(Cruce_cbox.getSelectedItem().toString(), numGeneraciones);
 				Mutacion metodoMutacion = FactoriaMutaciones.getAlgoritmoDeMutacion(Mutacion_cbox.getSelectedItem().toString(), numGeneraciones);
 				String tipoIndividuo = individuo_cbox.getSelectedItem().toString();
-				AG = new AlgoritmoGenetico(tamPoblacion, numGeneraciones, precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite, tipoIndividuo);
-				//textField_solucion.setText(AG.getSolucion());
+				int numN = 6;
 				if (tipoIndividuo.equals("Funcion Michalewicz (Booleanos)") || tipoIndividuo.equals("Funcion Michalewicz (Reales)")) {
+					
+					numN = Integer.parseInt(paramNText.getText());
 					dimension.setSize(500, 800);
 					//solArea.setMinimumSize(dimension);
 					solArea.setPreferredSize(dimension);
 				}
+				AG = new AlgoritmoGenetico(tamPoblacion, numGeneraciones, precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite, tipoIndividuo, numN);
+				//textField_solucion.setText(AG.getSolucion());
 				solArea.setText(AG.getSolucion());
 				//solLabel.setText(AG.getSolucion());
 				gr.actualiza(numGeneraciones, AG.getMejorAbsoluto(), AG.getMejorGeneracion(), AG.getMediaGeneracion());
@@ -292,13 +314,13 @@ public class panelPrincipal {
 		});
 		////////////////////////////////////////////////		
 
-		JPanel problemas = new JPanel();
+		/*JPanel problemas = new JPanel();
 		frame.getContentPane().add(problemas, BorderLayout.NORTH);
 		
 		JLabel lblNewLabel = new JLabel("Problema");
 		problemas.add(lblNewLabel);
 		
-		problemas.add(individuo_cbox);
+		problemas.add(individuo_cbox);*/
 	}
 
 }
