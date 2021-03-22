@@ -75,24 +75,19 @@ public class AlgoritmoGenetico {
 	
 	public void evaluar(String tipoIndividuo, ArrayList<Individuo> poblacion, double porcElite) {
 		
-		ArrayList<Integer> mejoresIndividuos = new ArrayList<Integer>();
-		double mejorGeneracion;
+		double mejorGeneracion = 0;
 		double maxFitness = 0;
 		
-		if (tipoIndividuo.equals("Funcion 1")) {	//Funcion1
+		if (tipoIndividuo.equals("Funcion 1")) {
 			
 			mejorGeneracion = 0;
+			String mejorFenotipo = "";
 			for (Individuo ind : poblacion) {
 				double fitness = ind.calculateFitness();
 				if (fitness > mejorGeneracion) {
 					
 					mejorGeneracion = fitness;
-					mejoresIndividuos.add(poblacion.indexOf(ind));
-				}
-				
-				if (this.generacionActual == 0 || fitness > this.mejorAbsoluto[this.generacionActual - 1]) {
-					
-					this.mejorSolucion = ind.getFenotipo();
+					mejorFenotipo = ind.getFenotipo() + "\n" + fitness;
 				}
 				
 				this.mediaGeneracion[this.generacionActual] += fitness;
@@ -101,6 +96,11 @@ public class AlgoritmoGenetico {
 			this.mediaGeneracion[this.generacionActual] = this.mediaGeneracion[this.generacionActual] / this.tamPoblacion;
 			
 			this.mejorGeneracion[this.generacionActual] = mejorGeneracion;
+			
+			if (this.generacionActual == 0 || mejorGeneracion > this.mejorAbsoluto[this.generacionActual - 1]) {
+				
+				this.mejorSolucion = mejorFenotipo;
+			}
 			
 			if (this.generacionActual == 0 || this.mejorGeneracion[this.generacionActual] > this.mejorAbsoluto[this.generacionActual - 1]) {
 				
@@ -123,7 +123,6 @@ public class AlgoritmoGenetico {
 				if (fitness < mejorGeneracion) {
 					
 					mejorGeneracion = fitness;
-					mejoresIndividuos.add(poblacion.indexOf(ind));
 				}
 				
 				if (fitness > maxFitness) {
@@ -134,7 +133,7 @@ public class AlgoritmoGenetico {
 				System.out.println(ind.getFenotipo());
 				if (this.generacionActual == 0 || fitness < this.mejorAbsoluto[this.generacionActual - 1]) {
 					
-					this.mejorSolucion = ind.getFenotipo();
+					this.mejorSolucion = ind.getFenotipo() + "\n" + fitness;
 				}
 				
 				

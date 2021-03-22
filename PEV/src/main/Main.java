@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import algoritmoGenetico.AlgoritmoGenetico;
@@ -11,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+	
 		panelPrincipal p = new panelPrincipal();
 		/*AlgoritmoGenetico ag = new AlgoritmoGenetico(2, 
 				2, 0.0001, null, null, 0.01, null, 0, 0);*/

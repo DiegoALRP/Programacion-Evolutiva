@@ -4,18 +4,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 import algoritmoGenetico.individuos.FactoriaIndividuo;
 import algoritmoGenetico.individuos.Individuo;
 
 public class SeleccionTruncamiento extends Seleccion{
 
-	private double trunc;
+	private int trunc;
 	private int num_copias;
 	private int num_individuos;
 	
-	public SeleccionTruncamiento(double umbral) {
-		trunc = umbral;
+	public SeleccionTruncamiento() {
+		Random rand = new Random();
+		trunc = rand.nextInt(4) + 1;
 		seleccionaCopias();
 	}
 
@@ -49,7 +51,7 @@ public class SeleccionTruncamiento extends Seleccion{
 
 	
 	private void seleccionaCopias() {
-		switch((int) trunc* 10) {
+		switch(trunc) {
 		case 1: num_copias = 10; num_individuos = 10;break;
 		case 2: num_copias = 4; num_individuos = 20;break;
 		case 3: num_copias = 3; num_individuos = 30;break;

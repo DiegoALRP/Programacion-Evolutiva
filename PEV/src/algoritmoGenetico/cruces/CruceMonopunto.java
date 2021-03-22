@@ -20,24 +20,13 @@ public class CruceMonopunto extends Cruce {
 		Random rand = new Random();
 		this.punto_cruce = rand.nextInt(this.tamPoblacion - 2) + 1;
 		
-		/*System.out.println("Antes:\n");
-		for (int i = 0; i < poblacion.size(); i++) {
-			
-			System.out.println(poblacion.get(i).printCromosoma() + "\n");
-		}*/
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
 			
+			if (selec_cruce.get(i) == selec_cruce.get(i+1)) {
+				
+			}
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
 		}
-		
-		//System.out.println("Punto de cruce: " + this.punto_cruce);
-		//sSystem.out.println("Numero de Seleccionados: " + this.num_selec_cruce);
-		
-		/*System.out.println("Despues:\n");
-		for (int i = 0; i < poblacion.size(); i++) {
-			
-			System.out.println(poblacion.get(i).printCromosoma() + "\n");
-		}*/
 	}
 	
 	@Override
@@ -86,8 +75,21 @@ public class CruceMonopunto extends Cruce {
 			
 			if (rand.nextDouble() < this.probCruce) {
 				
-				this.selec_cruce.add(i);
-				this.num_selec_cruce++;
+				
+				
+				if (this.num_selec_cruce % 2 == 1) {
+					
+					if (!poblacion.get(i).getCromosoma().equals(poblacion.get(this.selec_cruce.get(this.num_selec_cruce - 1)).getCromosoma())) {
+						
+						this.selec_cruce.add(i);
+						this.num_selec_cruce++;
+					}
+				}
+				else {
+					
+					this.selec_cruce.add(i);
+					this.num_selec_cruce++;
+				}
 			}
 		}
 		
