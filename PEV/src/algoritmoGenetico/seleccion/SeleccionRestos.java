@@ -46,7 +46,7 @@ public class SeleccionRestos extends Seleccion{
 
 	private int getIndividuo(double puntero) {
 		int pivote = 0;
-		while(pivote < puntAcumulada.length && puntAcumulada[pivote] < puntero) {
+		while(pivote < puntAcumulada.length - 1 && puntAcumulada[pivote] < puntero) {
 			pivote++;
 		}	
 		return pivote;
