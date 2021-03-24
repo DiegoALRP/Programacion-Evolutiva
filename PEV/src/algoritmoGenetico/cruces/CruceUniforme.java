@@ -51,9 +51,9 @@ public class CruceUniforme extends Cruce {
 		while (i < longitudCromo) {
 			
 			if (rand.nextDouble() < this.probCruce) {
+				
 				cromoHijo1.set(i, cromoPadre2Aux.get(i));
 				cromoHijo2.set(i, cromoPadre1Aux.get(i));
-				System.out.println("SE SUSTITUYE: " + i);
 			}
 			i++;
 		}
@@ -70,7 +70,7 @@ public class CruceUniforme extends Cruce {
 		if (fitnessA2 < fitnessB2) padre2.setCromosoma(cromoPadre2);*/
 	}
 
-	@Override
+	/*@Override
 	protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
 
 		this.tamPoblacion = poblacion.size();
@@ -90,6 +90,6 @@ public class CruceUniforme extends Cruce {
 			this.num_selec_cruce--;
 			this.selec_cruce.remove(num_selec_cruce);
 		}
-	}
+	}*/
 
 }
