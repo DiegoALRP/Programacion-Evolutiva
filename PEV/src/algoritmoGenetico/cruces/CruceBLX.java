@@ -30,8 +30,11 @@ public class CruceBLX extends Cruce{
 		ArrayList<Double> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Double> cromoPadre2 = padre2.getCromosoma();
 		
-		double fitnessP1 = padre1.getFitness();
-		double fitnessP2 = padre2.getFitness();
+		ArrayList<Double> cromoPadre1Aux = new ArrayList<Double>();
+		cromoPadre1Aux.addAll(cromoPadre1);
+		
+		ArrayList<Double> cromoPadre2Aux = new ArrayList<Double>();
+		cromoPadre2Aux.addAll(cromoPadre2);
 		
 		ArrayList<Double> cromoHijo1 = new ArrayList<Double>();
 		cromoHijo1.addAll(cromoPadre1);
@@ -41,13 +44,13 @@ public class CruceBLX extends Cruce{
 		
 		int longCromo = padre1.getLongitudCromosoma();
 		Random rand = new Random();
+		double alpha = rand.nextDouble();
 		for (int i = 0; i < longCromo; i++) {
 			
-			double cmax = Math.max(cromoPadre1.get(i), cromoPadre2.get(i));
-			double cmin = Math.min(cromoPadre1.get(i), cromoPadre2.get(i));
+			double cmax = Math.max(cromoPadre1Aux.get(i), cromoPadre2Aux.get(i));
+			double cmin = Math.min(cromoPadre1Aux.get(i), cromoPadre2Aux.get(i));
 			
 			double varI = cmax - cmin;
-			double alpha = rand.nextDouble();
 			double rangeMin = cmin - varI*alpha;
 			double rangeMax = cmax + varI*alpha;
 			
@@ -57,9 +60,11 @@ public class CruceBLX extends Cruce{
 			cromoHijo1.set(i, newGen1);
 			cromoHijo2.set(i, newGen2);
 		}
+		
+		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
 	}
 
-	@Override
+	/*@Override
 	protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
 		
 		this.tamPoblacion = poblacion.size();
@@ -79,6 +84,6 @@ public class CruceBLX extends Cruce{
 			this.num_selec_cruce--;
 			this.selec_cruce.remove(num_selec_cruce);
 		}
-	}
+	}*/
 
 }

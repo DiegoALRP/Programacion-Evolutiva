@@ -34,8 +34,11 @@ public class CruceAritmetico extends Cruce {
 		ArrayList<Double> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Double> cromoPadre2 = padre2.getCromosoma();
 		
-		double fitnessB1 = padre1.getFitness();
-		double fitnessB2 = padre2.getFitness();
+		ArrayList<Double> cromoPadre1Aux = new ArrayList<Double>();
+		cromoPadre1Aux.addAll(cromoPadre1);
+		
+		ArrayList<Double> cromoPadre2Aux = new ArrayList<Double>();
+		cromoPadre2Aux.addAll(cromoPadre2);
 		
 		ArrayList<Double> cromoHijo1 = new ArrayList<Double>();
 		cromoHijo1.addAll(cromoPadre1);
@@ -49,15 +52,15 @@ public class CruceAritmetico extends Cruce {
 		double alpha = rand.nextDouble();
 		while (i < longitudCromo) {
 			
-			cromoHijo1.set(i, alpha*cromoPadre1.get(i) + (1 - alpha)*cromoPadre2.get(i));
-			cromoHijo2.set(i, alpha*cromoPadre2.get(i) + (1 - alpha)*cromoPadre1.get(i));
+			cromoHijo1.set(i, alpha*cromoPadre1Aux.get(i) + (1 - alpha)*cromoPadre2Aux.get(i));
+			cromoHijo2.set(i, alpha*cromoPadre2Aux.get(i) + (1 - alpha)*cromoPadre1Aux.get(i));
 			i++;
 		}
 		
-		
+		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
 	}
 
-	@Override
+	/*@Override
 	protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
 		
 		this.tamPoblacion = poblacion.size();
@@ -77,6 +80,6 @@ public class CruceAritmetico extends Cruce {
 			this.num_selec_cruce--;
 			this.selec_cruce.remove(num_selec_cruce);
 		}
-	}
+	}*/
 
 }

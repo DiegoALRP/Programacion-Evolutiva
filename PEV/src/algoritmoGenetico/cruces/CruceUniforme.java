@@ -29,8 +29,14 @@ public class CruceUniforme extends Cruce {
 		ArrayList cromoPadre1 = padre1.getCromosoma();
 		ArrayList cromoPadre2 = padre2.getCromosoma();
 		
-		double fitnessB1 = padre1.getFitness();
-		double fitnessB2 = padre2.getFitness();
+		ArrayList cromoPadre1Aux = new ArrayList();
+		cromoPadre1Aux.addAll(cromoPadre1);
+		
+		ArrayList cromoPadre2Aux = new ArrayList();
+		cromoPadre2Aux.addAll(cromoPadre2);
+		
+		/*double fitnessB1 = padre1.getFitness();
+		double fitnessB2 = padre2.getFitness();*/
 		
 		ArrayList cromoHijo1 = new ArrayList();
 		cromoHijo1.addAll(cromoPadre1);
@@ -39,7 +45,6 @@ public class CruceUniforme extends Cruce {
 		cromoHijo2.addAll(cromoPadre2);
 		
 		int longitudCromo = padre1.getLongitudCromosoma();
-		
 		int i = 0;
 		Random rand = new Random();
 		while (i < longitudCromo) {
@@ -51,8 +56,10 @@ public class CruceUniforme extends Cruce {
 			i++;
 		}
 		
-		padre1.setCromosoma(cromoHijo1);
-		padre2.setCromosoma(cromoHijo2);
+		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
+		
+		/*padre1.setCromosoma(cromoHijo1);
+		padre2.setCromosoma(cromoHijo2);*/
 		
 		/*double fitnessA1 = padre1.getFitness();
 		double fitnessA2 = padre2.getFitness();
@@ -61,7 +68,7 @@ public class CruceUniforme extends Cruce {
 		if (fitnessA2 < fitnessB2) padre2.setCromosoma(cromoPadre2);*/
 	}
 
-	@Override
+	/*@Override
 	protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
 
 		this.tamPoblacion = poblacion.size();
@@ -81,6 +88,6 @@ public class CruceUniforme extends Cruce {
 			this.num_selec_cruce--;
 			this.selec_cruce.remove(num_selec_cruce);
 		}
-	}
+	}*/
 
 }

@@ -41,8 +41,8 @@ public class CruceMonopunto extends Cruce {
 		ArrayList cromoPadre2Aux = new ArrayList();
 		cromoPadre2Aux.addAll(cromoPadre2);
 		
-		double fitnessP1 = padre1.getFitness();
-		double fitnessP2 = padre2.getFitness();
+		/*double fitnessP1 = padre1.getFitness();
+		double fitnessP2 = padre2.getFitness();*/
 		
 		ArrayList cromoHijo1 = new ArrayList();
 		cromoHijo1.addAll(cromoPadre1Aux);
@@ -51,7 +51,6 @@ public class CruceMonopunto extends Cruce {
 		cromoHijo2.addAll(cromoPadre2Aux);
 		
 		int longitudCromo = padre1.getLongitudCromosoma();
-		
 		int longi = this.punto_cruce;
 		while (longi < longitudCromo) {
 			
@@ -60,7 +59,9 @@ public class CruceMonopunto extends Cruce {
 			longi++;
 		}
 		
-		padre1.setCromosoma(cromoHijo1);
+		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
+		
+		/*padre1.setCromosoma(cromoHijo1);
 		padre2.setCromosoma(cromoHijo2);
 		
 		double fitnessH1 = padre1.calculateFitness();
@@ -74,7 +75,7 @@ public class CruceMonopunto extends Cruce {
 			
 			if (fitnessP1 < fitnessH1) padre1.setCromosoma(cromoPadre1Aux);
 			if (fitnessP2 < fitnessH2) padre2.setCromosoma(cromoPadre2Aux);
-		}
+		}*/
 		
 		//if (fitnessA1 < fitnessB1) padre1.setCromosoma(cromoPadre1);
 		//if (fitnessA2 < fitnessB2) padre2.setCromosoma(cromoPadre2);
@@ -82,7 +83,7 @@ public class CruceMonopunto extends Cruce {
 		
 	}
 
-	protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
+	/*protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
 		
 		this.tamPoblacion = poblacion.size();
 		Random rand = new Random();
@@ -112,5 +113,5 @@ public class CruceMonopunto extends Cruce {
 			this.num_selec_cruce--;
 			this.selec_cruce.remove(num_selec_cruce);
 		}
-	}
+	}*/
 }
