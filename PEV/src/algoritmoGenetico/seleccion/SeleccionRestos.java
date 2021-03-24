@@ -21,7 +21,7 @@ public class SeleccionRestos extends Seleccion{
 		
 		ArrayList<Individuo> seleccionados = new ArrayList<Individuo>(poblacion.size());
 		Random r = new Random();
-		double marca = r.nextInt(1/poblacion.size());
+		double marca = (1/poblacion.size()) * r.nextDouble();
 		double puntero;
 		int aux = 0;
 		inicializaAptitudes(poblacion);
@@ -38,6 +38,7 @@ public class SeleccionRestos extends Seleccion{
 			 puntero = (marca + i -1) / poblacion.size();
 			 //seleccionados.add(poblacion.get(getIndividuo(puntero)));
 			 addIndividual(poblacion, seleccionados, getIndividuo(puntero));
+			 //aux++;
 		}
 		return seleccionados;
 	}
@@ -45,7 +46,7 @@ public class SeleccionRestos extends Seleccion{
 
 	private int getIndividuo(double puntero) {
 		int pivote = 0;
-		while(puntAcumulada[pivote] < puntero) {
+		while(pivote < puntAcumulada.length - 1 && puntAcumulada[pivote] < puntero) {
 			pivote++;
 		}	
 		return pivote;
@@ -62,8 +63,9 @@ public class SeleccionRestos extends Seleccion{
 		}
 		
 		for(int i = 0; i < poblacion.size(); i++) {
-			puntAcumulada[i] += poblacion.get(i).getFitnessDesplazado() / aptitudes;
-			pik[i] = ((poblacion.get(i).getFitnessDesplazado() / aptitudes)) * poblacion.size();
+			double fitness = poblacion.get(i).getFitnessDesplazado() / aptitudes;
+			puntAcumulada[i] = (i == 0)? fitness : puntAcumulada[i-1] + fitness;
+			pik[i] = fitness * poblacion.size();
 		}
 	}
 	
