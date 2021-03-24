@@ -13,6 +13,7 @@ public class CruceUniforme extends Cruce {
 
 		this.num_selec_cruce = 0;
 		this.selec_cruce = new ArrayList<Integer>();
+		this.probCruce = probCruce;
 		
 		this.seleccionaIndividuos(poblacion);
 		
@@ -39,10 +40,10 @@ public class CruceUniforme extends Cruce {
 		double fitnessB2 = padre2.getFitness();*/
 		
 		ArrayList cromoHijo1 = new ArrayList();
-		cromoHijo1.addAll(cromoPadre1);
+		cromoHijo1.addAll(cromoPadre1Aux);
 
 		ArrayList cromoHijo2 = new ArrayList();
-		cromoHijo2.addAll(cromoPadre2);
+		cromoHijo2.addAll(cromoPadre2Aux);
 		
 		int longitudCromo = padre1.getLongitudCromosoma();
 		int i = 0;
@@ -50,8 +51,9 @@ public class CruceUniforme extends Cruce {
 		while (i < longitudCromo) {
 			
 			if (rand.nextDouble() < this.probCruce) {
-				cromoHijo1.set(i, cromoPadre2.get(i));
-				cromoHijo2.set(i, cromoPadre1.get(i));
+				cromoHijo1.set(i, cromoPadre2Aux.get(i));
+				cromoHijo2.set(i, cromoPadre1Aux.get(i));
+				System.out.println("SE SUSTITUYE: " + i);
 			}
 			i++;
 		}
@@ -68,7 +70,7 @@ public class CruceUniforme extends Cruce {
 		if (fitnessA2 < fitnessB2) padre2.setCromosoma(cromoPadre2);*/
 	}
 
-	/*@Override
+	@Override
 	protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
 
 		this.tamPoblacion = poblacion.size();
@@ -88,6 +90,6 @@ public class CruceUniforme extends Cruce {
 			this.num_selec_cruce--;
 			this.selec_cruce.remove(num_selec_cruce);
 		}
-	}*/
+	}
 
 }

@@ -37,10 +37,10 @@ public class CruceBLX extends Cruce{
 		cromoPadre2Aux.addAll(cromoPadre2);
 		
 		ArrayList<Double> cromoHijo1 = new ArrayList<Double>();
-		cromoHijo1.addAll(cromoPadre1);
+		cromoHijo1.addAll(cromoPadre1Aux);
 
 		ArrayList<Double> cromoHijo2 = new ArrayList<Double>();
-		cromoHijo2.addAll(cromoPadre2);
+		cromoHijo2.addAll(cromoPadre2Aux);
 		
 		int longCromo = padre1.getLongitudCromosoma();
 		Random rand = new Random();
