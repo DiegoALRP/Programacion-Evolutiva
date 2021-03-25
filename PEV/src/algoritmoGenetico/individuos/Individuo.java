@@ -5,18 +5,18 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Universidad Complutense de Madrid
- * Programación Evolutiva
- * Grupo A 2021
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
  * Profesor:
- * 	-Carlos Cervigon Ruckauer
+ * 	-Carlos Cervigon Ruckauer.
  * 
- * Clase Individuo
+ * Clase Individuo.
  * 
  * @author 
- * Grupo G06
- * 	-Miguel Robledo
- * 	-Diego Alejandro Rodríguez Pereira
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
  *
  */
 public abstract class Individuo<E> {
