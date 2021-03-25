@@ -7,29 +7,17 @@ import algoritmoGenetico.individuos.Individuo;
 
 public class CruceAritmetico extends Cruce {
 
-	/*
-	 * Nota esta clase solo funciona con funcion 4
+	/**
+	 * [ES] Esta función cruza dos individuos (2 padres) y genera e inserta dos nuevos individuos (2 nuevos hijos).
+	 * [EN] This function crossover two individuals (2 parenst) and generates and insert two new individual (2 new children).
+	 * 
+	 * @param padre1	[ES] El primer individuo a cruzar.
+	 * 					[EN] The first individual to cross.
+	 * @param padre2	[ES] El segundo indivuduo a cruzar.
+	 * 					[EN] The second individual to cross.
 	 */
 	@Override
-	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
-		// TODO Auto-generated method stub
-
-		this.num_selec_cruce = 0;
-		this.selec_cruce = new ArrayList<Integer>();
-		this.probCruce = probCruce;
-		this.tamPoblacion = poblacion.size();
-		
-		this.seleccionaIndividuos(poblacion);
-		
-		for (int i = 0; i < this.num_selec_cruce; i += 2) {
-			
-			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
-		}
-	}
-
-	@Override
 	protected void cruzaPadres(Individuo padre1, Individuo padre2) {
-		// TODO Auto-generated method stub
 		
 		ArrayList<Double> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Double> cromoPadre2 = padre2.getCromosoma();
@@ -59,27 +47,4 @@ public class CruceAritmetico extends Cruce {
 		
 		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
 	}
-
-	/*@Override
-	protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
-		
-		this.tamPoblacion = poblacion.size();
-		Random rand = new Random();
-		
-		for (int i = 0; i < tamPoblacion; i++) {
-			
-			if (rand.nextDouble() < this.probCruce) {
-				
-				this.selec_cruce.add(i);
-				this.num_selec_cruce++;
-			}
-		}
-		
-		if ((num_selec_cruce % 2) == 1) {
-			
-			this.num_selec_cruce--;
-			this.selec_cruce.remove(num_selec_cruce);
-		}
-	}*/
-
 }

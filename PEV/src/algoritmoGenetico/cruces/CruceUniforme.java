@@ -8,22 +8,6 @@ import algoritmoGenetico.individuos.Individuo;
 public class CruceUniforme extends Cruce {
 
 	@Override
-	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
-		// TODO Auto-generated method stub
-
-		this.num_selec_cruce = 0;
-		this.selec_cruce = new ArrayList<Integer>();
-		this.probCruce = probCruce;
-		
-		this.seleccionaIndividuos(poblacion);
-		
-		for (int i = 0; i < this.num_selec_cruce; i += 2) {
-			
-			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
-		}
-	}
-
-	@Override
 	protected void cruzaPadres(Individuo padre1, Individuo padre2) {
 		// TODO Auto-generated method stub
 

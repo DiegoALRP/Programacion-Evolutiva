@@ -252,13 +252,10 @@ public class panelPrincipal {
 		controles.add(resetear);
 		
 		JLabel solucion = new JLabel("Solucion :");
-		//JTextField textField_solucion = new JTextField();
 		JTextArea solArea = new JTextArea();
 		Dimension dimension = new Dimension();
 		controles.add(solucion);
 		controles.add(solArea);
-		//controles.add(textField_solucion);
-		//controles.add(solLabel);
 		
 		problemas.add(individuo_cbox);
 		
@@ -276,7 +273,7 @@ public class panelPrincipal {
 				int tamPoblacion = Integer.parseInt(n.getText());
 				
 				Seleccion metodoSeleccion = FactoriaSelecciones.getAlgoritmoDeSeleccion(Seleccion_cbox.getSelectedItem().toString(), numGeneraciones);
-				Cruce metodoCruce = FactoriaCruces.getAlgoritmoDeCruce(Cruce_cbox.getSelectedItem().toString(), numGeneraciones);
+				Cruce metodoCruce = FactoriaCruces.getAlgoritmoDeCruce(Cruce_cbox.getSelectedItem().toString());
 				Mutacion metodoMutacion = FactoriaMutaciones.getAlgoritmoDeMutacion(Mutacion_cbox.getSelectedItem().toString(), numGeneraciones);
 				String tipoIndividuo = individuo_cbox.getSelectedItem().toString();
 				int numN = 6;
@@ -284,13 +281,10 @@ public class panelPrincipal {
 					
 					numN = Integer.parseInt(paramNText.getText());
 					dimension.setSize(500, 800);
-					//solArea.setMinimumSize(dimension);
 					solArea.setPreferredSize(dimension);
 				}
 				AG = new AlgoritmoGenetico(tamPoblacion, numGeneraciones, precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite, tipoIndividuo, numN);
-				//textField_solucion.setText(AG.getSolucion());
 				solArea.setText(AG.getSolucion());
-				//solLabel.setText(AG.getSolucion());
 				gr.actualiza(numGeneraciones, AG.getMejorAbsoluto(), AG.getMejorGeneracion(), AG.getMediaGeneracion());
 			}
 		});
