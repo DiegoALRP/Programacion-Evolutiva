@@ -272,7 +272,7 @@ public class panelPrincipal {
 				double precision = Double.parseDouble(textField_error.getText());
 				int tamPoblacion = Integer.parseInt(n.getText());
 				
-				Seleccion metodoSeleccion = FactoriaSelecciones.getAlgoritmoDeSeleccion(Seleccion_cbox.getSelectedItem().toString(), numGeneraciones);
+				Seleccion metodoSeleccion = FactoriaSelecciones.getAlgoritmoDeSeleccion(Seleccion_cbox.getSelectedItem().toString());
 				Cruce metodoCruce = FactoriaCruces.getAlgoritmoDeCruce(Cruce_cbox.getSelectedItem().toString());
 				Mutacion metodoMutacion = FactoriaMutaciones.getAlgoritmoDeMutacion(Mutacion_cbox.getSelectedItem().toString());
 				String tipoIndividuo = individuo_cbox.getSelectedItem().toString();
