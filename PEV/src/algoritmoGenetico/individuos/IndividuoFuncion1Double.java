@@ -3,6 +3,21 @@ package algoritmoGenetico.individuos;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Clase Funcion 1 (Reales).
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class IndividuoFuncion1Double extends Individuo<Double> {
 
 	public IndividuoFuncion1Double(double precision) {
