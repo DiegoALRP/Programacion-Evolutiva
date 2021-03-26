@@ -3,8 +3,30 @@ package algoritmoGenetico.individuos;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Universidad Complutense de Madrid
+ * Programación Evolutiva
+ * Grupo A 2021
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer
+ * 
+ * Clase de la Función 4: Michalewicz (Reales)
+ * 
+ * @author 
+ * Grupo G06
+ * 	-Miguel Robledo
+ * 	-Diego Alejandro Rodríguez Pereira
+ *
+ */
 public class IndividuoFuncion4Double extends Individuo<Double>{
 
+	/**
+	 * [ES] Constructora de la función 1.
+	 * [EN] Function 1's constructor.
+	 * 
+	 * @param precision [ES] Valor de precisión.
+	 * 					[EN] Precision's value.
+	 */
 	public IndividuoFuncion4Double(int n, double precision) {
 		
 		this.id = "Funcion Michalewicz (Reales)";
@@ -26,6 +48,27 @@ public class IndividuoFuncion4Double extends Individuo<Double>{
 		cromosoma = new ArrayList<Double>(longitudTotal);
 	}
 
+	/**
+	 * [ES] Función que inicializa los valores del individuo.
+	 * [EN] Function that initialize the individual's values.
+	 */
+	@Override
+	public void inicializaIndividuo() {
+		
+		Random rand = new Random();
+		for (int i = 0; i < longitudTotal; i++) {
+			
+			cromosoma.add((Math.PI) * rand.nextDouble());
+		}
+	}
+	
+	/**
+	 * [ES] Esta función calcula el valor de aptitud/fitness del individuo.
+	 * [EN] This function calculates the individual's fitness value.
+	 * 
+	 * @return	[ES] Valor de aptitud / valor de Fitness del individuo.
+	 * 			[EN] Indiviual's Fitness value.
+	 */
 	@Override
 	public double calculateFitness() {
 		
@@ -43,19 +86,15 @@ public class IndividuoFuncion4Double extends Individuo<Double>{
 		}
 		
 		aptitud = -sumAcum;
+		this.aptitudDesplazada = aptitud;
+		
 		return aptitud;
 	}
 
-	@Override
-	public void inicializaIndividuo() {
-		
-		Random rand = new Random();
-		for (int i = 0; i < longitudTotal; i++) {
-			
-			cromosoma.add((Math.PI) * rand.nextDouble());
-		}
-	}
-
+	/**
+	 * [ES] Esta función calcula el fenotipo del individuo.
+	 * [EN] This function calculates the individual's phenotype.
+	 */
 	@Override
 	public void calculateFenotipo() {
 		
@@ -64,16 +103,25 @@ public class IndividuoFuncion4Double extends Individuo<Double>{
 			this.fenotipo[i] = this.cromosoma.get(i);
 		}
 	}
+	
+	/**
+	 * Getters and Setters
+	 */
 
 	@Override
 	public ArrayList<Double> getCromosoma() {
-		// TODO Auto-generated method stub
+		
 		return this.cromosoma;
 	}
 
 	@Override
 	public StringBuilder printCromosoma() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < this.longitudTotal; i++) {
+			
+			sb.append(this.cromosoma.get(i));
+		}
+		return sb;
 	}
 }

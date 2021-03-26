@@ -5,8 +5,38 @@ import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Clase Cruce Monopunto.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class CruceMonopunto extends Cruce {
 	
+	
+	/**
+	 * [ES] Esta es una función abstracta y es la principal método de las clases de cruces.
+	 * A partir de esta función se seleccionan y cruzan los individuos.
+	 * En la clase "CruceMonopunto" se modifica para permitir seleccionar un punto de cruce.
+	 * 
+	 * [EN] This is an abstract function and it is the principal function of the cross classes.
+	 * From here we select and cross the individuals.
+	 * In the class "CruceMonopunto" it's modified to allow select a crossover's point.
+	 * 
+	 * @param poblacion	[ES] Población a cruzar.
+	 * 					[EN] Population to cross.
+	 * @param probCruce	[ES] Probabilidad de cruce.
+	 * 					[EN] Crossover probability.
+	 */
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
@@ -15,29 +45,25 @@ public class CruceMonopunto extends Cruce {
 		this.selec_cruce = new ArrayList<Integer>();
 		this.tamPoblacion = poblacion.size();
 		
+		int longitudCromosoma = poblacion.get(0).getLongitudCromosoma();
+		
 		this.seleccionaIndividuos(poblacion);
 		
 		Random rand = new Random();
-		this.punto_cruce = rand.nextInt(this.tamPoblacion - 2) + 1;
+		if (longitudCromosoma == 2) {
+			this.punto_cruce = 1;
+		}
+		else if (longitudCromosoma < 2) {
+			this.punto_cruce = 0;
+		}
+		else {
+			this.punto_cruce = rand.nextInt(longitudCromosoma - 2) + 1;
+		}
 		
-		/*System.out.println("Antes:\n");
-		for (int i = 0; i < poblacion.size(); i++) {
-			
-			System.out.println(poblacion.get(i).printCromosoma() + "\n");
-		}*/
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
 			
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
 		}
-		
-		//System.out.println("Punto de cruce: " + this.punto_cruce);
-		//sSystem.out.println("Numero de Seleccionados: " + this.num_selec_cruce);
-		
-		/*System.out.println("Despues:\n");
-		for (int i = 0; i < poblacion.size(); i++) {
-			
-			System.out.println(poblacion.get(i).printCromosoma() + "\n");
-		}*/
 	}
 	
 	@Override
@@ -46,55 +72,27 @@ public class CruceMonopunto extends Cruce {
 		ArrayList cromoPadre1 = padre1.getCromosoma();
 		ArrayList cromoPadre2 = padre2.getCromosoma();
 		
-		double fitnessB1 = padre1.getFitness();
-		double fitnessB2 = padre2.getFitness();
+		ArrayList cromoPadre1Aux = new ArrayList();
+		cromoPadre1Aux.addAll(cromoPadre1);
+		
+		ArrayList cromoPadre2Aux = new ArrayList();
+		cromoPadre2Aux.addAll(cromoPadre2);
 		
 		ArrayList cromoHijo1 = new ArrayList();
-		cromoHijo1.addAll(cromoPadre1);
+		cromoHijo1.addAll(cromoPadre1Aux);
 
 		ArrayList cromoHijo2 = new ArrayList();
-		cromoHijo2.addAll(cromoPadre2);
+		cromoHijo2.addAll(cromoPadre2Aux);
 		
 		int longitudCromo = padre1.getLongitudCromosoma();
-		
 		int longi = this.punto_cruce;
 		while (longi < longitudCromo) {
 			
-			cromoHijo1.set(longi, cromoPadre2.get(longi));
-			cromoHijo2.set(longi, cromoPadre1.get(longi));
+			cromoHijo1.set(longi, cromoPadre2Aux.get(longi));
+			cromoHijo2.set(longi, cromoPadre1Aux.get(longi));
 			longi++;
 		}
 		
-		padre1.setCromosoma(cromoHijo1);
-		padre2.setCromosoma(cromoHijo2);
-		
-		//double fitnessA1 = padre1.getFitness();
-		//double fitnessA2 = padre2.getFitness();
-		
-		//if (fitnessA1 < fitnessB1) padre1.setCromosoma(cromoPadre1);
-		//if (fitnessA2 < fitnessB2) padre2.setCromosoma(cromoPadre2);
-		
-		
-	}
-
-	protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
-		
-		this.tamPoblacion = poblacion.size();
-		Random rand = new Random();
-		
-		for (int i = 0; i < tamPoblacion; i++) {
-			
-			if (rand.nextDouble() < this.probCruce) {
-				
-				this.selec_cruce.add(i);
-				this.num_selec_cruce++;
-			}
-		}
-		
-		if ((num_selec_cruce % 2) == 1) {
-			
-			this.num_selec_cruce--;
-			this.selec_cruce.remove(num_selec_cruce);
-		}
+		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
 	}
 }

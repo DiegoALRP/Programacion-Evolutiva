@@ -1,36 +1,28 @@
 package algoritmoGenetico.individuos;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**
- * Universidad Complutense de Madrid
- * Programación Evolutiva
- * Grupo A 2021
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
  * Profesor:
- * 	-Carlos Cervigon Ruckauer
+ * 	-Carlos Cervigon Ruckauer.
  * 
- * Clase de la Función 1
+ * Clase Funcion 1 (Reales).
  * 
  * @author 
- * Grupo G06
- * 	-Miguel Robledo
- * 	-Diego Alejandro Rodríguez Pereira
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
  *
  */
-public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
+public class IndividuoFuncion1Double extends Individuo<Double> {
 
-	/**
-	 * [ES] Constructora de la función 1.
-	 * [EN] Function 1's constructor.
-	 * 
-	 * @param precision [ES] Valor de precisión.
-	 * 					[EN] Precision's value.
-	 */
-	public IndividuoFuncion1(double precision){
+	public IndividuoFuncion1Double(double precision) {
 		
-		this.id = "Funcion 1";
+		this.id = "Funcion 1 (Reales)";
 		min = new double[2];
 		max = new double[2];
 		longitud = new int[2];
@@ -45,11 +37,10 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 		
 		this.precision = precision;
 		
-		longitud[0] = tamGen(min[0], max[0]);
-		longitud[1] = tamGen(min[1], max[1]);
-		longitudTotal = longitud[0] + longitud[1];
+		longitud[0] = 0;
+		longitudTotal = 2;
 		
-		cromosoma = new ArrayList<Boolean>(longitudTotal);	
+		cromosoma = new ArrayList<Double>(longitudTotal);	
 	}
 	
 	/**
@@ -59,14 +50,17 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 	@Override
 	public void inicializaIndividuo() {
 		
-		Random ran = new Random();
-		for(int i = 0; i < longitudTotal; i++) {
+		Random rand = new Random();
+		for (int i = 0; i < longitudTotal; i++) {
 			
-			cromosoma.add(ran.nextBoolean());
+			double rangeMin = this.min[i];
+			double rangeMax = this.max[i];
+			cromosoma.add(rangeMin + (rangeMax - rangeMin) * rand.nextDouble());
 		}
 		
 		calculateFitness();
 	}
+
 	
 	/**
 	 * [ES] Esta función calcula el valor de aptitud/fitness del individuo.
@@ -84,6 +78,7 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 		
 		return aptitud;
 	}
+
 	
 	/**
 	 * [ES] Esta función calcula el fenotipo del individuo.
@@ -91,34 +86,13 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 	 */
 	@Override
 	public void calculateFenotipo() {
-		int index = 0;
-
-		for (int i = 0; i < numGenes; i++) {
+		
+		for (int i = 0; i < this.numGenes; i++) {
 			
-			StringBuilder gen = new StringBuilder();
-			
-			for (int k = 0; k < longitud[i]; k++) {
-				
-				if (cromosoma.get(index)) {
-					
-					gen.append('1');
-				}
-				else {
-					
-					gen.append('0');
-				}
-				index++;
-			}
-			
-			double real = Integer.parseInt(gen.toString(),2);
-			fenotipo[i] = min[i] + real * (max[i] - min[i])/(Math.pow(2,longitud[i])-1);
+			this.fenotipo[i] = this.cromosoma.get(i);
 		}
 	}
-	
-	/**
-	 * Getters and Setters
-	 */
-	
+
 	@Override
 	public double getFitnessDesplazado() {
 		
@@ -130,26 +104,21 @@ public class IndividuoFuncion1 extends Individuo<Boolean> implements Cloneable{
 		
 		this.aptitud = newFitness;
 	}
-	
 	@Override
-	public ArrayList<Boolean> getCromosoma(){
+	public ArrayList<Double> getCromosoma() {
 		
 		return this.cromosoma;
 	}
-	
+
 	@Override
 	public StringBuilder printCromosoma() {
 		
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < this.longitudTotal; i++) {
 			
-			if (this.cromosoma.get(i)) {
-				sb.append(1);
-			}
-			else {
-				sb.append(0);
-			}
+			sb.append(this.cromosoma.get(i));
 		}
 		return sb;
 	}
+
 }

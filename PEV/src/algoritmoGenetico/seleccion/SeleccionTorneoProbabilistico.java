@@ -14,7 +14,7 @@ import algoritmoGenetico.individuos.Individuo;
  * Profesor:
  * 	-Carlos Cervigon Ruckauer.
  * 
- * Clase Seleccion por Torneo Determinista.
+ * Clase Seleccion por Torneo Probabilístico.
  * 
  * @author 
  * Grupo G06:
@@ -22,12 +22,12 @@ import algoritmoGenetico.individuos.Individuo;
  * 	-Diego Alejandro Rodríguez Pereira.
  *
  */
-public class SeleccionTorneo extends Seleccion {
-	
+public class SeleccionTorneoProbabilistico extends Seleccion{
+
 	private final int tamTorneo = 2;
+	private final double probSelecWorst = 0.5;
 	private int tamPoblacion;
-	
-	
+
 	/**
 	 * [ES]	Esta función es la principal de la clase de Selección.
 	 * Esta función selecciona a los individuos de una población para generar
@@ -71,7 +71,9 @@ public class SeleccionTorneo extends Seleccion {
 	public void competenciaTorneo(ArrayList<Individuo> candidatos, ArrayList<Individuo> nuevaPoblacion){
 		
 		double maxFitness = 0;
+		double minFitness = Double.MAX_VALUE;
 		int indexBestIndividual = 0;
+		int indexWorstIndividual = 0;
 		
 		for (int i = 0; i < tamTorneo; i++) {
 			
@@ -82,12 +84,22 @@ public class SeleccionTorneo extends Seleccion {
 				maxFitness = fitness;
 				indexBestIndividual = i;
 			}
+			if (fitness < minFitness) {
+				
+				minFitness = fitness;
+				indexWorstIndividual = i;
+			}
 		}
 		
-		Individuo mejorIndividuo = candidatos.get(indexBestIndividual);
-		Individuo nuevoIndividuo = FactoriaIndividuo.getIndividuo(mejorIndividuo.getId(), mejorIndividuo.getPrecision(), mejorIndividuo.getNumGenes());
+		Individuo indSeleccionado = candidatos.get(indexBestIndividual);
+		Random rand = new Random();
+		if (rand.nextDouble() < this.probSelecWorst) {
+			indSeleccionado = candidatos.get(indexWorstIndividual);
+		}
 		
-		ArrayList cromoPadre1 = mejorIndividuo.getCromosoma();
+		Individuo nuevoIndividuo = FactoriaIndividuo.getIndividuo(indSeleccionado.getId(), indSeleccionado.getPrecision() , indSeleccionado.getNumGenes());
+		
+		ArrayList cromoPadre1 = indSeleccionado.getCromosoma();
 		ArrayList cromoHijo1 = new ArrayList();
 		cromoHijo1.addAll(cromoPadre1);
 		nuevoIndividuo.setCromosoma(cromoHijo1);
