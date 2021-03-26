@@ -7,15 +7,43 @@ import java.util.Random;
 import algoritmoGenetico.individuos.FactoriaIndividuo;
 import algoritmoGenetico.individuos.Individuo;
 
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Clase Seleccion por Torneo Determinista.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class SeleccionTorneo extends Seleccion {
 	
 	private final int tamTorneo = 2;
 	private int tamPoblacion;
 	
-	public SeleccionTorneo(int participantes) {
-		
-	}
-
+	
+	/**
+	 * [ES]	Esta función es la principal de la clase de Selección.
+	 * Esta función selecciona a los individuos de una población para generar
+	 * una población nueva/auxiliar con los individuos elegidos.
+	 * Ambas poblaciones son del mismo tamaño.
+	 * [EN] This is the main function of the Selection's class.
+	 * This function selects the individuals of a population to generate a new/auxiliar
+	 * population with the individuals chosen.
+	 * Both population are of the same size.
+	 * 
+	 * @param poblacion	[ES] Población de la cual se van a seleccionar los individuos.
+	 * 					[EN] Population form which it's going to be selected the individuals.
+	 * 
+	 * @return	[ES] La nueva población con los individuos seleccionados.
+	 * 			[EN] The new population with the selected individuals.
+	 */
 	@Override
 	public List<Individuo> seleccionar(List<Individuo> poblacion) {
 	
@@ -66,5 +94,4 @@ public class SeleccionTorneo extends Seleccion {
 		
 		nuevaPoblacion.add(nuevoIndividuo);
 	}
-
 }

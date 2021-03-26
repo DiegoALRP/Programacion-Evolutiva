@@ -5,22 +5,53 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-
-import algoritmoGenetico.individuos.FactoriaIndividuo;
 import algoritmoGenetico.individuos.Individuo;
 
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Clase Seleccion por Truncamiento.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class SeleccionTruncamiento extends Seleccion{
 
 	private int trunc;
 	private int num_copias;
 	private int num_individuos;
 	
+	
 	public SeleccionTruncamiento() {
+		
 		Random rand = new Random();
 		trunc = rand.nextInt(4) + 1;
 		seleccionaCopias();
 	}
 
+	/**
+	 * [ES]	Esta función es la principal de la clase de Selección.
+	 * Esta función selecciona a los individuos de una población para generar
+	 * una población nueva/auxiliar con los individuos elegidos.
+	 * Ambas poblaciones son del mismo tamaño.
+	 * [EN] This is the main function of the Selection's class.
+	 * This function selects the individuals of a population to generate a new/auxiliar
+	 * population with the individuals chosen.
+	 * Both population are of the same size.
+	 * 
+	 * @param poblacion	[ES] Población de la cual se van a seleccionar los individuos.
+	 * 					[EN] Population form which it's going to be selected the individuals.
+	 * 
+	 * @return	[ES] La nueva población con los individuos seleccionados.
+	 * 			[EN] The new population with the selected individuals.
+	 */
 	@Override
 	public List<Individuo> seleccionar(List<Individuo> poblacion) {
 		
@@ -32,17 +63,18 @@ public class SeleccionTruncamiento extends Seleccion{
 			}
 			
 		});
+		
 		for(int i = 0; i < num_copias; i++) {
 			for(int j = 0; j < num_individuos; j++) {
-				//seleccionados.add(poblacion.get(j));
-				addIndividual(poblacion, seleccionados, j);
+				
+				addIndividuo(poblacion, seleccionados, j);
 			}
 		}
 		
 		if(seleccionados.size() < poblacion.size()) {		// añadir restantes si procede
 			for(int i = 0; i < poblacion.size() - seleccionados.size(); i++) {
-				//seleccionados.add(poblacion.get(i));
-				addIndividual(poblacion, seleccionados, i);
+				
+				addIndividuo(poblacion, seleccionados, i);
 			}
 		}
 		
@@ -59,27 +91,5 @@ public class SeleccionTruncamiento extends Seleccion{
 		case 5: num_copias = 2; num_individuos = 50;break;
 		}
 		
-	}
-	
-	/**
-	 * Copia el individuo seleccionado (por el índice) de la poblacion inicial
-	 * a la nueva poblacion.
-	 * La copia es por valor
-	 * 
-	 * @param poblacion poblacion inicial
-	 * @param nuevaPoblacion nueva poblacion
-	 * @param index índice del individuo seleccionado
-	 */
-	public void addIndividual(List<Individuo> poblacion, ArrayList<Individuo> nuevaPoblacion, int index) {
-		
-		Individuo indSeleccionado = poblacion.get(index);
-		Individuo nuevoIndividuo = FactoriaIndividuo.getIndividuo(indSeleccionado.getId(), indSeleccionado.getPrecision(), indSeleccionado.getNumGenes());
-	
-		ArrayList cromoPadre1 = indSeleccionado.getCromosoma();
-		ArrayList cromoHijo1 = new ArrayList();
-		cromoHijo1.addAll(cromoPadre1);
-		nuevoIndividuo.setCromosoma(cromoHijo1);
-		
-		nuevaPoblacion.add(nuevoIndividuo);
 	}
 }

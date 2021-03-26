@@ -225,7 +225,9 @@ public class panelPrincipal {
 		problemas.add(lblNewLabel);
 		
 		JComboBox individuo_cbox = new JComboBox();
-		individuo_cbox.setModel(new DefaultComboBoxModel(new String[] {"Funcion 1", "Funcion Schubert", "Funcion Holder table", "Funcion Michalewicz (Booleanos)", "Funcion Michalewicz (Reales)", "Funcion Bukin", "Funcion Matyas"}));
+		individuo_cbox.setModel(new DefaultComboBoxModel(new String[] {"Funcion 1", "Funcion 1 (Reales)", "Funcion Schubert", "Funcion Schubert (Reales)",
+				"Funcion Holder table", "Funcion Holder table (Reales)",
+				"Funcion Michalewicz (Booleanos)", "Funcion Michalewicz (Reales)", "Funcion Bukin", "Funcion Matyas"}));
 		individuo_cbox.addActionListener(new ActionListener() {
 			
 			@Override
@@ -236,10 +238,19 @@ public class panelPrincipal {
 					problemas.add(paramN);
 					problemas.add(paramNText);
 				}
-				if(individuo_cbox.getSelectedItem().toString().equals("Funcion Michalewicz (Reales)")) {
+				if(individuo_cbox.getSelectedItem().toString().equals("Funcion Michalewicz (Reales)") || individuo_cbox.getSelectedItem().toString().equals("Funcion Schubert (Reales)") ||
+						 individuo_cbox.getSelectedItem().toString().equals("Funcion 1 (Reales)")) {
+					
 					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme", "Aritmetico", "BLX-alpha"}));
 					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica", "Mutacion Uniforme"}));
-				} else {
+				} 
+				else if (individuo_cbox.getSelectedItem().toString().equals("Funcion Holder table (Reales)")) {
+					
+					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme", "Aritmetico"}));
+					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica", "Mutacion Uniforme"}));
+				}
+				else {
+					
 					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme"}));
 					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutacion basica"})); 
 				}
@@ -252,13 +263,10 @@ public class panelPrincipal {
 		controles.add(resetear);
 		
 		JLabel solucion = new JLabel("Solucion :");
-		//JTextField textField_solucion = new JTextField();
 		JTextArea solArea = new JTextArea();
 		Dimension dimension = new Dimension();
 		controles.add(solucion);
 		controles.add(solArea);
-		//controles.add(textField_solucion);
-		//controles.add(solLabel);
 		
 		problemas.add(individuo_cbox);
 		
@@ -275,22 +283,19 @@ public class panelPrincipal {
 				double precision = Double.parseDouble(textField_error.getText());
 				int tamPoblacion = Integer.parseInt(n.getText());
 				
-				Seleccion metodoSeleccion = FactoriaSelecciones.getAlgoritmoDeSeleccion(Seleccion_cbox.getSelectedItem().toString(), numGeneraciones);
-				Cruce metodoCruce = FactoriaCruces.getAlgoritmoDeCruce(Cruce_cbox.getSelectedItem().toString(), numGeneraciones);
-				Mutacion metodoMutacion = FactoriaMutaciones.getAlgoritmoDeMutacion(Mutacion_cbox.getSelectedItem().toString(), numGeneraciones);
+				Seleccion metodoSeleccion = FactoriaSelecciones.getAlgoritmoDeSeleccion(Seleccion_cbox.getSelectedItem().toString());
+				Cruce metodoCruce = FactoriaCruces.getAlgoritmoDeCruce(Cruce_cbox.getSelectedItem().toString());
+				Mutacion metodoMutacion = FactoriaMutaciones.getAlgoritmoDeMutacion(Mutacion_cbox.getSelectedItem().toString());
 				String tipoIndividuo = individuo_cbox.getSelectedItem().toString();
 				int numN = 6;
 				if (tipoIndividuo.equals("Funcion Michalewicz (Booleanos)") || tipoIndividuo.equals("Funcion Michalewicz (Reales)")) {
 					
 					numN = Integer.parseInt(paramNText.getText());
 					dimension.setSize(500, 800);
-					//solArea.setMinimumSize(dimension);
 					solArea.setPreferredSize(dimension);
 				}
 				AG = new AlgoritmoGenetico(tamPoblacion, numGeneraciones, precision, metodoSeleccion, metodoCruce, porcCruce, metodoMutacion, porcMutacion, elite, tipoIndividuo, numN);
-				//textField_solucion.setText(AG.getSolucion());
 				solArea.setText(AG.getSolucion());
-				//solLabel.setText(AG.getSolucion());
 				gr.actualiza(numGeneraciones, AG.getMejorAbsoluto(), AG.getMejorGeneracion(), AG.getMediaGeneracion());
 			}
 		});

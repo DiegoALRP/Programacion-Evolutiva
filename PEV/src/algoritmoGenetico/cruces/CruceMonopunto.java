@@ -5,8 +5,38 @@ import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Clase Cruce Monopunto.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class CruceMonopunto extends Cruce {
 	
+	
+	/**
+	 * [ES] Esta es una función abstracta y es la principal método de las clases de cruces.
+	 * A partir de esta función se seleccionan y cruzan los individuos.
+	 * En la clase "CruceMonopunto" se modifica para permitir seleccionar un punto de cruce.
+	 * 
+	 * [EN] This is an abstract function and it is the principal function of the cross classes.
+	 * From here we select and cross the individuals.
+	 * In the class "CruceMonopunto" it's modified to allow select a crossover's point.
+	 * 
+	 * @param poblacion	[ES] Población a cruzar.
+	 * 					[EN] Population to cross.
+	 * @param probCruce	[ES] Probabilidad de cruce.
+	 * 					[EN] Crossover probability.
+	 */
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
@@ -15,16 +45,23 @@ public class CruceMonopunto extends Cruce {
 		this.selec_cruce = new ArrayList<Integer>();
 		this.tamPoblacion = poblacion.size();
 		
+		int longitudCromosoma = poblacion.get(0).getLongitudCromosoma();
+		
 		this.seleccionaIndividuos(poblacion);
 		
 		Random rand = new Random();
-		this.punto_cruce = rand.nextInt(this.tamPoblacion - 2) + 1;
+		if (longitudCromosoma == 2) {
+			this.punto_cruce = 1;
+		}
+		else if (longitudCromosoma < 2) {
+			this.punto_cruce = 0;
+		}
+		else {
+			this.punto_cruce = rand.nextInt(longitudCromosoma - 2) + 1;
+		}
 		
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
 			
-			if (selec_cruce.get(i) == selec_cruce.get(i+1)) {
-				
-			}
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
 		}
 	}
@@ -40,9 +77,6 @@ public class CruceMonopunto extends Cruce {
 		
 		ArrayList cromoPadre2Aux = new ArrayList();
 		cromoPadre2Aux.addAll(cromoPadre2);
-		
-		/*double fitnessP1 = padre1.getFitness();
-		double fitnessP2 = padre2.getFitness();*/
 		
 		ArrayList cromoHijo1 = new ArrayList();
 		cromoHijo1.addAll(cromoPadre1Aux);
@@ -60,58 +94,5 @@ public class CruceMonopunto extends Cruce {
 		}
 		
 		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
-		
-		/*padre1.setCromosoma(cromoHijo1);
-		padre2.setCromosoma(cromoHijo2);
-		
-		double fitnessH1 = padre1.calculateFitness();
-		double fitnessH2 = padre2.calculateFitness();
-		
-		if(padre1.getId().equals("Funcion 1")) {
-			if (fitnessP1 > fitnessH1) padre1.setCromosoma(cromoPadre1Aux);
-			if (fitnessP2 > fitnessH2) padre2.setCromosoma(cromoPadre2Aux);
-		}
-		else {
-			
-			if (fitnessP1 < fitnessH1) padre1.setCromosoma(cromoPadre1Aux);
-			if (fitnessP2 < fitnessH2) padre2.setCromosoma(cromoPadre2Aux);
-		}*/
-		
-		//if (fitnessA1 < fitnessB1) padre1.setCromosoma(cromoPadre1);
-		//if (fitnessA2 < fitnessB2) padre2.setCromosoma(cromoPadre2);
-		
-		
 	}
-
-	/*protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
-		
-		this.tamPoblacion = poblacion.size();
-		Random rand = new Random();
-		
-		for (int i = 0; i < tamPoblacion; i++) {
-			
-			if (rand.nextDouble() < this.probCruce) {
-
-				if (this.num_selec_cruce % 2 == 1) {
-					
-					if (!poblacion.get(i).getCromosoma().equals(poblacion.get(this.selec_cruce.get(this.num_selec_cruce - 1)).getCromosoma())) {
-						
-						this.selec_cruce.add(i);
-						this.num_selec_cruce++;
-					}
-				}
-				else {
-					
-					this.selec_cruce.add(i);
-					this.num_selec_cruce++;
-				}
-			}
-		}
-		
-		if ((num_selec_cruce % 2) == 1) {
-			
-			this.num_selec_cruce--;
-			this.selec_cruce.remove(num_selec_cruce);
-		}
-	}*/
 }

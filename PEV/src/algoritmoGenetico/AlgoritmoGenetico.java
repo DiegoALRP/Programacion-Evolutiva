@@ -14,7 +14,6 @@ import algoritmoGenetico.seleccion.Seleccion;
 
 public class AlgoritmoGenetico {
 
-	//Nota, dejar estas variables como array de doubles, no hacerlo como ArrayList
 	private double[] mejorAbsoluto;		//Array con el mejor absoluto (a lo largo de todas las generaciones)
 	private double[] mejorGeneracion;	//Array con el mejor fitness de una generacion
 	private double[] mediaGeneracion;	//Array con la media de fitness de cada generacion
@@ -39,17 +38,19 @@ public class AlgoritmoGenetico {
 			metodoSeleccion.seleccionar(poblacion);
 			metodoCruce.cruza(poblacion, porcCruce);
 			
-			if (!tipoIndividuo.equals("Funcion Michalewicz (Reales)")) {
-				metodoMutacion.mutaPoblacionBoolean(poblacion, porcMutacion);
-			}
-			else {
+			if (tipoIndividuo.equals("Funcion Michalewicz (Reales)") || tipoIndividuo.equals("Funcion Schubert (Reales)") ||
+					tipoIndividuo.equals("Funcion Holder table (Reales)") || tipoIndividuo.equals("Funcion 1 (Reales)")) {
 				metodoMutacion.mutaPoblacionDouble(poblacion, porcMutacion);
 			}
+			else {
+				metodoMutacion.mutaPoblacionBoolean(poblacion, porcMutacion);
+			}
+			
 			poblacion.addAll(elite);
 			this.generacionActual++;
 		}
 		
-		System.out.println("Solucion: " + this.mejorSolucion);
+		//System.out.println("Solucion: " + this.mejorSolucion);
 	}
 	
 	public void inicializaVariables(int tamPoblacion, int numGeneraciones) {
@@ -67,7 +68,7 @@ public class AlgoritmoGenetico {
 		double mejorGeneracion = 0;
 		double maxFitness = 0;
 		
-		if (tipoIndividuo.equals("Funcion 1")) {
+		if (tipoIndividuo.equals("Funcion 1") || (tipoIndividuo.equals("Funcion 1 (Reales)"))) {
 			
 			mejorGeneracion = 0;
 			String mejorFenotipo = "";

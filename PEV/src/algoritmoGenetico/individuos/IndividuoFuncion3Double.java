@@ -10,7 +10,7 @@ import java.util.Random;
  * Profesor:
  * 	-Carlos Cervigon Ruckauer
  * 
- * Clase de la Función 3: Holder Table
+ * Clase de la Función 3: Holder Table (Reales)
  * 
  * @author 
  * Grupo G06
@@ -18,18 +18,11 @@ import java.util.Random;
  * 	-Diego Alejandro Rodríguez Pereira
  *
  */
-public class IndividuoFuncion3 extends Individuo<Boolean> {
-	
-	/**
-	 * [ES] Constructora de la función 1.
-	 * [EN] Function 1's constructor.
-	 * 
-	 * @param precision [ES] Valor de precisión.
-	 * 					[EN] Precision's value.
-	 */
-	public IndividuoFuncion3(double precision) {
+public class IndividuoFuncion3Double extends Individuo<Double> {
+
+	public IndividuoFuncion3Double(double precision) {
 		
-		this.id = "Funcion Holder table";
+		this.id = "Funcion Holder table (Reales)";
 		
 		this.min = new double[2];
 		this.max = new double[2];
@@ -44,11 +37,10 @@ public class IndividuoFuncion3 extends Individuo<Boolean> {
 		
 		this.precision = precision;
 		
-		longitud[0] = tamGen(min[0], max[0]);
-		longitud[1] = tamGen(min[1], max[1]);
-		longitudTotal = longitud[0] + longitud[1];
+		longitud[0] = 0;
+		longitudTotal = 2;
 		
-		cromosoma = new ArrayList<Boolean>(longitudTotal);
+		cromosoma = new ArrayList<Double>(longitudTotal);
 	}
 	
 	/**
@@ -59,14 +51,17 @@ public class IndividuoFuncion3 extends Individuo<Boolean> {
 	public void inicializaIndividuo() {
 		
 		Random rand = new Random();
-		for(int i = 0; i < longitudTotal; i++) {
+		for (int i = 0; i < longitudTotal; i++) {
 			
-			cromosoma.add(rand.nextBoolean());
+			double rangeMin = this.min[0];
+			double rangeMax = this.max[0];
+			cromosoma.add(rangeMin + (rangeMax - rangeMin) * rand.nextDouble());
 		}
 		
 		calculateFitness();
 	}
 
+	
 	/**
 	 * [ES] Esta función calcula el valor de aptitud/fitness del individuo.
 	 * [EN] This function calculates the individual's fitness value.
@@ -92,7 +87,7 @@ public class IndividuoFuncion3 extends Individuo<Boolean> {
 		
 		return aptitud;
 	}
-	
+
 	/**
 	 * [ES] Esta función calcula el fenotipo del individuo.
 	 * [EN] This function calculates the individual's phenotype.
@@ -100,36 +95,14 @@ public class IndividuoFuncion3 extends Individuo<Boolean> {
 	@Override
 	public void calculateFenotipo() {
 		
-		int index = 0;
-		for (int i = 0; i < numGenes; i++) {
+		for (int i = 0; i < this.numGenes; i++) {
 			
-			StringBuilder gen = new StringBuilder();
-			
-			for (int k = 0; k < longitud[i]; k++) {
-				
-				if (cromosoma.get(index)) {
-					
-					gen.append('1');
-				}
-				else {
-					
-					gen.append('0');
-				}
-				
-				index++;
-			}
-			
-			double real = Integer.parseInt(gen.toString(),2);
-			fenotipo[i] = min[i] + real * (max[i] - min[i])/(Math.pow(2,longitud[i])-1);
+			this.fenotipo[i] = this.cromosoma.get(i);
 		}
 	}
 
-	/**
-	 * Getters and Setters
-	 */
-	
 	@Override
-	public ArrayList<Boolean> getCromosoma() {
+	public ArrayList<Double> getCromosoma() {
 		
 		return this.cromosoma;
 	}
@@ -140,14 +113,9 @@ public class IndividuoFuncion3 extends Individuo<Boolean> {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < this.longitudTotal; i++) {
 			
-			if (this.cromosoma.get(i)) {
-				sb.append(1);
-			}
-			else {
-				sb.append(0);
-			}
+			sb.append(this.cromosoma.get(i));
 		}
-		
 		return sb;
 	}
+
 }

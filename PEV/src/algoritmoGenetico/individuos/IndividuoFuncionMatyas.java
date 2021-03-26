@@ -3,8 +3,30 @@ package algoritmoGenetico.individuos;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Universidad Complutense de Madrid
+ * Programación Evolutiva
+ * Grupo A 2021
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer
+ * 
+ * Clase de la Función 6: Matyas
+ * 
+ * @author 
+ * Grupo G06
+ * 	-Miguel Robledo
+ * 	-Diego Alejandro Rodríguez Pereira
+ *
+ */
 public class IndividuoFuncionMatyas extends Individuo<Boolean>{
 
+	/**
+	 * [ES] Constructora de la función 1.
+	 * [EN] Function 1's constructor.
+	 * 
+	 * @param precision [ES] Valor de precisión.
+	 * 					[EN] Precision's value.
+	 */
 	public IndividuoFuncionMatyas() {
 		this.id = "Funcion Matyas";
 		
@@ -27,6 +49,32 @@ public class IndividuoFuncionMatyas extends Individuo<Boolean>{
 		
 		cromosoma = new ArrayList<Boolean>(longitudTotal);
 	}
+	
+	
+	/**
+	 * [ES] Función que inicializa los valores del individuo.
+	 * [EN] Function that initialize the individual's values.
+	 */
+	@Override
+	public void inicializaIndividuo() {
+		
+		Random rand = new Random();
+		for(int i = 0; i < longitudTotal; i++) {
+			
+			cromosoma.add(rand.nextBoolean());
+		}
+		
+		calculateFitness();
+	}
+	
+	
+	/**
+	 * [ES] Esta función calcula el valor de aptitud/fitness del individuo.
+	 * [EN] This function calculates the individual's fitness value.
+	 * 
+	 * @return	[ES] Valor de aptitud / valor de Fitness del individuo.
+	 * 			[EN] Indiviual's Fitness value.
+	 */
 	@Override
 	public double calculateFitness() {
 		
@@ -40,37 +88,39 @@ public class IndividuoFuncionMatyas extends Individuo<Boolean>{
 		return aptitud;
 	}
 
-	@Override
-	public void inicializaIndividuo() {
-		Random rand = new Random();
-		for(int i = 0; i < longitudTotal; i++) {
-			
-			cromosoma.add(rand.nextBoolean());
-		}
-		//aptitud = calculateFitness();
-		calculateFitness();
-		
-	}
-
+	
+	/**
+	 * [ES] Esta función calcula el fenotipo del individuo.
+	 * [EN] This function calculates the individual's phenotype.
+	 */
 	@Override
 	public void calculateFenotipo() {
-			int index = 0;
-			for (int i = 0; i < numGenes; i++) {
-				StringBuilder gen = new StringBuilder();
-				for (int k = 0; k < longitud[i]; k++) {
-					if (cromosoma.get(index)) {
-						gen.append('1');
-					}
-					else {
-						gen.append('0');
-					}
-					index++;
+		int index = 0;
+		for (int i = 0; i < numGenes; i++) {
+			
+			StringBuilder gen = new StringBuilder();
+			for (int k = 0; k < longitud[i]; k++) {
+				
+				if (cromosoma.get(index)) {
+					
+					gen.append('1');
 				}
-				double real = Integer.parseInt(gen.toString(),2);
-				fenotipo[i] = min[i] + real * (max[i] - min[i])/(Math.pow(2,longitud[i])-1);
-				//System.out.println("x" + i + " fenotipo: " + fenotipo[i]);
+				else {
+			
+					gen.append('0');
+				}
+				
+				index++;
 			}
+			
+			double real = Integer.parseInt(gen.toString(),2);
+			fenotipo[i] = min[i] + real * (max[i] - min[i])/(Math.pow(2,longitud[i])-1);
+		}
 	}
+	
+	/**
+	 * Getters and Setters
+	 */
 
 	@Override
 	public ArrayList<Boolean> getCromosoma() {
@@ -79,8 +129,18 @@ public class IndividuoFuncionMatyas extends Individuo<Boolean>{
 
 	@Override
 	public StringBuilder printCromosoma() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < this.longitudTotal; i++) {
+			
+			if (this.cromosoma.get(i)) {
+				sb.append(1);
+			}
+			else {
+				sb.append(0);
+			}
+		}
+		return sb;
 	}
 
 }
