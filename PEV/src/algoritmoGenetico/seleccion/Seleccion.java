@@ -13,7 +13,7 @@ import algoritmoGenetico.individuos.Individuo;
  * Profesor:
  * 	-Carlos Cervigon Ruckauer.
  * 
- * Clase Factoria Mutación.
+ * Clase Abstracta Seleccion
  * 
  * @author 
  * Grupo G06:

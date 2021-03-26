@@ -22,9 +22,22 @@ import algoritmoGenetico.individuos.Individuo;
  */
 public class CruceUniforme extends Cruce {
 
+	/**
+	 * [ES] Esta es una función abstracta y es la principal método de las clases de cruces.
+	 * A partir de esta función se seleccionan y cruzan los individuos.
+	 * En la clase "CruceMonopunto" se modifica para permitir seleccionar un punto de cruce.
+	 * 
+	 * [EN] This is an abstract function and it is the principal function of the cross classes.
+	 * From here we select and cross the individuals.
+	 * In the class "CruceMonopunto" it's modified to allow select a crossover's point.
+	 * 
+	 * @param poblacion	[ES] Población a cruzar.
+	 * 					[EN] Population to cross.
+	 * @param probCruce	[ES] Probabilidad de cruce.
+	 * 					[EN] Crossover probability.
+	 */
 	@Override
 	protected void cruzaPadres(Individuo padre1, Individuo padre2) {
-		// TODO Auto-generated method stub
 
 		ArrayList cromoPadre1 = padre1.getCromosoma();
 		ArrayList cromoPadre2 = padre2.getCromosoma();
@@ -34,9 +47,6 @@ public class CruceUniforme extends Cruce {
 		
 		ArrayList cromoPadre2Aux = new ArrayList();
 		cromoPadre2Aux.addAll(cromoPadre2);
-		
-		/*double fitnessB1 = padre1.getFitness();
-		double fitnessB2 = padre2.getFitness();*/
 		
 		ArrayList cromoHijo1 = new ArrayList();
 		cromoHijo1.addAll(cromoPadre1Aux);
@@ -58,37 +68,5 @@ public class CruceUniforme extends Cruce {
 		}
 		
 		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
-		
-		/*padre1.setCromosoma(cromoHijo1);
-		padre2.setCromosoma(cromoHijo2);*/
-		
-		/*double fitnessA1 = padre1.getFitness();
-		double fitnessA2 = padre2.getFitness();
-		
-		if (fitnessA1 < fitnessB1) padre1.setCromosoma(cromoPadre1);
-		if (fitnessA2 < fitnessB2) padre2.setCromosoma(cromoPadre2);*/
 	}
-
-	/*@Override
-	protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
-
-		this.tamPoblacion = poblacion.size();
-		Random rand = new Random();
-		
-		for (int i = 0; i < tamPoblacion; i++) {
-			
-			if (rand.nextDouble() < this.probCruce) {
-				
-				this.selec_cruce.add(i);
-				this.num_selec_cruce++;
-			}
-		}
-		
-		if ((num_selec_cruce % 2) == 1) {
-			
-			this.num_selec_cruce--;
-			this.selec_cruce.remove(num_selec_cruce);
-		}
-	}*/
-
 }

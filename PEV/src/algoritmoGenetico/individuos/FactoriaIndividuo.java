@@ -36,10 +36,16 @@ public class FactoriaIndividuo {
 			
 			case "Funcion 1": 
 				return new IndividuoFuncion1(precision);
+			case "Funcion 1 (Reales)":
+				return new IndividuoFuncion1Double(precision);
 	        case "Funcion Schubert": 
 	        	return new IndividuoFuncion2(precision);
+	        case "Funcion Schubert (Reales)":
+	        	return new IndividuoFuncion2Double(precision);
 	        case "Funcion Holder table": 
 	        	return new IndividuoFuncion3(precision);
+	        case "Funcion Holder table (Reales)":
+	        	return new IndividuoFuncion3Double(precision);
 	        case "Funcion Michalewicz (Booleanos)": 
 	        	return new IndividuoFuncion4(numN, precision);
 	        case "Funcion Michalewicz (Reales)": 

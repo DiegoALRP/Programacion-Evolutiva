@@ -150,7 +150,7 @@ public abstract class Cruce {
 		double fitnessH1 = padre1.calculateFitness();
 		double fitnessH2 = padre2.calculateFitness();
 		
-		if(padre1.getId().equals("Funcion 1")) {
+		if(padre1.getId().equals("Funcion 1") || padre1.getId().equals("Funcion 1 (Reales)")) {
 			if (fitnessP1 > fitnessH1) padre1.setCromosoma(cromoPadre1Aux);
 			if (fitnessP2 > fitnessH2) padre2.setCromosoma(cromoPadre2Aux);
 		}

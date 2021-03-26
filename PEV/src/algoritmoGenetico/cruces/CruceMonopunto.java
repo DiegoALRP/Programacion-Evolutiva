@@ -22,6 +22,7 @@ import algoritmoGenetico.individuos.Individuo;
  */
 public class CruceMonopunto extends Cruce {
 	
+	
 	/**
 	 * [ES] Esta es una función abstracta y es la principal método de las clases de cruces.
 	 * A partir de esta función se seleccionan y cruzan los individuos.
@@ -44,10 +45,20 @@ public class CruceMonopunto extends Cruce {
 		this.selec_cruce = new ArrayList<Integer>();
 		this.tamPoblacion = poblacion.size();
 		
+		int longitudCromosoma = poblacion.get(0).getLongitudCromosoma();
+		
 		this.seleccionaIndividuos(poblacion);
 		
 		Random rand = new Random();
-		this.punto_cruce = rand.nextInt(this.tamPoblacion - 2) + 1;
+		if (longitudCromosoma == 2) {
+			this.punto_cruce = 1;
+		}
+		else if (longitudCromosoma < 2) {
+			this.punto_cruce = 0;
+		}
+		else {
+			this.punto_cruce = rand.nextInt(longitudCromosoma - 2) + 1;
+		}
 		
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
 			

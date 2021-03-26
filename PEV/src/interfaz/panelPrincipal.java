@@ -225,7 +225,9 @@ public class panelPrincipal {
 		problemas.add(lblNewLabel);
 		
 		JComboBox individuo_cbox = new JComboBox();
-		individuo_cbox.setModel(new DefaultComboBoxModel(new String[] {"Funcion 1", "Funcion Schubert", "Funcion Holder table", "Funcion Michalewicz (Booleanos)", "Funcion Michalewicz (Reales)", "Funcion Bukin", "Funcion Matyas"}));
+		individuo_cbox.setModel(new DefaultComboBoxModel(new String[] {"Funcion 1", "Funcion 1 (Reales)", "Funcion Schubert", "Funcion Schubert (Reales)",
+				"Funcion Holder table", "Funcion Holder table (Reales)",
+				"Funcion Michalewicz (Booleanos)", "Funcion Michalewicz (Reales)", "Funcion Bukin", "Funcion Matyas"}));
 		individuo_cbox.addActionListener(new ActionListener() {
 			
 			@Override
@@ -236,10 +238,19 @@ public class panelPrincipal {
 					problemas.add(paramN);
 					problemas.add(paramNText);
 				}
-				if(individuo_cbox.getSelectedItem().toString().equals("Funcion Michalewicz (Reales)")) {
+				if(individuo_cbox.getSelectedItem().toString().equals("Funcion Michalewicz (Reales)") || individuo_cbox.getSelectedItem().toString().equals("Funcion Schubert (Reales)") ||
+						 individuo_cbox.getSelectedItem().toString().equals("Funcion 1 (Reales)")) {
+					
 					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme", "Aritmetico", "BLX-alpha"}));
 					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica", "Mutacion Uniforme"}));
-				} else {
+				} 
+				else if (individuo_cbox.getSelectedItem().toString().equals("Funcion Holder table (Reales)")) {
+					
+					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme", "Aritmetico"}));
+					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica", "Mutacion Uniforme"}));
+				}
+				else {
+					
 					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme"}));
 					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutacion basica"})); 
 				}

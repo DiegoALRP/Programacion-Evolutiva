@@ -55,6 +55,7 @@ public class CruceAritmetico extends Cruce {
 		double alpha = rand.nextDouble();
 		while (i < longitudCromo) {
 			
+			//double alpha = rand.nextDouble();
 			cromoHijo1.set(i, alpha*cromoPadre1Aux.get(i) + (1 - alpha)*cromoPadre2Aux.get(i));
 			cromoHijo2.set(i, alpha*cromoPadre2Aux.get(i) + (1 - alpha)*cromoPadre1Aux.get(i));
 			i++;
