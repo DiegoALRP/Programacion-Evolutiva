@@ -4,19 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 
 
 import algoritmoGenetico.cruces.Cruce;
-import algoritmoGenetico.cruces.CruceMonopunto;
 import algoritmoGenetico.individuos.FactoriaIndividuo;
 import algoritmoGenetico.individuos.Individuo;
-import algoritmoGenetico.individuos.IndividuoFuncion1;
 import algoritmoGenetico.mutaciones.Mutacion;
-import algoritmoGenetico.mutaciones.MutacionBasica;
 import algoritmoGenetico.seleccion.Seleccion;
-import algoritmoGenetico.seleccion.SeleccionRuleta;
-import algoritmoGenetico.seleccion.SeleccionTorneo;
 
 public class AlgoritmoGenetico {
 
