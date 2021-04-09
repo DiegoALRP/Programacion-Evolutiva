@@ -28,13 +28,23 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	
-		panelPrincipal p = new panelPrincipal();
-		/*AlgoritmoGenetico ag = new AlgoritmoGenetico(2, 
-				2, 0.0001, null, null, 0.01, null, 0, 0);*/
+		panelPrincipal main = new panelPrincipal();
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/**
+		 * Obtención de tablas
+		 */
 		/*Seleccion sel = new SeleccionRuleta();
 		Cruce cr = new CruceMonopunto();
-		Mutacion mt = new MutacionBasica();
+		Mutacion mt = new MutacionUniforme();
 		
 		double mejorAbsoluto = 0;
 		double mediaAbsoluto = 0;
@@ -45,7 +55,7 @@ public class Main {
 		
 		for (int i = 0; i < vueltas; i++) {
 			AlgoritmoGenetico ag = new AlgoritmoGenetico(100, 100, 0.0001, sel, cr,
-					0.6, mt, 0.05, 0, "Funcion Michalewicz (Reales)", 6);
+					0.6, mt, 0.6, 0, "Funcion Michalewicz (Reales)", 6);
 			
 			double mejorAbsolutoArray[] = ag.getMejorAbsoluto();
 			double mejorGeneracionArray[] = ag.getMejorGeneracion();

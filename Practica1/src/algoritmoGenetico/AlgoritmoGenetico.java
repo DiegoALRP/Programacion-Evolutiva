@@ -19,11 +19,11 @@ public class AlgoritmoGenetico {
 	private double[] mediaGeneracion;	//Array con la media de fitness de cada generacion
 	private String mejorSolucion;
 	
-	private int generacionActual;
+	private int generacionActual;		//Generacion actual
 	
 	private int tamPoblacion;			//Tamanho de la poblacion
 	
-	private List<Individuo> elite;
+	private List<Individuo> elite;		//Elitismo
 	
 	public <T> AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, double precision, Seleccion metodoSeleccion, Cruce metodoCruce, 
 			double porcCruce, Mutacion metodoMutacion, double porcMutacion, double porcElite, String tipoIndividuo, int numN) {
@@ -49,8 +49,6 @@ public class AlgoritmoGenetico {
 			poblacion.addAll(elite);
 			this.generacionActual++;
 		}
-		
-		//System.out.println("Solucion: " + this.mejorSolucion);
 	}
 	
 	public void inicializaVariables(int tamPoblacion, int numGeneraciones) {
@@ -150,7 +148,7 @@ public class AlgoritmoGenetico {
 			
 			generaElite(poblacion, porcElite, tipoIndividuo);
 			
-			//Desplazamos aptitud
+			//Desplazamiento aptitud
 			for (Individuo individuo : poblacion) {
 				
 				double newFitness = maxFitness - individuo.getFitness();

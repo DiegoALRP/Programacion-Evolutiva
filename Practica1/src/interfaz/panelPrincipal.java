@@ -83,7 +83,7 @@ public class panelPrincipal {
 		JPanel poblacion_panel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) poblacion_panel.getLayout();
 		flowLayout.setAlignment(FlowLayout.RIGHT);
-		JLabel lblNewLabel_1 = new JLabel("Tamaño poblacion");
+		JLabel lblNewLabel_1 = new JLabel("Tamaï¿½o poblacion");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		poblacion_panel.add(lblNewLabel_1);
 		
@@ -97,7 +97,7 @@ public class panelPrincipal {
 		JPanel generaciones = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) generaciones.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.RIGHT);
-		JLabel lblNewLabel_2 = new JLabel("Número de generaciones");
+		JLabel lblNewLabel_2 = new JLabel("Nï¿½mero de generaciones");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		generaciones.add(lblNewLabel_2);
 		
@@ -126,7 +126,7 @@ public class panelPrincipal {
 		controles.add(seleccion_panel);
 		seleccion_panel.setLayout(new GridLayout(2, 1, 0, 5));
 		
-		JLabel lblSeleccion = new JLabel("Tipo de selección");
+		JLabel lblSeleccion = new JLabel("Tipo de selecciï¿½n");
 		seleccion_panel.add(lblSeleccion);
 		
 		JComboBox Seleccion_cbox = new JComboBox();
@@ -134,7 +134,7 @@ public class panelPrincipal {
 		Seleccion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Metodo de la ruleta", "Universal Estocastico", "Torneo Deterministico", "Torneo Probabilistico", "Truncamiento", "Restos"}));
 		seleccion_panel.add(Seleccion_cbox);
 		
-		TitledBorder title_Seleccion = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Selección");
+		TitledBorder title_Seleccion = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Selecciï¿½n");
 		seleccion_panel.setBorder(title_Seleccion);
 		
 		Component horizontalStrut = Box.createHorizontalStrut(20);
@@ -174,7 +174,7 @@ public class panelPrincipal {
 		mutacion_panel.add(lbltipoMutacion);
 		
 		JComboBox Mutacion_cbox = new JComboBox();
-		Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica"}));
+		Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutaciï¿½n basica"}));
 		mutacion_panel.add(Mutacion_cbox);
 		
 		JLabel lblporcentajeMutacion = new JLabel("% Mutacion");
@@ -185,15 +185,15 @@ public class panelPrincipal {
 		mutacion_panel.add(textField_mutacion);
 		textField_mutacion.setColumns(10);
 		
-		TitledBorder borde_mutacion = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Mutacion básica");
+		TitledBorder borde_mutacion = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Mutacion bï¿½sica");
 		mutacion_panel.setBorder(borde_mutacion);
 
-		////////////////////////////////////////////////		ÉLITE 
+		////////////////////////////////////////////////		ï¿½LITE 
 		JPanel elite_panel = new JPanel();
 		controles.add(elite_panel);
 		elite_panel.setLayout(new GridLayout(2, 1, 0, 5));
 		
-		JLabel porcentajeElite = new JLabel("% Élite");
+		JLabel porcentajeElite = new JLabel("% ï¿½lite");
 		elite_panel.add(porcentajeElite);
 		
 		JTextField textField_elite = new JTextField();
@@ -201,7 +201,7 @@ public class panelPrincipal {
 		elite_panel.add(textField_elite);
 		textField_elite.setColumns(10);
 		
-		TitledBorder title_elite = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Élite");
+		TitledBorder title_elite = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "ï¿½lite");
 		elite_panel.setBorder(title_elite);
 
 
@@ -242,12 +242,12 @@ public class panelPrincipal {
 						 individuo_cbox.getSelectedItem().toString().equals("Funcion 1 (Reales)")) {
 					
 					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme", "Aritmetico", "BLX-alpha"}));
-					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica", "Mutacion Uniforme"}));
+					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutaciï¿½n basica", "Mutacion Uniforme"}));
 				} 
 				else if (individuo_cbox.getSelectedItem().toString().equals("Funcion Holder table (Reales)")) {
 					
 					Cruce_cbox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto","Discreto Uniforme", "Aritmetico"}));
-					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutación basica", "Mutacion Uniforme"}));
+					Mutacion_cbox.setModel(new DefaultComboBoxModel(new String[] {"Mutaciï¿½n basica", "Mutacion Uniforme"}));
 				}
 				else {
 					
