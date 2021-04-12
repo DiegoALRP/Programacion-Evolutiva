@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 
 import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.NGramas;
+import algoritmoGenetico.individuos.Texto;
 
 public class Main {
 
@@ -16,8 +17,9 @@ public class Main {
 		StringBuilder st3 = new StringBuilder("Washington: First in war, first in peace, and last in the National League East. Washington: First in war, first in peace, and last in the National League East.");
 		NGramas ng = new NGramas();
 		ng.loadHashs();
+		Texto claseTexto = new Texto(st, st2);
 		
-		Individuo ind = new Individuo(st, st2, ng);
+		Individuo ind = new Individuo(claseTexto, ng);
 		System.out.println(ind.getFenotipe());
 		double end = System.currentTimeMillis() - start;
 		System.out.println("Time: " + end);

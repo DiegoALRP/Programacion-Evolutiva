@@ -37,29 +37,50 @@ public class Individuo {
 	protected double fitness;
 	
 	protected NGramas ngramas;
+	protected Texto claseTexto;
 	
 	/************************** CONSTANT ATRIBUTTES *****************************/
 	protected final int tam = 26;
 	protected final int initLetter = 65;
 	
 	/**************************** CONSTRUCTOR *******************************/
-	public Individuo(StringBuilder textoOriginal, StringBuilder textoAyuda, NGramas ngramas) {
+	public Individuo(Texto claseTexto, NGramas ngramas) {
 		
 		this.cromosoma = new ArrayList<Integer>(tam);
 		
 		this.claveDescifrado = new HashMap<Character, Character>(tam);
 		this.fenotipo = new StringBuilder(tamTexto);
 		
-		this.textoOriginal = new StringBuilder(textoOriginal);
-		this.textoAyuda = new StringBuilder(textoAyuda);
+		this.textoOriginal = claseTexto.getTextoOriginal();
+		this.textoAyuda = claseTexto.getTextoAyuda();
 		this.tamTexto = textoOriginal.length();
 		this.tamTextoAyuda = textoAyuda.length();
 		
 		this.ngramas = ngramas;
+		this.claseTexto = claseTexto;
 		
 		this.initializeCromosome();
 		
 		this.calculateFenotipo();
+		
+		this.calculateFitness();
+	}
+	
+	public Individuo(Texto claseTexto, NGramas ngramas, ArrayList<Integer> cromosoma) {
+		
+		this.cromosoma = new ArrayList<Integer>(tam);
+		this.cromosoma.addAll(cromosoma);
+		
+		this.claveDescifrado = new HashMap<Character, Character>(tam);
+		this.fenotipo = new StringBuilder(tamTexto);
+		
+		this.textoOriginal = claseTexto.getTextoOriginal();
+		this.textoAyuda = claseTexto.getTextoAyuda();
+		this.tamTexto = textoOriginal.length();
+		this.tamTextoAyuda = textoAyuda.length();
+		
+		this.ngramas = ngramas;
+		this.claseTexto = claseTexto;
 		
 		this.calculateFitness();
 	}
@@ -197,6 +218,21 @@ public class Individuo {
 		}
 	}
 	/**************************** GET & SET ********************************/
+	public NGramas getNGrama() {
+		
+		return this.ngramas;
+	}
+	
+	public Texto getTexto() {
+		
+		return this.claseTexto;
+	}
+	
+	public ArrayList<Integer> getCromosoma(){
+		
+		return this.cromosoma;
+	}
+	
 	public String getFenotipe() {
 		
 		return this.fenotipo.toString();
