@@ -31,7 +31,7 @@ public class NGramas {
 	protected HashMap<String, Double> frecuenciaTrigramas;
 	protected HashMap<String, Double> frecuenciaCuadragramas;
 	protected HashMap<String, Double> frecuenciaQuintagramas;
-	protected HashSet<String> palabras;
+	protected HashMap<String, Double> frecuenciaPalabras;
 	
 	private final int tamMonograma = 26;
 	private final int tamBigrama = 676;
@@ -48,7 +48,7 @@ public class NGramas {
 		this.frecuenciaTrigramas = new HashMap<String, Double>(tamTrigrama);
 		this.frecuenciaCuadragramas = new HashMap<String, Double>(tamCuadragrama);
 		this.frecuenciaQuintagramas = new HashMap<String, Double>(tamQuintagrama);
-		this.palabras = new HashSet<String>(tamPalabras);
+		this.frecuenciaPalabras = new HashMap<String, Double>(tamPalabras);
 	}
 	/***************************** METHODS ********************************/
 	
@@ -165,10 +165,10 @@ public class NGramas {
 		
 		while (sc.hasNextLine()) {
 			String[] st = sc.nextLine().split(" ");
-			this.palabras.add((st[0]));
+			this.frecuenciaPalabras.put(st[0], Double.parseDouble(st[1]));
 		}
 		
-		System.out.println("Wordssize: " + this.palabras.size());
+		System.out.println("Wordssize: " + this.frecuenciaPalabras.size());
 	}
 	
 	/**************************** GET & SET ********************************/
