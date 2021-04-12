@@ -43,7 +43,7 @@ public class Individuo {
 	protected final int initLetter = 65;
 	
 	/**************************** CONSTRUCTOR *******************************/
-	public Individuo(String textoOriginal, String textoAyuda, NGramas ngramas) {
+	public Individuo(StringBuilder textoOriginal, StringBuilder textoAyuda, NGramas ngramas) {
 		
 		this.cromosoma = new ArrayList<Integer>(tam);
 		
@@ -200,5 +200,10 @@ public class Individuo {
 	public String getFenotipe() {
 		
 		return this.fenotipo.toString();
+	}
+	
+	public double getFitness() {
+		
+		return this.fitness;
 	}
 }

@@ -10,10 +10,10 @@ public class Main {
 	public static void main(String[] args) {
 		
 		double start = System.currentTimeMillis();
-		String st = "Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue.";
-		String st2 = "Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue.Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue.";
+		StringBuilder st = new StringBuilder("Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue.");
+		StringBuilder st2 = new StringBuilder("Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue.Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue.");
 		
-		String st3 = "Washington: First in war, first in peace, and last in the National League East. Washington: First in war, first in peace, and last in the National League East.";
+		StringBuilder st3 = new StringBuilder("Washington: First in war, first in peace, and last in the National League East. Washington: First in war, first in peace, and last in the National League East.");
 		NGramas ng = new NGramas();
 		ng.loadHashs();
 		
