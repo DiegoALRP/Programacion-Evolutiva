@@ -1,5 +1,9 @@
 package algoritmoGenetico.seleccion;
 
+import java.util.ArrayList;
+
+import algoritmoGenetico.individuos.Individuo;
+
 /**
  * Universidad Complutense de Madrid.
  * Programación Evolutiva.
@@ -7,7 +11,7 @@ package algoritmoGenetico.seleccion;
  * Profesor:
  * 	-Carlos Cervigon Ruckauer.
  * 
- * Clase Seleccion.
+ * Clase Abstracta Selección.
  * 
  * @author 
  * Grupo G06:
@@ -19,7 +23,18 @@ package algoritmoGenetico.seleccion;
 public abstract class Seleccion {
 
 	/**************************** ATRIBUTTES *******************************/
+	
 	/**************************** CONSTRUCTOR *******************************/
+	
 	/***************************** METHODS ********************************/
+	
+	public void addIndividuo(ArrayList<Individuo> nuevaPoblacion, Individuo individuo) {
+		
+		Individuo nuevoIndividuo = new Individuo(individuo.getTexto(), individuo.getNGrama(), individuo.getCromosoma());
+		nuevaPoblacion.add(nuevoIndividuo);
+	}
+	
+	
+	
 	/**************************** GET & SET ********************************/
 }
