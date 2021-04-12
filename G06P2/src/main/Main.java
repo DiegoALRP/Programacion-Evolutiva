@@ -18,22 +18,10 @@ public class Main {
 		ng.loadHashs();
 		
 		Individuo ind = new Individuo(st, st2, ng);
+		System.out.println(ind.getFenotipe());
 		double end = System.currentTimeMillis() - start;
 		System.out.println("Time: " + end);
-		//System.out.println(ind.getFenotipe());
 		
-		/*double start = System.currentTimeMillis();
-		NGramas ng = new NGramas();
-		ng.loadHashs();
-		double end = System.currentTimeMillis() - start;
-		System.out.println("Time: " + end);*/
-		
-		//System.out.println((char)97);
-		
-		/*for (int i = 0; i < 26; i++) {
-			
-			System.out.println((char)(97 + i));
-		}*/
 	}
 
 }

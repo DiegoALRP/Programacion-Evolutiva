@@ -1,10 +1,8 @@
 package algoritmoGenetico.individuos;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Scanner;
 
 /**
@@ -76,6 +74,7 @@ public class NGramas {
 	public void loadMonograms() throws FileNotFoundException {
 		
 		FileInputStream file = new FileInputStream("frecuencies/english_monograms_frecuencies.txt");
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(file);
 		
 		while (sc.hasNextLine()) {
@@ -83,7 +82,7 @@ public class NGramas {
 			this.frecuenciaMonogramas.put(st[0], Double.parseDouble(st[1]));
 		}
 		
-		System.out.println(this.frecuenciaMonogramas);
+		System.out.println("Monosize: " + this.frecuenciaMonogramas.size());
 	}
 	
 	/**

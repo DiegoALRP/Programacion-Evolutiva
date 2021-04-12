@@ -27,22 +27,13 @@ public class Individuo {
 	/**************************** ATRIBUTTES *******************************/
 	protected ArrayList<Integer> cromosoma;
 	protected HashMap<Character, Character> claveDescifrado; //HashMap que tiene como clave las letras a-z del texto cifrado y como valor las letras a-z del texto descifrado
-	protected ArrayList<Character> fenotipo;
+	protected StringBuilder fenotipo;
 	
 	protected StringBuilder textoOriginal; 
-	//protected char[] arrayTextoOriginal;
-	//protected ArrayList<Character> textOriginalSinEsp;
 	protected int tamTexto;
 	protected StringBuilder textoAyuda;
-	//protected char[] arrayTextoAyuda;
-	//protected ArrayList<Character> textoAyudaSinEsp;
 	protected int tamTextoAyuda;
 	
-	/*protected HashMap<String, Integer> frecuenciaMonograma;
-	protected HashMap<String, Integer> frecuenciaBigrama;
-	protected HashMap<String, Integer> frecuenciaTrigrama;
-	protected HashMap<String, Integer> frecuenciaCuatrigrama;
-	protected HashMap<String, Integer> frecuenciaQuintagrama;*/
 	protected double fitness;
 	
 	protected NGramas ngramas;
@@ -54,34 +45,23 @@ public class Individuo {
 	/**************************** CONSTRUCTOR *******************************/
 	public Individuo(String textoOriginal, String textoAyuda, NGramas ngramas) {
 		
-		//this.tamTexto = textoOriginal.length();
-		//this.tamTextoAyuda = textoAyuda.length();
 		this.cromosoma = new ArrayList<Integer>(tam);
-		this.initializeCromosome();
 		
 		this.claveDescifrado = new HashMap<Character, Character>(tam);
-		this.fenotipo = new ArrayList<Character>(textoOriginal.length());
+		this.fenotipo = new StringBuilder(tamTexto);
 		
 		this.textoOriginal = new StringBuilder(textoOriginal);
 		this.textoAyuda = new StringBuilder(textoAyuda);
 		this.tamTexto = textoOriginal.length();
 		this.tamTextoAyuda = textoAyuda.length();
-		//this.convertTextToArray();
-		
-		/*this.frecuenciaMonograma = new HashMap<String, Integer>(tam);
-		this.frecuenciaBigrama = new HashMap<String, Integer>(tam);
-		this.frecuenciaTrigrama = new HashMap<String, Integer>(tam);
-		this.frecuenciaCuatrigrama = new HashMap<String, Integer>(tam);
-		this.frecuenciaQuintagrama = new HashMap<String, Integer>(tam);*/
-		
-		this.calculateFenotipe();
 		
 		this.ngramas = ngramas;
 		
-		this.calculateFitness();
+		this.initializeCromosome();
 		
-		//System.out.println("Fitness: " + this.fitness/(Math.log(this.tamTextoAyuda)));
-		System.out.println("Fitness: " + this.fitness);
+		this.calculateFenotipo();
+		
+		this.calculateFitness();
 	}
 	/***************************** METHODS ********************************/
 	
@@ -108,53 +88,7 @@ public class Individuo {
 		}
 	}
 	
-	/*private void convertTextToArray() {
-		
-		this.arrayTextoOriginal = new char[tamTexto];
-		this.arrayTextoAyuda = new char[tamTextoAyuda];
-		this.textOriginalSinEsp = new ArrayList<Character>(tamTexto);
-		this.textoAyudaSinEsp = new ArrayList<Character>(tamTextoAyuda);
-		
-		for (int i = 0; i < tamTexto; i++) {
-			
-			char caracter = Character.toUpperCase(textoOriginal.charAt(i));
-			char caracterAyuda = Character.toUpperCase(textoAyuda.charAt(i));
-			int asciiChar = (int) caracter;
-			int asciiCharAyuda = (int) caracterAyuda;
-			
-			this.arrayTextoOriginal[i] = caracter;
-			this.arrayTextoAyuda[i] = caracterAyuda;
-			
-			if (this.isAZ(asciiChar)) {
-				
-				this.textOriginalSinEsp.add(caracter);
-			}
-			
-			if (this.isAZ(asciiCharAyuda)) {
-				
-				this.textoAyudaSinEsp.add(caracterAyuda);
-			}	
-		}
-		for (int i = tamTexto; i < tamTextoAyuda; i++) {
-			
-			char caracterAyuda = Character.toUpperCase(textoAyuda.charAt(i));
-			int asciiCharAyuda = (int) caracterAyuda;
-			
-			this.arrayTextoAyuda[i] = caracterAyuda;
-			
-			if (this.isAZ(asciiCharAyuda)) {
-				
-				this.textoAyudaSinEsp.add(caracterAyuda);
-			}	
-		}
-	}*/
-	
-	private boolean isAZ(int caracter) {
-		
-		return ((caracter >= 65 && caracter <= 90) || (caracter >= 97 && caracter <= 122));
-	}
-	
-	private void decodificador() {
+	private void decodifica() {
 		
 		for (int i = 0; i < this.tam; i++) {
 			
@@ -166,6 +100,7 @@ public class Individuo {
 		
 		StringBuilder sb = new StringBuilder();
 		StringBuilder word = new StringBuilder();
+		this.decodifica();
 		
 		int j = 0;
 		for (int i = 0; i < this.textoAyuda.length(); i++) {
@@ -174,38 +109,33 @@ public class Individuo {
 			
 			if (this.isAZ(caracter)) {
 				
-				sb.append(caracter);
-				word.append(caracter);
+				char caracterDeco = this.claveDescifrado.get(caracter);
+				//char caracterDeco = caracter;
+				
+				sb.append(caracterDeco);
+				word.append(caracterDeco);
 				j = sb.length();
 				
-				System.out.println(caracter);
-				this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracter))/(Math.log(tamTextoAyuda)*2);
-				//this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracter))/((Math.log(tamTextoAyuda)/Math.log(2))*2);
+				//this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/(Math.log(tamTextoAyuda)*2);
+				this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracter))/((Math.log(tamTextoAyuda)/Math.log(2))*2);
 				
 				if (j > 1) {
-					
 					this.fitness += this.ngramas.frecuenciaBigramas.get(sb.substring(j - 2, j));
 				}
 				if (j > 2) {
-					
 					this.fitness += this.ngramas.frecuenciaTrigramas.get(sb.substring(j - 3, j)) * 5;
 				}
 				if (j > 3) {
-					
 					if (this.ngramas.frecuenciaCuadragramas.containsKey(sb.substring(j - 4, j))) {
-						
 						this.fitness += this.ngramas.frecuenciaCuadragramas.get(sb.substring(j - 4, j)) * 5;
 					}
-					else {
-						
-						this.fitness -= 1;
-					}
+					//else this.fitness -= 1;
 				}
 				if (j > 4) {
 					if (this.ngramas.frecuenciaQuintagramas.containsKey(sb.substring(j - 5, j))) {
 						this.fitness += this.ngramas.frecuenciaQuintagramas.get(sb.substring(j - 5, j)) * 10;
 					}
-					else this.fitness -= 1;
+					//else this.fitness -= 1;
 				}
 				
 				if (this.ngramas.frecuenciaPalabras.containsKey(word.toString())) {
@@ -213,6 +143,7 @@ public class Individuo {
 				}
 			}
 			else {
+				
 				if (this.ngramas.frecuenciaPalabras.containsKey(word.toString())) {
 					this.fitness += this.ngramas.frecuenciaPalabras.get(word.toString()) * (word.length() * 2);
 				}
@@ -220,13 +151,25 @@ public class Individuo {
 			}
 		}
 		
+		//if (this.fitness < 0) {
+		//	this.fitness = 0;
+		//}
+		System.out.println("Fitness sin division: " + this.fitness);
+		this.fitness = this.fitness/Math.log10(this.tamTextoAyuda);
+		System.out.println("Fitness con division: " + this.fitness);
 		
-		return (this.fitness/this.tamTextoAyuda);
+		return this.fitness;
 	}
 	
-	private void calculateFenotipe() {
+	private boolean isAZ(int caracter) {
 		
-		this.decodificador();
+		return ((caracter >= 65 && caracter <= 90) || (caracter >= 97 && caracter <= 122));
+	}
+	
+	private void calculateFenotipo() {
+		
+		this.decodifica();
+		this.fenotipo = new StringBuilder(tamTexto);
 		
 		for (int i = 0; i < this.tamTexto; i++) {
 			
@@ -235,20 +178,20 @@ public class Individuo {
 			if (Character.isUpperCase(caracter)) {
 				
 				if (this.claveDescifrado.containsKey(caracter)) {
-					this.fenotipo.add(this.claveDescifrado.get(caracter));
+					this.fenotipo.append(this.claveDescifrado.get(caracter));
 				}
 				else {
-					this.fenotipo.add(caracter);
+					this.fenotipo.append(caracter);
 				}
 			}
 			else {
 				
-				caracter = Character.toLowerCase(caracter);
+				caracter = Character.toUpperCase(caracter);
 				if (this.claveDescifrado.containsKey(caracter)) {
-					this.fenotipo.add(Character.toLowerCase(this.claveDescifrado.get(caracter)));
+					this.fenotipo.append(Character.toLowerCase(this.claveDescifrado.get(caracter)));
 				}
 				else {
-					this.fenotipo.add(Character.toLowerCase(caracter));
+					this.fenotipo.append(Character.toLowerCase(caracter));
 				}
 			}
 		}
@@ -256,14 +199,6 @@ public class Individuo {
 	/**************************** GET & SET ********************************/
 	public String getFenotipe() {
 		
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < this.tamTexto; i++) {
-			
-			sb.append(this.fenotipo.get(i));
-		}
-		
-		System.out.println(this.cromosoma);
-		System.out.println(this.claveDescifrado);
-		return sb.toString();
+		return this.fenotipo.toString();
 	}
 }
