@@ -30,8 +30,14 @@ public abstract class Cruce {
 	protected int punto_cruce;					//Punto de Cruce
 	protected int num_selec_cruce;				//Numero de individuos seleccionados para cruzar
 	protected int tamPoblacion;					//Tamaño de la población
+	
 	/**************************** CONSTRUCTOR *******************************/
+	
+	
 	/***************************** METHODS ********************************/
+	
+	public abstract void cruza(ArrayList<Individuo> poblacion, double probCruce);
+	
 	protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
 		
 		this.tamPoblacion = poblacion.size();

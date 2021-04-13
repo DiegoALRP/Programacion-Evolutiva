@@ -11,6 +11,7 @@ public class CrucePorOrden extends Cruce{
 	private int punto1;
 	private int punto2;
 
+	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
 		this.num_selec_cruce = 0;
