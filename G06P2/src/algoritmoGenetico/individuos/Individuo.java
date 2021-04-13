@@ -117,7 +117,7 @@ public class Individuo {
 		}
 	}
 	
-	private double calculateFitness() {
+	public double calculateFitness() {
 		
 		StringBuilder sb = new StringBuilder();
 		StringBuilder word = new StringBuilder();
@@ -231,6 +231,11 @@ public class Individuo {
 	public ArrayList<Integer> getCromosoma(){
 		
 		return this.cromosoma;
+	}
+	public void setCromosoma(ArrayList<Integer> cromosoma) {
+		
+		this.cromosoma.clear();
+		this.cromosoma.addAll(cromosoma);
 	}
 	
 	public String getFenotipe() {
