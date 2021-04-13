@@ -144,7 +144,13 @@ public class Individuo {
 					this.fitness += this.ngramas.frecuenciaBigramas.get(sb.substring(j - 2, j));
 				}
 				if (j > 2) {
-					this.fitness += this.ngramas.frecuenciaTrigramas.get(sb.substring(j - 3, j)) * 5;
+					
+					if (this.ngramas.frecuenciaTrigramas.containsKey(sb.substring(j - 3, j))) {
+						this.fitness += this.ngramas.frecuenciaTrigramas.get(sb.substring(j - 3, j)) * 5;
+					}
+					else {
+						System.out.println(sb.substring(j - 3, j));
+					}
 				}
 				if (j > 3) {
 					if (this.ngramas.frecuenciaCuadragramas.containsKey(sb.substring(j - 4, j))) {
@@ -175,9 +181,9 @@ public class Individuo {
 		//if (this.fitness < 0) {
 		//	this.fitness = 0;
 		//}
-		System.out.println("Fitness sin division: " + this.fitness);
+		//System.out.println("Fitness sin division: " + this.fitness);
 		this.fitness = this.fitness/Math.log10(this.tamTextoAyuda);
-		System.out.println("Fitness con division: " + this.fitness);
+		//System.out.println("Fitness con division: " + this.fitness);
 		
 		return this.fitness;
 	}
