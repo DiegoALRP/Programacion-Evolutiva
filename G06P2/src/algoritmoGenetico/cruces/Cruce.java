@@ -63,5 +63,22 @@ public abstract class Cruce {
 			this.selec_cruce.remove(num_selec_cruce);
 		}
 	}
+	
+	protected void sustituyePadres(Individuo padre1, Individuo padre2, ArrayList<Integer> cromoHijo1, ArrayList<Integer>  cromoHijo2,
+			ArrayList<Integer>  cromoPadre1Aux, ArrayList<Integer>  cromoPadre2Aux) {
+		
+		double fitnessP1 = padre1.getFitness();
+		double fitnessP2 = padre2.getFitness();
+		
+		padre1.setCromosoma(cromoHijo1);
+		padre2.setCromosoma(cromoHijo2);
+		
+		double fitnessH1 = padre1.calculateFitness();
+		double fitnessH2 = padre2.calculateFitness();
+		
+		//TODO: probar que se cambien con una cierta probabilidad
+		if (fitnessP1 > fitnessH1) padre1.setCromosoma(cromoPadre1Aux);
+		if (fitnessP2 > fitnessH2) padre2.setCromosoma(cromoPadre2Aux);
+	}
 	/**************************** GET & SET ********************************/
 }

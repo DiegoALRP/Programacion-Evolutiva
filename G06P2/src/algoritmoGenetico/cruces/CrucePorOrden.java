@@ -53,7 +53,7 @@ public class CrucePorOrden extends Cruce{
 		
 		int longitudCromo = 26;
 		int longi = this.punto1;
-		int added1, added2 = 0;
+		int added1 = 0, added2 = 0;
 		while (longi < this.punto2) {
 			
 			cromoHijo1.set(longi, cromoPadre2Aux.get(longi));
@@ -65,7 +65,8 @@ public class CrucePorOrden extends Cruce{
 			added2++;
 		}
 		
-		int i1, j1 = (this.punto2 + 1)%26;
+		int i1 = (this.punto2 + 1)%26;
+		int j1 = (this.punto2 + 1)%26;
 		while (added1 <= 26) {
 			
 			int toAdd = cromoPadre2Aux.get(j1);
@@ -78,7 +79,8 @@ public class CrucePorOrden extends Cruce{
 			j1 = (j1 + 1)%26;
 		}
 		
-		int i2, j2 = (this.punto2 + 1)%26;
+		int i2 = (this.punto2 + 1)%26;
+		int j2 = (this.punto2 + 1)%26;
 		while (added2 <= 26) {
 			
 			int toAdd = cromoPadre2Aux.get(j2);
