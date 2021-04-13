@@ -29,7 +29,8 @@ public class SeleccionTorneo extends Seleccion {
 	/**************************** CONSTRUCTOR *******************************/
 	
 	/***************************** METHODS ********************************/
-	public ArrayList<Individuo> seleccionar(ArrayList<Individuo> poblacion){
+	@Override
+	public ArrayList<Individuo> seleccionar(ArrayList<Individuo> poblacion) {
 		
 		ArrayList<Individuo> nuevaPoblacion = new ArrayList<Individuo>();
 		ArrayList<Individuo> candidatos = new ArrayList<Individuo>();
