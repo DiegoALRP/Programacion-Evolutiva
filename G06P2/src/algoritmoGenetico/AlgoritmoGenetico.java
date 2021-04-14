@@ -3,6 +3,7 @@ package algoritmoGenetico;
 import java.util.ArrayList;
 
 import algoritmoGenetico.cruces.Cruce;
+import algoritmoGenetico.cruces.CrucePMX;
 import algoritmoGenetico.cruces.CrucePorOrden;
 import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.NGramas;
@@ -48,7 +49,7 @@ public class AlgoritmoGenetico {
 		this.tamPoblacion = 700;
 		this.numGeneraciones = 600;
 		this.metodoSeleccion = new SeleccionTorneo();
-		this.metodoCruce = new CrucePorOrden();
+		this.metodoCruce = new CrucePMX();
 		this.porcCruce = 0.8;
 		this.metodoMutacion = new MutacionIntercambio();
 		this.porcMutacion = 0.5;
