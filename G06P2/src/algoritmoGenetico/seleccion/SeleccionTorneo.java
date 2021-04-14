@@ -23,7 +23,7 @@ import algoritmoGenetico.individuos.Individuo;
 public class SeleccionTorneo extends Seleccion {
 
 	/**************************** ATRIBUTTES *******************************/
-	private final int tamTorneo = 0;
+	private final int tamTorneo = 2;
 	private int tamPoblacion;
 	
 	/**************************** CONSTRUCTOR *******************************/
@@ -32,6 +32,7 @@ public class SeleccionTorneo extends Seleccion {
 	@Override
 	public ArrayList<Individuo> seleccionar(ArrayList<Individuo> poblacion) {
 		
+		this.tamPoblacion = poblacion.size();
 		ArrayList<Individuo> nuevaPoblacion = new ArrayList<Individuo>();
 		ArrayList<Individuo> candidatos = new ArrayList<Individuo>();
 		
@@ -50,13 +51,12 @@ public class SeleccionTorneo extends Seleccion {
 			count++;
 		}
 		
-		poblacion = nuevaPoblacion;
-		return poblacion;
+		return nuevaPoblacion;
 	}
 	
 	public void competenciaTorneo(ArrayList<Individuo> nuevaPoblacion, ArrayList<Individuo> candidatos) {
 		
-		double maxFitness = 0;
+		double maxFitness = -Double.MAX_VALUE;
 		int indexBestIndividual = 0;
 		
 		for (int i = 0; i < tamTorneo; i++) {
