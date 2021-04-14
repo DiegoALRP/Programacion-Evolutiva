@@ -10,6 +10,7 @@ public class CrucePMX extends Cruce {
 
 	private int punto1;
 	private int punto2;
+	private final int longCromosoma = 26;
 	
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
@@ -33,16 +34,27 @@ public class CrucePMX extends Cruce {
 	
 	protected void cruzaPadres(Individuo padre1, Individuo padre2) {
 		
-		//ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();
-		//ArrayList<Integer> cromoPadre2 = padre2.getCromosoma();
-		ArrayList<Integer> cromoPadre1 = new ArrayList<Integer>();
+		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();
+		ArrayList<Integer> cromoPadre2 = padre2.getCromosoma();
+		/*ArrayList<Integer> cromoPadre1 = new ArrayList<Integer>();
 		ArrayList<Integer> cromoPadre2 = new ArrayList<Integer>();
-		for (int i = 0; i < 26; i++) {
+		for (int i = 1; i < 10; i++) {
 			
 			cromoPadre1.add(i);
-			cromoPadre2.add(25 - i);
 		}
 		
+		cromoPadre2.add(4);
+		cromoPadre2.add(5);
+		cromoPadre2.add(2);
+		cromoPadre2.add(1);
+		cromoPadre2.add(8);
+		cromoPadre2.add(7);
+		cromoPadre2.add(6);
+		cromoPadre2.add(9);
+		cromoPadre2.add(3);
+		
+		this.punto1 = 3;
+		this.punto2 = 6;*/
 		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>();
 		cromoPadre1Aux.addAll(cromoPadre1);
 		
@@ -57,21 +69,26 @@ public class CrucePMX extends Cruce {
 		cromoHijo2.addAll(cromoPadre2Aux);
 		HashSet<Integer> setHijo2 = new HashSet<Integer>(26);
 		
+		ArrayList<Integer> cromoHijo1Aux = new ArrayList<>();
+		ArrayList<Integer> cromoHijo2Aux = new ArrayList<Integer>();
+		
 		int longi = this.punto1;
 		int added1 = 0, added2 = 0;
 		while (longi <= this.punto2) {
 			
 			cromoHijo1.set(longi, cromoPadre2Aux.get(longi));
+			cromoHijo1Aux.add(cromoPadre2Aux.get(longi));
 			setHijo1.add(cromoPadre2Aux.get(longi));
 			cromoHijo2.set(longi, cromoPadre1Aux.get(longi));
+			cromoHijo2Aux.add(cromoPadre1Aux.get(longi));
 			setHijo2.add(cromoPadre1Aux.get(longi));
 			added1++;
 			added2++;
 			longi++;
 		}
 		
-		int i1 = (this.punto2 + 1)%26;
-		while (added1 < 26) {
+		int i1 = (this.punto2 + 1)%longCromosoma;
+		while (added1 < longCromosoma) {
 			
 			int toAdd = cromoPadre1Aux.get(i1);
 			if (!setHijo1.contains(toAdd)) {
@@ -82,25 +99,25 @@ public class CrucePMX extends Cruce {
 			}
 			else {
 				
-				int index = cromoHijo1.indexOf(toAdd);
-				toAdd = cromoHijo2.get(index);
+				int index = cromoHijo1Aux.indexOf(toAdd);
+				toAdd = cromoHijo2Aux.get(index);
 				while (setHijo1.contains(toAdd)) {
 					
-					index = cromoHijo1.indexOf(toAdd);
-					toAdd = cromoHijo2.get(index);
+					index = cromoHijo1Aux.indexOf(toAdd);
+					toAdd = cromoHijo2Aux.get(index);
 				}
 				
 				cromoHijo1.set(i1, toAdd);
 				setHijo1.add(toAdd);
 				added1++;
 			}
-			i1 = (i1 + 1)%26;
+			i1 = (i1 + 1)%longCromosoma;
 		}
 		
-		int i2 = (this.punto2 + 1)%26;
-		while (added2 < 26) {
+		int i2 = (this.punto2 + 1)%longCromosoma;
+		while (added2 < longCromosoma) {
 			
-			int toAdd = cromoPadre1Aux.get(i2);
+			int toAdd = cromoPadre2Aux.get(i2);
 			if (!setHijo2.contains(toAdd)) {
 				
 				cromoHijo2.set(i2, toAdd);
@@ -109,15 +126,19 @@ public class CrucePMX extends Cruce {
 			}
 			else {
 				
-				int index = cromoHijo2.indexOf(toAdd);
-				toAdd = cromoHijo1.get(index);
+				int index = cromoHijo2Aux.indexOf(toAdd);
+				toAdd = cromoHijo1Aux.get(index);
 				while (setHijo2.contains(toAdd)) {
 					
-					index = cromoHijo2.indexOf(toAdd);
-					toAdd = cromoHijo1.get(index);
+					index = cromoHijo2Aux.indexOf(toAdd);
+					toAdd = cromoHijo1Aux.get(index);
 				}
+				
+				cromoHijo2.set(i2, toAdd);
+				setHijo2.add(toAdd);
+				added2++;
 			}
-			i2 = (i2 + 1)%26;
+			i2 = (i2 + 1)%longCromosoma;
 		}
 		
 		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
