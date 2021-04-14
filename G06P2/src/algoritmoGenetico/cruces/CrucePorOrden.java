@@ -24,7 +24,7 @@ public class CrucePorOrden extends Cruce{
 		this.seleccionaIndividuos(poblacion);
 		
 		Random rand = new Random();
-		punto1 = rand.nextInt(25);
+		punto1 = rand.nextInt(20);
 		punto2 = rand.nextInt(26 - punto1) + punto1;
 		
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
@@ -55,26 +55,27 @@ public class CrucePorOrden extends Cruce{
 		int longitudCromo = 26;
 		int longi = this.punto1;
 		int added1 = 0, added2 = 0;
-		while (longi < this.punto2) {
+		while (longi <= this.punto2) {
 			
-			cromoHijo1.set(longi, cromoPadre2Aux.get(longi));
-			setHijo1.add(cromoPadre2Aux.get(longi));
-			cromoHijo2.set(longi, cromoPadre1Aux.get(longi));
-			setHijo2.add(cromoPadre1Aux.get(longi));
-			longi++;
+			cromoHijo1.set(longi, cromoPadre1Aux.get(longi));
+			setHijo1.add(cromoPadre1Aux.get(longi));
+			cromoHijo2.set(longi, cromoPadre2Aux.get(longi));
+			setHijo2.add(cromoPadre2Aux.get(longi));
 			added1++;
 			added2++;
+			longi++;
 		}
 		
 		int i1 = (this.punto2 + 1)%26;
 		int j1 = (this.punto2 + 1)%26;
-		while (added1 <= 26) {
+		while (added1 < 26) {
 			
 			int toAdd = cromoPadre2Aux.get(j1);
 			if (!setHijo1.contains(toAdd)) {
 				
 				cromoHijo1.set(i1, toAdd);
 				i1 = (i1 + 1)%26;
+				setHijo1.add(toAdd);
 				added1++;
 			}
 			j1 = (j1 + 1)%26;
@@ -82,13 +83,14 @@ public class CrucePorOrden extends Cruce{
 		
 		int i2 = (this.punto2 + 1)%26;
 		int j2 = (this.punto2 + 1)%26;
-		while (added2 <= 26) {
+		while (added2 < 26) {
 			
-			int toAdd = cromoPadre2Aux.get(j2);
-			if (!setHijo1.contains(toAdd)) {
+			int toAdd = cromoPadre1Aux.get(j2);
+			if (!setHijo2.contains(toAdd)) {
 				
-				cromoHijo1.set(i2, toAdd);
+				cromoHijo2.set(i2, toAdd);
 				i2 = (i2 + 1)%26;
+				setHijo2.add(toAdd);
 				added2++;
 			}
 			j2 = (j2 + 1)%26;
