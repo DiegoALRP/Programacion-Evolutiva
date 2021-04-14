@@ -55,7 +55,7 @@ public class Individuo {
 		this.textoAyuda = claseTexto.getTextoAyuda();
 		this.tamTexto = textoOriginal.length();
 		this.tamTextoAyuda = textoAyuda.length();
-		
+
 		this.ngramas = ngramas;
 		this.claseTexto = claseTexto;
 		
@@ -114,6 +114,7 @@ public class Individuo {
 		for (int i = 0; i < this.tam; i++) {
 			
 			this.claveDescifrado.put((char) (this.cromosoma.get(i) + this.initLetter), (char) (i + this.initLetter));
+			//this.claveDescifrado.put((char) (this.cromosoma.get(i)), (char) (i + this.initLetter));
 		}
 	}
 	
@@ -130,12 +131,12 @@ public class Individuo {
 			
 			if (this.isAZ(caracter)) {
 				
-				if (!this.claveDescifrado.containsKey(caracter)) {
+				/*if (!this.claveDescifrado.containsKey(caracter)) {
 					
 					System.out.println("!!!EPA!!!: " + caracter);
 					System.out.println("Des: " + this.claveDescifrado);
 					System.out.println("Crom: " + this.cromosoma);
-				}
+				}*/
 				char caracterDeco = this.claveDescifrado.get(caracter);
 				//char caracterDeco = caracter;
 				
@@ -144,7 +145,7 @@ public class Individuo {
 				j = sb.length();
 				
 				//this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/(Math.log(tamTextoAyuda)*2);
-				this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracter))/((Math.log(tamTextoAyuda)/Math.log(2))*2);
+				this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/((Math.log(tamTextoAyuda)/Math.log(2))*2);
 				
 				if (j > 1) {
 					this.fitness += this.ngramas.frecuenciaBigramas.get(sb.substring(j - 2, j));
@@ -155,7 +156,7 @@ public class Individuo {
 						this.fitness += this.ngramas.frecuenciaTrigramas.get(sb.substring(j - 3, j)) * 2;
 					}
 					else {
-						this.fitness -= 1;
+						//this.fitness -= 1;
 						//System.out.println(sb.substring(j - 3, j));
 					}
 				}
@@ -163,13 +164,13 @@ public class Individuo {
 					if (this.ngramas.frecuenciaCuadragramas.containsKey(sb.substring(j - 4, j))) {
 						this.fitness += this.ngramas.frecuenciaCuadragramas.get(sb.substring(j - 4, j)) * 3;
 					}
-					else this.fitness -= 1;
+					//else this.fitness -= 1;
 				}
 				if (j > 4) {
 					if (this.ngramas.frecuenciaQuintagramas.containsKey(sb.substring(j - 5, j))) {
-						this.fitness += this.ngramas.frecuenciaQuintagramas.get(sb.substring(j - 5, j)) * 5;
+						this.fitness += this.ngramas.frecuenciaQuintagramas.get(sb.substring(j - 5, j)) * 4;
 					}
-					else this.fitness -= 1;
+					//else this.fitness -= 2;
 				}
 				
 				/*if (this.ngramas.frecuenciaPalabras.containsKey(word.toString())) {
@@ -179,7 +180,7 @@ public class Individuo {
 			else {
 				
 				if (this.ngramas.frecuenciaPalabras.containsKey(word.toString()) && word.length() > 1) {
-					this.fitness += this.ngramas.frecuenciaPalabras.get(word.toString()) * (word.length() * 5);
+					this.fitness += this.ngramas.frecuenciaPalabras.get(word.toString()) * (word.length() * 2);
 				}
 				word = new StringBuilder();
 			}
