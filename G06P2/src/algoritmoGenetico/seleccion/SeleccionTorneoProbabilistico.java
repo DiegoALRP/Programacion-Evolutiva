@@ -14,7 +14,7 @@ import algoritmoGenetico.individuos.Individuo;
  * 
  * Práctica 2
  * 
- * Clase Seleccion por Torneo Determinista.
+ * Clase Seleccion por Torneo Probabilístico.
  * 
  * @author 
  * Grupo G06:
@@ -22,18 +22,19 @@ import algoritmoGenetico.individuos.Individuo;
  * 	-Diego Alejandro Rodríguez Pereira.
  *
  */
-public class SeleccionTorneo extends Seleccion {
-
+public class SeleccionTorneoProbabilistico extends Seleccion {
+	
 	/**************************** ATRIBUTTES *******************************/
 	private final int tamTorneo = 2;
 	private int tamPoblacion;
+	private final double probSelecPeor = 0.5;
 	
 	/**************************** CONSTRUCTOR *******************************/
 	
 	/***************************** METHODS ********************************/
 	@Override
 	public ArrayList<Individuo> seleccionar(ArrayList<Individuo> poblacion) {
-		
+
 		this.tamPoblacion = poblacion.size();
 		ArrayList<Individuo> nuevaPoblacion = new ArrayList<Individuo>();
 		ArrayList<Individuo> candidatos = new ArrayList<Individuo>();
@@ -59,7 +60,9 @@ public class SeleccionTorneo extends Seleccion {
 	public void competenciaTorneo(ArrayList<Individuo> nuevaPoblacion, ArrayList<Individuo> candidatos) {
 		
 		double maxFitness = -Double.MAX_VALUE;
+		double minFitness = Double.MAX_VALUE;
 		int indexBestIndividual = 0;
+		int indexWorstIndividual = 0;
 		
 		for (int i = 0; i < tamTorneo; i++) {
 			
@@ -70,10 +73,20 @@ public class SeleccionTorneo extends Seleccion {
 				maxFitness = fitness;
 				indexBestIndividual = i;
 			}
+			if (fitness < minFitness) {
+				minFitness = fitness;
+				indexWorstIndividual = i;
+			}
 		}
 		
-		addIndividuo(nuevaPoblacion, candidatos.get(indexBestIndividual));
+		Random rand = new Random();
+		if (rand.nextDouble() < this.probSelecPeor) {
+			addIndividuo(nuevaPoblacion, candidatos.get(indexWorstIndividual));
+		}
+		else {
+			addIndividuo(nuevaPoblacion, candidatos.get(indexBestIndividual));
+		}
 	}
-	
+
 	/**************************** GET & SET ********************************/
 }

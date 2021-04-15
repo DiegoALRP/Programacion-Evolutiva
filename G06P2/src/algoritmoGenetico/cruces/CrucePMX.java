@@ -36,25 +36,7 @@ public class CrucePMX extends Cruce {
 		
 		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Integer> cromoPadre2 = padre2.getCromosoma();
-		/*ArrayList<Integer> cromoPadre1 = new ArrayList<Integer>();
-		ArrayList<Integer> cromoPadre2 = new ArrayList<Integer>();
-		for (int i = 1; i < 10; i++) {
-			
-			cromoPadre1.add(i);
-		}
 		
-		cromoPadre2.add(4);
-		cromoPadre2.add(5);
-		cromoPadre2.add(2);
-		cromoPadre2.add(1);
-		cromoPadre2.add(8);
-		cromoPadre2.add(7);
-		cromoPadre2.add(6);
-		cromoPadre2.add(9);
-		cromoPadre2.add(3);
-		
-		this.punto1 = 3;
-		this.punto2 = 6;*/
 		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>();
 		cromoPadre1Aux.addAll(cromoPadre1);
 		

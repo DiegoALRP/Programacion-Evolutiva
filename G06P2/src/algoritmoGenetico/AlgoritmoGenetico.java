@@ -12,6 +12,7 @@ import algoritmoGenetico.mutaciones.Mutacion;
 import algoritmoGenetico.mutaciones.MutacionIntercambio;
 import algoritmoGenetico.seleccion.Seleccion;
 import algoritmoGenetico.seleccion.SeleccionTorneo;
+import algoritmoGenetico.seleccion.SeleccionTorneoProbabilistico;
 
 public class AlgoritmoGenetico {
 	
@@ -46,9 +47,9 @@ public class AlgoritmoGenetico {
 	/**************************** CONSTRUCTOR *******************************/
 	public AlgoritmoGenetico() {
 		
-		this.tamPoblacion = 700;
+		this.tamPoblacion = 800;
 		this.numGeneraciones = 600;
-		this.metodoSeleccion = new SeleccionTorneo();
+		this.metodoSeleccion = new SeleccionTorneoProbabilistico();
 		this.metodoCruce = new CrucePMX();
 		this.porcCruce = 0.8;
 		this.metodoMutacion = new MutacionIntercambio();
@@ -87,26 +88,6 @@ public class AlgoritmoGenetico {
 	}
 	
 	/***************************** METHODS ********************************/
-	private void imprimePoblacion() {
-		
-		double maxFitness = 0;
-		int index = 0;
-		
-		for (Individuo ind : this.poblacion) {
-			
-			/*System.out.println(ind.getFenotipe());
-			System.out.println(ind.getFitness());*/
-			double fitness = ind.getFitness();
-			if(fitness > maxFitness) {
-				
-				maxFitness = fitness;
-				index = poblacion.indexOf(ind);
-			}
-		}
-		
-		System.out.println(poblacion.get(index).getFenotipe());
-		System.out.println(poblacion.get(index).getFitness());
-	}
 	
 	public void startAlgorithm() {
 		
@@ -139,6 +120,27 @@ public class AlgoritmoGenetico {
 			Individuo ind = new Individuo(claseTexto, ngramas);
 			poblacion.add(ind);
 		}
+	}
+	
+	private void imprimePoblacion() {
+		
+		double maxFitness = 0;
+		int index = 0;
+		
+		for (Individuo ind : this.poblacion) {
+			
+			/*System.out.println(ind.getFenotipe());
+			System.out.println(ind.getFitness());*/
+			double fitness = ind.getFitness();
+			if(fitness > maxFitness) {
+				
+				maxFitness = fitness;
+				index = poblacion.indexOf(ind);
+			}
+		}
+		
+		System.out.println(poblacion.get(index).getFenotipe());
+		System.out.println(poblacion.get(index).getFitness());
 	}
 	
 	private void evaluaFitnessPoblacion() {
