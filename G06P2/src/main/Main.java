@@ -1,6 +1,7 @@
 package main;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import algoritmoGenetico.AlgoritmoGenetico;
 import algoritmoGenetico.individuos.Individuo;
@@ -32,6 +33,10 @@ public class Main {
 		
 		double end = System.currentTimeMillis() - start;
 		System.out.println("Time: " + end);
+		
+		/*int[] array = new int[10];
+		array[3] = 4;
+		System.out.println(array);*/
 	}
 
 }

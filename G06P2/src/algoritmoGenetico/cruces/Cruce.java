@@ -86,5 +86,7 @@ public abstract class Cruce {
 		if (fitnessP1 > fitnessH1) padre1.setCromosoma(cromoPadre1Aux);
 		if (fitnessP2 > fitnessH2) padre2.setCromosoma(cromoPadre2Aux);
 	}
+	
+	protected abstract void cruzaPadres(Individuo padre1, Individuo padre2);
 	/**************************** GET & SET ********************************/
 }

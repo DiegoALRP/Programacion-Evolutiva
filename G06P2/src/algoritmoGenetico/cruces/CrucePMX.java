@@ -6,6 +6,23 @@ import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Práctica 2
+ * 
+ * Clase Cruce PMX.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class CrucePMX extends Cruce {
 
 	private int punto1;

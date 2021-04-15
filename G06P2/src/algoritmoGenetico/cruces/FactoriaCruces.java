@@ -7,6 +7,8 @@ package algoritmoGenetico.cruces;
  * Profesor:
  * 	-Carlos Cervigon Ruckauer.
  * 
+ * Práctica 2
+ * 
  * Clase Factoria Cruces.
  * 
  * @author 
