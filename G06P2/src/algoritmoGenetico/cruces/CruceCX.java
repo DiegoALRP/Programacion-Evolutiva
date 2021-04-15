@@ -79,20 +79,6 @@ public class CruceCX extends Cruce {
 		ArrayList<Integer> cromoHijo2 = new ArrayList<Integer>(longCromo);
 		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>(longCromo);
 		ArrayList<Integer> cromoPadre2Aux = new ArrayList<Integer>(longCromo);
-		/*int[] cromoHijo1 = new int[longCromo];
-		int[] cromoHijo2 = new int[longCromo];
-		int[] cromoPadre1Aux = new int[longCromo];
-		int[] cromoPadre2Aux = new int[longCromo];*/
-		
-		/*for (int i = 0; i < longCromo; i++) {
-			
-			cromoHijo1[i] = cromoPadre1.get(i);
-			cromoHijo2[i] = cromoPadre2.get(i);
-			cromoPadre1Aux[i] = cromoPadre1.get(i);
-			cromoPadre2Aux[i] = cromoPadre2.get(i);
-			mapaIndices1.put(cromoHijo1[i], i);
-			mapaIndices2.put(cromoHijo2[i], i);
-		}*/
 		
 		for (int i = 0; i < longCromo; i++) {
 			
@@ -106,26 +92,6 @@ public class CruceCX extends Cruce {
 		
 		HashSet<Integer> set1 = new HashSet<Integer>(longCromo);
 		HashSet<Integer> set2 = new HashSet<Integer>(longCromo);
-		
-		/*int k = 0;
-		int toAdd = cromoHijo1[k];
-		while (!set1.contains(toAdd)) {
-			
-			set1.add(toAdd);
-			toAdd = cromoHijo2[k];
-			k = mapaIndices1.get(toAdd);
-			mapaIndices1.remove(toAdd);
-		}
-		
-		k = 0;
-		toAdd = cromoHijo2[k];
-		while (!set2.contains(toAdd)) {
-			
-			set2.add(toAdd);
-			toAdd = cromoHijo1[k];
-			k = mapaIndices2.get(toAdd);
-			mapaIndices2.remove(toAdd);
-		}*/
 		
 		int k = 0;
 		int toAdd = cromoHijo1.get(k);
@@ -150,20 +116,6 @@ public class CruceCX extends Cruce {
 		//Probar iterando por el hashmap
 		/*for (Integer num : mapaIndices1.) {
 			
-		}*/
-		
-		/*int a = 0;
-		int b = 0;
-		for (int i = 0; i < longCromo; i++) {
-			
-			a = cromoHijo1[i];
-			b = cromoHijo2[i];
-			if (!set1.contains(a)) {
-				cromoHijo1[i] = cromoPadre2.get(i);
-			}
-			if (!set2.contains(b)) {
-				cromoHijo2[i] = cromoPadre1.get(i);
-			}
 		}*/
 		
 		int a = 0;

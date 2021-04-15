@@ -33,10 +33,6 @@ public class Main {
 		
 		double end = System.currentTimeMillis() - start;
 		System.out.println("Time: " + end);
-		
-		/*int[] array = new int[10];
-		array[3] = 4;
-		System.out.println(array);*/
 	}
 
 }
