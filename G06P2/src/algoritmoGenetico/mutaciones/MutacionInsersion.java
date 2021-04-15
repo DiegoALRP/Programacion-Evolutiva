@@ -29,14 +29,12 @@ public class MutacionInsersion extends Mutacion {
 		Random rand = new Random();
 		int i = rand.nextInt(longCromosoma);
 		int j = rand.nextInt(longCromosoma);
-		i = 2;
-		j = 6;
 		while (j == i) {
 			
 			j = rand.nextInt(longCromosoma);
 		}
 		
-		int k = j + 1;
+		int k = (j + 1)%longCromosoma;
 		while (k != (i + 1)%longCromosoma) {
 			
 			if (k == 0) {
