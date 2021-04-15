@@ -144,8 +144,8 @@ public class Individuo {
 				word.append(caracterDeco);
 				j = sb.length();
 				
-				//this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/(Math.log(tamTextoAyuda)*2);
-				this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/((Math.log(tamTextoAyuda)/Math.log(2))*2);
+				this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/(Math.log(tamTextoAyuda));
+				//this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/((Math.log(tamTextoAyuda)/Math.log(2))*2);
 				
 				if (j > 1) {
 					this.fitness += this.ngramas.frecuenciaBigramas.get(sb.substring(j - 2, j));
