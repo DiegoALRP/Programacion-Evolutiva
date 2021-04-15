@@ -10,6 +10,7 @@ import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.NGramas;
 import algoritmoGenetico.individuos.Texto;
 import algoritmoGenetico.mutaciones.Mutacion;
+import algoritmoGenetico.mutaciones.MutacionHeuristica;
 import algoritmoGenetico.mutaciones.MutacionInsersion;
 import algoritmoGenetico.mutaciones.MutacionIntercambio;
 import algoritmoGenetico.mutaciones.MutacionInversion;
@@ -50,13 +51,13 @@ public class AlgoritmoGenetico {
 	/**************************** CONSTRUCTOR *******************************/
 	public AlgoritmoGenetico() {
 		
-		this.tamPoblacion = 100;
-		this.numGeneraciones = 100;
+		this.tamPoblacion = 500;
+		this.numGeneraciones = 400;
 		this.metodoSeleccion = new SeleccionTorneoProbabilistico();
-		this.metodoCruce = new CruceCX();
-		this.porcCruce = 0.8;
+		this.metodoCruce = new CrucePMX();
+		this.porcCruce = 0.7;
 		this.metodoMutacion = new MutacionInsersion();
-		this.porcMutacion = 0.5;
+		this.porcMutacion = 0.3;
 		
 		StringBuilder st = new StringBuilder("Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue.");
 		StringBuilder st2 = new StringBuilder("Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue. Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue.");

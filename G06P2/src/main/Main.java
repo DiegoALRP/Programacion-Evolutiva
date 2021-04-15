@@ -33,6 +33,6 @@ public class Main {
 		
 		double end = System.currentTimeMillis() - start;
 		System.out.println("Time: " + end);
+		
 	}
-
 }
