@@ -51,22 +51,8 @@ public class CruceERX extends Cruce{
 		
 		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Integer> cromoPadre2 = padre2.getCromosoma();
-		/*ArrayList<Integer> cromoPadre1 = new ArrayList<Integer>(9);
-		ArrayList<Integer> cromoPadre2 = new ArrayList<Integer>(9);
-		
-		for (int i = 1; i < 10; i++) {
-			
-			cromoPadre1.add(i);
-		}
-		cromoPadre2.add(4);
-		cromoPadre2.add(5);
-		cromoPadre2.add(2);
-		cromoPadre2.add(1);
-		cromoPadre2.add(8);
-		cromoPadre2.add(7);
-		cromoPadre2.add(6);
-		cromoPadre2.add(9);
-		cromoPadre2.add(3);*/
+		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>(longCromo);
+		ArrayList<Integer> cromoPadre2Aux = new ArrayList<Integer>(longCromo);
 		
 		longCromo = cromoPadre1.size();
 		
@@ -78,6 +64,9 @@ public class CruceERX extends Cruce{
 			
 			a = cromoPadre1.get(i);
 			b = cromoPadre2.get(i);
+			
+			cromoPadre1Aux.add(a);
+			cromoPadre2Aux.add(b);
 			
 			if (tablaConectividades.containsKey(a)) {
 				
@@ -125,6 +114,8 @@ public class CruceERX extends Cruce{
 		this.funcionRecursiva(cromoHijo2Aux, setCromoHijo2, 1, tablaConectividades, cromoHijo2);
 		
 		int p = 0;
+		
+		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
 		/*ArrayList<Integer> cromoHijo1 = new ArrayList<Integer>(longCromo);
 		HashSet<Integer> setCromoHijo1 = new HashSet<Integer>(longCromo);
 		Random rand = new Random();
