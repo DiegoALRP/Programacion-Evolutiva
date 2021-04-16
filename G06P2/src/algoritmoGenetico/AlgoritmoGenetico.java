@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import algoritmoGenetico.cruces.Cruce;
 import algoritmoGenetico.cruces.CruceCX;
+import algoritmoGenetico.cruces.CruceERX;
 import algoritmoGenetico.cruces.CrucePMX;
 import algoritmoGenetico.cruces.CrucePorOrden;
 import algoritmoGenetico.individuos.Individuo;
@@ -54,7 +55,7 @@ public class AlgoritmoGenetico {
 		this.tamPoblacion = 500;
 		this.numGeneraciones = 400;
 		this.metodoSeleccion = new SeleccionTorneoProbabilistico();
-		this.metodoCruce = new CrucePMX();
+		this.metodoCruce = new CruceERX();
 		this.porcCruce = 0.7;
 		this.metodoMutacion = new MutacionInsersion();
 		this.porcMutacion = 0.3;
