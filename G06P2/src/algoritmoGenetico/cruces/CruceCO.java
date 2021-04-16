@@ -13,7 +13,7 @@ import algoritmoGenetico.individuos.Individuo;
  * 
  * Práctica 2
  * 
- * Clase Cruce ERX (Cruce por Recombinación de Rutas).
+ * Clase Cruce CO (Cruce Ordinal).
  * 
  * @author 
  * Grupo G06:
