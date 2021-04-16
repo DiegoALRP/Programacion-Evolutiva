@@ -35,7 +35,8 @@ public class AlgoritmoGenetico {
 		while (this.generacionActual < numGeneraciones) {
 			
 			this.evaluar(tipoIndividuo, poblacion, porcElite);
-			metodoSeleccion.seleccionar(poblacion);
+			poblacion = (ArrayList<Individuo>) metodoSeleccion.seleccionar(poblacion);
+			//metodoSeleccion.seleccionar(poblacion);
 			metodoCruce.cruza(poblacion, porcCruce);
 			
 			if (tipoIndividuo.equals("Funcion Michalewicz (Reales)") || tipoIndividuo.equals("Funcion Schubert (Reales)") ||
