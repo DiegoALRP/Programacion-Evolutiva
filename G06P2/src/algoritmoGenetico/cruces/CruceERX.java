@@ -51,10 +51,11 @@ public class CruceERX extends Cruce{
 		
 		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Integer> cromoPadre2 = padre2.getCromosoma();
-		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>(longCromo);
-		ArrayList<Integer> cromoPadre2Aux = new ArrayList<Integer>(longCromo);
 		
 		longCromo = cromoPadre1.size();
+		
+		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>(longCromo);
+		ArrayList<Integer> cromoPadre2Aux = new ArrayList<Integer>(longCromo);
 		
 		HashMap<Integer, HashSet<Integer>> tablaConectividades = new HashMap<Integer, HashSet<Integer>>(longCromo);
 		
