@@ -1,6 +1,7 @@
 package algoritmoGenetico.cruces;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 
@@ -48,6 +49,21 @@ public class CruceCO extends Cruce {
 		
 		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Integer> cromoPadre2 = padre2.getCromosoma();
+		/*this.longCromo = 9;
+		ArrayList<Integer> cromoPadre1 = new ArrayList<Integer>(longCromo);
+		ArrayList<Integer> cromoPadre2 = new ArrayList<Integer>(longCromo);
+		for (int i = 0; i < longCromo; i++) {
+			cromoPadre2.add(i + 1);
+		}
+		cromoPadre1.add(4);
+		cromoPadre1.add(5);
+		cromoPadre1.add(2);
+		cromoPadre1.add(1);
+		cromoPadre1.add(8);
+		cromoPadre1.add(7);
+		cromoPadre1.add(6);
+		cromoPadre1.add(9);
+		cromoPadre1.add(3);*/
 		
 		longCromo = cromoPadre1.size();
 		
@@ -83,10 +99,11 @@ public class CruceCO extends Cruce {
 			
 			index2 = listaDinamica2.indexOf(cromoPadre2Aux.get(i));
 			cromoHijo2Aux.add(index2);
-			listaDinamica2.remove(index1);
+			listaDinamica2.remove(index2);
 		}
 		
 		//Hacer Cruce Monopunto
+		cruceMonopunto(cromoHijo1Aux, cromoHijo2Aux);
 		ArrayList<Integer> cromoHijo1 = new ArrayList<Integer>(longCromo);
 		ArrayList<Integer> cromoHijo2 = new ArrayList<Integer>(longCromo);
 		
@@ -103,7 +120,22 @@ public class CruceCO extends Cruce {
 			cromoHijo2.add(b);
 			listaDinamica2Aux.remove((Object) b);
 		}
+		
+		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
 	}
 
+	private void cruceMonopunto(ArrayList<Integer> cromoPadre1, ArrayList<Integer> cromoPadre2) {
+		
+		Random rand = new Random();
+		//int puntoCruce = rand.nextInt(longCromo - 2) + 1;
+		int puntoCruce = 4;
+		int aux;
+		for (int i = puntoCruce; i < longCromo; i++) {
+			
+			aux = cromoPadre1.get(i);
+			cromoPadre1.set(i, cromoPadre2.get(i));
+			cromoPadre2.set(i, aux);
+		}
+	}
 	/**************************** GET & SET ********************************/
 }
