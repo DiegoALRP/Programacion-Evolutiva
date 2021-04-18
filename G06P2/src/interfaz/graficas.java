@@ -4,6 +4,7 @@ import java.awt.Font;
 
 import org.math.plot.*;
 
+
 public class graficas {
 
 	private Plot2DPanel plot;
@@ -12,6 +13,8 @@ public class graficas {
 	public graficas() {
 		
 		plot = new Plot2DPanel();
+		//plot.setLayout(null);
+		//plot.setBounds(400, 10, 1000, 403);
 		plot.addLegend("SOUTH");
 		plot.setAxisLabel(0, "Numero de generaciones");
 		plot.setAxisLabel(1, "Fitness");
