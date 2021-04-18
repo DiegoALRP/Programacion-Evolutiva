@@ -186,7 +186,7 @@ public class AlgoritmoGenetico {
 		List<Individuo> poblacionAuxiliar = new ArrayList<>();
 		poblacionAuxiliar.addAll(poblacion);
 		
-		if(tipoIndividuo == "Funcion 1") {
+		if(tipoIndividuo == "Funcion 1" || tipoIndividuo == "Funcion 1 (Reales)") {
 			Collections.sort(poblacionAuxiliar, new Comparator<Individuo>() { 		// ordena de mayor a menor
 				@Override
 				public int compare(Individuo o1, Individuo o2) {

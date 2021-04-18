@@ -109,6 +109,24 @@ public class Individuo {
 		}
 	}
 	
+	public void restartCromosome() {
+		
+		this.cromosoma.clear();
+		
+		Set<Integer> numSeleccionados = new HashSet<Integer>(this.tam);
+		Random rand = new Random();
+		
+		for (int i = 0; i < this.tam; i++) {
+			
+			int num = rand.nextInt(this.tam);
+			while (numSeleccionados.contains(num)) {
+				num = rand.nextInt(this.tam);
+			}
+			this.cromosoma.add(num);
+			numSeleccionados.add(num);
+		}
+	}
+	
 	private void decodifica() {
 		
 		for (int i = 0; i < this.tam; i++) {
@@ -124,6 +142,7 @@ public class Individuo {
 		StringBuilder word = new StringBuilder();
 		this.decodifica();
 		
+		this.fitness = 0;
 		int j = 0;
 		for (int i = 0; i < this.textoAyuda.length(); i++) {
 			
