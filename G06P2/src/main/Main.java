@@ -28,20 +28,20 @@ public class Main {
 		double end = System.currentTimeMillis() - start;
 		System.out.println("Time: " + end);*/
 		
-		/*double start = System.currentTimeMillis();
+		double start = System.currentTimeMillis();
 		
 		AlgoritmoGenetico ag = new AlgoritmoGenetico();
 		ag.startAlgorithm();
 		
 		double end = System.currentTimeMillis() - start;
-		System.out.println("Time: " + end);*/
+		System.out.println("Time: " + end);
 		
-		double start = System.currentTimeMillis();
+		/*double start = System.currentTimeMillis();
 		
 		IntentoVueltaAtras va = new IntentoVueltaAtras();
 		va.start();
 		
 		double end = System.currentTimeMillis() - start;
-		System.out.println("Time: " + end);
+		System.out.println("Time: " + end);*/
 	}
 }

@@ -12,6 +12,7 @@ import algoritmoGenetico.cruces.Cruce;
 import algoritmoGenetico.cruces.CruceCO;
 import algoritmoGenetico.cruces.CruceCX;
 import algoritmoGenetico.cruces.CruceERX;
+import algoritmoGenetico.cruces.CruceOXPP;
 import algoritmoGenetico.cruces.CrucePMX;
 import algoritmoGenetico.cruces.CrucePorOrden;
 import algoritmoGenetico.individuos.Individuo;
@@ -61,14 +62,14 @@ public class AlgoritmoGenetico {
 	/**************************** CONSTRUCTOR *******************************/
 	public AlgoritmoGenetico() {
 		
-		this.tamPoblacion = 1000;
-		this.numGeneraciones = 800;
+		this.tamPoblacion = 10000;
+		this.numGeneraciones = 2000;
 		this.metodoSeleccion = new SeleccionTorneoProbabilistico();
-		this.metodoCruce = new CrucePMX();
-		this.porcCruce = 0.7;
+		this.metodoCruce = new CruceOXPP();
+		this.porcCruce = 0.8;
 		this.metodoMutacion = new MutacionIntercambio();
-		this.porcMutacion = 0.9;
-		this.porcElite = 0.02;
+		this.porcMutacion = 0.8;
+		this.porcElite = 0.01;
 		
 		//StringBuilder st = new StringBuilder("Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue.");
 		//StringBuilder st2 = new StringBuilder("Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue. Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue.");
@@ -98,6 +99,7 @@ public class AlgoritmoGenetico {
 		st2.append(st);
 		st2.append(" ");
 		st2.append(st);
+		//StringBuilder st2 = new StringBuilder("qy cind tivnmqio qt zbiog mrw yqsw yztmwtm qo uwfqhrwdqog mrw mwkm, cin eqvv gwm z fiuw zt z dwezdu mrzm eqvv twdsw mi qbhdisw cind gdzuw. mdc mi yqow-mnow mrw yqmowtt ynofmqio ti mrzm mrw zvgidqmrb eidjt yztm. giiu vnfj. mrw iy zou mi antm vqjw iswd mrwb cwzd undqog lzfj cind gzbw lwyidw tfriiv riewswd mrdingr lwmewwo zdinou joie giswdobwom ydib bidw hwihvw hvzfw hnlvqf yqdtm yzbqvc yivvieqog");
 		this.ngramas = new NGramas();
 		this.ngramas.loadHashs();
 		this.claseTexto = new Texto(st, st2);
@@ -139,11 +141,14 @@ public class AlgoritmoGenetico {
 			//imprimePoblacion();
 			
 			this.desastreNatural();
+			//this.evaluaFitnessPoblacion();
 			reintroduceElite();
 			this.evaluaFitnessPoblacion();
 			imprimePoblacion();
 			this.generacionActual++;
 		}
+		
+		imprimeMejor();
 	}
 	
 	private void inicializaPoblacion() {
@@ -177,6 +182,28 @@ public class AlgoritmoGenetico {
 		System.out.println(poblacion.get(index).getFitness());
 	}
 	
+	private void imprimeMejor() {
+		
+		double maxFitness = 0;
+		int index = 0;
+		
+		for (Individuo ind : this.poblacion) {
+			
+			/*System.out.println(ind.getFenotipe());
+			System.out.println(ind.getFitness());*/
+			double fitness = ind.getFitness();
+			if(fitness > maxFitness) {
+				
+				maxFitness = fitness;
+				index = poblacion.indexOf(ind);
+			}
+		}
+		
+		System.out.println(poblacion.get(index).getFenotipe());
+		System.out.println(poblacion.get(index).getFitness());
+		System.out.println(poblacion.get(index).getCromosoma());
+	}
+	
 	private void evaluaFitnessPoblacion() {
 		
 		for (Individuo ind : poblacion) {
@@ -188,22 +215,31 @@ public class AlgoritmoGenetico {
 	private void desastreNatural() {
 		
 		ArrayList<Individuo> array = new ArrayList<Individuo>(5);
-		double fitnessPrevio = 0;
+		double menorFitness = 0;
+		double mayorFitness = 0;
 		double fitness;
-		for (Individuo ind : poblacion) {
+		for (Individuo ind : this.poblacion) {
 			
 			fitness = ind.calculateFitness();
 			
-			if (fitness >= (fitnessPrevio - 20) && fitness <= (fitnessPrevio + 20)) {
+			if (fitness >= (menorFitness - (20+Math.log(generacionActual))) && fitness <= (mayorFitness + (20+Math.log(generacionActual)))) {
 				
 				array.add(ind);
+				
+				if (fitness < menorFitness) {
+					
+					menorFitness = fitness;
+				}
+				if (fitness > mayorFitness) {
+					mayorFitness = fitness;
+				}
 			}
 			else {
 				
 				array.clear();
+				menorFitness = fitness;
+				mayorFitness = fitness;
 			}
-			
-			fitnessPrevio = fitness;
 			
 			if (array.size() == 4) {
 				
