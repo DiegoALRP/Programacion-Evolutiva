@@ -35,6 +35,7 @@ public class Individuo {
 	protected int tamTextoAyuda;
 	
 	protected double fitness;
+	protected double fitness_ranking;
 	
 	protected NGramas ngramas;
 	protected Texto claseTexto;
@@ -266,6 +267,7 @@ public class Individuo {
 		
 		return this.cromosoma;
 	}
+	
 	public void setCromosoma(ArrayList<Integer> cromosoma) {
 		
 		this.cromosoma.clear();
@@ -278,8 +280,15 @@ public class Individuo {
 		return this.fenotipo.toString();
 	}
 	
-	public double getFitness() {
-		
+	public void setFitnessRanking(double f) {
+		this.fitness_ranking = f;
+	}
+	
+	public double getFitness() {	
 		return this.fitness;
+	}
+	
+	public double getFitnessRanking() {
+		return this.fitness_ranking;
 	}
 }

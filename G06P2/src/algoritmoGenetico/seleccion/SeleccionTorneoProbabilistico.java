@@ -7,19 +7,19 @@ import algoritmoGenetico.individuos.Individuo;
 
 /**
  * Universidad Complutense de Madrid.
- * Programación Evolutiva.
+ * Programaciï¿½n Evolutiva.
  * Grupo A 2021.
  * Profesor:
  * 	-Carlos Cervigon Ruckauer.
  * 
- * Práctica 2
+ * Prï¿½ctica 2
  * 
- * Clase Seleccion por Torneo Probabilístico.
+ * Clase Seleccion por Torneo Probabilï¿½stico.
  * 
  * @author 
  * Grupo G06:
  * 	-Miguel Robledo.
- * 	-Diego Alejandro Rodríguez Pereira.
+ * 	-Diego Alejandro Rodrï¿½guez Pereira.
  *
  */
 public class SeleccionTorneoProbabilistico extends Seleccion {

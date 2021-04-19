@@ -28,9 +28,9 @@ public class SeleccionTorneo extends Seleccion {
 	private final int tamTorneo = 2;
 	private int tamPoblacion;
 	
-	/**************************** CONSTRUCTOR *******************************/
+	/**************************** CONSTRUCTOR ******************************/
 	
-	/***************************** METHODS ********************************/
+	/***************************** METHODS *********************************/
 	@Override
 	public ArrayList<Individuo> seleccionar(ArrayList<Individuo> poblacion) {
 		
