@@ -64,42 +64,48 @@ public class AlgoritmoGenetico {
 		
 		this.tamPoblacion = 100;
 		this.numGeneraciones = 100;
-		this.metodoSeleccion = new SeleccionTorneoProbabilistico();
-		this.metodoCruce = new CruceOXPP();
+		this.metodoSeleccion = new SeleccionTorneo();
+		this.metodoCruce = new CrucePMX();
 		this.porcCruce = 0.8;
 		this.metodoMutacion = new MutacionIntercambio();
-		this.porcMutacion = 0.8;
-		this.porcElite = 0.01;
+		this.porcMutacion = 0.7;
+		this.porcElite = 0.02;
 		
 		//StringBuilder st = new StringBuilder("Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue.");
 		//StringBuilder st2 = new StringBuilder("Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue. Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue.");
 		
-		/*StringBuilder st = new StringBuilder("Oslv xesvh trc xhyhr ahtvx tqs slv otmkhvx zvslqkm osvmk sr mkpx esrmprhrm t rhg rtmpsr, esrehpyhc pr Jpzhvma, trc chcpetmhc ms mkh dvsdsxpmpsr mktm tjj ihr tvh evhtmhc hnltj. " +  
+		/** texto 2*/
+		StringBuilder st = new StringBuilder("Oslv xesvh trc xhyhr ahtvx tqs slv otmkhvx zvslqkm osvmk sr mkpx esrmprhrm t rhg rtmpsr, esrehpyhc pr Jpzhvma, trc chcpetmhc ms mkh dvsdsxpmpsr mktm tjj ihr tvh evhtmhc hnltj. " +  
 				" Rsg gh tvh hrqtqhc pr t qvhtm epypj gtv, mhxmprq gkhmkhv mktm rtmpsr, sv tra rtmpsr, xs esrehpyhc trc xs chcpetmhc, etr jsrq hrclvh. Gh tvh ihm sr t qvhtm ztmmjh-ophjc so mktm gtv. Gh ktyh esih ms chcpetmh t dsvmpsr so mktm ophjc, tx t oprtj vhxmprq djteh osv mksxh gks khvh qtyh mkhpv jpyhx mktm mktm rtmpsr ipqkm jpyh. Pm px tjmsqhmkhv opmmprq trc dvsdhv mktm gh xksljc cs mkpx. " +  
 				" Zlm, pr t jtvqhv xhrxh, gh etr rsm chcpetmh -- gh etr rsm esrxhevtmh -- gh etr rsm ktjjsg -- mkpx qvslrc. Mkh zvtyh ihr, jpyprq trc chtc, gks xmvlqqjhc khvh, ktyh esrxhevtmhc pm, otv tzsyh slv dssv dsghv ms tcc sv chmvtem. Mkh gsvjc gpjj jpmmjh rsmh, rsv jsrq vhihizhv gktm gh xta khvh, zlm pm etr rhyhv osvqhm gktm mkha cpc khvh. Pm px osv lx mkh jpyprq, vtmkhv, ms zh chcpetmhc khvh ms mkh lroprpxkhc gsvu gkpek mkha gks oslqkm khvh ktyh mklx otv xs rszja tcytrehc. Pm px vtmkhv osv lx ms zh khvh chcpetmhc ms mkh qvhtm mtxu vhitprprq zhosvh lx -- mktm ovsi mkhxh ksrsvhc chtc gh mtuh prevhtxhc chysmpsr ms mktm etlxh osv gkpek mkha qtyh mkh jtxm oljj ihtxlvh so chysmpsr -- mktm gh khvh kpqkja vhxsjyh mktm mkhxh chtc xktjj rsm ktyh cphc pr ytpr -- mktm mkpx rtmpsr, lrchv Qsc, xktjj ktyh t rhg zpvmk so ovhhcsi -- trc mktm qsyhvrihrm so mkh dhsdjh, za mkh dhsdjh, osv mkh dhsdjh, xktjj rsm dhvpxk ovsi mkh htvmk.");
-		StringBuilder st2 = new StringBuilder("Oslv xesvh trc xhyhr ahtvx tqs slv otmkhvx zvslqkm osvmk sr mkpx esrmprhrm t rhg rtmpsr, esrehpyhc pr Jpzhvma, trc chcpetmhc ms mkh dvsdsxpmpsr mktm tjj ihr tvh evhtmhc hnltj. " + 
+		StringBuilder st2 = new StringBuilder("mpsrrmkhsomk mkkhprhvtrvhhxsrxm gsljc smkhv ahtvx dhsdjh clvprq zhosvh mkvslqk tqtprxm nlhxmpsr cpypxpsr isxnlh ismpytmpsr dlwwjh dtvugta zjtru hfsmpe szbhempsr xloopf ohchf vhbspr bhghjjhva epmpwhrx itqtwprh vhdlzjpetr gsvu gsvuprq mkh so trc ms blxm jpuh syhv mkhi ahtv clvprq zteu aslv qtih zhosvh xekssj ksghyhv mkvslqk zhmghhr tvslrc ursg qsyhvrihrm ovsi isvh dhsdjh djteh dlzjpe opvxm otipja osjjsgprq lrpyhvxpma eslrma tjgtax dsjpeh ehrmhv xhvypeh osjjsgprq");
+		/*StringBuilder st2 = new StringBuilder("Oslv xesvh trc xhyhr ahtvx tqs slv otmkhvx zvslqkm osvmk sr mkpx esrmprhrm t rhg rtmpsr, esrehpyhc pr Jpzhvma, trc chcpetmhc ms mkh dvsdsxpmpsr mktm tjj ihr tvh evhtmhc hnltj. " + 
 				" Rsg gh tvh hrqtqhc pr t qvhtm epypj gtv, mhxmprq gkhmkhv mktm rtmpsr, sv tra rtmpsr, xs esrehpyhc trc xs chcpetmhc, etr jsrq hrclvh. Gh tvh ihm sr t qvhtm ztmmjh-ophjc so mktm gtv. Gh ktyh esih ms chcpetmh t dsvmpsr so mktm ophjc, tx t oprtj vhxmprq djteh osv mksxh gks khvh qtyh mkhpv jpyhx mktm mktm rtmpsr ipqkm jpyh. Pm px tjmsqhmkhv opmmprq trc dvsdhv mktm gh xksljc cs mkpx. " + 
 				" Zlm, pr t jtvqhv xhrxh, gh etr rsm chcpetmh -- gh etr rsm esrxhevtmh -- gh etr rsm ktjjsg -- mkpx qvslrc. Mkh zvtyh ihr, jpyprq trc chtc, gks xmvlqqjhc khvh, ktyh esrxhevtmhc pm, otv tzsyh slv dssv dsghv ms tcc sv chmvtem. Mkh gsvjc gpjj jpmmjh rsmh, rsv jsrq vhihizhv gktm gh xta khvh, zlm pm etr rhyhv osvqhm gktm mkha cpc khvh. Pm px osv lx mkh jpyprq, vtmkhv, ms zh chcpetmhc khvh ms mkh lroprpxkhc gsvu gkpek mkha gks oslqkm khvh ktyh mklx otv xs rszja tcytrehc. Pm px vtmkhv osv lx ms zh khvh chcpetmhc ms mkh qvhtm mtxu vhitprprq zhosvh lx -- mktm ovsi mkhxh ksrsvhc chtc gh mtuh prevhtxhc chysmpsr ms mktm etlxh osv gkpek mkha qtyh mkh jtxm oljj ihtxlvh so chysmpsr -- mktm gh khvh kpqkja vhxsjyh mktm mkhxh chtc xktjj rsm ktyh cphc pr ytpr -- mktm mkpx rtmpsr, lrchv Qsc, xktjj ktyh t rhg zpvmk so ovhhcsi -- trc mktm qsyhvrihrm so mkh dhsdjh, za mkh dhsdjh, osv mkh dhsdjh, xktjj rsm dhvpxk ovsi mkh htvmk." +
 				"Oslv xesvh trc xhyhr ahtvx tqs slv otmkhvx zvslqkm osvmk sr mkpx esrmprhrm t rhg rtmpsr, esrehpyhc pr Jpzhvma, trc chcpetmhc ms mkh dvsdsxpmpsr mktm tjj ihr tvh evhtmhc hnltj. " +
 				"Rsg gh tvh hrqtqhc pr t qvhtm epypj gtv, mhxmprq gkhmkhv mktm rtmpsr, sv tra rtmpsr, xs esrehpyhc trc xs chcpetmhc, etr jsrq hrclvh. Gh tvh ihm sr t qvhtm ztmmjh-ophjc so mktm gtv. Gh ktyh esih ms chcpetmh t dsvmpsr so mktm ophjc, tx t oprtj vhxmprq djteh osv mksxh gks khvh qtyh mkhpv jpyhx mktm mktm rtmpsr ipqkm jpyh. Pm px tjmsqhmkhv opmmprq trc dvsdhv mktm gh xksljc cs mkpx. " +
 				"Zlm, pr t jtvqhv xhrxh, gh etr rsm chcpetmh -- gh etr rsm esrxhevtmh -- gh etr rsm ktjjsg -- mkpx qvslrc. Mkh zvtyh ihr, jpyprq trc chtc, gks xmvlqqjhc khvh, ktyh esrxhevtmhc pm, otv tzsyh slv dssv dsghv ms tcc sv chmvtem. Mkh gsvjc gpjj jpmmjh rsmh, rsv jsrq vhihizhv gktm gh xta khvh, zlm pm etr rhyhv osvqhm gktm mkha cpc khvh. Pm px osv lx mkh jpyprq, vtmkhv, ms zh chcpetmhc khvh ms mkh lroprpxkhc gsvu gkpek mkha gks oslqkm khvh ktyh mklx otv xs rszja tcytrehc. Pm px vtmkhv osv lx ms zh khvh chcpetmhc ms mkh qvhtm mtxu vhitprprq zhosvh lx -- mktm ovsi mkhxh ksrsvhc chtc gh mtuh prevhtxhc chysmpsr ms mktm etlxh osv gkpek mkha qtyh mkh jtxm oljj ihtxlvh so chysmpsr -- mktm gh khvh kpqkja vhxsjyh mktm mkhxh chtc xktjj rsm ktyh cphc pr ytpr -- mktm mkpx rtmpsr, lrchv Qsc, xktjj ktyh t rhg zpvmk so ovhhcsi -- trc mktm qsyhvrihrm so mkh dhsdjh, za mkh dhsdjh, osv mkh dhsdjh, xktjj rsm dhvpxk ovsi mkh htvmk.");
 		*/
-		
-		/*StringBuilder st = new StringBuilder("GNX NVMVNL XP G QUEVNLV NGSCV PM WYZGS GOXUEUXUVL US ONVGXUSC EULYGT, GYQUXPNH PN KVNMPNZUSC GNXUMGOXL. XWVLV GNXFPNBL VJKNVLL XWV GYXWPN'L UZGCUSGXUEV PN XVOWSUOGT LBUTT. GNX UL USXVSQVQ XP IV GKKNVOUGXVQ MPN UXL IVGYXH PN VZPXUPSGT KPFVN. US XWVUN ZPLX CVSVNGT MPNZ XWVLV GOXUEUXUVL USOTYQV XWV KNPQYOXUPS PM FPNBL PM GNX, XWV ONUXUOULZ PM GNX, XWV LXYQH PM XWV WULXPNH PM GNX, GSQ XWV GVLXWVXUO QULLVZUSGXUPS PM GNX. " + 
+		/** texto 3*/
+		/*StringBuilder st = new StringBuilder("GNX NVMVNL XP G QUEVNLV NGSCV PM WYZGS GOXUEUX"
+				+ "UVL US ONVGXUSC EULYGT, GYQUXPNH PN KVNMPNZUSC GNXUMGOXL. XWVLV GNXFPNBL VJKNVLL XWV GYXWPN'L UZGCUSGXUEV PN XVOWSUOGT LBUTT. GNX UL USXVSQVQ XP IV GKKNVOUGXVQ MPN UXL IVGYXH PN VZPXUPSGT KPFVN. US XWVUN ZPLX CVSVNGT MPNZ XWVLV GOXUEUXUVL USOTYQV XWV KNPQYOXUPS PM FPNBL PM GNX, XWV ONUXUOULZ PM GNX, XWV LXYQH PM XWV WULXPNH PM GNX, GSQ XWV GVLXWVXUO QULLVZUSGXUPS PM GNX. " + 
 				"GNX WGL WGQ G CNVGX SYZIVN PM QUMMVNVSX MYSOXUPSL XWNPYCWPYX UXL WULXPNH, ZGBUSC UXL KYNKPLV QUMMUOYTX XP GILXNGOX PN RYGSXUMH XP GSH LUSCTV OPSOVKX. XWUL QPVL SPX UZKTH XWGX XWV KYNKPLV PM GNX UL \"EGCYV\", IYX XWGX UX WGL WGQ ZGSH YSURYV, QUMMVNVSX NVGLPSL MPN IVUSC ONVGXVQ. " + 
 				"GNX OGS WGEV G KVNLPSGT MYSOXUPS, UX UL GS VJKNVLLUPS PM IGLUO WYZGS USLXUSOX MPN WGNZPSH, IGTGSOV, NWHXWZ. GNX GX XWUL TVEVT UL SPX GS GOXUPS PN GS PIDVOX, IYX GS USXVNSGT GKKNVOUGXUPS PM IGTGSOV GSQ WGNZPSH (IVGYXH), GSQ XWVNVMPNV GS GLKVOX PM IVUSC WYZGS IVHPSQ YXUTUXH. GNX GTLP KNPEUQVL G FGH XP VJKVNUVSOV PSV'L LVTM US NVTGXUPS XP XWV YSUEVNLV. XWUL VJKVNUVSOV ZGH PMXVS OPZV YSZPXUEGXVQ, GL PSV GKKNVOUGXVL GNX, ZYLUO PN KPVXNH. " + 
 				"PS XWV PXWVN WGSQ GNX ZGH WGEV G LPOUGT MYSOXUPS. GX UXL LUZKTVLX, GNX UL G MPNZ PM OPZZYSUOGXUPS. UX LVVBL XP VSXVNXGUS GSQ INUSC GIPYX G KGNXUOYTGN VZPXUPS PN ZPPQ, MPN XWV KYNKPLV PM NVTGJUSC PN VSXVNXGUSUSC XWV EUVFVN. GNX ZGH GTLP IV GS VJKNVLLUPS PM LPOUGT KNPXVLX, LVVBUSC XP RYVLXUPS GLKVOXL PM LPOUVXH. " + 
 				"XWV PTQVLX MPNZ PM GNX GNV EULYGT GNXL, FWUOW USOTYQV ONVGXUPS PM UZGCVL PN PIDVOXL US MUVTQL USOTYQUSC KGUSXUSC, LOYTKXYNV, KNUSXZGBUSC, KWPXPCNGKWH, GSQ PXWVN EULYGT ZVQUG. GNOWUXVOXYNV UL PMXVS USOTYQVQ GL PSV PM XWV EULYGT GNXL; WPFVEVN, TUBV XWV QVOPNGXUEV GNXL, UX USEPTEVL XWV ONVGXUPS PM PIDVOXL FWVNV XWV KNGOXUOGT OPSLUQVNGXUPSL PM YLV GNV VLLVSXUGT, US G FGH XWGX XWVH YLYGTTH GNV SPX US G KGUSXUSC, MPN VJGZKTV. ");
-		*/
+		*///StringBuilder st2 = new StringBuilder("gnx nvmvnl xp g quevnlv ngscv pm wyzgs goxueuxuvl us onvgxusc eulygt, gyquxpnh pn kvnmpnzusc gnxumgoxl. xwvlv gnxgpnbl vjknvll xwv gyxwpn'l uzgcusgxuev pn xvowsuogt lbutt. gnx ul usxvsqvq xp iv gkknvougxvq mpn uxl ivgyxh pn vzpxupsgt kpgvn. us xwvun zplx cvsvngt mpnz xwvlv goxueuxuvl usotyqv xwv knpqyoxups pm gpnbl pm gnx, xwv onuxuoulz pm gnx, xwv lxyqh pm xwv wulxpnh pm gnx, gsq xwv gvlxwvxuo qullvzusgxups pm gnx. gnx wgl wgq g cnvgx syzivn pm qummvnvsx mysoxupsl xwnpycwpyx uxl wulxpnh, zgbusc uxl kynkplv qummuoytx xp gilxngox pn rygsxumh xp gsh lusctv opsovkx. xwul qpvl spx uzkth xwgx xwv kynkplv pm gnx ul 'egcyv', iyx xwgx ux wgl wgq zgsh ysuryv, qummvnvsx nvglpsl mpn ivusc onvgxvq. gnx ogs wgev g kvnlpsgt mysoxups, ux ul gs vjknvllups pm igluo wyzgs uslxusox mpn wgnzpsh, igtgsov, nwhxwz. gnx gx xwul tvevt ul spx gs goxups pn gs pidvox, iyx gs usxvnsgt gkknvougxups pm igtgsov gsq wgnzpsh (ivgyxh), gsq xwvnvmpnv gs glkvox pm ivusc wyzgs ivhpsq yxutuxh. gnx gtlp knpeuqvl g ggh xp vjkvnuvsov psv'l lvtm us nvtgxups xp xwv ysuevnlv. xwul vjkvnuvsov zgh pmxvs opzv yszpxuegxvq, gl psv gkknvougxvl gnx, zyluo pn kpvxnh. ps xwv pxwvn wgsq gnx zgh wgev g lpougt mysoxups. gx uxl luzktvlx, gnx ul g mpnz pm opzzysuogxups. ux lvvbl xp vsxvnxgus gsq inusc gipyx g kgnxuoytgn vzpxups pn zppq, mpn xwv kynkplv pm nvtgjusc pn vsxvnxgususc xwv euvgvn. gnx zgh gtlp iv gs vjknvllups pm lpougt knpxvlx, lvvbusc xp ryvlxups glkvoxl pm lpouvxh. xwv ptqvlx mpnz pm gnx gnv eulygt gnxl, gwuow usotyqv onvgxups pm uzgcvl pn pidvoxl us muvtql usotyqusc kgusxusc, loytkxynv, knusxzgbusc, kwpxpcngkwh, gsq pxwvn eulygt zvqug. gnowuxvoxynv ul pmxvs usotyqvq gl psv pm xwv eulygt gnxl; wpgvevn, tubv xwv qvopngxuev gnxl, ux useptevl xwv onvgxups pm pidvoxl gwvnv xwv kngoxuogt opsluqvngxupsl pm ylv gnv vllvsxugt, us g ggh xwgx xwvh ylygtth gnv spx us g kgusxusc, mpn vjgzktv. gpytq pxwvn hvgnl kvpktv qynusc ivmpnv xwnpycw gcguslx ryvlxups queulups zplryv zpxuegxups kyaatv kgnbggh itgsb vjpxuo pidvoxups lymmuj mvqvj nvdpus dvgvttvnh ouxuavsl zgcgausv nvkyituogs.");
 		
+		/** texto 4*/
 		//StringBuilder st = new StringBuilder("QY CIND TIVNMQIO QT ZBIOG MRW YQSW YZTMWTM QO UWFQHRWDQOG MRW MWKM, CIN EQVV GWM Z FIUW ZT Z DWEZDU MRZM EQVV TWDSW MI QBHDISW CIND GDZUW. MDC MI YQOW-MNOW MRW YQMOWTT YNOFMQIO TI MRZM MRW ZVGIDQMRB EIDJT YZTM. GIIU VNFJ.");
+		//StringBuilder st2 = new StringBuilder("qy cind tivnmqio qt zbiog mrw yqsw yztmwtm qo uwfqhrwdqog mrw mwkm, cin eqvv gwm z fiuw zt z dwezdu mrzm eqvv twdsw mi qbhdisw cind gdzuw. mdc mi yqow-mnow mrw yqmowtt ynofmqio ti mrzm mrw zvgidqmrb eidjt yztm. giiu vnfj. mrw iy zou mi antm vqjw iswd mrwb cwzd undqog lzfj cind gzbw lwyidw tfriiv riewswd mrdingr lwmewwo zdinou joie giswdobwom ydib bidw hwihvw hvzfw hnlvqf yqdtm yzbqvc yivvieqog noqswdtqmc finomc zvezct hivqfw fwomwd twdsqfw yivvieqog");
+		//StringBuilder st2 = new StringBuilder("qy cind tivnmqio qt zbiog mrw yqsw yztmwtm qo uwfqhrwdqog mrw mwkm, cin eqvv gwm z fiuw zt z dwezdu mrzm eqvv twdsw mi qbhdisw cind gdzuw. mdc mi yqow-mnow mrw yqmowtt ynofmqio ti mrzm mrw zvgidqmrb eidjt yztm. giiu vnfj. mrw iy zou mi antm vqjw iswd mrwb cwzd undqog lzfj cind gzbw lwyidw tfriiv riewswd mrdingr lwmewwo zdinou");
 		
-		StringBuilder st = new StringBuilder("Eqa ycwe aqqt aqcit v aqqtwecwb wecwb zn v aqqtwecwb wqcit wecwb aqqt?  Zr aqcit wecwb vii rep aqqt revr v aqqtwecwb wqcit, zn v aqqtwecwb wqcit wecwb aqqt.");
-		StringBuilder st2 = new StringBuilder();
-		st2.append(st);
-		st2.append(" ");
-		st2.append(st);
-		//StringBuilder st2 = new StringBuilder("qy cind tivnmqio qt zbiog mrw yqsw yztmwtm qo uwfqhrwdqog mrw mwkm, cin eqvv gwm z fiuw zt z dwezdu mrzm eqvv twdsw mi qbhdisw cind gdzuw. mdc mi yqow-mnow mrw yqmowtt ynofmqio ti mrzm mrw zvgidqmrb eidjt yztm. giiu vnfj. mrw iy zou mi antm vqjw iswd mrwb cwzd undqog lzfj cind gzbw lwyidw tfriiv riewswd mrdingr lwmewwo zdinou joie giswdobwom ydib bidw hwihvw hvzfw hnlvqf yqdtm yzbqvc yivvieqog");
+		//StringBuilder st = new StringBuilder("Eqa ycwe aqqt aqcit v aqqtwecwb wecwb zn v aqqtwecwb wqcit wecwb aqqt?  Zr aqcit wecwb vii rep aqqt revr v aqqtwecwb wqcit, zn v aqqtwecwb wqcit wecwb aqqt.");
+		//StringBuilder st2 = new StringBuilder();
+		//st2.append(st);
+		//st2.append(" ");
+		//st2.append(st);
+		
 		this.ngramas = new NGramas();
 		this.ngramas.loadHashs();
 		this.claseTexto = new Texto(st, st2);
@@ -214,6 +220,8 @@ public class AlgoritmoGenetico {
 	
 	private void desastreNatural() {
 		
+		int contador = 0;
+		
 		ArrayList<Individuo> array = new ArrayList<Individuo>(5);
 		double menorFitness = 0;
 		double mayorFitness = 0;
@@ -249,11 +257,14 @@ public class AlgoritmoGenetico {
 					if (rand.nextBoolean()) {
 						
 						array.get(i).restartCromosome();
-						System.out.println("RESTART");
+						//System.out.println("RESTART");
+						contador++;
 					}
 				}
 			}
 		}
+		
+		System.out.println(contador);
 	}
 	
 	public void generaElite() {
