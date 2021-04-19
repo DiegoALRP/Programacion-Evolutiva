@@ -62,8 +62,8 @@ public class AlgoritmoGenetico {
 	/**************************** CONSTRUCTOR *******************************/
 	public AlgoritmoGenetico() {
 		
-		this.tamPoblacion = 10000;
-		this.numGeneraciones = 2000;
+		this.tamPoblacion = 100;
+		this.numGeneraciones = 100;
 		this.metodoSeleccion = new SeleccionTorneoProbabilistico();
 		this.metodoCruce = new CruceOXPP();
 		this.porcCruce = 0.8;
