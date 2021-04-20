@@ -1,59 +1,52 @@
 package interfaz;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
 
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Rectangle;
+
+import javax.swing.BorderFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import algoritmoGenetico.AlgoritmoGenetico;
+import algoritmoGenetico.cruces.Cruce;
+import algoritmoGenetico.cruces.FactoriaCruces;
+import algoritmoGenetico.mutaciones.FactoriaMutacion;
+import algoritmoGenetico.mutaciones.Mutacion;
+import algoritmoGenetico.seleccion.FactoriaSeleccion;
+import algoritmoGenetico.seleccion.Seleccion;
+
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JButton;
-import java.awt.Font;
+import javax.swing.JCheckBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class panelPrincipal {
 
 	private JFrame frame;
-	private JTextField n;
-	private JTextField nGeneraciones;
-	private JTextField textField_n;
-	private JTextField textField_nGeneraciones;
-	private JTextField textField_error;
 	private JTextField tf_n;
 	private JTextField tf_generaciones;
-	private JTextField tf_elitismo;
-	private JTextField tf_probCruce;
-	private JTextField tf_probMutacion;
+	private JTextField tf_elite;
+	private JTextField textField_probCruce;
+	private JTextField textField_probMutacion;
+	private String eleccion;
 	/**
 	 * Launch the application.
 	 */
@@ -82,218 +75,256 @@ public class panelPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(300, 300, 900, 900);
+		frame.setBounds(100, 100, 1327, 743);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 		
-		//////////////////////////////////////////////////////////////////////////////////		CONTROLES
-
 		JPanel control_panel = new JPanel();
-		control_panel.setBounds(10, 10, 385, 503);
 		control_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		frame.getContentPane().add(control_panel);
-		control_panel.setLayout(null);
-		
-		JLabel lbl_n = new JLabel("Tama\u00F1o Poblacion");
-		lbl_n.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbl_n.setBounds(26, 21, 109, 37);
-		control_panel.add(lbl_n);
-		
-		tf_n = new JTextField();
-		tf_n.setBounds(157, 21, 109, 37);
-		control_panel.add(tf_n);
-		tf_n.setColumns(10);
-		
-		JLabel lbl_generaciones = new JLabel("Generaciones");
-		lbl_generaciones.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbl_generaciones.setBounds(26, 68, 109, 35);
-		control_panel.add(lbl_generaciones);
-		
-		tf_generaciones = new JTextField();
-		tf_generaciones.setBounds(157, 68, 109, 35);
-		control_panel.add(tf_generaciones);
-		tf_generaciones.setColumns(10);
-		
-		JLabel lbl_elitismo = new JLabel("Elitismo");
-		lbl_elitismo.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbl_elitismo.setBounds(66, 113, 69, 38);
-		control_panel.add(lbl_elitismo);
-		
-		tf_elitismo = new JTextField();
-		tf_elitismo.setBounds(157, 113, 109, 38);
-		control_panel.add(tf_elitismo);
-		tf_elitismo.setColumns(10);
-		
-		JLabel lbl_seleccion = new JLabel("Seleccion");
-		lbl_seleccion.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbl_seleccion.setBounds(40, 229, 95, 17);
-		control_panel.add(lbl_seleccion);
-		
-		JComboBox comboBox_seleccion = new JComboBox();
-		comboBox_seleccion.setModel(new DefaultComboBoxModel(new String[] {"Ruleta","Torneo", "Torneo Probabilistico", "Estocastico", "Restos", "Truncamiento"," Ranking"}));
-		comboBox_seleccion.setBounds(157, 225, 109, 21);
-		control_panel.add(comboBox_seleccion);
-		
-		JLabel lbl_cruce = new JLabel("Cruce");
-		lbl_cruce.setHorizontalAlignment(SwingConstants.RIGHT);
-		lbl_cruce.setBounds(52, 276, 83, 17);
-		control_panel.add(lbl_cruce);
-		
-		JComboBox comboBox_cruce = new JComboBox();
-		comboBox_cruce.setModel(new DefaultComboBoxModel(new String[] {"PMX", "OX", "CX", "ERX", "CO"}));
-		comboBox_cruce.setBounds(157, 274, 109, 19);
-		control_panel.add(comboBox_cruce);
-		
-		tf_probCruce = new JTextField();
-		tf_probCruce.setBounds(289, 275, 75, 19);
-		control_panel.add(tf_probCruce);
-		tf_probCruce.setColumns(10);
-		
-		JLabel lblNewLabel = new JLabel("Mutacion");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(40, 319, 95, 13);
-		control_panel.add(lblNewLabel);
-		
-		JComboBox comboBox_mutacion = new JComboBox();
-		comboBox_mutacion.setModel(new DefaultComboBoxModel(new String[] {"Inserci\u00F3n", "Intercambio", "Inversi\u00F3n", "Heur\u00EDstica"}));
-		comboBox_mutacion.setBounds(157, 315, 109, 21);
-		control_panel.add(comboBox_mutacion);
-		
-		tf_probMutacion = new JTextField();
-		tf_probMutacion.setBounds(289, 316, 75, 19);
-		control_panel.add(tf_probMutacion);
-		tf_probMutacion.setColumns(10);
-		
-		JButton btn_ejecutar = new JButton("Ejecutar");
-		btn_ejecutar.setBounds(40, 402, 120, 35);
-		control_panel.add(btn_ejecutar);
-		
-		JButton btn_elegirFichero = new JButton("Elegir Fichero");
-		btn_elegirFichero.setBounds(214, 402, 120, 35);
-		control_panel.add(btn_elegirFichero);
-		
-		
-		JLabel lblNewLabel_1 = new JLabel("Metodo");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(157, 202, 109, 13);
-		control_panel.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("Probabilidad");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setBounds(289, 202, 75, 13);
-		control_panel.add(lblNewLabel_2);
-		
-		//////////////////////////////////////////////////////////////////////////////////		SOLUCION
+
 		JPanel solution_panel = new JPanel();
-		solution_panel.setBounds(10, 523, 385, 322);
 		solution_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		frame.getContentPane().add(solution_panel);
-		solution_panel.setLayout(null);
-		
-		JLabel lblNewLabel_3 = new JLabel("Mejor Respuesta");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setBounds(138, 30, 108, 23);
-		solution_panel.add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_4 = new JLabel("Fitness = uwu");
-		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_4.setBounds(123, 68, 135, 36);
-		solution_panel.add(lblNewLabel_4);
-		
-		JLabel lblNewLabel_5 = new JLabel("Cromosoma");
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_5.setBounds(150, 114, 83, 23);
-		solution_panel.add(lblNewLabel_5);
-		
-		JLabel lblNewLabel_6 = new JLabel("a b c d e f g h i j k l m n o p q r s t u v w x y z");
-		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_6.setBounds(87, 152, 236, 23);
-		solution_panel.add(lblNewLabel_6);
-		
-		JLabel lblNewLabel_7 = new JLabel("________________________________________");
-		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7.setBounds(76, 185, 268, 23);
-		solution_panel.add(lblNewLabel_7);
-		
-		JLabel lblNewLabel_6_1 = new JLabel("a b c d e f g h i j k l m n o p q r s t u v w x y z");
-		lblNewLabel_6_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_6_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblNewLabel_6_1.setBounds(87, 226, 236, 23);
-		solution_panel.add(lblNewLabel_6_1);
-		
-		//////////////////////////////////////////////////////////////////////////////////		GRAFICA
 
 		JPanel graph_panel = new JPanel();
-		graficas gr = new graficas();
-		//graph_panel.setLayout(null);
-		graph_panel.setBounds(400, 10, 1100, 503);
 		graph_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		graph_panel.add(gr.getPlot());
-		frame.getContentPane().add(graph_panel);
-		
-		//////////////////////////////////////////////////////////////////////////////////		TEXT AREA
 
 		JPanel text_panel = new JPanel();
-		text_panel.setBounds(400, 523, 1100, 322);
 		text_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		frame.getContentPane().add(text_panel);
+
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(control_panel, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+						.addComponent(solution_panel, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(text_panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(graph_panel, GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(12)
+							.addComponent(graph_panel, GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(control_panel, GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)))
+					.addGap(29)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(solution_panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(text_panel, GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE))
+					.addContainerGap())
+		);
 		text_panel.setLayout(null);
 		
 		JTextArea texto_original = new JTextArea();
-		texto_original.setText("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
-		texto_original.setBounds(54, 29, 410, 283);
-		texto_original.setLineWrap(true);
+		JScrollPane scrollPane = new JScrollPane(texto_original);
+		scrollPane.setBounds(58, 31, 370, 273);
+		texto_original.setBounds(58, 31, 370, 273);
 		texto_original.setBorder(BorderFactory.createLineBorder(Color.black));
-		text_panel.add(texto_original);
+		texto_original.setLineWrap(true);
+		text_panel.add(scrollPane);
 		
 		JTextArea texto_traducido = new JTextArea();
-		texto_traducido.setText("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
-		texto_traducido.setBounds(550, 29, 410, 283);
-		texto_traducido.setLineWrap(true);
-		texto_traducido.setBorder(BorderFactory.createLineBorder(Color.black));
+		texto_traducido.setBounds(578, 31, 370, 273);
 		text_panel.add(texto_traducido);
-
+		graph_panel.setLayout(null);
+		texto_traducido.setBorder(BorderFactory.createLineBorder(Color.black));
+		texto_traducido.setLineWrap(true);
 		
-		btn_elegirFichero.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser jFileChooser = new JFileChooser();
-				jFileChooser.setCurrentDirectory(new File(System.getProperty("user.dir") + System.getProperty("file.separator")+ "Pruebas"));
-				
-				int result = jFileChooser.showOpenDialog(new JFrame());
-				
-				if (result == JFileChooser.APPROVE_OPTION) {
-		            File file = jFileChooser.getSelectedFile();
-		            try {
-		                BufferedReader in;
-		                in = new BufferedReader(new FileReader(file));
-		                String line = in.readLine();
-		                while (line != null) {
-		                    texto_original.setText(line + "\n");
-		                    line = in.readLine();
-		                }
-		            } catch (Exception ex) {
-		                
-		            }
-				}
-				
-			}
-		});
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		graficas gr_texto1 = new graficas();
+		graficas gr_texto2 = new graficas();
+		graficas gr_texto3 = new graficas();
+		graficas gr_texto4 = new graficas();
+		tabbedPane.setBounds(18, 10, 939, 321);
+		tabbedPane.addTab("Texto 1", gr_texto1.getPlot());
+		tabbedPane.addTab("Texto 2", gr_texto2.getPlot());
+		tabbedPane.addTab("Texto 3", gr_texto3.getPlot());
+		tabbedPane.addTab("Texto 4", gr_texto4.getPlot());
+		graph_panel.add(tabbedPane);
+		solution_panel.setLayout(null);
 		
-		btn_ejecutar.addActionListener(new ActionListener() {
+		JLabel lblNewLabel_6 = new JLabel("Mejor Respuesta");
+		lblNewLabel_6.setBounds(106, 21, 64, 13);
+		solution_panel.add(lblNewLabel_6);
+		
+		JLabel lblNewLabel_7 = new JLabel("Fitness = 000000");
+		lblNewLabel_7.setBounds(106, 56, 64, 13);
+		solution_panel.add(lblNewLabel_7);
+		
+		JLabel lblNewLabel_8 = new JLabel("a b c d e f g h i j k l m n o p q r s t u v w x y z ");
+		lblNewLabel_8.setBounds(20, 101, 222, 13);
+		solution_panel.add(lblNewLabel_8);
+		
+		JLabel lblNewLabel_9 = new JLabel("______________________________");
+		lblNewLabel_9.setBounds(46, 124, 186, 13);
+		solution_panel.add(lblNewLabel_9);
+		
+		JLabel lblNewLabel_8_1 = new JLabel("a b c d e f g h i j k l m n o p q r s t u v w x y z ");
+		lblNewLabel_8_1.setBounds(20, 147, 222, 13);
+		solution_panel.add(lblNewLabel_8_1);
+		control_panel.setLayout(null);
+		
+		JLabel label_n = new JLabel("Tama\u00F1o Poblacion");
+		label_n.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_n.setBounds(10, 24, 117, 13);
+		control_panel.add(label_n);
+		
+		tf_n = new JTextField("100");
+		tf_n.setBounds(137, 21, 96, 19);
+		control_panel.add(tf_n);
+		tf_n.setColumns(10);
+		
+		JLabel label_generaciones = new JLabel("Numero Generaciones");
+		label_generaciones.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_generaciones.setBounds(10, 53, 117, 13);
+		control_panel.add(label_generaciones);
+		
+		tf_generaciones = new JTextField("100");
+		tf_generaciones.setBounds(137, 50, 96, 19);
+		control_panel.add(tf_generaciones);
+		tf_generaciones.setColumns(10);
+		
+		JLabel label_elite = new JLabel("Elite");
+		label_elite.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_elite.setBounds(10, 85, 117, 13);
+		control_panel.add(label_elite);
+		
+		tf_elite = new JTextField("2");
+		tf_elite.setBounds(137, 82, 96, 19);
+		control_panel.add(tf_elite);
+		tf_elite.setColumns(10);
+		
+		JLabel label_seleccion = new JLabel("Selecci\u00F3n");
+		label_seleccion.setBounds(10, 169, 67, 13);
+		control_panel.add(label_seleccion);
+		
+		JComboBox comboBox_seleccion = new JComboBox();
+		comboBox_seleccion.setModel(new DefaultComboBoxModel(new String[] {"Ruleta", "Torneo", "Torneo Probabilistico", "Estocastico", "Restos", "Truncamiento", " Ranking"}));
+		comboBox_seleccion.setBounds(101, 165, 85, 21);
+		control_panel.add(comboBox_seleccion);
+		
+		JLabel label_cruce = new JLabel("Cruce");
+		label_cruce.setBounds(10, 202, 67, 13);
+		control_panel.add(label_cruce);
+		
+		JComboBox comboBox_cruce = new JComboBox();
+		comboBox_cruce.setModel(new DefaultComboBoxModel(new String[] {"PMX", "OX", "CX", "ERX", "CO", "OXPP"}));
+		comboBox_cruce.setBounds(101, 198, 85, 21);
+		control_panel.add(comboBox_cruce);
+		
+		textField_probCruce = new JTextField("60");
+		textField_probCruce.setBounds(188, 199, 45, 19);
+		control_panel.add(textField_probCruce);
+		textField_probCruce.setColumns(10);
+		
+		JLabel labrl_mutacion = new JLabel("Mutacion");
+		labrl_mutacion.setBounds(10, 239, 67, 13);
+		control_panel.add(labrl_mutacion);
+		
+		JComboBox comboBox_mutacion = new JComboBox();
+		comboBox_mutacion.setModel(new DefaultComboBoxModel(new String[] {"Inserci\u00F3n", "Intercambio", "Inversi\u00F3n", "Heur\u00EDstica"}));
+		comboBox_mutacion.setBounds(101, 235, 85, 21);
+		control_panel.add(comboBox_mutacion);
+		
+		textField_probMutacion = new JTextField("20");
+		textField_probMutacion.setBounds(188, 236, 45, 19);
+		control_panel.add(textField_probMutacion);
+		textField_probMutacion.setColumns(10);
+		
+		JButton ejecutar = new JButton("Ejecutar");
+		ejecutar.setBounds(101, 309, 85, 21);
+		control_panel.add(ejecutar);
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Apocalipsis");
+		chckbxNewCheckBox.setBounds(101, 282, 102, 21);
+		control_panel.add(chckbxNewCheckBox);
+		
+		JLabel lblNewLabel = new JLabel("%");
+		lblNewLabel.setBounds(243, 85, 26, 13);
+		control_panel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("%");
+		lblNewLabel_1.setBounds(243, 202, 26, 13);
+		control_panel.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("%");
+		lblNewLabel_2.setBounds(243, 239, 26, 13);
+		control_panel.add(lblNewLabel_2);
+		frame.getContentPane().setLayout(groupLayout);
+		
+		ejecutar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				texto_traducido.setText("SE HA TRADUCIDO CORRECTAMENTE");
+				int n = Integer.parseInt(tf_n.getText());
+				int numGeneraciones = Integer.parseInt(tf_generaciones.getText());
+				double elite = Double.parseDouble(tf_elite.getText());
+				
+				Seleccion metodoSeleccion = FactoriaSeleccion.getAlgoritmoDeSeleccion(comboBox_seleccion.getSelectedItem().toString());
+				Cruce metodoCruce = FactoriaCruces.getAlgoritmoDeCruce(comboBox_cruce.getSelectedItem().toString());
+				Mutacion metodoMutacion = FactoriaMutacion.getAlgoritmoDeMutacion(comboBox_mutacion.getSelectedItem().toString());
+				
+				double probCruce = Double.parseDouble(textField_probCruce.getText());
+				double probMutacion = Double.parseDouble(textField_probMutacion.getText());
+				AlgoritmoGenetico  ag = new AlgoritmoGenetico(n, numGeneraciones, metodoSeleccion, metodoCruce, probCruce, metodoMutacion, probMutacion, elite, texto_original.getText());
+				ag.startAlgorithm();
 			}
 		});
 		
+		tabbedPane.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				int index = tabbedPane.getSelectedIndex();
+				seleccionaFichero(index);
+				texto_original.setText("");
+				String pathString = System.getProperty("user.dir") + File.separator + eleccion;
+				
+				File fichero = new File(pathString);
+				
+				 try {
+				        BufferedReader in;
+				        in = new BufferedReader(new FileReader(fichero));
+				        String line = in.readLine();
+				        while (line != null) {
+				        	texto_original.setText(texto_original.getText() + "\n" + line);
+				            line = in.readLine();
+				        }
+				    } catch (Exception ex) {
+				        ex.printStackTrace();
+				    }
+			}
+		});
+	}
+	
+	
+	private void seleccionaFichero(int index) {
+		switch (index) {
+			case 0: {
+				eleccion = "Pruebas" + File.separator + "Uno.txt";
+				break;
+			}
+			case 1: {
+				eleccion = "Pruebas" + File.separator + "Dos.txt";
+				break;
+			}
+			case 2: {
+				eleccion = "Pruebas" + File.separator + "Tres.txt";
+				break;
+			}
+			case 3: {
+				eleccion = "Pruebas" + File.separator + "cuatro.txt";
+				break;
+			}
+
+		}
 	}
 }
