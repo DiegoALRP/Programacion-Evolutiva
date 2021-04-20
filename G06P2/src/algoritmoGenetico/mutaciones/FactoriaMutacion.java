@@ -1,5 +1,13 @@
 package algoritmoGenetico.mutaciones;
 
+import algoritmoGenetico.seleccion.SeleccionEstocastico;
+import algoritmoGenetico.seleccion.SeleccionRanking;
+import algoritmoGenetico.seleccion.SeleccionRestos;
+import algoritmoGenetico.seleccion.SeleccionRuleta;
+import algoritmoGenetico.seleccion.SeleccionTorneo;
+import algoritmoGenetico.seleccion.SeleccionTorneoProbabilistico;
+import algoritmoGenetico.seleccion.SeleccionTruncamiento;
+
 /**
  * Universidad Complutense de Madrid.
  * Programación Evolutiva.
@@ -30,7 +38,17 @@ public class FactoriaMutacion {
 	 */
 	public static Mutacion getAlgoritmoDeMutacion(String algoritmo) {
 		
-		//TODO
-		return null;
+		switch(algoritmo) {
+			case "Insercion":
+				return new MutacionInsersion();
+			case "Intercambio":
+				return new MutacionIntercambio();
+			case "Inversion":
+				return new MutacionInversion();
+			case "Heuristica":
+				return new MutacionHeuristica();
+			default:
+				return new MutacionInsersion();
+		}
 	}
 }
