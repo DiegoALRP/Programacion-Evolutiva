@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.EventQueue;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,13 +16,24 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		double start = System.currentTimeMillis();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					NGramas ngramas = new NGramas();
+					ngramas.loadHashs();
+					panelPrincipal window = new panelPrincipal(ngramas);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		
-		/*AlgoritmoGenetico ag = new AlgoritmoGenetico();
-		ag.startAlgorithm();*/
-		panelPrincipal main = new panelPrincipal();
+		/*double start = System.currentTimeMillis();
+		
+		AlgoritmoGenetico ag = new AlgoritmoGenetico();
+		ag.startAlgorithm();
 		
 		double end = System.currentTimeMillis() - start;
-		System.out.println("Time: " + end);
+		System.out.println("Time: " + end);*/
 	}
 }

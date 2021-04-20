@@ -29,6 +29,8 @@ import javax.swing.event.ChangeListener;
 import algoritmoGenetico.AlgoritmoGenetico;
 import algoritmoGenetico.cruces.Cruce;
 import algoritmoGenetico.cruces.FactoriaCruces;
+import algoritmoGenetico.individuos.NGramas;
+import algoritmoGenetico.individuos.Texto;
 import algoritmoGenetico.mutaciones.FactoriaMutacion;
 import algoritmoGenetico.mutaciones.Mutacion;
 import algoritmoGenetico.seleccion.FactoriaSeleccion;
@@ -47,27 +49,21 @@ public class panelPrincipal {
 	private JTextField textField_probCruce;
 	private JTextField textField_probMutacion;
 	private String eleccion;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					panelPrincipal window = new panelPrincipal();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
+	private NGramas ngramas;
+	private Texto claseTexto;
+	private StringBuilder textoOriginal;
+	private StringBuilder textoAyuda;
 
 	/**
 	 * Create the application.
 	 */
-	public panelPrincipal() {
+	public panelPrincipal(NGramas ngramas) {
+		
+		this.ngramas = ngramas;
+		
 		initialize();
+		this.frame.setVisible(true);
 	}
 
 	/**
@@ -274,8 +270,11 @@ public class panelPrincipal {
 				
 				double probCruce = Double.parseDouble(textField_probCruce.getText());
 				double probMutacion = Double.parseDouble(textField_probMutacion.getText());
-				//AlgoritmoGenetico  ag = new AlgoritmoGenetico(n, numGeneraciones, metodoSeleccion, metodoCruce, probCruce, metodoMutacion, probMutacion, elite, texto_original.getText());
-				AlgoritmoGenetico ag = new AlgoritmoGenetico();
+				
+				claseTexto = new Texto(textoOriginal, textoAyuda);
+				AlgoritmoGenetico  ag = new AlgoritmoGenetico(n, numGeneraciones, metodoSeleccion, metodoCruce, probCruce, 
+						metodoMutacion, probMutacion, elite, ngramas, claseTexto);
+				//AlgoritmoGenetico ag = new AlgoritmoGenetico();
 				ag.startAlgorithm();
 			}
 		});
@@ -288,16 +287,30 @@ public class panelPrincipal {
 				seleccionaFichero(index);
 				texto_original.setText("");
 				String pathString = System.getProperty("user.dir") + File.separator + eleccion;
+				String pathStringAyuda = System.getProperty("user.dir") + File.separator + eleccion + "-Ayuda";
 				
 				File fichero = new File(pathString);
+				File ficheroAyuda = new File(pathStringAyuda);
 				
 				 try {
 				        BufferedReader in;
 				        in = new BufferedReader(new FileReader(fichero));
+				        
+				        textoOriginal = new StringBuilder();
 				        String line = in.readLine();
 				        while (line != null) {
 				        	texto_original.setText(texto_original.getText() + "\n" + line);
+				        	textoOriginal.append(line);
 				            line = in.readLine();
+				        }
+				        
+				        BufferedReader inAyuda = new BufferedReader(new FileReader(ficheroAyuda));
+				        textoAyuda = new StringBuilder();
+				        String lineAyuda = in.readLine();
+				        while (lineAyuda != null) {
+				        	
+				        	textoAyuda.append(line);
+				        	lineAyuda = inAyuda.readLine();
 				        }
 				    } catch (Exception ex) {
 				        ex.printStackTrace();
