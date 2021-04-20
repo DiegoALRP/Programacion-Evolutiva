@@ -274,7 +274,8 @@ public class panelPrincipal {
 				
 				double probCruce = Double.parseDouble(textField_probCruce.getText());
 				double probMutacion = Double.parseDouble(textField_probMutacion.getText());
-				AlgoritmoGenetico  ag = new AlgoritmoGenetico(n, numGeneraciones, metodoSeleccion, metodoCruce, probCruce, metodoMutacion, probMutacion, elite, texto_original.getText());
+				//AlgoritmoGenetico  ag = new AlgoritmoGenetico(n, numGeneraciones, metodoSeleccion, metodoCruce, probCruce, metodoMutacion, probMutacion, elite, texto_original.getText());
+				AlgoritmoGenetico ag = new AlgoritmoGenetico();
 				ag.startAlgorithm();
 			}
 		});

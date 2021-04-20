@@ -126,7 +126,8 @@ public class AlgoritmoGenetico {
 	}
 	
 	public AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, Seleccion metodoSeleccion, 
-			Cruce metodoCruce, double porcCruce, Mutacion metodoMutacion, double porcMutacion, double porcElite) {
+			Cruce metodoCruce, double porcCruce, Mutacion metodoMutacion, double porcMutacion, double porcElite,
+			NGramas ngramas, Texto claseTexto) {
 		
 		this.tamPoblacion = tamPoblacion;
 		this.numGeneraciones = numGeneraciones;
