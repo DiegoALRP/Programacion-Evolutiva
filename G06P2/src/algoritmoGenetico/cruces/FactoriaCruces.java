@@ -1,11 +1,17 @@
 package algoritmoGenetico.cruces;
 
+import algoritmoGenetico.mutaciones.MutacionHeuristica;
+import algoritmoGenetico.mutaciones.MutacionInsersion;
+import algoritmoGenetico.mutaciones.MutacionIntercambio;
+
 /**
  * Universidad Complutense de Madrid.
  * Programación Evolutiva.
  * Grupo A 2021.
  * Profesor:
  * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Práctica 2
  * 
  * Clase Factoria Cruces.
  * 
@@ -29,6 +35,21 @@ public class FactoriaCruces {
 	 */
 	public static Cruce getAlgoritmoDeCruce(String algoritmo) {
 		
-		return null;
+		switch(algoritmo) {
+			case "PMX":
+				return new CrucePMX();
+			case "OX":
+				return new CrucePorOrden();
+			case "CX":
+				return new CruceCX();
+			case "ERX":
+				return new CruceERX();
+			case "CO":
+				return new CruceCO();
+			case "OXPP":
+				return new CruceOXPP();
+			default:
+				return new CrucePMX();
+			}
 	}
 }
