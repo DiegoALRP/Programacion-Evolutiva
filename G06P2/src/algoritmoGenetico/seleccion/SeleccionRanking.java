@@ -11,8 +11,8 @@ public class SeleccionRanking extends Seleccion{
 	private double beta;
 	private double[] puntAcumulada;
 	
-	public SeleccionRanking(double b) {
-		beta = b;
+	public SeleccionRanking() {
+		beta = 2;
 	}
 	@Override
 	public ArrayList<Individuo> seleccionar(ArrayList<Individuo> poblacion) {
@@ -22,7 +22,7 @@ public class SeleccionRanking extends Seleccion{
 		inicializaRanking(poblacion);
 		return seleccionRuleta(poblacion);
 		
-		}
+	}
 	
 	private ArrayList<Individuo> seleccionRuleta(ArrayList<Individuo> poblacion) {
 		ArrayList<Individuo> nuevaPoblacion = new ArrayList<Individuo>(poblacion.size());
@@ -70,8 +70,8 @@ public class SeleccionRanking extends Seleccion{
 			probOfIth = (double)probOfIth * ((double)1/k);
 			
 			poblacion.get(i).setFitnessRanking(probOfIth);
-			puntAcumulada[i] = acum;
 			acum += probOfIth;
+			puntAcumulada[i] = acum;
 		}
 	}
 
