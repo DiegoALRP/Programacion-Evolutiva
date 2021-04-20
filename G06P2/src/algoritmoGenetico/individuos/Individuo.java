@@ -166,34 +166,28 @@ public class Individuo {
 				word.append(caracterDeco);
 				j = sb.length();
 				
-				this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/(Math.log(tamTextoAyuda));
-				//this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/((Math.log(tamTextoAyuda)/Math.log(2))*2);
-				//this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco));
+				/**ganadora */
+				this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/((Math.log(tamTextoAyuda)/Math.log(2))*2);
+				//this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/((Math.log(tamTextoAyuda)/Math.log(2))*3);
 				
 				if (j > 1) {
-					this.fitness += this.ngramas.frecuenciaBigramas.get(sb.substring(j - 2, j));
+					this.fitness += this.ngramas.frecuenciaBigramas.get(sb.substring(j - 2, j))*0.1;
 				}
 				if (j > 2) {
 					
 					if (this.ngramas.frecuenciaTrigramas.containsKey(sb.substring(j - 3, j))) {
-						this.fitness += this.ngramas.frecuenciaTrigramas.get(sb.substring(j - 3, j)) * 2;
-					}
-					else {
-						//this.fitness -= 1;
-						//System.out.println(sb.substring(j - 3, j));
+						this.fitness += this.ngramas.frecuenciaTrigramas.get(sb.substring(j - 3, j)) * 0.3;
 					}
 				}
 				if (j > 3) {
 					if (this.ngramas.frecuenciaCuadragramas.containsKey(sb.substring(j - 4, j))) {
-						this.fitness += this.ngramas.frecuenciaCuadragramas.get(sb.substring(j - 4, j)) * 3;
+						this.fitness += this.ngramas.frecuenciaCuadragramas.get(sb.substring(j - 4, j)) * 0.6;
 					}
-					//else this.fitness -= 1;
 				}
 				if (j > 4) {
 					if (this.ngramas.frecuenciaQuintagramas.containsKey(sb.substring(j - 5, j))) {
-						this.fitness += this.ngramas.frecuenciaQuintagramas.get(sb.substring(j - 5, j)) * 5;
+						this.fitness += this.ngramas.frecuenciaQuintagramas.get(sb.substring(j - 5, j));
 					}
-					//else this.fitness -= 2;
 				}
 				
 				/*if (this.ngramas.frecuenciaPalabras.containsKey(word.toString())) {
@@ -202,9 +196,6 @@ public class Individuo {
 			}
 			else {
 				
-				//if (word.equals("woodchuck")) {
-					//this.fitness += 100;
-				//}
 				if (this.ngramas.frecuenciaPalabras.containsKey(word.toString()) && word.length() > 1) {
 					this.fitness += this.ngramas.frecuenciaPalabras.get(word.toString()) * (word.length() * 2);
 					//this.fitness += word.length();

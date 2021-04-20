@@ -70,6 +70,15 @@ public class AlgoritmoGenetico {
 	private double mediaFitnessTotal;
 	private double[] mediaFitnessGeneracion;
 	
+	//Presion Selecctiva
+	private double presionSelecitiva;
+	private double[] presionSelectivaArray;
+	
+	//Apocalipsis
+	private boolean apocalipsis;
+	private int contadorApocalipsis;
+	private final int numGeneracionesApocalipsis = 15;
+	
 	/**************************** CONSTRUCTOR *******************************/
 	public AlgoritmoGenetico() {
 		
@@ -127,7 +136,7 @@ public class AlgoritmoGenetico {
 	
 	public AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, Seleccion metodoSeleccion, 
 			Cruce metodoCruce, double porcCruce, Mutacion metodoMutacion, double porcMutacion, double porcElite,
-			NGramas ngramas, Texto claseTexto) {
+			NGramas ngramas, Texto claseTexto, boolean apocalipsis) {
 		
 		this.tamPoblacion = tamPoblacion;
 		this.numGeneraciones = numGeneraciones;
@@ -140,6 +149,8 @@ public class AlgoritmoGenetico {
 		
 		this.ngramas = ngramas;
 		this.claseTexto = claseTexto;
+		
+		this.apocalipsis = apocalipsis;
 		
 		System.out.println(claseTexto.getTextoOriginal());
 		System.out.println(claseTexto.getTextoAyuda());
@@ -163,8 +174,15 @@ public class AlgoritmoGenetico {
 			reintroduceElite();
 			this.evaluaFitnessPoblacion();
 			
-			System.out.println(this.mejorFenotipoGeneracion[generacionActual]);
-			System.out.println(this.mejorFitnessGeneracion[generacionActual]);
+			/*System.out.println("Feno: " + this.mejorFenotipoGeneracion[generacionActual]);
+			System.out.println("Fitness: " + this.mejorFitnessGeneracion[generacionActual]);
+			System.out.println("Presion: " + this.presionSelectivaArray[generacionActual]);
+			System.out.println("Media: " + this.mediaFitnessGeneracion[generacionActual]);
+			System.out.println("Peor: " + this.peorFitnessGeneracion[generacionActual]);*/
+			
+			if (this.apocalipsis) {
+				this.apocalipsis();
+			}
 			this.generacionActual++;
 		}
 		
@@ -183,6 +201,8 @@ public class AlgoritmoGenetico {
 		peorFitnessGeneracion = new double[numGeneraciones];
 		
 		mediaFitnessGeneracion = new double[numGeneraciones];
+		
+		this.presionSelectivaArray = new double[numGeneraciones];
 	}
 	
 	private void inicializaPoblacion() {
@@ -269,8 +289,11 @@ public class AlgoritmoGenetico {
 		
 		this.mejorIndividuoGeneracion[generacionActual] = new Individuo(claseTexto, ngramas, mejorIndividuo.getCromosoma());
 		
-		this.mediaFitnessGeneracion[generacionActual] = mediaGeneracion;
-		this.mediaFitnessTotal += mediaGeneracion;
+		this.mediaFitnessGeneracion[generacionActual] = mediaGeneracion/tamPoblacion;
+		this.mediaFitnessTotal += mediaGeneracion/tamPoblacion;
+		
+		this.presionSelecitiva = mejorGeneracion/(mediaGeneracion/tamPoblacion);
+		this.presionSelectivaArray[generacionActual] = mejorGeneracion/(mediaGeneracion/tamPoblacion);
 		
 		if (this.generacionActual == 0 || 
 				mejorGeneracion > this.arrayMejorAbsoluto[generacionActual - 1]) {
@@ -307,7 +330,7 @@ public class AlgoritmoGenetico {
 			
 			fitness = ind.calculateFitness();
 			
-			if (fitness >= (menorFitness - (20+Math.log(generacionActual))) && fitness <= (mayorFitness + (20+Math.log(generacionActual)))) {
+			if (fitness >= (menorFitness - (20*this.presionSelecitiva+Math.log(generacionActual))) && fitness <= (mayorFitness + (20*this.presionSelecitiva+Math.log(generacionActual)))) {
 				
 				array.add(ind);
 				
@@ -346,12 +369,50 @@ public class AlgoritmoGenetico {
 	
 	private void apocalipsis() {
 		
-		for (int i = 0; i < this.tamPoblacion; i++) {
+		if (this.generacionActual == 0 || this.mejorFitnessGeneracion[generacionActual] == this.mejorFitnessGeneracion[generacionActual - 1]) {
 			
-			if (i%5!=0) {
+			this.contadorApocalipsis += 1;
+		}
+		else {
+			
+			this.contadorApocalipsis = 0;
+		}
+		
+		if (this.contadorApocalipsis != 0 && this.contadorApocalipsis%this.numGeneracionesApocalipsis == 0) {
+			
+			System.out.println("\n APOCALIPSIS \n");
+			
+			Collections.sort(this.poblacion, new Comparator<Individuo>() {
+
+				@Override
+				public int compare(Individuo o1, Individuo o2) {
+					
+					return Double.compare(o2.getFitness(), o1.getFitness());
+				}
+			});
+			
+			int contador = 0;
+			for (int i = 0; i < this.tamPoblacion; i++) {
 				
-				this.poblacion.get(i).restartCromosome();
+				if (i < this.tamPoblacion*this.porcElite*2) {
+					
+					this.poblacion.get(i).restartCromosome();
+				}
+				else {
+					
+					if (contador < 5) {
+						
+						this.poblacion.get(i).restartCromosome();
+						contador++;
+					}
+					else {
+						
+						contador = 0;
+					}
+				}
 			}
+			
+			this.contadorApocalipsis = 0;
 		}
 	}
 	
@@ -376,10 +437,6 @@ public class AlgoritmoGenetico {
 		for (int i = 0; i < numElite; i++) {
 			
 			elite.add(poblacionAuxiliar.get(i));
-			//System.out.println(poblacionAuxiliar.get(i).getCromosoma());
-			//System.out.println("F1 :" + poblacionAuxiliar.get(i).calculateFitness());
-			//System.out.println("F2 :" + poblacionAuxiliar.get(i).calculateFitness());
-			//System.out.println("F3 :" + poblacionAuxiliar.get(i).calculateFitness());
 		}
 		for (int i = 0; i < numPlebe; i++) {
 			
@@ -503,6 +560,8 @@ public class AlgoritmoGenetico {
 		return mediaFitnessGeneracion;
 	}
 	
-	
+	public double[] getPresionSelectivaArray() {
+		return presionSelectivaArray;
+	}
 
 }

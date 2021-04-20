@@ -238,9 +238,9 @@ public class panelPrincipal {
 		ejecutar.setBounds(101, 309, 85, 21);
 		control_panel.add(ejecutar);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Apocalipsis");
-		chckbxNewCheckBox.setBounds(101, 282, 102, 21);
-		control_panel.add(chckbxNewCheckBox);
+		JCheckBox apocalipsisBox = new JCheckBox("Apocalipsis");
+		apocalipsisBox.setBounds(101, 282, 102, 21);
+		control_panel.add(apocalipsisBox);
 		
 		JLabel lblNewLabel = new JLabel("%");
 		lblNewLabel.setBounds(243, 85, 26, 13);
@@ -273,7 +273,7 @@ public class panelPrincipal {
 				
 				claseTexto = new Texto(textoOriginal, textoAyuda);
 				AlgoritmoGenetico  ag = new AlgoritmoGenetico(n, numGeneraciones, metodoSeleccion, metodoCruce, probCruce, 
-						metodoMutacion, probMutacion, elite, ngramas, claseTexto);
+						metodoMutacion, probMutacion, elite, ngramas, claseTexto, apocalipsisBox.isSelected());
 				//AlgoritmoGenetico ag = new AlgoritmoGenetico();
 				ag.startAlgorithm();
 			}
