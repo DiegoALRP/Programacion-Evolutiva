@@ -28,14 +28,14 @@ public class FactoriaSeleccion {
 	 * @return	[ES] La instancia de la clase del tipo de selección.
 	 * 			[EN] The instance of the class's selection type.
 	 */
-	public static Seleccion getAlgoritmoDeSeleccion(String algoritmo, double b) {
+	public static Seleccion getAlgoritmoDeSeleccion(String algoritmo) {
 		
 		switch(algoritmo) {
-		case "Metodo de la ruleta":
+		case "Ruleta":
 			return new SeleccionRuleta();
-		case "Universal Estocastico":
+		case "Estocastico":
 			return new SeleccionEstocastico();
-		case "Torneo Deterministico":
+		case "Torneo":
 			return new SeleccionTorneo();
 		case "Torneo Probabilistico":
 			return new SeleccionTorneoProbabilistico();
@@ -44,7 +44,7 @@ public class FactoriaSeleccion {
 		case "Restos":
 			return new SeleccionRestos();
 		case "Ranking":
-			return new SeleccionRanking(b);
+			return new SeleccionRanking();
 		default:
 			return new SeleccionRuleta();
 	}
