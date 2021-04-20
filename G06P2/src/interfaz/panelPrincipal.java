@@ -286,8 +286,8 @@ public class panelPrincipal {
 				int index = tabbedPane.getSelectedIndex();
 				seleccionaFichero(index);
 				texto_original.setText("");
-				String pathString = System.getProperty("user.dir") + File.separator + eleccion;
-				String pathStringAyuda = System.getProperty("user.dir") + File.separator + eleccion + "-Ayuda";
+				String pathString = System.getProperty("user.dir") + File.separator + eleccion + ".txt";
+				String pathStringAyuda = System.getProperty("user.dir") + File.separator + eleccion + "-Ayuda.txt";
 				
 				File fichero = new File(pathString);
 				File ficheroAyuda = new File(pathStringAyuda);
@@ -306,10 +306,10 @@ public class panelPrincipal {
 				        
 				        BufferedReader inAyuda = new BufferedReader(new FileReader(ficheroAyuda));
 				        textoAyuda = new StringBuilder();
-				        String lineAyuda = in.readLine();
+				        String lineAyuda = inAyuda.readLine();
 				        while (lineAyuda != null) {
 				        	
-				        	textoAyuda.append(line);
+				        	textoAyuda.append(lineAyuda);
 				        	lineAyuda = inAyuda.readLine();
 				        }
 				    } catch (Exception ex) {
@@ -323,19 +323,19 @@ public class panelPrincipal {
 	private void seleccionaFichero(int index) {
 		switch (index) {
 			case 0: {
-				eleccion = "Pruebas" + File.separator + "Uno.txt";
+				eleccion = "Pruebas" + File.separator + "Uno";
 				break;
 			}
 			case 1: {
-				eleccion = "Pruebas" + File.separator + "Dos.txt";
+				eleccion = "Pruebas" + File.separator + "Dos";
 				break;
 			}
 			case 2: {
-				eleccion = "Pruebas" + File.separator + "Tres.txt";
+				eleccion = "Pruebas" + File.separator + "Tres";
 				break;
 			}
 			case 3: {
-				eleccion = "Pruebas" + File.separator + "cuatro.txt";
+				eleccion = "Pruebas" + File.separator + "Cuatro";
 				break;
 			}
 

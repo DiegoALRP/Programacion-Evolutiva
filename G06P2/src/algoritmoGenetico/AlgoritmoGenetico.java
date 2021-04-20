@@ -133,11 +133,16 @@ public class AlgoritmoGenetico {
 		this.numGeneraciones = numGeneraciones;
 		this.metodoSeleccion = metodoSeleccion;
 		this.metodoCruce = metodoCruce;
-		this.porcCruce = porcCruce;
+		this.porcCruce = porcCruce/100;
 		this.metodoMutacion = metodoMutacion;
-		this.porcMutacion = porcMutacion;
-		this.porcElite = porcElite;
+		this.porcMutacion = porcMutacion/100;
+		this.porcElite = porcElite/100;
 		
+		this.ngramas = ngramas;
+		this.claseTexto = claseTexto;
+		
+		System.out.println(claseTexto.getTextoOriginal());
+		System.out.println(claseTexto.getTextoAyuda());
 		this.inicializaVariables();
 	}
 	
@@ -235,7 +240,7 @@ public class AlgoritmoGenetico {
 	
 	private void evaluaFitnessPoblacion() {
 		
-		double mejorGeneracion = 0;
+		double mejorGeneracion = -Double.MAX_VALUE;
 		Individuo mejorIndividuo = null;
 		double peorGeneracion = Double.MAX_VALUE;
 		double mediaGeneracion = 0;

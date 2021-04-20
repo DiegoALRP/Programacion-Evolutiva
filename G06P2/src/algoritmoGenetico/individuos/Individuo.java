@@ -206,8 +206,8 @@ public class Individuo {
 					//this.fitness += 100;
 				//}
 				if (this.ngramas.frecuenciaPalabras.containsKey(word.toString()) && word.length() > 1) {
-					//this.fitness += this.ngramas.frecuenciaPalabras.get(word.toString()) * (word.length() * 2);
-					this.fitness += word.length();
+					this.fitness += this.ngramas.frecuenciaPalabras.get(word.toString()) * (word.length() * 2);
+					//this.fitness += word.length();
 				}
 				word = new StringBuilder();
 			}
