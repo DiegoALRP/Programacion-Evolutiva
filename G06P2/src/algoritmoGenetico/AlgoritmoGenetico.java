@@ -107,7 +107,7 @@ public class AlgoritmoGenetico {
 	}
 	
 	public AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, Seleccion metodoSeleccion, 
-			Cruce metodoCruce, double porcCruce, Mutacion metodoMutacion, double porcMutacion, double porcElite) {
+			Cruce metodoCruce, double porcCruce, Mutacion metodoMutacion, double porcMutacion, double porcElite, String texto) {
 		
 		this.tamPoblacion = tamPoblacion;
 		this.numGeneraciones = numGeneraciones;
@@ -117,6 +117,17 @@ public class AlgoritmoGenetico {
 		this.metodoMutacion = metodoMutacion;
 		this.porcMutacion = porcMutacion;
 		this.porcElite = porcElite;
+		
+		StringBuilder st = new StringBuilder(texto);
+		StringBuilder st2 = new StringBuilder();
+
+		st2.append(st);
+		st2.append(" ");
+		st2.append(st);
+		
+		this.ngramas = new NGramas();
+		this.ngramas.loadHashs();
+		this.claseTexto = new Texto(st, st2);
 	}
 	
 	/***************************** METHODS ********************************/
@@ -159,6 +170,7 @@ public class AlgoritmoGenetico {
 			Individuo ind = new Individuo(claseTexto, ngramas);
 			poblacion.add(ind);
 		}
+		System.out.println("inicia");
 	}
 	
 	private void imprimePoblacion() {
@@ -258,7 +270,7 @@ public class AlgoritmoGenetico {
 	
 	public void generaElite() {
 		
-		int numElite = (int) Math.ceil(this.tamPoblacion*this.porcElite);
+		int numElite = (int) Math.ceil(this.tamPoblacion*(this.porcElite/100));
 		int numPlebe = numElite*2;
 		
 		this.elite = new ArrayList<Individuo>(numElite);
@@ -292,7 +304,7 @@ public class AlgoritmoGenetico {
 	
 	public void reintroduceElite() {
 		
-		int numElite = (int) Math.ceil(this.tamPoblacion*this.porcElite);
+		int numElite = (int) Math.ceil(this.tamPoblacion*(this.porcElite/100));
 		HashSet<Integer> indexAdded = new HashSet<Integer>(numElite);
 		int numAdded = 0;
 		int index;
