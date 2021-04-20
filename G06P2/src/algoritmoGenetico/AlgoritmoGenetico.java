@@ -48,16 +48,27 @@ public class AlgoritmoGenetico {
 	private HashMap<Individuo, Double> plebe;
 	private int generacionActual;
 	
-	private Individuo[] mejorIndividuoGeneracion;
+	/** Individuo **/
+	//Mejor Individuo Absoluto
 	private Individuo mejorIndividuoAbsoluto;
-	private ArrayList<ArrayList<Character>> mejorFenotipoGeneracion;
-	private ArrayList<Character> mejorFenotipoAbsoluto;
-	private double[] mejorFitnessGeneracion;
+	private ArrayList<Integer> mejorCromosomaAbsoluto;
+	private StringBuilder mejorFenotipoAbsoluto;
 	private double mejorFitnessAbsoluto;
-	private double[] peorFitnessGeneracion;
+	private double[] arrayMejorAbsoluto;
+	
+	//Mejor Individuo Generacion
+	private Individuo[] mejorIndividuoGeneracion;
+	private ArrayList<ArrayList<Integer>> mejorCromosomaGeneracion;
+	private StringBuilder[] mejorFenotipoGeneracion;
+	private double[] mejorFitnessGeneracion;
+	
+	//Peor Individuo
 	private double peorFitnessAbsoluto;
-	private double[] mediaFitnessGeneracion;
+	private double[] peorFitnessGeneracion;
+	
+	//Media Individuo
 	private double mediaFitnessTotal;
+	private double[] mediaFitnessGeneracion;
 	
 	/**************************** CONSTRUCTOR *******************************/
 	public AlgoritmoGenetico() {
@@ -111,6 +122,7 @@ public class AlgoritmoGenetico {
 		this.ngramas.loadHashs();
 		this.claseTexto = new Texto(st, st2);
 		
+		this.inicializaVariables();
 	}
 	
 	public AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, Seleccion metodoSeleccion, 
@@ -124,6 +136,8 @@ public class AlgoritmoGenetico {
 		this.metodoMutacion = metodoMutacion;
 		this.porcMutacion = porcMutacion;
 		this.porcElite = porcElite;
+		
+		this.inicializaVariables();
 	}
 	
 	/***************************** METHODS ********************************/
@@ -134,27 +148,35 @@ public class AlgoritmoGenetico {
 		while (this.generacionActual < this.numGeneraciones) {
 			
 			generaElite();
-			//System.out.println("Antes de seleccionar: ");
-			//imprimePoblacion();
 			this.poblacion = this.metodoSeleccion.seleccionar(poblacion);
-			//System.out.println("Seleccion-Cruce: ");
-			//imprimePoblacion();
 			this.metodoCruce.cruza(poblacion, porcCruce);
-			//System.out.println("Cruce-Mutacion: ");
-			//imprimePoblacion();
 			this.metodoMutacion.muta(poblacion, porcMutacion);
-			//System.out.println("Despues de mutacion: ");
-			//imprimePoblacion();
 			
 			this.desastreNatural();
 			//this.evaluaFitnessPoblacion();
 			reintroduceElite();
 			this.evaluaFitnessPoblacion();
-			imprimePoblacion();
+			
+			System.out.println(this.mejorFenotipoGeneracion[generacionActual]);
+			System.out.println(this.mejorFitnessGeneracion[generacionActual]);
 			this.generacionActual++;
 		}
 		
 		imprimeMejor();
+	}
+	
+	private void inicializaVariables() {
+		
+		arrayMejorAbsoluto = new double[numGeneraciones];
+		
+		mejorIndividuoGeneracion = new Individuo[numGeneraciones];
+		mejorCromosomaGeneracion = new ArrayList<ArrayList<Integer>>(numGeneraciones);
+		mejorFenotipoGeneracion = new StringBuilder[numGeneraciones];
+		mejorFitnessGeneracion = new double[numGeneraciones];
+		
+		peorFitnessGeneracion = new double[numGeneraciones];
+		
+		mediaFitnessGeneracion = new double[numGeneraciones];
 	}
 	
 	private void inicializaPoblacion() {
@@ -212,10 +234,59 @@ public class AlgoritmoGenetico {
 	
 	private void evaluaFitnessPoblacion() {
 		
+		double mejorGeneracion = 0;
+		Individuo mejorIndividuo = null;
+		double peorGeneracion = Double.MAX_VALUE;
+		double mediaGeneracion = 0;
+		
+		double fitness;
 		for (Individuo ind : poblacion) {
 			
-			ind.calculateFitness();
+			fitness = ind.calculateFitness();
+			
+			//Mejor Generacion
+			if (fitness > mejorGeneracion) {
+				mejorGeneracion = fitness;
+				mejorIndividuo = ind;
+			}
+			//Peor Generacion
+			if (fitness < peorGeneracion) {
+				peorGeneracion = fitness;
+			}
+			
+			mediaGeneracion += fitness;
 		}
+		
+		this.mejorFitnessGeneracion[generacionActual] = mejorGeneracion;
+		this.mejorCromosomaGeneracion.add(new ArrayList<Integer>(mejorIndividuo.getCromosoma()));
+		this.mejorFenotipoGeneracion[generacionActual] = new StringBuilder(mejorIndividuo.getFenotipe());
+		
+		this.mejorIndividuoGeneracion[generacionActual] = new Individuo(claseTexto, ngramas, mejorIndividuo.getCromosoma());
+		
+		this.mediaFitnessGeneracion[generacionActual] = mediaGeneracion;
+		this.mediaFitnessTotal += mediaGeneracion;
+		
+		if (this.generacionActual == 0 || 
+				mejorGeneracion > this.arrayMejorAbsoluto[generacionActual - 1]) {
+			
+			this.arrayMejorAbsoluto[generacionActual] = mejorGeneracion;
+			this.mejorFitnessAbsoluto = mejorGeneracion;
+			
+			this.mejorCromosomaAbsoluto = new ArrayList<Integer>(mejorIndividuo.getCromosoma());
+			this.mejorFenotipoAbsoluto = new StringBuilder(mejorIndividuo.getFenotipe());
+			this.mejorFitnessAbsoluto = mejorGeneracion;
+			
+			this.mejorIndividuoAbsoluto = new Individuo(claseTexto, ngramas, mejorIndividuo.getCromosoma());
+		}
+		else {
+			
+			this.arrayMejorAbsoluto[generacionActual] = this.arrayMejorAbsoluto[generacionActual - 1];
+		}
+		
+		if (this.generacionActual == 0 || peorGeneracion < this.peorFitnessAbsoluto) {
+			this.peorFitnessAbsoluto = peorGeneracion;
+		}
+		this.peorFitnessGeneracion[generacionActual] = peorGeneracion;
 	}
 	
 	private void desastreNatural() {
@@ -369,5 +440,63 @@ public class AlgoritmoGenetico {
 		}
 	}
 	/**************************** GET & SET ********************************/
+
+	public int getGeneracionActual() {
+		return generacionActual;
+	}
+
+	public Individuo getMejorIndividuoAbsoluto() {
+		return mejorIndividuoAbsoluto;
+	}
+
+	public ArrayList<Integer> getMejorCromosomaAbsoluto() {
+		return mejorCromosomaAbsoluto;
+	}
+
+	public StringBuilder getMejorFenotipoAbsoluto() {
+		return mejorFenotipoAbsoluto;
+	}
+
+	public double getMejorFitnessAbsoluto() {
+		return mejorFitnessAbsoluto;
+	}
+
+	public double[] getArrayMejorAbsoluto() {
+		return arrayMejorAbsoluto;
+	}
+
+	public Individuo[] getMejorIndividuoGeneracion() {
+		return mejorIndividuoGeneracion;
+	}
+
+	public ArrayList<ArrayList<Integer>> getMejorCromosomaGeneracion() {
+		return mejorCromosomaGeneracion;
+	}
+
+	public StringBuilder[] getMejorFenotipoGeneracion() {
+		return mejorFenotipoGeneracion;
+	}
+
+	public double[] getMejorFitnessGeneracion() {
+		return mejorFitnessGeneracion;
+	}
+
+	public double getPeorFitnessAbsoluto() {
+		return peorFitnessAbsoluto;
+	}
+
+	public double[] getPeorFitnessGeneracion() {
+		return peorFitnessGeneracion;
+	}
+
+	public double getMediaFitnessTotal() {
+		return mediaFitnessTotal;
+	}
+
+	public double[] getMediaFitnessGeneracion() {
+		return mediaFitnessGeneracion;
+	}
+	
+	
 
 }
