@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import javax.swing.JOptionPane;
+
 import algoritmoGenetico.AlgoritmoGenetico;
 import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.NGramas;
@@ -19,6 +21,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					JOptionPane.showMessageDialog(null, "Al hacer click en OK empezará la carga de ficheros. Porfavor espere.");
 					NGramas ngramas = new NGramas();
 					ngramas.loadHashs();
 					panelPrincipal window = new panelPrincipal(ngramas);
