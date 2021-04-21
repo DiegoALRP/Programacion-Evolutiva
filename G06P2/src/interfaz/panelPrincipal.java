@@ -353,12 +353,16 @@ public class panelPrincipal {
 		switch (current_plot) {
 			case 0: {
 				gr_texto1.actualiza(numGeneraciones, mejorAbsoluto, mejorGeneracion, mediaGeneracion, presionSelectiva);
+				break;
 			}case 1: {
 				gr_texto2.actualiza(numGeneraciones, mejorAbsoluto, mejorGeneracion, mediaGeneracion, presionSelectiva);
+				break;
 			}case 2: {
 				gr_texto3.actualiza(numGeneraciones, mejorAbsoluto, mejorGeneracion, mediaGeneracion, presionSelectiva);
+				break;
 			}case 3: {
 				gr_texto4.actualiza(numGeneraciones, mejorAbsoluto, mejorGeneracion, mediaGeneracion, presionSelectiva);
+				break;
 			}
 			
 		}
