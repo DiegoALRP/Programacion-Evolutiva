@@ -45,7 +45,7 @@ public class CrucePorOrden extends Cruce{
 		punto2 = rand.nextInt(26 - punto1) + punto1;
 		
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
-			
+			this.numCruce++;
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
 		}
 	}

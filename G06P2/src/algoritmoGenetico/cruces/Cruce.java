@@ -30,6 +30,7 @@ public abstract class Cruce {
 	protected int punto_cruce;					//Punto de Cruce
 	protected int num_selec_cruce;				//Numero de individuos seleccionados para cruzar
 	protected int tamPoblacion;					//Tamaño de la población
+	protected int numCruce;
 	
 	/**************************** CONSTRUCTOR *******************************/
 	
@@ -89,4 +90,8 @@ public abstract class Cruce {
 	
 	protected abstract void cruzaPadres(Individuo padre1, Individuo padre2);
 	/**************************** GET & SET ********************************/
+	
+	public int getNumCruces() {
+		return this.numCruce;
+	}
 }

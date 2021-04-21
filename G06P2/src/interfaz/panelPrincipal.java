@@ -145,10 +145,10 @@ public class panelPrincipal {
 		gr_texto3 = new graficas();
 		gr_texto4 = new graficas();
 		tabbedPane.setBounds(18, 10, 939, 321);
-		tabbedPane.addTab("Texto 1", gr_texto1.getPlot());
-		tabbedPane.addTab("Texto 2", gr_texto2.getPlot());
-		tabbedPane.addTab("Texto 3", gr_texto3.getPlot());
-		tabbedPane.addTab("Texto 4", gr_texto4.getPlot());
+		tabbedPane.addTab("Texto 1 - Trabalenguas", gr_texto1.getPlot());
+		tabbedPane.addTab("Texto 2 - Lincon", gr_texto2.getPlot());
+		tabbedPane.addTab("Texto 3 - Arte", gr_texto3.getPlot());
+		tabbedPane.addTab("Texto 4 - Código", gr_texto4.getPlot());
 		graph_panel.add(tabbedPane);
 		solution_panel.setLayout(null);
 		
@@ -157,7 +157,7 @@ public class panelPrincipal {
 		lblNewLabel_6.setBounds(10, 25, 267, 13);
 		solution_panel.add(lblNewLabel_6);
 		
-		JLabel lbl_fitness = new JLabel("Fitness = ");
+		JLabel lbl_fitness = new JLabel("Fitness: ");
 		lbl_fitness.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_fitness.setBounds(10, 61, 267, 13);
 		solution_panel.add(lbl_fitness);
@@ -192,7 +192,7 @@ public class panelPrincipal {
 		label_n.setBounds(10, 24, 117, 13);
 		control_panel.add(label_n);
 		
-		tf_n = new JTextField("100");
+		tf_n = new JTextField("120");
 		tf_n.setBounds(137, 21, 96, 19);
 		control_panel.add(tf_n);
 		tf_n.setColumns(10);
@@ -202,7 +202,7 @@ public class panelPrincipal {
 		label_generaciones.setBounds(10, 53, 117, 13);
 		control_panel.add(label_generaciones);
 		
-		tf_generaciones = new JTextField("100");
+		tf_generaciones = new JTextField("200");
 		tf_generaciones.setBounds(137, 50, 96, 19);
 		control_panel.add(tf_generaciones);
 		tf_generaciones.setColumns(10);
@@ -249,7 +249,7 @@ public class panelPrincipal {
 		comboBox_mutacion.setBounds(101, 235, 85, 21);
 		control_panel.add(comboBox_mutacion);
 		
-		textField_probMutacion = new JTextField("20");
+		textField_probMutacion = new JTextField("40");
 		textField_probMutacion.setBounds(188, 236, 45, 19);
 		control_panel.add(textField_probMutacion);
 		textField_probMutacion.setColumns(10);

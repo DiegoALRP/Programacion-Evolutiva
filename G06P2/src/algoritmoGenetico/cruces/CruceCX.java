@@ -38,7 +38,7 @@ public class CruceCX extends Cruce {
 		this.seleccionaIndividuos(poblacion);
 		
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
-			
+			this.numCruce++;
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
 		}
 	}

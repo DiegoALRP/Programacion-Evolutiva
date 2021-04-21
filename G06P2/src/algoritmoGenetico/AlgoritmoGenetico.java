@@ -47,7 +47,7 @@ public class AlgoritmoGenetico {
 	private ArrayList<Individuo> elite;
 	private HashMap<Individuo, Double> plebe;
 	private int generacionActual;
-	private int mejorGeneracion;
+	private int generacionSolucion;
 	
 	/** Individuo **/
 	//Mejor Individuo Absoluto
@@ -175,9 +175,9 @@ public class AlgoritmoGenetico {
 			reintroduceElite();
 			this.evaluaFitnessPoblacion();
 			
-			/*System.out.println("Feno: " + this.mejorFenotipoGeneracion[generacionActual]);
+			System.out.println("Feno: " + this.mejorFenotipoGeneracion[generacionActual]);
 			System.out.println("Fitness: " + this.mejorFitnessGeneracion[generacionActual]);
-			System.out.println("Presion: " + this.presionSelectivaArray[generacionActual]);
+			/*System.out.println("Presion: " + this.presionSelectivaArray[generacionActual]);
 			System.out.println("Media: " + this.mediaFitnessGeneracion[generacionActual]);
 			System.out.println("Peor: " + this.peorFitnessGeneracion[generacionActual]);*/
 			
@@ -188,6 +188,9 @@ public class AlgoritmoGenetico {
 		}
 		
 		imprimeMejor();
+		System.out.println("NUMERO DE CRUCES: " + this.metodoCruce.getNumCruces());
+		System.out.println("NUMERO DE MUTACIONES: " + this.metodoMutacion.getNumMutaciones());
+		
 	}
 	
 	private void inicializaVariables() {
@@ -275,7 +278,6 @@ public class AlgoritmoGenetico {
 			if (fitness > mejorGeneracion) {
 				mejorGeneracion = fitness;
 				mejorIndividuo = ind;
-				this.mejorGeneracion = this.generacionActual;
 				
 			}
 			//Peor Generacion
@@ -300,8 +302,11 @@ public class AlgoritmoGenetico {
 		
 		if (this.generacionActual == 0 || 
 				mejorGeneracion > this.arrayMejorAbsoluto[generacionActual - 1]) {
-			
 			this.arrayMejorAbsoluto[generacionActual] = mejorGeneracion;
+
+			if(this.generacionActual != 0 && (arrayMejorAbsoluto[this.generacionActual] - arrayMejorAbsoluto[this.generacionActual -1 ]) > 1)
+					this.generacionSolucion = this.generacionActual;
+
 			this.mejorFitnessAbsoluto = mejorGeneracion;
 			
 			this.mejorCromosomaAbsoluto = mejorIndividuo.getCromosomaLetra().toString();
@@ -451,7 +456,7 @@ public class AlgoritmoGenetico {
 	
 	public void reintroduceElite() {
 		
-		int numElite = (int) Math.ceil(this.tamPoblacion*this.porcElite);
+		int numElite = (int) Math.floor(this.tamPoblacion*this.porcElite);
 		HashSet<Integer> indexAdded = new HashSet<Integer>(numElite);
 		int numAdded = 0;
 		int index;
@@ -568,7 +573,7 @@ public class AlgoritmoGenetico {
 	}
 	
 	public String getMejorGeneracion() {
-		return "" + this.mejorGeneracion;
+		return "" + this.generacionSolucion;
 	}
 
 }

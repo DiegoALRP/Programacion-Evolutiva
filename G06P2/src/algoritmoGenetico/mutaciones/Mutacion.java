@@ -25,6 +25,7 @@ public abstract class Mutacion {
 
 	/**************************** ATRIBUTTES *******************************/
 	protected double probMutacion;
+	protected int numMutaciones;
 	
 	/**************************** CONSTRUCTOR *******************************/
 	/***************************** METHODS ********************************/
@@ -38,6 +39,7 @@ public abstract class Mutacion {
 			
 			if (rand.nextDouble() < this.probMutacion) {
 				
+				this.numMutaciones++;
 				mutaIndividuo(poblacion.get(i));
 			}
 		}
@@ -48,4 +50,8 @@ public abstract class Mutacion {
 	
 	
 	/**************************** GET & SET ********************************/
+	
+	public int getNumMutaciones() {
+		return this.numMutaciones;
+	}
 }
