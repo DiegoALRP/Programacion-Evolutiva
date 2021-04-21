@@ -27,4 +27,22 @@ public class graficas {
 	public Plot2DPanel getPlot() {
 		return this.plot;
 	}
+	
+	public void actualiza(int numGeneraciones, double[] mejorAbsoluto, double[] mejorGeneracion, double[] mediaGeneracion, double[] presionSelectiva) {
+		
+		plot.removeAllPlots();
+		
+		x = new double[numGeneraciones];
+		for(int i=0;i<numGeneraciones;i++) {
+			x[i]=i;
+		}
+		
+		plot.addLinePlot("Mejor absoluto", x, mejorAbsoluto);
+		plot.addLinePlot("Mejor generacion", x, mejorGeneracion);
+		plot.addLinePlot("Media generacion", x, mediaGeneracion);
+		plot.addLinePlot("Presion selectiva", x, presionSelectiva);
+
+		
+		
+	}
 }

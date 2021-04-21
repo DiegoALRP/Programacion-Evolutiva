@@ -54,7 +54,12 @@ public class panelPrincipal {
 	private Texto claseTexto;
 	private StringBuilder textoOriginal;
 	private StringBuilder textoAyuda;
-
+	
+	private graficas gr_texto1;
+	private graficas gr_texto2; 
+	private graficas gr_texto3 ;
+	private graficas gr_texto4;
+	private int current_plot;
 	/**
 	 * Create the application.
 	 */
@@ -134,10 +139,10 @@ public class panelPrincipal {
 		texto_traducido.setLineWrap(true);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		graficas gr_texto1 = new graficas();
-		graficas gr_texto2 = new graficas();
-		graficas gr_texto3 = new graficas();
-		graficas gr_texto4 = new graficas();
+		gr_texto1 = new graficas();
+		gr_texto2 = new graficas();
+		gr_texto3 = new graficas();
+		gr_texto4 = new graficas();
 		tabbedPane.setBounds(18, 10, 939, 321);
 		tabbedPane.addTab("Texto 1", gr_texto1.getPlot());
 		tabbedPane.addTab("Texto 2", gr_texto2.getPlot());
@@ -272,10 +277,11 @@ public class panelPrincipal {
 				double probMutacion = Double.parseDouble(textField_probMutacion.getText());
 				
 				claseTexto = new Texto(textoOriginal, textoAyuda);
-				AlgoritmoGenetico  ag = new AlgoritmoGenetico(n, numGeneraciones, metodoSeleccion, metodoCruce, probCruce, 
+				AlgoritmoGenetico  AG = new AlgoritmoGenetico(n, numGeneraciones, metodoSeleccion, metodoCruce, probCruce, 
 						metodoMutacion, probMutacion, elite, ngramas, claseTexto, apocalipsisBox.isSelected());
 				//AlgoritmoGenetico ag = new AlgoritmoGenetico();
-				ag.startAlgorithm();
+				AG.startAlgorithm();
+				actualizaPlots(Integer.parseInt(tf_generaciones.getText()), AG.getArrayMejorAbsoluto(), AG.getMejorFitnessGeneracion(), AG.getMediaFitnessGeneracion(), AG.getPresionSelectivaArray());
 			}
 		});
 		
@@ -283,8 +289,8 @@ public class panelPrincipal {
 			
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				int index = tabbedPane.getSelectedIndex();
-				seleccionaFichero(index);
+				current_plot = tabbedPane.getSelectedIndex();
+				seleccionaFichero(current_plot);
 				texto_original.setText("");
 				String pathString = System.getProperty("user.dir") + File.separator + eleccion + ".txt";
 				String pathStringAyuda = System.getProperty("user.dir") + File.separator + eleccion + "-Ayuda.txt";
@@ -339,6 +345,22 @@ public class panelPrincipal {
 				break;
 			}
 
+		}
+	}
+	
+	private void actualizaPlots(int numGeneraciones, double[] mejorAbsoluto, double[] mejorGeneracion, double[] mediaGeneracion, double[] presionSelectiva) {
+		
+		switch (current_plot) {
+			case 0: {
+				gr_texto1.actualiza(numGeneraciones, mejorAbsoluto, mejorGeneracion, mediaGeneracion, presionSelectiva);
+			}case 1: {
+				gr_texto2.actualiza(numGeneraciones, mejorAbsoluto, mejorGeneracion, mediaGeneracion, presionSelectiva);
+			}case 2: {
+				gr_texto3.actualiza(numGeneraciones, mejorAbsoluto, mejorGeneracion, mediaGeneracion, presionSelectiva);
+			}case 3: {
+				gr_texto4.actualiza(numGeneraciones, mejorAbsoluto, mejorGeneracion, mediaGeneracion, presionSelectiva);
+			}
+			
 		}
 	}
 }
