@@ -161,7 +161,7 @@ public class Individuo {
 				}*/
 				char caracterDeco = this.claveDescifrado.get(caracter);
 				//char caracterDeco = caracter;
-				
+
 				sb.append(caracterDeco);
 				word.append(caracterDeco);
 				j = sb.length();
@@ -171,22 +171,22 @@ public class Individuo {
 				//this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/((Math.log(tamTextoAyuda)/Math.log(2))*3);
 				
 				if (j > 1) {
-					this.fitness += this.ngramas.frecuenciaBigramas.get(sb.substring(j - 2, j))*0.1;
+					this.fitness += this.ngramas.frecuenciaBigramas.get(sb.substring(j - 2, j))/((Math.log(tamTextoAyuda)/Math.log(2))*2);
 				}
 				if (j > 2) {
 					
 					if (this.ngramas.frecuenciaTrigramas.containsKey(sb.substring(j - 3, j))) {
-						this.fitness += this.ngramas.frecuenciaTrigramas.get(sb.substring(j - 3, j)) * 0.3;
+						this.fitness += this.ngramas.frecuenciaTrigramas.get(sb.substring(j - 3, j)) /((Math.log(tamTextoAyuda)/Math.log(2))*2);
 					}
 				}
 				if (j > 3) {
 					if (this.ngramas.frecuenciaCuadragramas.containsKey(sb.substring(j - 4, j))) {
-						this.fitness += this.ngramas.frecuenciaCuadragramas.get(sb.substring(j - 4, j)) * 0.6;
+						this.fitness += this.ngramas.frecuenciaCuadragramas.get(sb.substring(j - 4, j))/((Math.log(tamTextoAyuda)/Math.log(2)));
 					}
 				}
 				if (j > 4) {
 					if (this.ngramas.frecuenciaQuintagramas.containsKey(sb.substring(j - 5, j))) {
-						this.fitness += this.ngramas.frecuenciaQuintagramas.get(sb.substring(j - 5, j));
+						this.fitness += this.ngramas.frecuenciaQuintagramas.get(sb.substring(j - 5, j)) /((Math.log(tamTextoAyuda)/Math.log(2)));
 					}
 				}
 				
@@ -287,5 +287,15 @@ public class Individuo {
 	
 	public double getFitnessRanking() {
 		return this.fitness_ranking;
+	}
+	
+	public StringBuilder getCromosomaLetra() {
+		StringBuilder cromosoma = new StringBuilder();
+		for(int i = 0; i < this.cromosoma.size(); i++) {
+			Character letra = (char) (this.cromosoma.get(i) + this.initLetter);
+			cromosoma.append(Character.toLowerCase(letra) + " ");
+		}
+		
+		return cromosoma;
 	}
 }

@@ -132,11 +132,12 @@ public class panelPrincipal {
 		text_panel.add(scrollPane);
 		
 		JTextArea texto_traducido = new JTextArea();
-		texto_traducido.setBounds(578, 31, 370, 273);
-		text_panel.add(texto_traducido);
+		JScrollPane scrollPane_traducido = new JScrollPane(texto_traducido);
+		scrollPane_traducido.setBounds(578, 31, 370, 273);
 		graph_panel.setLayout(null);
 		texto_traducido.setBorder(BorderFactory.createLineBorder(Color.black));
 		texto_traducido.setLineWrap(true);
+		text_panel.add(scrollPane_traducido);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		gr_texto1 = new graficas();
@@ -152,24 +153,38 @@ public class panelPrincipal {
 		solution_panel.setLayout(null);
 		
 		JLabel lblNewLabel_6 = new JLabel("Mejor Respuesta");
-		lblNewLabel_6.setBounds(106, 21, 64, 13);
+		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_6.setBounds(10, 25, 267, 13);
 		solution_panel.add(lblNewLabel_6);
 		
-		JLabel lblNewLabel_7 = new JLabel("Fitness = 000000");
-		lblNewLabel_7.setBounds(106, 56, 64, 13);
-		solution_panel.add(lblNewLabel_7);
+		JLabel lbl_fitness = new JLabel("Fitness = ");
+		lbl_fitness.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_fitness.setBounds(10, 61, 267, 13);
+		solution_panel.add(lbl_fitness);
 		
 		JLabel lblNewLabel_8 = new JLabel("a b c d e f g h i j k l m n o p q r s t u v w x y z ");
-		lblNewLabel_8.setBounds(20, 101, 222, 13);
+		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_8.setBounds(10, 126, 267, 13);
 		solution_panel.add(lblNewLabel_8);
 		
 		JLabel lblNewLabel_9 = new JLabel("______________________________");
-		lblNewLabel_9.setBounds(46, 124, 186, 13);
+		lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_9.setBounds(10, 154, 267, 13);
 		solution_panel.add(lblNewLabel_9);
 		
-		JLabel lblNewLabel_8_1 = new JLabel("a b c d e f g h i j k l m n o p q r s t u v w x y z ");
-		lblNewLabel_8_1.setBounds(20, 147, 222, 13);
-		solution_panel.add(lblNewLabel_8_1);
+		JLabel lbl_cromosoma = new JLabel("");
+		lbl_cromosoma.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_cromosoma.setBounds(10, 177, 267, 13);
+		solution_panel.add(lbl_cromosoma);
+		
+		JLabel label = new JLabel("New label");
+		label.setBounds(105, 84, 45, 0);
+		solution_panel.add(label);
+		
+		JLabel lbl_mejorGeneracion = new JLabel("Generacion: ");
+		lbl_mejorGeneracion.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_mejorGeneracion.setBounds(20, 93, 257, 13);
+		solution_panel.add(lbl_mejorGeneracion);
 		control_panel.setLayout(null);
 		
 		JLabel label_n = new JLabel("Tama\u00F1o Poblacion");
@@ -282,6 +297,10 @@ public class panelPrincipal {
 				//AlgoritmoGenetico ag = new AlgoritmoGenetico();
 				AG.startAlgorithm();
 				actualizaPlots(Integer.parseInt(tf_generaciones.getText()), AG.getArrayMejorAbsoluto(), AG.getMejorFitnessGeneracion(), AG.getMediaFitnessGeneracion(), AG.getPresionSelectivaArray());
+				lbl_fitness.setText("Fitness = " + AG.getMejorFitnessAbsoluto());
+				lbl_cromosoma.setText(AG.getMejorCromosomaAbsoluto().toString());
+				texto_traducido.setText(AG.getMejorFenotipoAbsoluto().toString());
+				lbl_mejorGeneracion.setText("Generacion: " + AG.getMejorGeneracion());
 			}
 		});
 		

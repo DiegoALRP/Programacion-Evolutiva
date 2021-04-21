@@ -47,11 +47,12 @@ public class AlgoritmoGenetico {
 	private ArrayList<Individuo> elite;
 	private HashMap<Individuo, Double> plebe;
 	private int generacionActual;
+	private int mejorGeneracion;
 	
 	/** Individuo **/
 	//Mejor Individuo Absoluto
 	private Individuo mejorIndividuoAbsoluto;
-	private ArrayList<Integer> mejorCromosomaAbsoluto;
+	private String mejorCromosomaAbsoluto;
 	private StringBuilder mejorFenotipoAbsoluto;
 	private double mejorFitnessAbsoluto;
 	private double[] arrayMejorAbsoluto;
@@ -274,6 +275,8 @@ public class AlgoritmoGenetico {
 			if (fitness > mejorGeneracion) {
 				mejorGeneracion = fitness;
 				mejorIndividuo = ind;
+				this.mejorGeneracion = this.generacionActual;
+				
 			}
 			//Peor Generacion
 			if (fitness < peorGeneracion) {
@@ -301,7 +304,7 @@ public class AlgoritmoGenetico {
 			this.arrayMejorAbsoluto[generacionActual] = mejorGeneracion;
 			this.mejorFitnessAbsoluto = mejorGeneracion;
 			
-			this.mejorCromosomaAbsoluto = new ArrayList<Integer>(mejorIndividuo.getCromosoma());
+			this.mejorCromosomaAbsoluto = mejorIndividuo.getCromosomaLetra().toString();
 			this.mejorFenotipoAbsoluto = new StringBuilder(mejorIndividuo.getFenotipe());
 			this.mejorFitnessAbsoluto = mejorGeneracion;
 			
@@ -512,7 +515,7 @@ public class AlgoritmoGenetico {
 		return mejorIndividuoAbsoluto;
 	}
 
-	public ArrayList<Integer> getMejorCromosomaAbsoluto() {
+	public String getMejorCromosomaAbsoluto() {
 		return mejorCromosomaAbsoluto;
 	}
 
@@ -562,6 +565,10 @@ public class AlgoritmoGenetico {
 	
 	public double[] getPresionSelectivaArray() {
 		return presionSelectivaArray;
+	}
+	
+	public String getMejorGeneracion() {
+		return "" + this.mejorGeneracion;
 	}
 
 }

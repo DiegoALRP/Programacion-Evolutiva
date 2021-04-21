@@ -1,5 +1,6 @@
 package interfaz;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import org.math.plot.*;
@@ -40,7 +41,7 @@ public class graficas {
 		plot.addLinePlot("Mejor absoluto", x, mejorAbsoluto);
 		plot.addLinePlot("Mejor generacion", x, mejorGeneracion);
 		plot.addLinePlot("Media generacion", x, mediaGeneracion);
-		plot.addLinePlot("Presion selectiva", x, presionSelectiva);
+		plot.addLinePlot("Presion selectiva", Color.black, x, presionSelectiva);
 
 		
 		
