@@ -141,6 +141,20 @@ public class Individuo {
 	
 	public double calculateFitness() {
 		
+		if (tamTexto > 160) {
+			
+			this.firstFitness();
+		}
+		else {
+			
+			this.secondFitness();
+		}
+		
+		return this.fitness;
+	}
+	
+	private void firstFitness() {
+		
 		StringBuilder sb = new StringBuilder();
 		StringBuilder word = new StringBuilder();
 		this.decodifica();
@@ -153,14 +167,7 @@ public class Individuo {
 			
 			if (this.isAZ(caracter)) {
 				
-				/*if (!this.claveDescifrado.containsKey(caracter)) {
-					
-					System.out.println("!!!EPA!!!: " + caracter);
-					System.out.println("Des: " + this.claveDescifrado);
-					System.out.println("Crom: " + this.cromosoma);
-				}*/
 				char caracterDeco = this.claveDescifrado.get(caracter);
-				//char caracterDeco = caracter;
 
 				sb.append(caracterDeco);
 				word.append(caracterDeco);
@@ -198,20 +205,73 @@ public class Individuo {
 				
 				if (this.ngramas.frecuenciaPalabras.containsKey(word.toString()) && word.length() > 1) {
 					this.fitness += this.ngramas.frecuenciaPalabras.get(word.toString()) * (word.length() * 2);
-					//this.fitness += word.length();
 				}
 				word = new StringBuilder();
 			}
 		}
 		
-		//if (this.fitness < 0) {
-		//	this.fitness = 0;
-		//}
-		//System.out.println("Fitness sin division: " + this.fitness);
 		this.fitness = this.fitness/Math.log10(this.tamTextoAyuda);
-		//System.out.println("Fitness con division: " + this.fitness);
+	}
+	
+	private void secondFitness() {
 		
-		return this.fitness;
+		StringBuilder sb = new StringBuilder();
+		StringBuilder word = new StringBuilder();
+		this.decodifica();
+		
+		this.fitness = 0;
+		int j = 0;
+		for (int i = 0; i < this.textoAyuda.length(); i++) {
+			
+			char caracter = Character.toUpperCase(this.textoAyuda.charAt(i));
+			
+			if (this.isAZ(caracter)) {
+				
+				char caracterDeco = this.claveDescifrado.get(caracter);
+
+				sb.append(caracterDeco);
+				word.append(caracterDeco);
+				j = sb.length();
+				
+				/**ganadora */
+				if (j > 1) {
+					this.fitness += this.ngramas.frecuenciaBigramas.get(sb.substring(j - 2, j))/((Math.log(tamTextoAyuda)/Math.log(2))*2);
+				}
+				if (j > 2) {
+					
+					if (this.ngramas.frecuenciaTrigramas.containsKey(sb.substring(j - 3, j))) {
+						this.fitness += this.ngramas.frecuenciaTrigramas.get(sb.substring(j - 3, j)) /((Math.log(tamTextoAyuda)/Math.log(2))*2);
+					}
+				}
+				if (j > 3) {
+					if (this.ngramas.frecuenciaCuadragramas.containsKey(sb.substring(j - 4, j))) {
+						this.fitness += this.ngramas.frecuenciaCuadragramas.get(sb.substring(j - 4, j))/((Math.log(tamTextoAyuda)/Math.log(2)));
+					}
+				}
+				if (j > 4) {
+					if (this.ngramas.frecuenciaQuintagramas.containsKey(sb.substring(j - 5, j))) {
+						this.fitness += this.ngramas.frecuenciaQuintagramas.get(sb.substring(j - 5, j)) /((Math.log(tamTextoAyuda)/Math.log(2)));
+					}
+				}
+			}
+			else {
+				
+				if (word.toString() == "woodchuck" || word.toString() == "wood") {
+					System.out.println("!!!!!!!!!!!!!!!!!!!!!");
+					this.fitness += 100;
+				}
+				if (word.toString() == "chuck") {
+					System.out.println("???????????????????");
+					this.fitness += 50;
+				}
+				if (this.ngramas.frecuenciaPalabras.containsKey(word.toString()) && word.length() > 1) {
+					this.fitness += this.ngramas.frecuenciaPalabras.get(word.toString()) * (word.length()*5);
+				}
+				word = new StringBuilder();
+			}
+		}
+		
+		//this.fitness = this.fitness/Math.log(this.tamTextoAyuda);
 	}
 	
 	private boolean isAZ(int caracter) {

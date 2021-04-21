@@ -45,7 +45,7 @@ public class AlgoritmoGenetico {
 	
 	private ArrayList<Individuo> poblacion;
 	private ArrayList<Individuo> elite;
-	private HashMap<Individuo, Double> plebe;
+	private ArrayList<Individuo> plebe;
 	private int generacionActual;
 	private int generacionSolucion;
 	
@@ -78,7 +78,7 @@ public class AlgoritmoGenetico {
 	//Apocalipsis
 	private boolean apocalipsis;
 	private int contadorApocalipsis;
-	private final int numGeneracionesApocalipsis = 15;
+	private final int numGeneracionesApocalipsis = 50;
 	
 	/**************************** CONSTRUCTOR *******************************/
 	public AlgoritmoGenetico() {
@@ -153,6 +153,13 @@ public class AlgoritmoGenetico {
 		
 		this.apocalipsis = apocalipsis;
 		
+		if (claseTexto.getTextoOriginal().length() < 160) {
+			
+			this.porcCruce *= 2;
+			this.porcMutacion *= 2;
+		}
+		
+		System.out.println(claseTexto.getTextoOriginal().length()+"!!!!");
 		System.out.println(claseTexto.getTextoOriginal());
 		System.out.println(claseTexto.getTextoAyuda());
 		this.inicializaVariables();
@@ -177,9 +184,9 @@ public class AlgoritmoGenetico {
 			
 			System.out.println("Feno: " + this.mejorFenotipoGeneracion[generacionActual]);
 			System.out.println("Fitness: " + this.mejorFitnessGeneracion[generacionActual]);
-			/*System.out.println("Presion: " + this.presionSelectivaArray[generacionActual]);
+			System.out.println("Presion: " + this.presionSelectivaArray[generacionActual]);
 			System.out.println("Media: " + this.mediaFitnessGeneracion[generacionActual]);
-			System.out.println("Peor: " + this.peorFitnessGeneracion[generacionActual]);*/
+			System.out.println("Peor: " + this.peorFitnessGeneracion[generacionActual]);
 			
 			if (this.apocalipsis) {
 				this.apocalipsis();
@@ -338,7 +345,7 @@ public class AlgoritmoGenetico {
 			
 			fitness = ind.calculateFitness();
 			
-			if (fitness >= (menorFitness - (20*this.presionSelecitiva+Math.log(generacionActual))) && fitness <= (mayorFitness + (20*this.presionSelecitiva+Math.log(generacionActual)))) {
+			if (fitness >= (menorFitness - (15*this.presionSelecitiva+Math.log(generacionActual))) && fitness <= (mayorFitness + (15*this.presionSelecitiva+Math.log(generacionActual)))) {
 				
 				array.add(ind);
 				
@@ -430,7 +437,7 @@ public class AlgoritmoGenetico {
 		int numPlebe = numElite*2;
 		
 		this.elite = new ArrayList<Individuo>(numElite);
-		this.plebe = new HashMap<Individuo, Double>(numPlebe);
+		this.plebe = new ArrayList<Individuo>(numPlebe);
 		
 		ArrayList<Individuo> poblacionAuxiliar = new ArrayList<Individuo>(this.poblacion);
 		Collections.sort(poblacionAuxiliar, new Comparator<Individuo>() {
@@ -448,15 +455,14 @@ public class AlgoritmoGenetico {
 		}
 		for (int i = 0; i < numPlebe; i++) {
 			
-			//Individuo ind = poblacionAuxiliar.get(tamPoblacion/2 - i - 1);
-			Individuo ind = poblacionAuxiliar.get(i);
-			plebe.put(ind, ind.getFitness());
+			//Individuo ind = poblacionAuxiliar.get(tamPoblacion - i - 1);
+			plebe.add(poblacionAuxiliar.get(tamPoblacion - i - 1));
 		}
 	}
 	
 	public void reintroduceElite() {
 		
-		int numElite = (int) Math.floor(this.tamPoblacion*this.porcElite);
+		int numElite = (int) Math.ceil(this.tamPoblacion*this.porcElite);
 		HashSet<Integer> indexAdded = new HashSet<Integer>(numElite);
 		int numAdded = 0;
 		int index;
@@ -486,27 +492,24 @@ public class AlgoritmoGenetico {
 			}
 		}
 		
-		for (Map.Entry<Individuo, Double> ind : this.plebe.entrySet()) {
+		for (Individuo indPlebe : this.plebe) {
 			
-			double oldFitness = ind.getValue();
-			double newFitness = ind.getKey().getFitness();
-			//System.out.println(ind);
-			//System.out.println(ind.getKey());
-			//System.out.println(ind.getKey().getCromosoma());
+			index = rand.nextInt(this.tamPoblacion);
+			while (indexAdded.contains(index)) {
+				
+				index = rand.nextInt(this.tamPoblacion);
+			}
 			
-			for (Individuo indP : this.poblacion) {
+			indexAdded.add(index);
+			
+			double fitnessPlebe = indPlebe.getFitness();
+			Individuo indComparado = this.poblacion.get(index);
+			double fitnessComparado = indComparado.getFitness();
+			
+			if (fitnessPlebe > fitnessComparado) {
 				
-				if (indP.equals(ind.getKey())) {
-					System.out.println("!!!");
-				}
-			}
-			if (this.poblacion.contains(ind.getKey())) {
-				System.out.println("SI");
-			}
-			if (newFitness < oldFitness) {
-				
-				Individuo newInd = ind.getKey();
-				newInd = new Individuo(claseTexto, ngramas);
+				indComparado.setCromosoma(indPlebe.getCromosoma());
+				//System.out.println("\n Plebenho al ATAQUE!!!!");
 			}
 		}
 	}
