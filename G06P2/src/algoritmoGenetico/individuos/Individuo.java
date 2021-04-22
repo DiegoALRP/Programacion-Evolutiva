@@ -197,14 +197,14 @@ public class Individuo {
 					}
 				}
 				
-				/*if (this.ngramas.frecuenciaPalabras.containsKey(word.toString())) {
+				if (this.ngramas.frecuenciaPalabras.containsKey(word.toString())) {
 					this.fitness += this.ngramas.frecuenciaPalabras.get(word.toString()) * (Math.log(word.length()));
-				}*/
+				}
 			}
 			else {
 				
 				if (this.ngramas.frecuenciaPalabras.containsKey(word.toString()) && word.length() > 1) {
-					this.fitness += this.ngramas.frecuenciaPalabras.get(word.toString()) * (word.length() * 2);
+					this.fitness += this.ngramas.frecuenciaPalabras.get(word.toString()) * (word.length());
 				}
 				word = new StringBuilder();
 			}

@@ -30,7 +30,7 @@ public class MutacionHeuristica extends Mutacion {
 		int lonCromo = cromosoma.size();
 		
 		Random rand = new Random();
-		n = rand.nextInt(3) + 2;
+		n = rand.nextInt(2) + 2;
 		
 		HashSet<Integer> posiciones = new HashSet<Integer>(n);
 		
@@ -51,7 +51,7 @@ public class MutacionHeuristica extends Mutacion {
 	
 	private void permutacion(HashSet<Integer> posiciones, HashSet<Integer> set, ArrayList<Integer> orden, int i) {
 		
-		Iterator<Integer> it = set.iterator();
+		//Iterator<Integer> it = set.iterator();
 		for (int pos : set) {
 			
 			HashSet<Integer> copySet = new HashSet<Integer>(set);

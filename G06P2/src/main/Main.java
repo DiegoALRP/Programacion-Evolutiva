@@ -31,12 +31,25 @@ public class Main {
 			}
 		});
 		
-		/*double start = System.currentTimeMillis();
+		/*NGramas ngrama = new NGramas();
+		ngrama.loadHashs();
 		
-		AlgoritmoGenetico ag = new AlgoritmoGenetico();
-		ag.startAlgorithm();
+		double mediaMejorFitness = 0;
+		int numIter = 30;
+		for (int i = 0; i < numIter; i++) {
+			
+			System.out.println("\n ITERACION: " + (i + 1));
+			double start = System.currentTimeMillis();
+			
+			AlgoritmoGenetico ag = new AlgoritmoGenetico(ngrama, true, true);
+			ag.startAlgorithm();
+			
+			double end = System.currentTimeMillis() - start;
+			System.out.println("Time: " + end);
+			mediaMejorFitness += ag.getMejorFitnessAbsoluto();
+		}
 		
-		double end = System.currentTimeMillis() - start;
-		System.out.println("Time: " + end);*/
+		mediaMejorFitness = mediaMejorFitness/numIter;
+		System.out.println("Media: " + mediaMejorFitness);*/
 	}
 }

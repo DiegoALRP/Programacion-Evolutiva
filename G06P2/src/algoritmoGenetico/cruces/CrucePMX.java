@@ -55,22 +55,35 @@ public class CrucePMX extends Cruce {
 		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Integer> cromoPadre2 = padre2.getCromosoma();
 		
-		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>();
-		cromoPadre1Aux.addAll(cromoPadre1);
+		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>(26);
+		//cromoPadre1Aux.addAll(cromoPadre1);
 		
-		ArrayList<Integer> cromoPadre2Aux = new ArrayList<Integer>();
-		cromoPadre2Aux.addAll(cromoPadre2);
+		ArrayList<Integer> cromoPadre2Aux = new ArrayList<Integer>(26);
+		//cromoPadre2Aux.addAll(cromoPadre2);
 		
-		ArrayList<Integer> cromoHijo1 = new ArrayList<Integer>();
-		cromoHijo1.addAll(cromoPadre1Aux);
+		ArrayList<Integer> cromoHijo1 = new ArrayList<Integer>(26);
+		//cromoHijo1.addAll(cromoPadre1Aux);
 		HashSet<Integer> setHijo1 = new HashSet<Integer>(26);
 
-		ArrayList<Integer> cromoHijo2 = new ArrayList<Integer>();
-		cromoHijo2.addAll(cromoPadre2Aux);
+		ArrayList<Integer> cromoHijo2 = new ArrayList<Integer>(26);
+		//cromoHijo2.addAll(cromoPadre2Aux);
 		HashSet<Integer> setHijo2 = new HashSet<Integer>(26);
 		
-		ArrayList<Integer> cromoHijo1Aux = new ArrayList<>();
+		ArrayList<Integer> cromoHijo1Aux = new ArrayList<Integer>();
 		ArrayList<Integer> cromoHijo2Aux = new ArrayList<Integer>();
+		
+		int a;
+		int b;
+		for (int i = 0; i < longCromosoma; i++) {
+			
+			a = cromoPadre1.get(i);
+			b = cromoPadre2.get(i);
+			
+			cromoPadre1Aux.add(a);
+			cromoPadre2Aux.add(b);
+			cromoHijo1.add(a);
+			cromoHijo2.add(b);
+		}
 		
 		int longi = this.punto1;
 		int added1 = 0, added2 = 0;
