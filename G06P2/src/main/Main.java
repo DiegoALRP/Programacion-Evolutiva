@@ -34,8 +34,9 @@ public class Main {
 		/*NGramas ngrama = new NGramas();
 		ngrama.loadHashs();
 		
+		double startTotal = System.currentTimeMillis();
 		double mediaMejorFitness = 0;
-		int numIter = 30;
+		int numIter = 1;
 		for (int i = 0; i < numIter; i++) {
 			
 			System.out.println("\n ITERACION: " + (i + 1));
@@ -47,8 +48,10 @@ public class Main {
 			double end = System.currentTimeMillis() - start;
 			System.out.println("Time: " + end);
 			mediaMejorFitness += ag.getMejorFitnessAbsoluto();
-		}
-		
+		}*/
+		/*
+		double endTotal = System.currentTimeMillis() - startTotal;
+		System.out.println("Time: " + (endTotal/numIter));
 		mediaMejorFitness = mediaMejorFitness/numIter;
 		System.out.println("Media: " + mediaMejorFitness);*/
 	}
