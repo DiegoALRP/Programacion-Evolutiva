@@ -20,6 +20,7 @@ public class Texto {
 	/**************************** ATRIBUTTES *******************************/
 	protected StringBuilder textoOriginal;
 	protected StringBuilder textoAyuda;
+	protected int puntoMedio;
 	
 	/**************************** CONSTRUCTOR *******************************/
 	
@@ -27,6 +28,7 @@ public class Texto {
 		
 		this.textoOriginal = textoOriginal;
 		this.textoAyuda = textoAyuda;
+		this.calculaPuntoMedio();
 	}
 	/***************************** METHODS ********************************/
 	/**************************** GET & SET ********************************/
@@ -37,5 +39,22 @@ public class Texto {
 	public StringBuilder getTextoAyuda() {
 		
 		return this.textoAyuda;
+	}
+	
+	private void calculaPuntoMedio() {
+		
+		int i = (this.textoAyuda.length()/2);
+		boolean encontrado = false;
+		while (i < this.textoAyuda.length() && !encontrado) {
+			
+			int caracter = (int) Character.toLowerCase(textoAyuda.charAt(i));
+			if (caracter < 97 || caracter > 122) {
+				
+				this.puntoMedio = i + 1;
+				//System.out.println("Punto Medio: " + this.puntoMedio);
+				encontrado = true;
+			}
+			i++;
+		}
 	}
 }
