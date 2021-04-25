@@ -125,7 +125,7 @@ public class AlgoritmoGenetico {
 	
 	public AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, Seleccion metodoSeleccion, 
 			Cruce metodoCruce, double porcCruce, Mutacion metodoMutacion, double porcMutacion, double porcElite,
-			NGramas ngramas, Texto claseTexto, boolean apocalipsis) {
+			NGramas ngramas, Texto claseTexto, boolean apocalipsis, boolean desastre) {
 		
 		this.tamPoblacion = tamPoblacion;
 		this.numGeneraciones = numGeneraciones;
@@ -140,7 +140,7 @@ public class AlgoritmoGenetico {
 		this.claseTexto = claseTexto;
 		
 		this.apocalipsis = apocalipsis;
-		
+		this.desastre = desastre;
 		if (claseTexto.getTextoOriginal().length() < 160) {
 			
 			this.porcCruce *= 2;

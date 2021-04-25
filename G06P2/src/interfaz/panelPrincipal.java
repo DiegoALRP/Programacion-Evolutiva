@@ -245,7 +245,7 @@ public class panelPrincipal {
 		control_panel.add(labrl_mutacion);
 		
 		JComboBox comboBox_mutacion = new JComboBox();
-		comboBox_mutacion.setModel(new DefaultComboBoxModel(new String[] {"Inserci\u00F3n", "Intercambio", "Inversi\u00F3n", "Heur\u00EDstica"}));
+		comboBox_mutacion.setModel(new DefaultComboBoxModel(new String[] {"Inserci\u00F3n", "Intercambio", "Inversi\u00F3n", "Heur\u00EDstica", "Intercambio doble", "Incremento"}));
 		comboBox_mutacion.setBounds(101, 235, 85, 21);
 		control_panel.add(comboBox_mutacion);
 		
@@ -259,7 +259,7 @@ public class panelPrincipal {
 		control_panel.add(ejecutar);
 		
 		JCheckBox apocalipsisBox = new JCheckBox("Apocalipsis");
-		apocalipsisBox.setBounds(101, 282, 102, 21);
+		apocalipsisBox.setBounds(26, 282, 102, 21);
 		control_panel.add(apocalipsisBox);
 		
 		JLabel lblNewLabel = new JLabel("%");
@@ -273,6 +273,10 @@ public class panelPrincipal {
 		JLabel lblNewLabel_2 = new JLabel("%");
 		lblNewLabel_2.setBounds(243, 239, 26, 13);
 		control_panel.add(lblNewLabel_2);
+		
+		JCheckBox desastreBox = new JCheckBox("Desastre Natural");
+		desastreBox.setBounds(137, 282, 132, 21);
+		control_panel.add(desastreBox);
 		frame.getContentPane().setLayout(groupLayout);
 		
 		ejecutar.addActionListener(new ActionListener() {
@@ -293,7 +297,7 @@ public class panelPrincipal {
 				
 				claseTexto = new Texto(textoOriginal, textoAyuda);
 				AlgoritmoGenetico  AG = new AlgoritmoGenetico(n, numGeneraciones, metodoSeleccion, metodoCruce, probCruce, 
-						metodoMutacion, probMutacion, elite, ngramas, claseTexto, apocalipsisBox.isSelected());
+						metodoMutacion, probMutacion, elite, ngramas, claseTexto, apocalipsisBox.isSelected(), desastreBox.isSelected());
 				//AlgoritmoGenetico ag = new AlgoritmoGenetico();
 				AG.startAlgorithm();
 				actualizaPlots(Integer.parseInt(tf_generaciones.getText()), AG.getArrayMejorAbsoluto(), AG.getMejorFitnessGeneracion(), AG.getMediaFitnessGeneracion(), AG.getPresionSelectivaArray());
@@ -301,6 +305,7 @@ public class panelPrincipal {
 				lbl_cromosoma.setText(AG.getMejorCromosomaAbsoluto().toString());
 				texto_traducido.setText(AG.getMejorFenotipoAbsoluto().toString());
 				lbl_mejorGeneracion.setText("Generacion: " + AG.getMejorGeneracion());
+				
 			}
 		});
 		

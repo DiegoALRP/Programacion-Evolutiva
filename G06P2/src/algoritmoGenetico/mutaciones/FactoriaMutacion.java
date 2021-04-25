@@ -47,6 +47,10 @@ public class FactoriaMutacion {
 				return new MutacionInversion();
 			case "Heuristica":
 				return new MutacionHeuristica();
+			case "Intercambio doble":
+				return new MutacionIntercambioDoble();
+			case "Incremento":
+				return new MutacionIncremento();
 			default:
 				return new MutacionInsersion();
 		}

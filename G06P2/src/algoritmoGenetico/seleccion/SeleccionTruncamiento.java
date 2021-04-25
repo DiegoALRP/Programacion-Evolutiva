@@ -39,7 +39,8 @@ public class SeleccionTruncamiento extends Seleccion{
 		}
 		
 		if(seleccionados.size() < poblacion.size()) {		// añadir restantes si procede
-			for(int i = 0; i < poblacion.size() - seleccionados.size(); i++) {
+			int sel = seleccionados.size();
+			for(int i = 0; i < poblacion.size() - sel ; i++) {
 				nuevo = poblacion.get(i);
 				addIndividuo(seleccionados, nuevo);
 			}
