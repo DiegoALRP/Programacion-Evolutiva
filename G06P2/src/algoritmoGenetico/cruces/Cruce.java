@@ -12,7 +12,7 @@ import algoritmoGenetico.individuos.Individuo;
  * Profesor:
  * 	-Carlos Cervigon Ruckauer.
  * 
- * Clase Cruce.
+ * Clase Abstracta Cruce.
  * 
  * @author 
  * Grupo G06:
@@ -20,7 +20,6 @@ import algoritmoGenetico.individuos.Individuo;
  * 	-Diego Alejandro Rodríguez Pereira.
  *
  */
-
 public abstract class Cruce {
 
 	
@@ -89,7 +88,9 @@ public abstract class Cruce {
 	}
 	
 	protected abstract void cruzaPadres(Individuo padre1, Individuo padre2);
-	/**************************** GET & SET ********************************/
+	
+	
+	/**************************** GETTERS & SETTERS ********************************/
 	
 	public int getNumCruces() {
 		return this.numCruce;
