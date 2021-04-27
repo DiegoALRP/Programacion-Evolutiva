@@ -40,5 +40,6 @@ public class MutacionIntercambio extends Mutacion {
 		int aux = cromosoma.get(i);
 		cromosoma.set(i, cromosoma.get(j));
 		cromosoma.set(j, aux);
+		individuo.avisoCromoModificado();
 	}
 }

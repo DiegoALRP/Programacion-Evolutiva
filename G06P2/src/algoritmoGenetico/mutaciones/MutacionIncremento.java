@@ -19,6 +19,8 @@ public class MutacionIncremento extends Mutacion {
 			aux = cromosoma.get(i);
 			cromosoma.set(i, Math.floorMod((aux + incremento), 26));
 		}
+		
+		individuo.avisoCromoModificado();
 	}
 
 }

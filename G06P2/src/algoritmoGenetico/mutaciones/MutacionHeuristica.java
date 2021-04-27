@@ -47,6 +47,8 @@ public class MutacionHeuristica extends Mutacion {
 		ArrayList<Integer> orden = new ArrayList<Integer>(n);
 		
 		permutacion(posiciones, posiciones, orden, 0);
+		
+		individuo.setCromosoma(mejorIndividuo.getCromosoma());
 	}
 	
 	private void permutacion(HashSet<Integer> posiciones, HashSet<Integer> set, ArrayList<Integer> orden, int i) {

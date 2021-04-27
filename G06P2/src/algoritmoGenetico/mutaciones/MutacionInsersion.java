@@ -37,6 +37,7 @@ public class MutacionInsersion extends Mutacion {
 		}
 		
 		cromosoma.set(j, cromosomaAux.get(i));
+		individuo.avisoCromoModificado();
 	}
 
 }

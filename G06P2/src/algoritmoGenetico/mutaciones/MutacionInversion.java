@@ -31,6 +31,8 @@ public class MutacionInversion extends Mutacion {
 			
 			cromosoma.set(k, cromosomaAux.get(j - k + i));
 		}
+		
+		individuo.avisoCromoModificado();
 	}
 
 }

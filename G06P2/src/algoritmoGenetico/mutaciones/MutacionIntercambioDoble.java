@@ -57,6 +57,8 @@ public class MutacionIntercambioDoble extends Mutacion {
 		cromosoma.set(b, aux1);
 		cromosoma.set(c, cromosoma.get(d));
 		cromosoma.set(d, aux2);
+		
+		individuo.avisoCromoModificado();
 	}
 
 }
