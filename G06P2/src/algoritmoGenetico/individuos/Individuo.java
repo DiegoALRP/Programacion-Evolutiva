@@ -153,8 +153,8 @@ public class Individuo {
 			if (tamTexto > 160) {
 				
 				
-				//firstFitness();
-				calculaFitnessParalelo();
+				firstFitness();
+				//calculaFitnessParalelo();
 			}
 			else {
 				
@@ -205,14 +205,7 @@ public class Individuo {
 			
 			if (this.isAZ(caracter)) {
 				
-				/*if (!this.claveDescifrado.containsKey(caracter)) {
-					
-					System.out.println("!!!EPA!!!: " + caracter);
-					System.out.println("Des: " + this.claveDescifrado);
-					System.out.println("Crom: " + this.cromosoma);
-				}*/
 				char caracterDeco = this.claveDescifrado.get(caracter);
-				//char caracterDeco = caracter;
 
 				sb.append(caracterDeco);
 				word.append(caracterDeco);
@@ -220,7 +213,6 @@ public class Individuo {
 				
 				/**ganadora */
 				this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/((Math.log(tamTextoAyuda)/Math.log(2))*2);
-				//this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/((Math.log(tamTextoAyuda)/Math.log(2))*3);
 				
 				if (j > 1) {
 					this.fitness += this.ngramas.frecuenciaBigramas.get(sb.substring(j - 2, j))/((Math.log(tamTextoAyuda)/Math.log(2))*2);
@@ -241,16 +233,12 @@ public class Individuo {
 						this.fitness += this.ngramas.frecuenciaQuintagramas.get(sb.substring(j - 5, j)) /((Math.log(tamTextoAyuda)/Math.log(2)));
 					}
 				}
-				
-				/*if (this.ngramas.frecuenciaPalabras.containsKey(word.toString())) {
-					this.fitness += this.ngramas.frecuenciaPalabras.get(word.toString()) * (Math.log(word.length()));
-				}*/
 			}
 			else {
 				
 				if (this.ngramas.frecuenciaPalabras.containsKey(word.toString()) && word.length() > 1) {
-					this.fitness += this.ngramas.frecuenciaPalabras.get(word.toString()) * (word.length() * 2);
-					//this.fitness += word.length();
+					//this.fitness += (this.ngramas.frecuenciaPalabras.get(word.toString()) * (Math.log(word.length())/Math.log(2)))/((Math.log(tamTextoAyuda)/Math.log(2)));
+					this.fitness += (this.ngramas.frecuenciaPalabras.get(word.toString()) * word.length())/((Math.log(tamTextoAyuda)/Math.log(2)));
 				}
 				word = new StringBuilder();
 			}

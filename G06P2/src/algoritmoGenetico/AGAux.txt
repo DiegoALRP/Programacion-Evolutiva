@@ -30,19 +30,19 @@ import algoritmoGenetico.seleccion.SeleccionTorneoProbabilistico;
 
 /**
  * Universidad Complutense de Madrid.
- * Programación Evolutiva.
+ * ProgramaciÃ³n Evolutiva.
  * Grupo A 2021.
  * Profesor:
  * 	-Carlos Cervigon Ruckauer.
  * 
- * Práctica 2
+ * PrÃ¡ctica 2
  * 
- * Clase Algoritmo Genético.
+ * Clase Algoritmo GenÃ©tico.
  * 
  * @author 
  * Grupo G06:
  * 	-Miguel Robledo.
- * 	-Diego Alejandro Rodríguez Pereira.
+ * 	-Diego Alejandro RodrÃ­guez Pereira.
  *
  */
 public class AlgoritmoGenetico {
@@ -103,6 +103,10 @@ public class AlgoritmoGenetico {
 	
 	//Desastre Natural
 	private boolean desastre;
+	private double menorFitnessDN;
+	private double mayorFitnessDN;
+	private ArrayList<Individuo> arrayDesastreNatural;
+	private int numIndDesastreNatural;
 	
 	/**************************** CONSTRUCTOR *******************************/
 	public AlgoritmoGenetico(NGramas ngrama, boolean desastre, boolean plebeBool) {
@@ -171,14 +175,14 @@ public class AlgoritmoGenetico {
 		this.inicializaVariables();
 	}
 	
-	/********************************** METHODS **********************************/
+	/***************************** METHODS ********************************/
 	
 	/**
-	 * [ES] Método principal del algoritmo genético.
-	 * Aquí se ejecutan:
-	 * 	-Selección
+	 * [ES] MÃ©todo principal del algoritmo genÃ©tico.
+	 * AquÃ­ se ejecutan:
+	 * 	-SelecciÃ³n
 	 * 	-Cruce
-	 * 	-Mutación
+	 * 	-MutaciÃ³n
 	 * 	-Elitismo (si procede)
 	 * 	-Desaste Natural (si procede)
 	 *  -Apocalipsis (si procede)
@@ -203,17 +207,11 @@ public class AlgoritmoGenetico {
 			this.metodoCruce.cruza(poblacion, porcCruce);
 			this.metodoMutacion.muta(poblacion, porcMutacion);
 			
-			if (desastre) {
-				this.desastreNatural();
-			}
-			else {
-				this.evaluaFitnessPoblacion();
-			}
 			reintroduceElite();
 			this.evaluaFitnessPoblacion();
 			
-			/*System.out.println("Feno: " + this.mejorFenotipoGeneracion[generacionActual]);
-			System.out.println("Fitness: " + this.mejorFitnessGeneracion[generacionActual]);*/
+			//System.out.println("Feno: " + this.mejorFenotipoGeneracion[generacionActual]);
+			//System.out.println("Fitness: " + this.mejorFitnessGeneracion[generacionActual]);
 			/*System.out.println("Presion: " + this.presionSelectivaArray[generacionActual]);
 			System.out.println("Media: " + this.mediaFitnessGeneracion[generacionActual]);
 			System.out.println("Peor: " + this.peorFitnessGeneracion[generacionActual]);*/
@@ -225,16 +223,17 @@ public class AlgoritmoGenetico {
 		}
 		
 		//imprimeMejor();
+		//System.out.println("NumDesastre: " + numIndDesastreNatural);
 		/*System.out.println("NUMERO DE CRUCES: " + this.metodoCruce.getNumCruces());
 		System.out.println("NUMERO DE MUTACIONES: " + this.metodoMutacion.getNumMutaciones());*/
 		
 	}
 	
 	/**
-	 * [ES] Este metodo evalua el valor de aptitud/fitness de la población.
+	 * [ES] Este metodo evalua el valor de aptitud/fitness de la poblaciÃ³n.
 	 * Para ello primero se actualiza el valor de fitness de cada individuo.
-	 * Una vez actualizado, buscamos el mejor individuo de toda la población.
-	 * Y por último guardamos el valor del mejor individuo en los respectivos 
+	 * Una vez actualizado, buscamos el mejor individuo de toda la poblaciÃ³n.
+	 * Y por Ãºltimo guardamos el valor del mejor individuo en los respectivos 
 	 * atributos de clase. (MejorIndividuoGeneracion, MejorIndividuoAbsoluto, ...)
 	 * 
 	 * [EN] This method evaluates population's fitness value.
@@ -246,6 +245,9 @@ public class AlgoritmoGenetico {
 	 */
 	private void evaluaFitnessPoblacion() {
 		
+		if (desastre) {
+			this.desastreNatural();
+		}
 		double mejorGeneracion = -Double.MAX_VALUE;
 		Individuo mejorIndividuo = null;
 		double peorGeneracion = Double.MAX_VALUE;
@@ -268,6 +270,11 @@ public class AlgoritmoGenetico {
 			}
 			
 			mediaGeneracion += fitness;
+			
+			if (desastre) {
+				
+				this.desastreNaturalAux(ind, fitness);
+			}
 		}
 		
 		this.mejorFitnessGeneracion[generacionActual] = mejorGeneracion;
@@ -309,12 +316,56 @@ public class AlgoritmoGenetico {
 	}
 	
 	/**
-	 * [ES] Desastre natural reinicia individuos que estén consecutivos y
+	 * [ES] Desastre natural reinicia individuos que estÃ©n consecutivos y
 	 * que tengan valores cercanos de fitness.
 	 * Para seleccionar los individuos, se 
 	 * 
 	 */
 	private void desastreNatural() {
+		
+		arrayDesastreNatural = new ArrayList<Individuo>(5);
+		menorFitnessDN = 0;
+		mayorFitnessDN = 0;
+	}
+	
+	private void desastreNaturalAux(Individuo ind, double fitness) {
+		
+		if (fitness >= (menorFitnessDN - (15*this.presionSelecitiva+Math.log(generacionActual))) 
+				&& fitness <= (mayorFitnessDN + (15*this.presionSelecitiva+Math.log(generacionActual)))) {
+			
+			arrayDesastreNatural.add(ind);
+			
+			if (fitness < menorFitnessDN) {
+				
+				menorFitnessDN = fitness;
+			}
+			if (fitness > mayorFitnessDN) {
+				mayorFitnessDN = fitness;
+			}
+		}
+		else {
+			
+			arrayDesastreNatural.clear();
+			menorFitnessDN = fitness;
+			mayorFitnessDN = fitness;
+		}
+		
+		if (arrayDesastreNatural.size() == 4) {
+			
+			Random rand = new Random();
+			for (int i = 0; i < 4; i++) {
+				
+				if (rand.nextBoolean()) {
+					
+					arrayDesastreNatural.get(i).restartCromosome();
+					//System.out.println("RESTART");
+					numIndDesastreNatural++;
+				}
+			}
+		}
+	}
+	
+	private void desastreNatural2() {
 		
 		int contador = 0;
 		
@@ -325,39 +376,6 @@ public class AlgoritmoGenetico {
 		for (Individuo ind : this.poblacion) {
 			
 			fitness = ind.calculateFitness();
-			
-			if (fitness >= (menorFitness - (15*this.presionSelecitiva+Math.log(generacionActual))) && fitness <= (mayorFitness + (15*this.presionSelecitiva+Math.log(generacionActual)))) {
-				
-				array.add(ind);
-				
-				if (fitness < menorFitness) {
-					
-					menorFitness = fitness;
-				}
-				if (fitness > mayorFitness) {
-					mayorFitness = fitness;
-				}
-			}
-			else {
-				
-				array.clear();
-				menorFitness = fitness;
-				mayorFitness = fitness;
-			}
-			
-			if (array.size() == 4) {
-				
-				Random rand = new Random();
-				for (int i = 0; i < 4; i++) {
-					
-					if (rand.nextBoolean()) {
-						
-						array.get(i).restartCromosome();
-						//System.out.println("RESTART");
-						contador++;
-					}
-				}
-			}
 		}
 	}
 	
@@ -410,15 +428,7 @@ public class AlgoritmoGenetico {
 		}
 	}
 	
-	/**
-	 * [ES] Función que genera la élite de la población.
-	 * Recorre toda la población y se queda con los mejores individuos.
-	 * Aquí hemos agregado nuestra propia creación que hemos llamados "La Plebe"
-	 * Es básicamente lo mismo que 
-	 * 
-	 * 
-	 */
-	private void generaElite() {
+	public void generaElite() {
 		
 		int numElite = (int) Math.ceil(this.tamPoblacion*this.porcElite);
 		int numPlebe = numElite*3;
@@ -505,7 +515,7 @@ public class AlgoritmoGenetico {
 	/***************************** AUXILIAR METHODS ********************************/
 	
 	/**
-	 * [ES] Esta función auxiliar inicializa los atributos de la clase.
+	 * [ES] Esta funciÃ³n auxiliar inicializa los atributos de la clase.
 	 * [EN] This auxiliary function initialize the class's attributes.
 	 * 
 	 */
@@ -523,11 +533,13 @@ public class AlgoritmoGenetico {
 		mediaFitnessGeneracion = new double[numGeneraciones];
 		
 		this.presionSelectivaArray = new double[numGeneraciones];
+		
+		numIndDesastreNatural = 0;
 	}
 	
 	/**
-	 * [ES] Inicializa la población, creando tantos nuevos individuos como el
-	 * tamaño de la población.
+	 * [ES] Inicializa la poblaciÃ³n, creando tantos nuevos individuos como el
+	 * tamaÃ±o de la poblaciÃ³n.
 	 * 
 	 * [EN] Initializes the population, creating as many new individual as
 	 * the size of the population.
