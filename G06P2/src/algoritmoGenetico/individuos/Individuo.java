@@ -41,6 +41,8 @@ public class Individuo {
 	protected NGramas ngramas;
 	protected Texto claseTexto;
 	
+	protected boolean cromoModificado;
+	
 	/************************** CONSTANT ATRIBUTTES *****************************/
 	protected final int tam = 26;
 	protected final int initLetter = 65;
@@ -60,6 +62,8 @@ public class Individuo {
 
 		this.ngramas = ngramas;
 		this.claseTexto = claseTexto;
+		
+		this.cromoModificado = true;
 		
 		this.initializeCromosome();
 		
@@ -83,6 +87,8 @@ public class Individuo {
 		
 		this.ngramas = ngramas;
 		this.claseTexto = claseTexto;
+		
+		this.cromoModificado = true;
 		
 		this.calculateFitness();
 	}
@@ -128,6 +134,7 @@ public class Individuo {
 			numSeleccionados.add(num);
 		}
 		
+		this.cromoModificado = true;
 		this.calculateFitness();
 	}
 	
@@ -142,16 +149,20 @@ public class Individuo {
 	
 	public double calculateFitness() {
 		
-		if (tamTexto > 160) {
-			
-			
-			firstFitness();
-			//calculaFitnessParalelo();
+		if (cromoModificado) {
+			if (tamTexto > 160) {
+				
+				
+				//firstFitness();
+				calculaFitnessParalelo();
+			}
+			else {
+				
+				this.secondFitness();
+			}
 		}
-		else {
-			
-			this.secondFitness();
-		}
+		
+		this.cromoModificado = false;
 		
 		return this.fitness;
 	}
@@ -411,6 +422,12 @@ public class Individuo {
 			}
 		}
 	}
+	
+	public void avisoCromoModificado() {
+		
+		this.cromoModificado = true;
+	}
+	
 	/**************************** GET & SET ********************************/
 	public NGramas getNGrama() {
 		
@@ -431,6 +448,7 @@ public class Individuo {
 		
 		this.cromosoma.clear();
 		this.cromosoma.addAll(cromosoma);
+		this.cromoModificado = true;
 	}
 	
 	public String getFenotipe() {
