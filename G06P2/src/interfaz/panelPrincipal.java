@@ -282,7 +282,7 @@ public class panelPrincipal {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				texto_traducido.setText("SE HA TRADUCIDO CORRECTAMENTE");
+				texto_traducido.setText("POR FAVOR SELECCIONA UN TEXTO");
 				int n = Integer.parseInt(tf_n.getText());
 				int numGeneraciones = Integer.parseInt(tf_generaciones.getText());
 				double elite = Double.parseDouble(tf_elite.getText());

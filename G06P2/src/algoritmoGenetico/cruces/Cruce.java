@@ -41,8 +41,8 @@ public abstract class Cruce {
 	/**
 	 * [ES] Esta función se extiende a todas las subclases de la clase cruce. Su función es seleccionar a los
 	 * individuos a cruzar. Cada individuo se selecciona con una probabilidad (la probabilidad de cruce que pasamos
-	 * como parámetro en la función principal). Y almancamos el índice del individuo en un array.
-	 * Este método incluye una variación, y es que no cruca individuos con mismo cromosoma.
+	 * como parámetro en la función principal). Y almacenamos el índice del individuo en un array.
+	 * Este método incluye una variación, y es que no cruza individuos con mismo cromosoma.
 	 * 
 	 * [EN] This function extends to all subclasses of the cruce's class. It's function it's to select the
 	 * individuals to cross. Each individual is selected with a probability (the crossover probability that we pass
