@@ -2,15 +2,33 @@ package algoritmoGenetico.mutaciones;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.NGramas;
 import algoritmoGenetico.individuos.Texto;
 
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Práctica 2
+ * 
+ * Clase Mutación Heurística.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class MutacionHeuristica extends Mutacion {
 
+	
+	/**************************** ATRIBUTTES *******************************/
 	private double mejorFitness;
 	private Individuo mejorIndividuo;
 	private int n;
@@ -18,6 +36,11 @@ public class MutacionHeuristica extends Mutacion {
 	private Texto claseTexto;
 	private NGramas ngramas;
 	
+	
+	/**************************** CONSTRUCTOR ******************************/
+	
+	
+	/***************************** METHODS ********************************/
 	@Override
 	protected void mutaIndividuo(Individuo individuo) {
 		
@@ -53,7 +76,6 @@ public class MutacionHeuristica extends Mutacion {
 	
 	private void permutacion(HashSet<Integer> posiciones, HashSet<Integer> set, ArrayList<Integer> orden, int i) {
 		
-		//Iterator<Integer> it = set.iterator();
 		for (int pos : set) {
 			
 			HashSet<Integer> copySet = new HashSet<Integer>(set);
@@ -92,5 +114,7 @@ public class MutacionHeuristica extends Mutacion {
 			mejorFitness = fitness;
 			mejorIndividuo = ind;
 		}
+		
+		/**************************** GETTERS & SETTERS ********************************/
 	}
 }

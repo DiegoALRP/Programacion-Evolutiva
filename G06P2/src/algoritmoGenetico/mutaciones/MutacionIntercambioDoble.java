@@ -25,6 +25,14 @@ import algoritmoGenetico.individuos.Individuo;
  */
 public class MutacionIntercambioDoble extends Mutacion {
 
+	
+	/**************************** ATRIBUTTES *******************************/
+
+	
+	/**************************** CONSTRUCTOR ******************************/
+	
+	
+	/***************************** METHODS ********************************/
 	@Override
 	protected void mutaIndividuo(Individuo individuo) {
 		
@@ -35,19 +43,19 @@ public class MutacionIntercambioDoble extends Mutacion {
 		HashSet<Integer> puntos = new HashSet<Integer>();
 		int a = rand.nextInt(longCromo);
 		puntos.add(a);
-		int b = rand.nextInt();
+		int b = rand.nextInt(longCromo);
 		while (puntos.contains(b)) {
-			b = rand.nextInt();
+			b = rand.nextInt(longCromo);
 		}
 		puntos.add(b);
-		int c = rand.nextInt();
+		int c = rand.nextInt(longCromo);
 		while (puntos.contains(c)) {
-			c = rand.nextInt();
+			c = rand.nextInt(longCromo);
 		}
 		puntos.add(c);
-		int d = rand.nextInt();
+		int d = rand.nextInt(longCromo);
 		while (puntos.contains(d)) {
-			d = rand.nextInt();
+			d = rand.nextInt(longCromo);
 		}
 		puntos.add(d);
 		
@@ -61,4 +69,6 @@ public class MutacionIntercambioDoble extends Mutacion {
 		individuo.avisoCromoModificado();
 	}
 
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }

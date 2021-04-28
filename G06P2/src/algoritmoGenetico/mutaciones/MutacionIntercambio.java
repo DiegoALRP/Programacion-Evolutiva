@@ -24,6 +24,13 @@ import algoritmoGenetico.individuos.Individuo;
  */
 public class MutacionIntercambio extends Mutacion {
 
+	/**************************** ATRIBUTTES *******************************/
+
+	
+	/**************************** CONSTRUCTOR ******************************/
+	
+	
+	/***************************** METHODS ********************************/
 	@Override
 	protected void mutaIndividuo(Individuo individuo) {
 		
@@ -42,4 +49,7 @@ public class MutacionIntercambio extends Mutacion {
 		cromosoma.set(j, aux);
 		individuo.avisoCromoModificado();
 	}
+	
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }
