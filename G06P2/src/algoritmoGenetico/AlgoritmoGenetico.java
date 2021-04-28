@@ -3,30 +3,18 @@ package algoritmoGenetico;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Random;
 
 import algoritmoGenetico.cruces.Cruce;
-import algoritmoGenetico.cruces.CruceCO;
-import algoritmoGenetico.cruces.CruceCX;
-import algoritmoGenetico.cruces.CruceERX;
-import algoritmoGenetico.cruces.CruceOXPP;
 import algoritmoGenetico.cruces.CrucePMX;
-import algoritmoGenetico.cruces.CrucePorOrden;
 import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.NGramas;
 import algoritmoGenetico.individuos.Texto;
 import algoritmoGenetico.mutaciones.Mutacion;
-import algoritmoGenetico.mutaciones.MutacionHeuristica;
-import algoritmoGenetico.mutaciones.MutacionIncremento;
-import algoritmoGenetico.mutaciones.MutacionInsersion;
 import algoritmoGenetico.mutaciones.MutacionIntercambio;
-import algoritmoGenetico.mutaciones.MutacionInversion;
 import algoritmoGenetico.seleccion.Seleccion;
 import algoritmoGenetico.seleccion.SeleccionTorneo;
-import algoritmoGenetico.seleccion.SeleccionTorneoProbabilistico;
 
 /**
  * Universidad Complutense de Madrid.
@@ -59,7 +47,6 @@ public class AlgoritmoGenetico {
 	
 	private NGramas ngramas;
 	private Texto claseTexto;
-	private StringBuilder texto;
 	
 	private ArrayList<Individuo> poblacion;
 	private ArrayList<Individuo> elite;
@@ -213,8 +200,8 @@ public class AlgoritmoGenetico {
 			this.evaluaFitnessPoblacion();
 			
 			/*System.out.println("Feno: " + this.mejorFenotipoGeneracion[generacionActual]);
-			System.out.println("Fitness: " + this.mejorFitnessGeneracion[generacionActual]);*/
-			/*System.out.println("Presion: " + this.presionSelectivaArray[generacionActual]);
+			System.out.println("Fitness: " + this.mejorFitnessGeneracion[generacionActual]);
+			System.out.println("Presion: " + this.presionSelectivaArray[generacionActual]);
 			System.out.println("Media: " + this.mediaFitnessGeneracion[generacionActual]);
 			System.out.println("Peor: " + this.peorFitnessGeneracion[generacionActual]);*/
 			
@@ -224,8 +211,13 @@ public class AlgoritmoGenetico {
 			this.generacionActual++;
 		}
 		
-		//imprimeMejor();
-		/*System.out.println("NUMERO DE CRUCES: " + this.metodoCruce.getNumCruces());
+		/*System.out.println("Cromosoma: " + this.mejorIndividuoAbsoluto.getCromosomaLetra());
+		System.out.println("FitnessMaximo: " + this.mejorFitnessAbsoluto);
+		System.out.println("PeorFitness: " + this.peorFitnessAbsoluto);
+		this.mediaFitnessTotal = mediaFitnessTotal/2;
+		this.mediaFitnessTotal = mediaFitnessTotal/numGeneraciones;
+		System.out.println("MediaFitness: " + this.mediaFitnessTotal);
+		System.out.println("NUMERO DE CRUCES: " + this.metodoCruce.getNumCruces());
 		System.out.println("NUMERO DE MUTACIONES: " + this.metodoMutacion.getNumMutaciones());*/
 		
 	}
@@ -277,7 +269,7 @@ public class AlgoritmoGenetico {
 		this.mejorIndividuoGeneracion[generacionActual] = new Individuo(claseTexto, ngramas, mejorIndividuo.getCromosoma());
 		
 		this.mediaFitnessGeneracion[generacionActual] = mediaGeneracion/tamPoblacion;
-		this.mediaFitnessTotal += mediaGeneracion/tamPoblacion;
+		this.mediaFitnessTotal += this.mediaFitnessGeneracion[generacionActual];
 		
 		this.presionSelecitiva = mejorGeneracion/(mediaGeneracion/tamPoblacion);
 		this.presionSelectivaArray[generacionActual] = mejorGeneracion/(mediaGeneracion/tamPoblacion);
@@ -316,8 +308,6 @@ public class AlgoritmoGenetico {
 	 */
 	private void desastreNatural() {
 		
-		int contador = 0;
-		
 		ArrayList<Individuo> array = new ArrayList<Individuo>(5);
 		double menorFitness = 0;
 		double mayorFitness = 0;
@@ -353,8 +343,6 @@ public class AlgoritmoGenetico {
 					if (rand.nextBoolean()) {
 						
 						array.get(i).restartCromosome();
-						//System.out.println("RESTART");
-						contador++;
 					}
 				}
 			}
@@ -442,7 +430,6 @@ public class AlgoritmoGenetico {
 		}
 		for (int i = 0; i < numPlebe; i++) {
 			
-			//Individuo ind = poblacionAuxiliar.get(tamPoblacion - i - 1);
 			plebe.add(poblacionAuxiliar.get(tamPoblacion - i - 1));
 		}
 	}
@@ -465,8 +452,6 @@ public class AlgoritmoGenetico {
 			indexAdded.add(index);
 			
 			Individuo eli = this.elite.get(numAdded);
-			//System.out.println(eli.getCromosoma());
-			//double fitnessEli = eli.getFitness();
 			double fitnessEli = eli.calculateFitness();
 			Individuo ple = this.poblacion.get(index);
 			double fitnessPle = ple.getFitness();
@@ -497,7 +482,6 @@ public class AlgoritmoGenetico {
 				
 				indComparado.setCromosoma(indPlebe.getCromosoma());
 				indComparado.calculateFitness();
-				//System.out.println("\n Plebenho al ATAQUE!!!!");
 			}
 		}
 	}
