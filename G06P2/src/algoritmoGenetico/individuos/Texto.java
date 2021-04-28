@@ -17,25 +17,31 @@ package algoritmoGenetico.individuos;
  */
 public class Texto {
 
+	
 	/**************************** ATRIBUTTES *******************************/
 	protected StringBuilder textoOriginal;
 	protected StringBuilder textoAyuda;
 	protected int puntoMedio;
 	
-	/**************************** CONSTRUCTOR *******************************/
 	
+	/**************************** CONSTRUCTOR *******************************/
 	public Texto(StringBuilder textoOriginal, StringBuilder textoAyuda) {
 		
 		this.textoOriginal = textoOriginal;
 		this.textoAyuda = textoAyuda;
 		this.calculaPuntoMedio();
 	}
+	
 	/***************************** METHODS ********************************/
-	/**************************** GET & SET ********************************/
+	
+	
+	
+	/**************************** GETTERS & SETTERS ********************************/
 	public StringBuilder getTextoOriginal() {
 		
 		return this.textoOriginal;
 	}
+	
 	public StringBuilder getTextoAyuda() {
 		
 		return this.textoAyuda;
@@ -51,7 +57,6 @@ public class Texto {
 			if (caracter < 97 || caracter > 122) {
 				
 				this.puntoMedio = i + 1;
-				//System.out.println("Punto Medio: " + this.puntoMedio);
 				encontrado = true;
 			}
 			i++;
