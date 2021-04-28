@@ -6,14 +6,35 @@ import java.util.Comparator;
 
 import algoritmoGenetico.individuos.Individuo;
 
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Clase Selección por Ranking.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class SeleccionRanking extends Seleccion{
 
+	
+	/**************************** ATRIBUTTES *******************************/
 	private double beta;
 	private double[] puntAcumulada;
 	
+	
+	/**************************** CONSTRUCTOR *******************************/
 	public SeleccionRanking() {
 		beta = 2;
 	}
+	
+	/***************************** METHODS ********************************/
 	@Override
 	public ArrayList<Individuo> seleccionar(ArrayList<Individuo> poblacion) {
 		
@@ -75,4 +96,6 @@ public class SeleccionRanking extends Seleccion{
 		}
 	}
 
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }

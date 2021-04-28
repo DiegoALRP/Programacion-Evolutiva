@@ -75,5 +75,5 @@ public class SeleccionTorneo extends Seleccion {
 		addIndividuo(nuevaPoblacion, candidatos.get(indexBestIndividual));
 	}
 	
-	/**************************** GET & SET ********************************/
+	/**************************** GETTERS & SETTERS ********************************/
 }

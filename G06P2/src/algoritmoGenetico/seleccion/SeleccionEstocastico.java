@@ -6,12 +6,34 @@ import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Clase Selección Estocástico.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class SeleccionEstocastico extends Seleccion{
 
+	
+	/**************************** ATRIBUTTES *******************************/
 	private double[] puntAcumulada;
 	private double aptitudes;
 	private double acum;
 	
+	
+	/**************************** CONSTRUCTOR *******************************/
+	
+	
+	/***************************** METHODS ********************************/
 	@Override
 	public ArrayList<Individuo> seleccionar(ArrayList<Individuo> poblacion) {
 		inicializaAptitudes(poblacion);
@@ -38,7 +60,7 @@ public class SeleccionEstocastico extends Seleccion{
 		return pivote;
 	}
 	
-private void inicializaAptitudes(List<Individuo> poblacion) {
+	private void inicializaAptitudes(List<Individuo> poblacion) {
 		
 		aptitudes = 0.0;
 		acum = 0.0;
@@ -55,4 +77,6 @@ private void inicializaAptitudes(List<Individuo> poblacion) {
 		
 	}
 
+	
+	/**************************** GET & SET ********************************/
 }

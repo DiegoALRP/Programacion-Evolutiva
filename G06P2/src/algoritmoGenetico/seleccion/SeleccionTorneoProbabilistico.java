@@ -14,7 +14,7 @@ import algoritmoGenetico.individuos.Individuo;
  * 
  * Prï¿½ctica 2
  * 
- * Clase Seleccion por Torneo Probabilï¿½stico.
+ * Clase Seleccion por Torneo Probabilístico.
  * 
  * @author 
  * Grupo G06:
@@ -29,7 +29,9 @@ public class SeleccionTorneoProbabilistico extends Seleccion {
 	private int tamPoblacion;
 	private final double probSelecPeor = 0.5;
 	
+	
 	/**************************** CONSTRUCTOR *******************************/
+	
 	
 	/***************************** METHODS ********************************/
 	@Override
@@ -88,5 +90,5 @@ public class SeleccionTorneoProbabilistico extends Seleccion {
 		}
 	}
 
-	/**************************** GET & SET ********************************/
+	/**************************** GETTERS & SETTERS ********************************/
 }

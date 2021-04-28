@@ -6,12 +6,32 @@ import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Clase Selección por Restos.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class SeleccionRestos extends Seleccion{
 
+	/**************************** ATRIBUTTES *******************************/
 	private double[] puntAcumulada;
 	private double[] pik;
 	private double aptitudes;
 	
+	/**************************** CONSTRUCTOR *******************************/
+	
+	
+	/***************************** METHODS ********************************/
 	@Override
 	public ArrayList<Individuo> seleccionar(ArrayList<Individuo> poblacion) {
 		ArrayList<Individuo> seleccionados = new ArrayList<Individuo>(poblacion.size());
@@ -67,4 +87,6 @@ public class SeleccionRestos extends Seleccion{
 		return pivote;
 	}
 
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }

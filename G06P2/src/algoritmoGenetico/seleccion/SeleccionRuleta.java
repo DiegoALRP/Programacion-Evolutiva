@@ -5,14 +5,36 @@ import java.util.List;
 
 import algoritmoGenetico.individuos.Individuo;
 
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Clase Selección por Ruleta.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class SeleccionRuleta extends Seleccion {
 
+	
+	/**************************** ATRIBUTTES *******************************/
 	private double[] puntAcumulada;		
 	private double prob;
 	private int pos_super;
 	private double aptitudes;
 	private double acum;
 	
+	
+	/**************************** CONSTRUCTOR *******************************/
+	
+	
+	/***************************** METHODS ********************************/
 	@Override
 	public ArrayList<Individuo> seleccionar(ArrayList<Individuo> poblacion) {
 		
@@ -50,4 +72,7 @@ public class SeleccionRuleta extends Seleccion {
 			puntAcumulada[i] = acum;
 		}
 	}
+	
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }

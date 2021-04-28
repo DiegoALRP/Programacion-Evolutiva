@@ -7,18 +7,40 @@ import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 
+
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Clase Selección por Truncamiento.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class SeleccionTruncamiento extends Seleccion{
 
+	/**************************** ATRIBUTTES *******************************/
 	private int trunc;
 	private int num_copias;
 	private int num_individuos;
 	
+	
+	/**************************** CONSTRUCTOR *******************************/
 	public SeleccionTruncamiento() {
 		
 		Random rand = new Random();
 		trunc = rand.nextInt(4) + 1;
 		seleccionaCopias();
 	}
+	
+	
+	/***************************** METHODS ********************************/
 	@Override
 	public ArrayList<Individuo> seleccionar(ArrayList<Individuo> poblacion) {
 		ArrayList<Individuo> seleccionados = new ArrayList<Individuo>();
@@ -60,4 +82,6 @@ public class SeleccionTruncamiento extends Seleccion{
 		
 	}
 
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }
