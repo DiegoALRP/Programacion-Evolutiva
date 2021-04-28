@@ -5,8 +5,32 @@ import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 
-public class MutacionInsersion extends Mutacion {
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Práctica 2
+ * 
+ * Clase Mutación por Inserción.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
+public class MutacionInsercion extends Mutacion {
 
+	/**************************** ATRIBUTTES *******************************/
+	
+	
+	/**************************** CONSTRUCTOR ******************************/
+	
+	
+	/***************************** METHODS ********************************/
 	@Override
 	protected void mutaIndividuo(Individuo individuo) {
 		
@@ -40,4 +64,6 @@ public class MutacionInsersion extends Mutacion {
 		individuo.avisoCromoModificado();
 	}
 
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }
