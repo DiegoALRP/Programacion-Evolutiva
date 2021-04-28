@@ -43,6 +43,8 @@ public class FactoriaMutacion {
 				return new MutacionIntercambioDoble();
 			case "Incremento":
 				return new MutacionIncremento();
+			case "OrdenMD":
+				return new MutacionDelOrdenMD();
 			default:
 				return new MutacionIntercambio();
 		}
