@@ -26,30 +26,42 @@ import java.util.concurrent.Semaphore;
 public class Individuo {
 
 	/**************************** ATRIBUTTES *******************************/
-	protected ArrayList<Integer> cromosoma;
-	protected HashMap<Character, Character> claveDescifrado; //HashMap que tiene como clave las letras a-z del texto cifrado y como valor las letras a-z del texto descifrado
-	protected StringBuilder fenotipo;
+	protected ArrayList<Integer> cromosoma;						//Cromosoma del individuo. Tiene tamaño 26 y está formado por números que representan el índice de las letras.
+	protected HashMap<Character, Character> claveDescifrado; 	//HashMap que tiene como clave las letras a-z del texto cifrado y como valor las letras a-z del texto descifrado.
+	protected StringBuilder fenotipo;							//Fenotipo del individuo.
 	
-	protected StringBuilder textoOriginal; 
-	protected int tamTexto;
-	protected StringBuilder textoAyuda;
-	protected int tamTextoAyuda;
+	protected StringBuilder textoOriginal; 		//Texto original que vamos a descrifrar
+	protected int tamTexto;						//Tamaño del texto original
+	protected StringBuilder textoAyuda;			//Texto adicional de ayuda para poder descifrar más rápidamente
+	protected int tamTextoAyuda;				//Tamaño del texto de ayuda
 	
-	protected volatile double fitness;
-	protected double fitness_ranking;
+	protected volatile double fitness;			//Valor de aptitud/Fitness del individuo
+	protected double fitness_ranking;			//Valor de aptitud/Fitness del individuo para la selección de ranking
 	
-	protected NGramas ngramas;
-	protected Texto claseTexto;
+	protected NGramas ngramas;					//Clase que contiene los n-gramas
+	protected Texto claseTexto;					//Clase que contiene el texto
 	
-	protected boolean cromoModificado;
+	protected boolean cromoModificado;			//Booleano que nos indica si el individuo ha sido cruzado o mutado, o en su defecto, que su cromosoma ha sido modificado
+	
 	
 	/************************** CONSTANT ATRIBUTTES *****************************/
-	protected final int tam = 26;
-	protected final int initLetter = 65;
+	protected final int tam = 26;			//Tamaño del cromosoma, 26, dado que el abecedario (en el inglés consta de 26 palabras).
+	protected final int initLetter = 65;	//Valor de la letra A en ASCII
 	
 	
 	
 	/**************************** CONSTRUCTOR *******************************/
+	
+	/**
+	 * [ES] Constructora que genera un nuevo individuo con valores nuevos y el cromosoma generado aleatoriamente.
+	 * [EN] Constructor that generates a new individual with new values and the cromosome generated randomly.
+	 * 
+	 * @param claseTexto	[ES] Clase que contiene los textos.
+	 * 						[EN] Class that contains the texts.
+	 * 
+	 * @param ngramas		[ES] Clase que contiene los n-gramas.
+	 * 						[EN] Class that contains the n-grams.
+	 */
 	public Individuo(Texto claseTexto, NGramas ngramas) {
 		
 		this.cromosoma = new ArrayList<Integer>(tam);
@@ -74,6 +86,25 @@ public class Individuo {
 		this.calculateFitness();
 	}
 	
+	
+	/**
+	 * [ES] Constructora que crea un nuevo individuo con un cromosoma predefinido.
+	 * Esta constructora nos permite generar individuos con el cromosoma que deseamos,
+	 * es especialmente útil para duplicar individuos o copiar individuos.
+	 * 
+	 * [EN] Constructor that creates a new individual with a predefined cromosome.
+	 * This constructor allow us to generate individuals with the cromosome we want,
+	 * this is specially useful to duplicate or copy individuals.
+	 * 
+	 * @param claseTexto 	[ES] Clase que contiene los textos.
+	 * 						[EN] Class that contains the texts.
+	 * 
+	 * @param ngramas	[ES] Clase que contiene los n-gramas.
+	 * 					[EN] Class that contains the n-grams.
+	 * 
+	 * @param cromosoma	[ES] Cromosoma que le queremos poner al individuo.
+	 * 					[EN] Cromosome that we want to put to the individual.
+	 */
 	public Individuo(Texto claseTexto, NGramas ngramas, ArrayList<Integer> cromosoma) {
 		
 		this.cromosoma = new ArrayList<Integer>(tam);
@@ -98,9 +129,18 @@ public class Individuo {
 	
 	
 	/***************************** METHODS ********************************/
+	
+	/**
+	 * [ES] Inicializa el cromosoma del individuo.
+	 * Es generado aleatoriamente.
+	 * 
+	 * [EN] Initializes the individual's cromosome.
+	 * It's randomly generated.
+	 * 
+	 */
 	private void initializeCromosome() {
 		
-		//Ejemplo profesor
+		//Ejemplo profesor (Es para debuggear, pero solo funciona con el ejemplo del enunciado de la práctica).
 		/*this.cromosoma.add(19);this.cromosoma.add(7);this.cromosoma.add(15);this.cromosoma.add(1);
 		this.cromosoma.add(17);this.cromosoma.add(12);this.cromosoma.add(21);this.cromosoma.add(13);
 		this.cromosoma.add(5);this.cromosoma.add(8);this.cromosoma.add(24);this.cromosoma.add(23);
@@ -122,6 +162,16 @@ public class Individuo {
 		}
 	}
 	
+	
+	/**
+	 * [ES] Reinicia el cromosoma del individuo.
+	 * Sustituye el cromosoma que tiene actualmente por un cromosoma
+	 * generado aleatoriamente.
+	 * 
+	 * [EN] Restarts the individual's cromosome.
+	 * Replaces the actual cromosome for a random generated cromosome.
+	 * 
+	 */
 	public void restartCromosome() {
 		
 		this.cromosoma.clear();
@@ -143,6 +193,15 @@ public class Individuo {
 		this.calculateFitness();
 	}
 	
+	
+	/**
+	 * [ES] Función que traduce el cromosoma que es en números, a un decodificador que contiene
+	 * la letra origial con la letra cifrada.
+	 * 
+	 * [EN] Function that translates the cromosome that is in numbers, to a decoder that contains
+	 * the original letter with the decipher letter.
+	 * 
+	 */
 	private void decodifica() {
 		
 		for (int i = 0; i < this.tam; i++) {
@@ -151,6 +210,14 @@ public class Individuo {
 		}
 	}
 	
+	/**
+	 * [ES] Función que calcula el valor de aptitud/fitness del individuo.
+	 * 
+	 * [EN] Function that calculates the individual's fitness value.
+	 * 
+	 * @return 	[ES] Valor de aptitud/fitness
+	 * 			[EN] Fitness value.
+	 */
 	public double calculateFitness() {
 		
 		if (cromoModificado) {
@@ -158,6 +225,8 @@ public class Individuo {
 				
 				
 				firstFitness();
+				
+				//Descomentar la siguiente línea para utilizar concurrencia en el cálculo del fitness.
 				//calculaFitnessParalelo();
 			}
 			else {
@@ -171,6 +240,20 @@ public class Individuo {
 		return this.fitness;
 	}
 	
+	/**
+	 * [ES] Función auxiliar que calcula el fitness de manera concurrente.
+	 * Se crean dos hilos y se divide el texto por la mitad.
+	 * De esta manera se analiza las dos mitades del texto al mismo tiempo y se reduce los tiempos
+	 * de ejecución.
+	 * Hecha para textos muy largos.
+	 * 
+	 * [EN] Auxiliary function that calculates concurrently the fitness value.
+	 * It creates to threads and divides the text in half.
+	 * With this, it can analyzes the two half of the texto in the same time, and
+	 * reduce the execution time.
+	 * Made for very large texts.
+	 * 
+	 */
 	@SuppressWarnings("unused")
 	private void calculaFitnessParalelo() {
 		
@@ -196,6 +279,18 @@ public class Individuo {
 		this.fitness = this.fitness/Math.log10(this.tamTextoAyuda);
 	}
 	
+	
+	/**
+	 * [ES] Función auxiliar que calcula el fitness para textos que no sean cortos.
+	 * Utiliza la frecuencia de los n-gramas para el cálculo.
+	 * 
+	 * [EN] Auxiliary function that calculates the fitness values for texts that are
+	 * not short.
+	 * It uses the frequencies of the n-gram to calculate the fitness.
+	 * 
+	 * @return 	[ES] Valor de Fitness.
+	 * 			[EN] Fitness value.
+	 */
 	private double firstFitness() {
 		
 		StringBuilder sb = new StringBuilder();
@@ -253,6 +348,16 @@ public class Individuo {
 		return this.fitness;
 	}
 	
+	
+	/**
+	 * [ES] Función auxiliar que calcula el fitness para textos que sean cortos.
+	 * Utiliza la frecuencia de los n-gramas para el cálculo.
+	 * 
+	 * [EN] Auxiliary function that calculates the fitness values for texts that are
+	 * short.
+	 * It uses the frequencies of the n-gram to calculate the fitness.
+	 * 
+	 */
 	private void secondFitness() {
 		
 		StringBuilder sb = new StringBuilder();
@@ -303,11 +408,30 @@ public class Individuo {
 		}
 	}
 	
+	
+	/**
+	 * [ES] Verifica que la letra que es leía se encuentra entre los carácteres a-z o A-Z.
+	 * 
+	 * [EN] Verifies that the read letter is between a-z or A-Z.
+	 * 
+	 * @param caracter	[ES] Carácter que queremos verificar.
+	 * 					[EN] Character that we want to verify.
+	 * 
+	 * @return	[ES] True, si se encuentra entre los carácteres a-z o A-Z. False, en otro caso.
+	 * 			[EN] True, if is between a-z or A-Z. False, otherwise.
+	 */
 	private boolean isAZ(int caracter) {
 		
 		return ((caracter >= 65 && caracter <= 90) || (caracter >= 97 && caracter <= 122));
 	}
 	
+	
+	/**
+	 * [ES] Función que calcula el fenotipo del individuo.
+	 * 
+	 * [EN] Function that calculates the individual's fenotipe.
+	 * 
+	 */
 	private void calculateFenotipo() {
 		
 		this.decodifica();
