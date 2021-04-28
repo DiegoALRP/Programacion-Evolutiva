@@ -244,7 +244,7 @@ public class panelPrincipal {
 		control_panel.add(labrl_mutacion);
 		
 		JComboBox comboBox_mutacion = new JComboBox();
-		comboBox_mutacion.setModel(new DefaultComboBoxModel(new String[] {"Inserci\u00F3n", "Intercambio", "Inversi\u00F3n", "Heur\u00EDstica", "Intercambio doble", "Incremento"}));
+		comboBox_mutacion.setModel(new DefaultComboBoxModel(new String[] {"Inserci\u00F3n", "Intercambio", "Inversi\u00F3n", "Heur\u00EDstica", "Intercambio doble", "Incremento", "OrdenMD"}));
 		comboBox_mutacion.setBounds(101, 235, 85, 21);
 		control_panel.add(comboBox_mutacion);
 		
