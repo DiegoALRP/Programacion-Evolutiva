@@ -31,6 +31,14 @@ public class Fitness {
 	
 	
 	/***************************** METHODS ********************************/
+	
+	/**
+	 * [ES] Suma al fitness actual, el valor que se pasa por parámetro.
+	 * [EN] Add the value passed as parameter to the actual fitness.
+	 * 
+	 * @param fitness 	[ES] Valor de fitness que queremos añadir
+	 * 					[EN] Fitness value that we want to add.
+	 */
 	public void addFitness(double fitness) {
 		
 		this.fitness += fitness;
