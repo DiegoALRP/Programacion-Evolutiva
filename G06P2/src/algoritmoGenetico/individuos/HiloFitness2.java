@@ -3,8 +3,27 @@ package algoritmoGenetico.individuos;
 import java.util.HashMap;
 import java.util.concurrent.Semaphore;
 
+
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Práctica 2
+ * 
+ * Clase Hilo Segunda Mitad.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class HiloFitness2 extends Thread{
 
+	/**************************** ATRIBUTTES *******************************/
 	private double fitness;
 	private NGramas ngramas;
 	private Texto claseTexto;
@@ -14,6 +33,8 @@ public class HiloFitness2 extends Thread{
 	Semaphore sem;
 	Fitness numFitness;
 
+	
+	/**************************** CONSTRUCTOR ******************************/
 	public HiloFitness2(NGramas ngramas, Texto claseTexto, HashMap<Character, Character> claveDescifrado, Semaphore sem, Fitness numFitness) {
 		
 		this.fitness = 0;
@@ -26,6 +47,8 @@ public class HiloFitness2 extends Thread{
 		this.numFitness = numFitness;
 	}
 	
+	
+	/***************************** METHODS ********************************/
 	public void run() {
 		
 		this.calculaFitness();
@@ -52,7 +75,6 @@ public class HiloFitness2 extends Thread{
 				
 				/**ganadora */
 				this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/((Math.log(tamTextoAyuda)/Math.log(2))*2);
-				//this.fitness += this.ngramas.frecuenciaMonogramas.get(Character.toString(caracterDeco))/((Math.log(tamTextoAyuda)/Math.log(2))*3);
 				
 				if (j > 1) {
 					this.fitness += this.ngramas.frecuenciaBigramas.get(sb.substring(j - 2, j))/((Math.log(tamTextoAyuda)/Math.log(2))*2);
@@ -73,10 +95,6 @@ public class HiloFitness2 extends Thread{
 						this.fitness += this.ngramas.frecuenciaQuintagramas.get(sb.substring(j - 5, j)) /((Math.log(tamTextoAyuda)/Math.log(2)));
 					}
 				}
-				
-				/*if (this.ngramas.frecuenciaPalabras.containsKey(word.toString())) {
-					this.fitness += this.ngramas.frecuenciaPalabras.get(word.toString()) * (Math.log(word.length()));
-				}*/
 			}
 			else {
 				
@@ -85,8 +103,6 @@ public class HiloFitness2 extends Thread{
 				}
 				word = new StringBuilder();
 			}
-			
-			//System.out.println(i);
 		}
 		
 		this.addFitness();
@@ -107,6 +123,9 @@ public class HiloFitness2 extends Thread{
 		
 		return ((caracter >= 65 && caracter <= 90) || (caracter >= 97 && caracter <= 122));
 	}
+	
+	
+	/**************************** GETTERS & SETTERS ********************************/
 	
 	public double getFitness() {
 		return this.fitness;
