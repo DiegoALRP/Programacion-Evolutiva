@@ -1,10 +1,6 @@
 package main;
 
 import java.awt.EventQueue;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 
 import javax.swing.JOptionPane;
 
@@ -23,7 +19,7 @@ public class Main {
 				try {
 					JOptionPane.showMessageDialog(null, "Al hacer click en OK empezará la carga de ficheros. Porfavor espere.");
 					NGramas ngramas = new NGramas();
-					ngramas.loadHashs();
+					ngramas.loadNGrams();
 					panelPrincipal window = new panelPrincipal(ngramas);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +32,7 @@ public class Main {
 		
 		double startTotal = System.currentTimeMillis();
 		double mediaMejorFitness = 0;
-		int numIter = 1;
+		int numIter = 15;
 		for (int i = 0; i < numIter; i++) {
 			
 			System.out.println("\n ITERACION: " + (i + 1));
@@ -48,8 +44,8 @@ public class Main {
 			double end = System.currentTimeMillis() - start;
 			System.out.println("Time: " + end);
 			mediaMejorFitness += ag.getMejorFitnessAbsoluto();
-		}*/
-		/*
+		}
+		
 		double endTotal = System.currentTimeMillis() - startTotal;
 		System.out.println("Time: " + (endTotal/numIter));
 		mediaMejorFitness = mediaMejorFitness/numIter;
