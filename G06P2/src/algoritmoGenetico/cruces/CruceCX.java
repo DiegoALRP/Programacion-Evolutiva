@@ -1,10 +1,8 @@
 package algoritmoGenetico.cruces;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 
@@ -26,7 +24,12 @@ import algoritmoGenetico.individuos.Individuo;
  *
  */
 public class CruceCX extends Cruce {
+	
+	/**************************** ATRIBUTTES *******************************/
 
+	/**************************** CONSTRUCTOR ******************************/
+	
+	/***************************** METHODS ********************************/
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
@@ -48,28 +51,6 @@ public class CruceCX extends Cruce {
 		
 		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Integer> cromoPadre2 = padre2.getCromosoma();
-		/*ArrayList<Integer> cromoPadre1 = new ArrayList<Integer>();
-		ArrayList<Integer> cromoPadre2 = new ArrayList<Integer>();
-		
-		cromoPadre1.add(1);
-		cromoPadre1.add(2);
-		cromoPadre1.add(3);
-		cromoPadre1.add(4);
-		cromoPadre1.add(5);
-		cromoPadre1.add(6);
-		cromoPadre1.add(7);
-		cromoPadre1.add(8);
-		cromoPadre1.add(9);
-		
-		cromoPadre2.add(4);
-		cromoPadre2.add(1);
-		cromoPadre2.add(2);
-		cromoPadre2.add(8);
-		cromoPadre2.add(7);
-		cromoPadre2.add(6);
-		cromoPadre2.add(9);
-		cromoPadre2.add(3);
-		cromoPadre2.add(5);*/
 		
 		int longCromo = cromoPadre1.size();
 		
@@ -113,11 +94,6 @@ public class CruceCX extends Cruce {
 			mapaIndices2.remove(toAdd);
 		}
 		
-		//Probar iterando por el hashmap
-		/*for (Integer num : mapaIndices1.) {
-			
-		}*/
-		
 		int a = 0;
 		int b = 0;
 		for (int i = 0; i < longCromo; i++) {
@@ -135,4 +111,6 @@ public class CruceCX extends Cruce {
 		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
 	}
 
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }

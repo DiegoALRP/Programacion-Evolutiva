@@ -25,9 +25,16 @@ import algoritmoGenetico.individuos.Individuo;
  */
 public class CrucePorOrden extends Cruce{
 	
+	/**************************** ATRIBUTTES *******************************/
 	private int punto1;
 	private int punto2;
+	private final int longCromo = 26;
 
+	
+	/**************************** CONSTRUCTOR ******************************/
+	
+	
+	/***************************** METHODS ********************************/
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
@@ -36,13 +43,11 @@ public class CrucePorOrden extends Cruce{
 		this.selec_cruce = new ArrayList<Integer>();
 		this.tamPoblacion = poblacion.size();
 		
-		int longitudCromosoma = 26;
-		
 		this.seleccionaIndividuos(poblacion);
 		
 		Random rand = new Random();
 		punto1 = rand.nextInt(20);
-		punto2 = rand.nextInt(26 - punto1) + punto1;
+		punto2 = rand.nextInt(longCromo - punto1) + punto1;
 		
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
 			this.numCruce++;
@@ -55,21 +60,24 @@ public class CrucePorOrden extends Cruce{
 		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Integer> cromoPadre2 = padre2.getCromosoma();
 		
-		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>();
-		cromoPadre1Aux.addAll(cromoPadre1);
+		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>(longCromo);
+		ArrayList<Integer> cromoPadre2Aux = new ArrayList<Integer>(longCromo);
 		
-		ArrayList<Integer> cromoPadre2Aux = new ArrayList<Integer>();
-		cromoPadre2Aux.addAll(cromoPadre2);
-		
-		ArrayList<Integer> cromoHijo1 = new ArrayList<Integer>();
-		cromoHijo1.addAll(cromoPadre1Aux);
-		HashSet<Integer> setHijo1 = new HashSet<Integer>(26);
+		ArrayList<Integer> cromoHijo1 = new ArrayList<Integer>(longCromo);
+		HashSet<Integer> setHijo1 = new HashSet<Integer>(longCromo);
 
-		ArrayList<Integer> cromoHijo2 = new ArrayList<Integer>();
-		cromoHijo2.addAll(cromoPadre2Aux);
-		HashSet<Integer> setHijo2 = new HashSet<Integer>(26);
+		ArrayList<Integer> cromoHijo2 = new ArrayList<Integer>(longCromo);
+		HashSet<Integer> setHijo2 = new HashSet<Integer>(longCromo);
 		
-		int longitudCromo = 26;
+		for (int i = 0; i < longCromo; i++) {
+			
+			cromoPadre1Aux.add(cromoPadre1.get(i));
+			cromoPadre2Aux.add(cromoPadre2.get(i));
+			
+			cromoHijo1.add(cromoPadre1.get(i));
+			cromoHijo2.add(cromoPadre2.get(i));
+		}
+		
 		int longi = this.punto1;
 		int added1 = 0, added2 = 0;
 		while (longi <= this.punto2) {
@@ -115,4 +123,7 @@ public class CrucePorOrden extends Cruce{
 		
 		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
 	}
+	
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }

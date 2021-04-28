@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 
@@ -28,8 +27,13 @@ import algoritmoGenetico.individuos.Individuo;
  */
 public class CruceERX extends Cruce{
 
+	/**************************** ATRIBUTTES *******************************/
 	private int longCromo;
 	private boolean encontrado;
+	
+	/**************************** CONSTRUCTOR ******************************/
+	
+	/***************************** METHODS ********************************/
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
@@ -114,79 +118,7 @@ public class CruceERX extends Cruce{
 		encontrado = false;
 		this.funcionRecursiva(cromoHijo2Aux, setCromoHijo2, 1, tablaConectividades, cromoHijo2);
 		
-		int p = 0;
-		
 		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
-		/*ArrayList<Integer> cromoHijo1 = new ArrayList<Integer>(longCromo);
-		HashSet<Integer> setCromoHijo1 = new HashSet<Integer>(longCromo);
-		Random rand = new Random();
-		
-		int added = 1;
-		cromoHijo1.add(cromoPadre1.get(0));
-		setCromoHijo1.add(cromoPadre1.get(0));
-		while (added < longCromo) {
-			
-			ArrayList<Integer> array = new ArrayList<Integer>(2);
-			int minSize = Integer.MAX_VALUE;
-			int size;
-			for (int toAdd : tablaConectividades.get(cromoHijo1.get(added - 1))) {
-				
-				size = tablaConectividades.get(toAdd).size();
-				if (!setCromoHijo1.contains(toAdd)) {
-					if (size == minSize) {
-						
-						array.add(toAdd);
-					}
-					if (size < minSize) {
-						
-						minSize = size;
-						array.clear();
-						array.add(toAdd);
-					}
-				}
-			}
-			
-			int finalAdd = array.get(rand.nextInt(array.size()));
-			cromoHijo1.add(finalAdd);
-			setCromoHijo1.add(finalAdd);
-			added++;
-		}
-		
-		ArrayList<Integer> cromoHijo2 = new ArrayList<Integer>(longCromo);
-		HashSet<Integer> setCromoHijo2 = new HashSet<Integer>(longCromo);
-		
-		added = 1;
-		cromoHijo2.add(cromoPadre2.get(0));
-		setCromoHijo2.add(cromoPadre2.get(0));
-		while (added < longCromo) {
-			
-			ArrayList<Integer> array = new ArrayList<Integer>(2);
-			int minSize = Integer.MAX_VALUE;
-			int size;
-			for (int toAdd : tablaConectividades.get(cromoHijo2.get(added - 1))) {
-				
-				size = tablaConectividades.get(toAdd).size();
-				if (!setCromoHijo2.contains(toAdd)) {
-					if (size == minSize) {
-						
-						array.add(toAdd);
-					}
-					if (size < minSize) {
-						
-						minSize = size;
-						array.clear();
-						array.add(toAdd);
-					}
-				}
-			}
-			
-			int finalAdd = array.get(rand.nextInt(array.size()));
-			cromoHijo2.add(finalAdd);
-			setCromoHijo2.add(finalAdd);
-			added++;
-		}
-		
-		int pp = 1;*/
 	}
 
 	private void funcionRecursiva(ArrayList<Integer> cromosoma, HashSet<Integer> setCromosoma, int numAdded,
@@ -226,4 +158,6 @@ public class CruceERX extends Cruce{
 			}
 		}
 	}
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }

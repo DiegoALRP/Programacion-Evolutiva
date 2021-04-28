@@ -26,7 +26,11 @@ public class CruceCO extends Cruce {
 	
 	/**************************** ATRIBUTTES *******************************/
 	private int longCromo;
+	
+	
 	/**************************** CONSTRUCTOR ******************************/
+	
+	
 	/***************************** METHODS ********************************/
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
@@ -50,21 +54,6 @@ public class CruceCO extends Cruce {
 		
 		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Integer> cromoPadre2 = padre2.getCromosoma();
-		/*this.longCromo = 9;
-		ArrayList<Integer> cromoPadre1 = new ArrayList<Integer>(longCromo);
-		ArrayList<Integer> cromoPadre2 = new ArrayList<Integer>(longCromo);
-		for (int i = 0; i < longCromo; i++) {
-			cromoPadre2.add(i + 1);
-		}
-		cromoPadre1.add(4);
-		cromoPadre1.add(5);
-		cromoPadre1.add(2);
-		cromoPadre1.add(1);
-		cromoPadre1.add(8);
-		cromoPadre1.add(7);
-		cromoPadre1.add(6);
-		cromoPadre1.add(9);
-		cromoPadre1.add(3);*/
 		
 		longCromo = cromoPadre1.size();
 		
@@ -103,7 +92,6 @@ public class CruceCO extends Cruce {
 			listaDinamica2.remove(index2);
 		}
 		
-		//Hacer Cruce Monopunto
 		cruceMonopunto(cromoHijo1Aux, cromoHijo2Aux);
 		ArrayList<Integer> cromoHijo1 = new ArrayList<Integer>(longCromo);
 		ArrayList<Integer> cromoHijo2 = new ArrayList<Integer>(longCromo);
@@ -114,7 +102,6 @@ public class CruceCO extends Cruce {
 			
 			a = listaDinamica1Aux.get(cromoHijo1Aux.get(i));
 			cromoHijo1.add(a);
-			//Problema grave aqui (creo que ya lo solucione
 			listaDinamica1Aux.remove((Object) a);
 			
 			b = listaDinamica2Aux.get(cromoHijo2Aux.get(i));
@@ -128,8 +115,7 @@ public class CruceCO extends Cruce {
 	private void cruceMonopunto(ArrayList<Integer> cromoPadre1, ArrayList<Integer> cromoPadre2) {
 		
 		Random rand = new Random();
-		//int puntoCruce = rand.nextInt(longCromo - 2) + 1;
-		int puntoCruce = 4;
+		int puntoCruce = rand.nextInt(longCromo - 2) + 1;
 		int aux;
 		for (int i = puntoCruce; i < longCromo; i++) {
 			
@@ -138,5 +124,6 @@ public class CruceCO extends Cruce {
 			cromoPadre2.set(i, aux);
 		}
 	}
-	/**************************** GET & SET ********************************/
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }
