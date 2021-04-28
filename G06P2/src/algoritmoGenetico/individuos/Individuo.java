@@ -27,7 +27,7 @@ public class Individuo {
 
 	/**************************** ATRIBUTTES *******************************/
 	protected ArrayList<Integer> cromosoma;						//Cromosoma del individuo. Tiene tamaño 26 y está formado por números que representan el índice de las letras.
-	protected HashMap<Character, Character> claveDescifrado; 	//HashMap que tiene como clave las letras a-z del texto cifrado y como valor las letras a-z del texto descifrado.
+	protected HashMap<Character, Character> decodificador; 		//HashMap que tiene como clave las letras a-z del texto cifrado y como valor las letras a-z del texto descifrado.
 	protected StringBuilder fenotipo;							//Fenotipo del individuo.
 	
 	protected StringBuilder textoOriginal; 		//Texto original que vamos a descrifrar
@@ -66,7 +66,7 @@ public class Individuo {
 		
 		this.cromosoma = new ArrayList<Integer>(tam);
 		
-		this.claveDescifrado = new HashMap<Character, Character>(tam);
+		this.decodificador = new HashMap<Character, Character>(tam);
 		this.fenotipo = new StringBuilder(tamTexto);
 		
 		this.textoOriginal = claseTexto.getTextoOriginal();
@@ -110,7 +110,7 @@ public class Individuo {
 		this.cromosoma = new ArrayList<Integer>(tam);
 		this.cromosoma.addAll(cromosoma);
 		
-		this.claveDescifrado = new HashMap<Character, Character>(tam);
+		this.decodificador = new HashMap<Character, Character>(tam);
 		this.fenotipo = new StringBuilder(tamTexto);
 		
 		this.textoOriginal = claseTexto.getTextoOriginal();
@@ -206,7 +206,7 @@ public class Individuo {
 		
 		for (int i = 0; i < this.tam; i++) {
 			
-			this.claveDescifrado.put((char) (this.cromosoma.get(i) + this.initLetter), (char) (i + this.initLetter));
+			this.decodificador.put((char) (this.cromosoma.get(i) + this.initLetter), (char) (i + this.initLetter));
 		}
 	}
 	
@@ -262,8 +262,8 @@ public class Individuo {
 		Semaphore sem = new Semaphore(1);
 		Fitness numFitness = new Fitness();
 		
-		HiloFitness1 hilo1 = new HiloFitness1(ngramas, claseTexto, claveDescifrado, sem, numFitness);
-		HiloFitness2 hilo2 = new HiloFitness2(ngramas, claseTexto, claveDescifrado, sem, numFitness);
+		HiloFitness1 hilo1 = new HiloFitness1(ngramas, claseTexto, decodificador, sem, numFitness);
+		HiloFitness2 hilo2 = new HiloFitness2(ngramas, claseTexto, decodificador, sem, numFitness);
 		
 		hilo1.start();
 		hilo2.start();
@@ -305,7 +305,7 @@ public class Individuo {
 			
 			if (this.isAZ(caracter)) {
 				
-				char caracterDeco = this.claveDescifrado.get(caracter);
+				char caracterDeco = this.decodificador.get(caracter);
 
 				sb.append(caracterDeco);
 				word.append(caracterDeco);
@@ -372,7 +372,7 @@ public class Individuo {
 			
 			if (this.isAZ(caracter)) {
 				
-				char caracterDeco = this.claveDescifrado.get(caracter);
+				char caracterDeco = this.decodificador.get(caracter);
 
 				sb.append(caracterDeco);
 				word.append(caracterDeco);
@@ -443,8 +443,8 @@ public class Individuo {
 			
 			if (Character.isUpperCase(caracter)) {
 				
-				if (this.claveDescifrado.containsKey(caracter)) {
-					this.fenotipo.append(this.claveDescifrado.get(caracter));
+				if (this.decodificador.containsKey(caracter)) {
+					this.fenotipo.append(this.decodificador.get(caracter));
 				}
 				else {
 					this.fenotipo.append(caracter);
@@ -453,8 +453,8 @@ public class Individuo {
 			else {
 				
 				caracter = Character.toUpperCase(caracter);
-				if (this.claveDescifrado.containsKey(caracter)) {
-					this.fenotipo.append(Character.toLowerCase(this.claveDescifrado.get(caracter)));
+				if (this.decodificador.containsKey(caracter)) {
+					this.fenotipo.append(Character.toLowerCase(this.decodificador.get(caracter)));
 				}
 				else {
 					this.fenotipo.append(Character.toLowerCase(caracter));
