@@ -34,6 +34,17 @@ public class CrucePMX extends Cruce {
 	
 	
 	/***************************** METHODS ********************************/
+	/**
+	 * [ES] Esta función selecciona los individuos a cruzar y los cruza dos a dos aplicando cruce PLX.
+	 * 
+	 * [EN] This function selects the individuals to cross and crosses them by pairs applying PMX.
+	 * 
+	 * @param poblacion	[ES] La población original.
+	 * 					[EN] The original population.
+	 * 
+	 * @param probCruce	[ES] La probabilidad de cruce.
+	 * 					[EN] Cross probability.
+	 */
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
@@ -55,6 +66,22 @@ public class CrucePMX extends Cruce {
 		}
 	}
 	
+	/**
+	 * [ES] Seleccionar dos puntos de corte e intercambiar las posiciones de los cromosomas entre dichos puntos.
+	 * Para el resto de posiciones, si la posicion que se quiere intercambiar no está en la subcadena, se copia.
+	 * Si la posición si esta en la subcadena, se copia el valor del otro padre. 
+	 * 
+	 * 
+	 * [EN] Select two cut points and swap the chromosome positions between them.
+	 * For the rest of the positions, if the position to be exchanged is not in the substring, it is copied.
+	 * If the position is in the substring, the value of the other parent is copied. 
+	 * 
+	 * @param padre1	[ES] Primer padre.
+	 * 					[EN] First parent.
+	 * 
+	 * @param padre2	[ES] Segundo padre.
+	 * 					[EN] Second parent.
+	 */	 
 	protected void cruzaPadres(Individuo padre1, Individuo padre2) {
 		
 		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();

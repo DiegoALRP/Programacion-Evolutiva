@@ -30,6 +30,17 @@ public class CruceCX extends Cruce {
 	/**************************** CONSTRUCTOR ******************************/
 	
 	/***************************** METHODS ********************************/
+	/**
+	 * [ES] Esta función selecciona los individuos a cruzar y los cruza dos a dos aplicando cruce por ciclos.
+	 * 
+	 * [EN] This function selects the individuals to cross and crosses them by pairs applying cicle crossover.
+	 * 
+	 * @param poblacion	[ES] La población original.
+	 * 					[EN] The original population.
+	 * 
+	 * @param probCruce	[ES] La probabilidad de cruce.
+	 * 					[EN] Cross probability.
+	 */
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
@@ -45,7 +56,23 @@ public class CruceCX extends Cruce {
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
 		}
 	}
-
+	
+	/**
+	 * [ES] Un padre comienza heredando la primera posicion del otro. Para la posicion original que ha sido 
+	 * sustituida, se consulta su ubicacion en el otro padre y "se baja" al padre actual siguiente un ciclo hasta
+	 * que termina.
+	 * 
+	 * 
+	 * [EN] One parent begins by inheriting the first position from the other. For the original position 
+	 * that has been substituted, its location in the other parent is queried and "down-cycled" to the
+	 * until it ends.
+	 * 
+	 * @param padre1	[ES] Primer padre.
+	 * 					[EN] First parent.
+	 * 
+	 * @param padre2	[ES] Segundo padre.
+	 * 					[EN] Second parent.
+	 */	
 	@Override
 	protected void cruzaPadres(Individuo padre1, Individuo padre2) {
 		

@@ -34,6 +34,19 @@ public class CruceOXPP extends Cruce {
 	/**************************** CONSTRUCTOR ******************************/
 	
 	/***************************** METHODS ********************************/
+	
+	/**
+	 * [ES] Variante del cruce por orden con posiciones prioritarias
+	 * 
+	 * 
+	 * [EN] Variant of the order crossover with priority positions.
+	 * 
+	 * @param poblacion	[ES] Poblacion original.
+	 * 					[EN] Original population.
+	 * 
+	 * @param probCruce	[ES] Probabilidad de cruce
+	 * 					[EN] Crossover probability.
+	 */	 
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 

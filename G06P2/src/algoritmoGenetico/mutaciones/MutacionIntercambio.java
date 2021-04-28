@@ -31,6 +31,22 @@ public class MutacionIntercambio extends Mutacion {
 	
 	
 	/***************************** METHODS ********************************/
+	
+	/**
+	 * [ES] Esta función muta un individuo siguiendo el patron de mutación por intercambio.
+	 * Dado un indiviuo, se seleccionan dos puntos de corte en el cromosoma de este y se intercambian
+	 * las posiciones en dichos puntos.
+	 * 
+	 * 
+	 * [EN] This function mutates an individual following the pattern of mutation by exchange.
+	 * Given an individual, two breakpoints are selected on the individual's chromosome and the 
+	 * positions at these breakpoints are swapped.
+	 * 
+	 * 
+	 * @param Individuo	[ES] El individuo.
+	 * 					[EN] The individual.
+	 * 
+	 */
 	@Override
 	protected void mutaIndividuo(Individuo individuo) {
 		

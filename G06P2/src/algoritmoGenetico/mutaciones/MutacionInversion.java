@@ -32,6 +32,22 @@ public class MutacionInversion extends Mutacion {
 	
 	
 	/***************************** METHODS ********************************/
+	
+	/**
+	 * [ES] Esta función muta un individuo siguiendo el patron de mutación por inversión.
+	 * Dado un indiviuo, se seleccionan dos puntos de corte en el cromosoma de este y se invierten
+	 * las posiciones entre dichos puntos.
+	 * 
+	 * 
+	 * [EN] This function mutates an individual following the pattern of mutation by inversion.
+	 * Given an individual, two breakpoints are selected on the individual's chromosome and the 
+	 * positions between these breakpoints are inverted.
+	 * 
+	 * 
+	 * @param Individuo	[ES] El individuo.
+	 * 					[EN] The  individual.
+	 * 
+	 */
 	@Override
 	protected void mutaIndividuo(Individuo individuo) {
 		ArrayList<Integer> cromosoma = individuo.getCromosoma();

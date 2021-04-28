@@ -33,6 +33,24 @@ public class MutacionIntercambioDoble extends Mutacion {
 	
 	
 	/***************************** METHODS ********************************/
+	
+	/**
+	 * [ES] Esta función muta un individuo siguiendo el patron de mutación por intercambio doble la cual fue
+	 * creada por nosotros.
+	 * Dado un indiviuo, se seleccionan cuatro puntos de corte en el cromosoma de este y se intercambian
+	 * las posiciones en dichos puntos por parejas.
+	 * 
+	 * 
+	 * [EN] This function mutates an individual following the pattern of mutation by exchange which was
+	 * developed by us.
+	 * Given an individual, four breakpoints are selected on the individual's chromosome and the 
+	 * positions at these breakpoints are swapped by pairs.
+	 * 
+	 * 
+	 * @param Individuo	[ES] El individuo.
+	 * 					[EN] The individual.
+	 * 
+	 */
 	@Override
 	protected void mutaIndividuo(Individuo individuo) {
 		

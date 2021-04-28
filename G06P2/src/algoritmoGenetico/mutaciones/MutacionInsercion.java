@@ -31,6 +31,23 @@ public class MutacionInsercion extends Mutacion {
 	
 	
 	/***************************** METHODS ********************************/
+	
+	/**
+	 * [ES] Esta función muta un individuo siguiendo el patron de mutación por inserción
+	 * Dado un indiviuo, se seleccionan dos puntos de corte en el cromosoma de este y se introducen
+	 * en distintas posiciones desplazando el resto del cromosoma para dejar espacio.
+	 * 
+	 * 
+	 * [EN]This function mutates an individual following the insertion mutation pattern.
+	 * Given an individual, two breakpoints are selected on the individual's chromosome 
+	 * and inserted at different positions, displacing the rest of the chromosome to make room.
+	 * 
+	 * 
+	 * @param Individuo	[ES] El individuo.
+	 * 					[EN] The individual.
+	 * 
+	 */
+	
 	@Override
 	protected void mutaIndividuo(Individuo individuo) {
 		

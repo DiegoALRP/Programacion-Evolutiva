@@ -34,6 +34,17 @@ public class CruceERX extends Cruce{
 	/**************************** CONSTRUCTOR ******************************/
 	
 	/***************************** METHODS ********************************/
+	/**
+	 * [ES] Esta función selecciona los individuos a cruzar y los cruza dos a dos aplicando recombinacion de rutas.
+	 * 
+	 * [EN] This function selects the individuals to cross and crosses them by pairs applying rute recalculation.
+	 * 
+	 * @param poblacion	[ES] La población original.
+	 * 					[EN] The original population.
+	 * 
+	 * @param probCruce	[ES] La probabilidad de cruce.
+	 * 					[EN] Cross probability.
+	 */
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
@@ -49,7 +60,22 @@ public class CruceERX extends Cruce{
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
 		}
 	}
-
+	
+	/**
+	 * [ES] Para cada dos progenitores se calcula la matriz de adyacencia(matriz con los vecinos).
+	 * Una vez construida, para cada posicion que se quiera intercambiar se seleccionará.
+	 * La siguiente posición  será aquella con conexiones minimas en la tabla de adyacencia.
+	 * 
+	 * [EN] For both of the two parents, the adjacent matrix (matrix with neighbours) is calculated.
+	 * Once built, for each position to be exchanged, it will cross.
+	 * The next position will be the one with minimal connections in the adjacency table.
+	 * 
+	 * @param poblacion	[ES] La población original.
+	 * 					[EN] The original population.
+	 * 
+	 * @param probCruce	[ES] La probabilidad de cruce.
+	 * 					[EN] Cross probability.
+	 */
 	@Override
 	protected void cruzaPadres(Individuo padre1, Individuo padre2) {
 		

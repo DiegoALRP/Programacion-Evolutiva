@@ -35,6 +35,17 @@ public class CrucePorOrden extends Cruce{
 	
 	
 	/***************************** METHODS ********************************/
+	/**
+	 * [ES] Esta función selecciona los individuos a cruzar y los cruza dos a dos aplicando cruce por orden.
+	 * 
+	 * [EN] This function selects the individuals to cross and crosses them by pairs applying order crossover.
+	 * 
+	 * @param poblacion	[ES] La población original.
+	 * 					[EN] The original population.
+	 * 
+	 * @param probCruce	[ES] La probabilidad de cruce.
+	 * 					[EN] Cross probability.
+	 */
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
@@ -55,6 +66,22 @@ public class CrucePorOrden extends Cruce{
 		}
 	}
 	
+	/**
+	 * [ES] Similar al cruce PMX. Se intercambian las posiciones entre dos puntos de corte.
+	 * Para el resto de posiciones se copian los valores del padre respetando el orden 
+	 * a partir de la zona copiada
+	 * 
+	 * 
+	 * [EN] Similar to PMX crossover. Positions are exchanged between two cut-off points.
+	 * For the remaining positions, the values are copied from the parent in the order of the two cut-off points
+	 * from the copied area
+	 * 
+	 * @param padre1	[ES] Primer padre.
+	 * 					[EN] First parent.
+	 * 
+	 * @param padre2	[ES] Segundo padre.
+	 * 					[EN] Second parent.
+	 */	 
 	protected void cruzaPadres(Individuo padre1, Individuo padre2) {
 		
 		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();

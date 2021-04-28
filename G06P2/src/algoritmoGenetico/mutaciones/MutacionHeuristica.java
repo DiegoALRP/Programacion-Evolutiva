@@ -41,6 +41,25 @@ public class MutacionHeuristica extends Mutacion {
 	
 	
 	/***************************** METHODS ********************************/
+	
+	/**
+	 * [ES] Esta función muta un individuo siguiendo el patron de mutación heuristica.
+	 * Dado un indiviuo, se seleccionan 3 posiciones aleatorias.
+	 * Se calculará el fitness de las permutacones y se seleccionará aquella de 
+	 * mayor fitness
+	 * 
+	 * 
+	 * [EN] This function mutates an individual following the heuristic mutation pattern.
+	 * Given an individual, 3 random positions are selected.
+	 * The fitness of the permutations will be calculated and the one with the 
+	 * higher fitness will be selected.
+	 * 
+	 * 
+	 * 
+	 * @param Individuo	[ES] El individuo.
+	 * 					[EN] The  individual.
+	 * 
+	 */
 	@Override
 	protected void mutaIndividuo(Individuo individuo) {
 		
@@ -73,7 +92,15 @@ public class MutacionHeuristica extends Mutacion {
 		
 		individuo.setCromosoma(mejorIndividuo.getCromosoma());
 	}
-	
+	/**
+	 * [ES] Función recursiva que calcula la permutación y  el fitness
+	 * cuando está completamente construida
+	 * 
+	 * 
+	 * [EN] Recursive function that calculates the permutation and fitness
+	 * when it is fully built 
+	 * 
+	 */
 	private void permutacion(HashSet<Integer> posiciones, HashSet<Integer> set, ArrayList<Integer> orden, int i) {
 		
 		for (int pos : set) {
@@ -91,6 +118,17 @@ public class MutacionHeuristica extends Mutacion {
 		}
 	}
 	
+	/**
+	 * [ES] Esta función introduce los valores del parametro posiciones en el cromosoma original
+	 * y calcula el fitness 
+	 * 
+	 * 
+	 * [EN] This function enters the values of the parameter positions in the original chromosome
+	 * and calculates the fitness 
+	 * 
+	 * 
+	 * 
+	 */
 	private void calculaFitness(HashSet<Integer> posiciones, ArrayList<Integer> orden) {
 		
 		ArrayList<Integer> cromosomaAux = new ArrayList<Integer>();
