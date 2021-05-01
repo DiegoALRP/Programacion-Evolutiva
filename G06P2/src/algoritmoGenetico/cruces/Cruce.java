@@ -7,7 +7,7 @@ import algoritmoGenetico.individuos.Individuo;
 
 /**
  * Universidad Complutense de Madrid.
- * Programación Evolutiva.
+ * Programaciï¿½n Evolutiva.
  * Grupo A 2021.
  * Profesor:
  * 	-Carlos Cervigon Ruckauer.
@@ -17,18 +17,18 @@ import algoritmoGenetico.individuos.Individuo;
  * @author 
  * Grupo G06:
  * 	-Miguel Robledo.
- * 	-Diego Alejandro Rodríguez Pereira.
+ * 	-Diego Alejandro Rodrï¿½guez Pereira.
  *
  */
 public abstract class Cruce {
 
 	
 	/**************************** ATRIBUTTES *******************************/
-	protected ArrayList<Integer> selec_cruce;	//Array de enteros que contiene el índice de los individuos de la población
+	protected ArrayList<Integer> selec_cruce;	//Array de enteros que contiene el ï¿½ndice de los individuos de la poblaciï¿½n
 	protected double probCruce;					//Probabilidad de Cruce
 	protected int punto_cruce;					//Punto de Cruce
 	protected int num_selec_cruce;				//Numero de individuos seleccionados para cruzar
-	protected int tamPoblacion;					//Tamaño de la población
+	protected int tamPoblacion;					//Tamaï¿½o de la poblaciï¿½n
 	protected int numCruce;
 	
 	/**************************** CONSTRUCTOR *******************************/
@@ -39,17 +39,17 @@ public abstract class Cruce {
 	public abstract void cruza(ArrayList<Individuo> poblacion, double probCruce);
 	
 	/**
-	 * [ES] Esta función se extiende a todas las subclases de la clase cruce. Su función es seleccionar a los
+	 * [ES] Esta funciï¿½n se extiende a todas las subclases de la clase cruce. Su funciï¿½n es seleccionar a los
 	 * individuos a cruzar. Cada individuo se selecciona con una probabilidad (la probabilidad de cruce que pasamos
-	 * como parámetro en la función principal). Y almacenamos el índice del individuo en un array.
-	 * Este método incluye una variación, y es que no cruza individuos con mismo cromosoma.
+	 * como parï¿½metro en la funciï¿½n principal). Y almacenamos el ï¿½ndice del individuo en un array.
+	 * Este mï¿½todo incluye una variaciï¿½n, y es que no cruza individuos con mismo cromosoma.
 	 * 
 	 * [EN] This function extends to all subclasses of the cruce's class. It's function it's to select the
 	 * individuals to cross. Each individual is selected with a probability (the crossover probability that we pass
 	 * as parameter of the principal function. And we store the index of the individual in an array.
 	 * This method includes a variation, it doens't crossover individuals with the same chromosome.
 	 * 
-	 * @param poblacion	[ES] La población de la cual queremos seleccionar a los individuos a cruzar.
+	 * @param poblacion	[ES] La poblaciï¿½n de la cual queremos seleccionar a los individuos a cruzar.
 	 * 					[EN] The population from which we select the individuals to cross.
 	 */
 	protected void seleccionaIndividuos(ArrayList<Individuo> poblacion) {
@@ -85,9 +85,9 @@ public abstract class Cruce {
 	}
 	
 	/**
-	 * [ES] Esta función utiliza la política de reemplazo "Reemplazar si es mejor".
-	 * Es decir, esta función evalua la aptitud de ambos padres y ambos hijos.
-	 * Y sólo se sustituye a los padres, en caso de que los hijos sean mejores que los padres.
+	 * [ES] Esta funciï¿½n utiliza la polï¿½tica de reemplazo "Reemplazar si es mejor".
+	 * Es decir, esta funciï¿½n evalua la aptitud de ambos padres y ambos hijos.
+	 * Y sï¿½lo se sustituye a los padres, en caso de que los hijos sean mejores que los padres.
 	 * En caso contrario, se mantiene a los padres y se descartan a los hijos.
 	 * 
 	 * [EN] This function uses the replacement policy "Replace if better".

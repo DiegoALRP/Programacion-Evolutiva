@@ -199,6 +199,8 @@ public class AlgoritmoGenetico {
 			reintroduceElite();
 			this.evaluaFitnessPoblacion();
 			
+			//System.out.println("Presion: " + this.presionSelectivaArray[generacionActual]);
+			
 			/*System.out.println("Feno: " + this.mejorFenotipoGeneracion[generacionActual]);
 			System.out.println("Fitness: " + this.mejorFitnessGeneracion[generacionActual]);
 			System.out.println("Presion: " + this.presionSelectivaArray[generacionActual]);
@@ -278,7 +280,7 @@ public class AlgoritmoGenetico {
 				mejorGeneracion > this.arrayMejorAbsoluto[generacionActual - 1]) {
 			this.arrayMejorAbsoluto[generacionActual] = mejorGeneracion;
 
-			if(this.generacionActual != 0 && (arrayMejorAbsoluto[this.generacionActual] - arrayMejorAbsoluto[this.generacionActual -1 ]) > 1)
+			if(this.generacionActual != 0 && (arrayMejorAbsoluto[this.generacionActual] - arrayMejorAbsoluto[this.generacionActual -1 ]) > 0.5)
 					this.generacionSolucion = this.generacionActual;
 
 			this.mejorFitnessAbsoluto = mejorGeneracion;
