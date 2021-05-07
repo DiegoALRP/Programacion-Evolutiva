@@ -2,40 +2,66 @@ package interfaz;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.List;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import Misc.Pair;
+import misc.Pair;
 
 public class panelHormiga extends JPanel{
 
-	 public panelHormiga()    {       
-		 setVisible( true );   
+	private final static int tamañoCelda = 20;
+	private final static int tamañoTablero = 32;
+	
+	private ArrayList<Pair> casillasComida;
+	private ArrayList<Pair> casillasHormiga;
+	
+	 public panelHormiga(ArrayList<Pair> casillasComida)    {       
+		 setVisible(true);   
+		 this.casillasComida = casillasComida;
 	 } 
 	 
-	public void paint( Graphics g )    {  
-	 for ( int x = 20; x <= 640; x += 20 )
-		 for ( int y = 20; y <= 640; y += 20 ) 
-		 { 
-			 g.setColor(Color.black);
-			 g.drawRect( x, y + 20, 20, 20 );
-			 g.setColor(Color.gray);
-			 g.fill3DRect(x +1, y + 21, 19, 19, true);
-			
+	public void paint(Graphics g)    {  
+		 for ( int x = tamañoCelda; x <= tamañoCelda * tamañoTablero; x += tamañoCelda)
+			 for ( int y = tamañoCelda; y <= 640; y += tamañoCelda ) 
+			 { 
+				 g.setColor(Color.black);
+				 g.drawRect( x, y + tamañoCelda, tamañoCelda, tamañoCelda);
+				 g.setColor(Color.gray);
+				 g.fill3DRect(x + 1, y + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1, true);
+				
+			 }
+		 g.setColor(Color.black);
+		 
+		 for(Pair p : casillasComida) {
+			 g.fillRect(tamañoCelda * p.get_first() + 1, tamañoCelda * p.get_second() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
 		 }
-	 g.setColor(Color.yellow);
-	 
-	 ArrayList<Pair> a = new ArrayList<Pair>(); // hormiga
-	 Pair p = new Pair(5,5);
-	 Pair p2 = new Pair(8,32);
-	 
-	 a.add(p2);
-	 a.add(p);
-
-	 for (Pair p3 : a ) {
-		 g.fillRect(20 * p3.get_first() + 1, 20 * p3.get_second() + 21, 19, 19);
-
-	 }
+		 
+		 g.setColor(Color.yellow);
+		 
+		 for(Pair p : casillasHormiga) {
+			 g.fillRect(tamañoCelda * p.get_first() + 1, tamañoCelda * p.get_second() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
+		 }
+	}
+	
+	/*public void pintaCamino(Graphics g, ArrayList<Pair> casillasComida) {
+		g.setColor(Color.yellow);
+		 
+		 for(Pair p : casillasComida) {
+			 g.fillRect(tamañoCelda * p.get_first() + 1, tamañoCelda * p.get_second() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
+		 }
+	}*/
+	
+	public void repaint(Graphics g) {
+		g.setColor(Color.yellow);
+		 
+		 for(Pair p : casillasHormiga) {
+			 g.fillRect(tamañoCelda * p.get_first() + 1, tamañoCelda * p.get_second() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
+		 }
+	}
+	
+	public void setCaminoHormiga(ArrayList<Pair> casillas) {
+		this.casillasHormiga = casillas;
 	}
 }

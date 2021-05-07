@@ -14,15 +14,15 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
-import Misc.Pair;
-
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JProgressBar;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import misc.Pair;
+
 import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
 
@@ -34,26 +34,14 @@ public class panelPrincipal {
 	private JTextField textField_2;
 	private JTextField porc_cruce;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					panelPrincipal window = new panelPrincipal();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private ArrayList<Pair> comida;
+
 
 	/**
 	 * Create the application.
 	 */
-	public panelPrincipal() {
+	public panelPrincipal(ArrayList<Pair> comida) {
+		this.comida = comida;
 		initialize();
 	}
 
@@ -64,6 +52,8 @@ public class panelPrincipal {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1004, 788);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		frame.setVisible(true);
 		
 		JPanel controlPanel = new JPanel();
 		
@@ -202,7 +192,13 @@ public class panelPrincipal {
 		
 		
 		///////////////////////////////////////////////////// 			TABBED PANE
-		panelHormiga hormiga = new panelHormiga();
+
+		panelHormiga hormiga = new panelHormiga(comida);
+		
+		ArrayList<Pair> a = new ArrayList<Pair>();
+		a.add(new Pair(4,5));
+		
+		hormiga.setCaminoHormiga(a);
 		graficas gr = new graficas();
 		tabbedPane.addTab("Hormiga", hormiga);
 		tabbedPane.addTab("Grafica", gr.getPlot());
