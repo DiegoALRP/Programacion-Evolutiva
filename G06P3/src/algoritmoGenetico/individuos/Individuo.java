@@ -1,5 +1,7 @@
 package algoritmoGenetico.individuos;
 
+import java.util.ArrayList;
+
 /**
  * Universidad Complutense de Madrid.
  * Programación Evolutiva.
