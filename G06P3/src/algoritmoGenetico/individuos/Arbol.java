@@ -1,6 +1,7 @@
 package algoritmoGenetico.individuos;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Universidad Complutense de Madrid.
@@ -64,6 +65,62 @@ public class Arbol {
 		}
 	}
 	
+	public Arbol(ArrayList<Operando> treeArray, int max_prof) {
+		
+		this.padre = null;
+		this.raiz = treeArray.get(0);
+		treeArray.remove(0);
+		this.max_prof = max_prof;
+		
+		hijos = new ArrayList<Arbol>();
+		for (int i = 0; i < treeArray.size(); i++) {
+			
+			Operando raiz = treeArray.get(0);
+			treeArray.remove(0);
+			//Arbol a = new Arbol(this, raiz, treeArray, max_prof - 1);
+			//hijos.add(a);
+		}
+	}
+	
+	public Arbol(Arbol padre, ArrayList<Operando> treeArray, int max_prof) {
+		
+		this.padre = padre;
+		this.raiz = treeArray.get(0);
+		treeArray.remove(0);
+		this.max_prof = max_prof;
+		
+		if (this.raiz.equalsProgN2() || this.raiz.equalsSiComida()) {
+			
+			this.numHijos = 2;
+			this.profundidad = 1;
+			this.esHoja = false;
+		}
+		else if (this.raiz.equalsProgN3()) {
+			
+			this.numHijos = 3;
+			this.profundidad = 1;
+			this.esHoja = false;
+		}
+		else {
+			
+			this.numHijos = 0;
+			this.profundidad = 0;
+			this.esHoja = true;
+		}
+		
+		if (raiz.isFunction()) {
+		
+			hijos = new ArrayList<Arbol>();
+			for (int i = 0; i < this.numHijos; i++) {
+				
+				//Operando raizH = treeArray.get(0);
+				//treeArray.remove(0);
+				//Poner aqui uncamente el remove
+				Arbol a = new Arbol(this, treeArray, max_prof - 1);
+				hijos.add(a);
+			}
+		}
+	}
 	/********************************* METHODS *********************************/
 	public void insert(Operando raiz) {
 		
@@ -103,13 +160,12 @@ public class Arbol {
 	
 	
 	/********************************* AUXILIARY METHODS *********************************/
-	
-	private void toArrayAux(ArrayList<String> array, Arbol a) {
+	public void toArrayAux(ArrayList<Operando> array) {
 		
-		array.add(a.getRaiz());
+		array.add(this.getRaiz());
 		
-		for(int i = 0; i < a.hijos.size(); i++){
-			toArrayAux(array, a.hijos.get(i));
+		for(int i = 0; i < this.hijos.size(); i++){
+			this.hijos.get(i).toArrayAux(array);
 		}
 	}
 	
@@ -127,6 +183,51 @@ public class Arbol {
 		return profundidad;
 	}
 	
+	protected void inicializaCompleto() {
+		
+		if (this.max_prof > 1) {
+			
+			for (int i = 0; i < numHijos; i++) {
+				
+				Operando op = new Operando(false);
+				Arbol a = new Arbol(this, op, max_prof - 1);
+				a.inicializaCompleto();
+				hijos.add(a);
+			}
+		}
+		else {
+			
+			for (int i = 0; i < numHijos; i++) {
+				
+				Operando op = new Operando(true);
+				Arbol a = new Arbol(this, op, max_prof - 1);
+				hijos.add(a);
+			}
+			
+		}
+	}
+	
+	protected StringBuilder arbolToString() {
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(raiz.getOperando());
+		
+		if (raiz.isFunction()) {
+			
+			sb.append("( ");
+			for (int i = 0; i < numHijos; i++) {
+				
+				sb.append(hijos.get(i).arbolToString());
+				sb.append(", ");
+			}
+			int in = sb.length();
+			sb.deleteCharAt(in - 1);
+			sb.deleteCharAt(in - 2);
+			sb.append(")");
+		}
+		
+		return sb;
+	}
 	
 	/**************************** GETTERS & SETTERS ****************************/
 	public Arbol getPadre() {
@@ -139,8 +240,8 @@ public class Arbol {
 		this.padre = padre;
 	}
 	
-	public String getRaiz() {
-		return raiz.getOperando();
+	public Operando getRaiz() {
+		return raiz;
 	}
 
 	public ArrayList<Arbol> getHijos() {

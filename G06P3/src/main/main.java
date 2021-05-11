@@ -1,9 +1,11 @@
 package main;
 
 import java.awt.EventQueue;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.Operando;
 import interfaz.panelPrincipal;
 import misc.rastroSantaFe;
@@ -24,8 +26,31 @@ public class main {
 			}
 		});*/
 		
-		String st = "PROGN2";
-		Operando op = new Operando(st);
-		System.out.println(op.equalsProgN2()); 
+		/*ArrayList<Integer> list = new ArrayList<Integer>();
+		list.add(1);
+		list.add(2);
+		list.add(3);
+		list.add(4);
+		list.add(5);
+		
+		int count = 0;
+		int end = list.size();
+		System.out.println(list);
+		for (int i = 0; i < list.size(); i++) {
+			
+			System.out.println(list.get(0));
+			list.remove(0);
+			//count++;
+		}
+		System.out.println(list);*/
+		
+		Individuo ind1 = new Individuo("Completo", 2);
+		System.out.println("Antes 1: " + ind1.printFenotipo());
+		Individuo ind2 = new Individuo("Completo", 2);
+		System.out.println("Antes 2: " + ind2.printFenotipo());
+		
+		ind2.copyFenotipe(ind1.copyFenotipe());
+		System.out.println("Despues 1: " + ind1.printFenotipo());
+		System.out.println("Despues 2: " + ind2.printFenotipo());
 	}
 }

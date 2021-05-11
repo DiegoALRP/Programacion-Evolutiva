@@ -125,4 +125,9 @@ public class Operando {
 		return this.operando;
 	}
 	
+	@Override
+	public String toString() {
+		
+		return this.operando;
+	}
 }
