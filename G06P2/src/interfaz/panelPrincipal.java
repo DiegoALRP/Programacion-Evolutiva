@@ -1,7 +1,6 @@
 package interfaz;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -54,7 +53,12 @@ public class panelPrincipal {
 	private Texto claseTexto;
 	private StringBuilder textoOriginal;
 	private StringBuilder textoAyuda;
-
+	
+	private graficas gr_texto1;
+	private graficas gr_texto2; 
+	private graficas gr_texto3 ;
+	private graficas gr_texto4;
+	private int current_plot;
 	/**
 	 * Create the application.
 	 */
@@ -127,44 +131,59 @@ public class panelPrincipal {
 		text_panel.add(scrollPane);
 		
 		JTextArea texto_traducido = new JTextArea();
-		texto_traducido.setBounds(578, 31, 370, 273);
-		text_panel.add(texto_traducido);
+		JScrollPane scrollPane_traducido = new JScrollPane(texto_traducido);
+		scrollPane_traducido.setBounds(578, 31, 370, 273);
 		graph_panel.setLayout(null);
 		texto_traducido.setBorder(BorderFactory.createLineBorder(Color.black));
 		texto_traducido.setLineWrap(true);
+		text_panel.add(scrollPane_traducido);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		graficas gr_texto1 = new graficas();
-		graficas gr_texto2 = new graficas();
-		graficas gr_texto3 = new graficas();
-		graficas gr_texto4 = new graficas();
+		gr_texto1 = new graficas();
+		gr_texto2 = new graficas();
+		gr_texto3 = new graficas();
+		gr_texto4 = new graficas();
 		tabbedPane.setBounds(18, 10, 939, 321);
-		tabbedPane.addTab("Texto 1", gr_texto1.getPlot());
-		tabbedPane.addTab("Texto 2", gr_texto2.getPlot());
-		tabbedPane.addTab("Texto 3", gr_texto3.getPlot());
-		tabbedPane.addTab("Texto 4", gr_texto4.getPlot());
+		tabbedPane.addTab("Texto 1 - Trabalenguas", gr_texto1.getPlot());
+		tabbedPane.addTab("Texto 2 - Lincon", gr_texto2.getPlot());
+		tabbedPane.addTab("Texto 3 - Arte", gr_texto3.getPlot());
+		tabbedPane.addTab("Texto 4 - Código", gr_texto4.getPlot());
 		graph_panel.add(tabbedPane);
 		solution_panel.setLayout(null);
 		
 		JLabel lblNewLabel_6 = new JLabel("Mejor Respuesta");
-		lblNewLabel_6.setBounds(106, 21, 64, 13);
+		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_6.setBounds(10, 25, 267, 13);
 		solution_panel.add(lblNewLabel_6);
 		
-		JLabel lblNewLabel_7 = new JLabel("Fitness = 000000");
-		lblNewLabel_7.setBounds(106, 56, 64, 13);
-		solution_panel.add(lblNewLabel_7);
+		JLabel lbl_fitness = new JLabel("Fitness: ");
+		lbl_fitness.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_fitness.setBounds(10, 61, 267, 13);
+		solution_panel.add(lbl_fitness);
 		
 		JLabel lblNewLabel_8 = new JLabel("a b c d e f g h i j k l m n o p q r s t u v w x y z ");
-		lblNewLabel_8.setBounds(20, 101, 222, 13);
+		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_8.setBounds(10, 126, 267, 13);
 		solution_panel.add(lblNewLabel_8);
 		
 		JLabel lblNewLabel_9 = new JLabel("______________________________");
-		lblNewLabel_9.setBounds(46, 124, 186, 13);
+		lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_9.setBounds(10, 154, 267, 13);
 		solution_panel.add(lblNewLabel_9);
 		
-		JLabel lblNewLabel_8_1 = new JLabel("a b c d e f g h i j k l m n o p q r s t u v w x y z ");
-		lblNewLabel_8_1.setBounds(20, 147, 222, 13);
-		solution_panel.add(lblNewLabel_8_1);
+		JLabel lbl_cromosoma = new JLabel("");
+		lbl_cromosoma.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_cromosoma.setBounds(10, 177, 267, 13);
+		solution_panel.add(lbl_cromosoma);
+		
+		JLabel label = new JLabel("New label");
+		label.setBounds(105, 84, 45, 0);
+		solution_panel.add(label);
+		
+		JLabel lbl_mejorGeneracion = new JLabel("Generacion: ");
+		lbl_mejorGeneracion.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_mejorGeneracion.setBounds(20, 93, 257, 13);
+		solution_panel.add(lbl_mejorGeneracion);
 		control_panel.setLayout(null);
 		
 		JLabel label_n = new JLabel("Tama\u00F1o Poblacion");
@@ -172,7 +191,7 @@ public class panelPrincipal {
 		label_n.setBounds(10, 24, 117, 13);
 		control_panel.add(label_n);
 		
-		tf_n = new JTextField("100");
+		tf_n = new JTextField("120");
 		tf_n.setBounds(137, 21, 96, 19);
 		control_panel.add(tf_n);
 		tf_n.setColumns(10);
@@ -182,7 +201,7 @@ public class panelPrincipal {
 		label_generaciones.setBounds(10, 53, 117, 13);
 		control_panel.add(label_generaciones);
 		
-		tf_generaciones = new JTextField("100");
+		tf_generaciones = new JTextField("200");
 		tf_generaciones.setBounds(137, 50, 96, 19);
 		control_panel.add(tf_generaciones);
 		tf_generaciones.setColumns(10);
@@ -225,11 +244,11 @@ public class panelPrincipal {
 		control_panel.add(labrl_mutacion);
 		
 		JComboBox comboBox_mutacion = new JComboBox();
-		comboBox_mutacion.setModel(new DefaultComboBoxModel(new String[] {"Inserci\u00F3n", "Intercambio", "Inversi\u00F3n", "Heur\u00EDstica"}));
+		comboBox_mutacion.setModel(new DefaultComboBoxModel(new String[] {"Inserci\u00F3n", "Intercambio", "Inversi\u00F3n", "Heur\u00EDstica", "Intercambio doble", "Incremento", "OrdenMD"}));
 		comboBox_mutacion.setBounds(101, 235, 85, 21);
 		control_panel.add(comboBox_mutacion);
 		
-		textField_probMutacion = new JTextField("20");
+		textField_probMutacion = new JTextField("40");
 		textField_probMutacion.setBounds(188, 236, 45, 19);
 		control_panel.add(textField_probMutacion);
 		textField_probMutacion.setColumns(10);
@@ -238,9 +257,9 @@ public class panelPrincipal {
 		ejecutar.setBounds(101, 309, 85, 21);
 		control_panel.add(ejecutar);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Apocalipsis");
-		chckbxNewCheckBox.setBounds(101, 282, 102, 21);
-		control_panel.add(chckbxNewCheckBox);
+		JCheckBox apocalipsisBox = new JCheckBox("Apocalipsis");
+		apocalipsisBox.setBounds(26, 282, 102, 21);
+		control_panel.add(apocalipsisBox);
 		
 		JLabel lblNewLabel = new JLabel("%");
 		lblNewLabel.setBounds(243, 85, 26, 13);
@@ -253,13 +272,17 @@ public class panelPrincipal {
 		JLabel lblNewLabel_2 = new JLabel("%");
 		lblNewLabel_2.setBounds(243, 239, 26, 13);
 		control_panel.add(lblNewLabel_2);
+		
+		JCheckBox desastreBox = new JCheckBox("Desastre Natural");
+		desastreBox.setBounds(137, 282, 132, 21);
+		control_panel.add(desastreBox);
 		frame.getContentPane().setLayout(groupLayout);
 		
 		ejecutar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				texto_traducido.setText("SE HA TRADUCIDO CORRECTAMENTE");
+				texto_traducido.setText("POR FAVOR SELECCIONA UN TEXTO");
 				int n = Integer.parseInt(tf_n.getText());
 				int numGeneraciones = Integer.parseInt(tf_generaciones.getText());
 				double elite = Double.parseDouble(tf_elite.getText());
@@ -272,10 +295,16 @@ public class panelPrincipal {
 				double probMutacion = Double.parseDouble(textField_probMutacion.getText());
 				
 				claseTexto = new Texto(textoOriginal, textoAyuda);
-				AlgoritmoGenetico  ag = new AlgoritmoGenetico(n, numGeneraciones, metodoSeleccion, metodoCruce, probCruce, 
-						metodoMutacion, probMutacion, elite, ngramas, claseTexto);
+				AlgoritmoGenetico  AG = new AlgoritmoGenetico(n, numGeneraciones, metodoSeleccion, metodoCruce, probCruce, 
+						metodoMutacion, probMutacion, elite, ngramas, claseTexto, apocalipsisBox.isSelected(), desastreBox.isSelected());
 				//AlgoritmoGenetico ag = new AlgoritmoGenetico();
-				ag.startAlgorithm();
+				AG.startAlgorithm();
+				actualizaPlots(Integer.parseInt(tf_generaciones.getText()), AG.getArrayMejorAbsoluto(), AG.getMejorFitnessGeneracion(), AG.getMediaFitnessGeneracion(), AG.getPresionSelectivaArray());
+				lbl_fitness.setText("Fitness = " + AG.getMejorFitnessAbsoluto());
+				lbl_cromosoma.setText(AG.getMejorCromosomaAbsoluto().toString());
+				texto_traducido.setText(AG.getMejorFenotipoAbsoluto().toString());
+				lbl_mejorGeneracion.setText("Generacion: " + AG.getMejorGeneracion());
+				
 			}
 		});
 		
@@ -283,8 +312,8 @@ public class panelPrincipal {
 			
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				int index = tabbedPane.getSelectedIndex();
-				seleccionaFichero(index);
+				current_plot = tabbedPane.getSelectedIndex();
+				seleccionaFichero(current_plot);
 				texto_original.setText("");
 				String pathString = System.getProperty("user.dir") + File.separator + eleccion + ".txt";
 				String pathStringAyuda = System.getProperty("user.dir") + File.separator + eleccion + "-Ayuda.txt";
@@ -339,6 +368,26 @@ public class panelPrincipal {
 				break;
 			}
 
+		}
+	}
+	
+	private void actualizaPlots(int numGeneraciones, double[] mejorAbsoluto, double[] mejorGeneracion, double[] mediaGeneracion, double[] presionSelectiva) {
+		
+		switch (current_plot) {
+			case 0: {
+				gr_texto1.actualiza(numGeneraciones, mejorAbsoluto, mejorGeneracion, mediaGeneracion, presionSelectiva);
+				break;
+			}case 1: {
+				gr_texto2.actualiza(numGeneraciones, mejorAbsoluto, mejorGeneracion, mediaGeneracion, presionSelectiva);
+				break;
+			}case 2: {
+				gr_texto3.actualiza(numGeneraciones, mejorAbsoluto, mejorGeneracion, mediaGeneracion, presionSelectiva);
+				break;
+			}case 3: {
+				gr_texto4.actualiza(numGeneraciones, mejorAbsoluto, mejorGeneracion, mediaGeneracion, presionSelectiva);
+				break;
+			}
+			
 		}
 	}
 }

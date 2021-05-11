@@ -25,9 +25,27 @@ import algoritmoGenetico.individuos.Individuo;
  */
 public class CrucePorOrden extends Cruce{
 	
+	/**************************** ATRIBUTTES *******************************/
 	private int punto1;
 	private int punto2;
+	private final int longCromo = 26;
 
+	
+	/**************************** CONSTRUCTOR ******************************/
+	
+	
+	/***************************** METHODS ********************************/
+	/**
+	 * [ES] Esta función selecciona los individuos a cruzar y los cruza dos a dos aplicando cruce por orden.
+	 * 
+	 * [EN] This function selects the individuals to cross and crosses them by pairs applying order crossover.
+	 * 
+	 * @param poblacion	[ES] La población original.
+	 * 					[EN] The original population.
+	 * 
+	 * @param probCruce	[ES] La probabilidad de cruce.
+	 * 					[EN] Cross probability.
+	 */
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
@@ -36,40 +54,57 @@ public class CrucePorOrden extends Cruce{
 		this.selec_cruce = new ArrayList<Integer>();
 		this.tamPoblacion = poblacion.size();
 		
-		int longitudCromosoma = 26;
-		
 		this.seleccionaIndividuos(poblacion);
 		
 		Random rand = new Random();
 		punto1 = rand.nextInt(20);
-		punto2 = rand.nextInt(26 - punto1) + punto1;
+		punto2 = rand.nextInt(longCromo - punto1) + punto1;
 		
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
-			
+			this.numCruce++;
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
 		}
 	}
 	
+	/**
+	 * [ES] Similar al cruce PMX. Se intercambian las posiciones entre dos puntos de corte.
+	 * Para el resto de posiciones se copian los valores del padre respetando el orden 
+	 * a partir de la zona copiada
+	 * 
+	 * 
+	 * [EN] Similar to PMX crossover. Positions are exchanged between two cut-off points.
+	 * For the remaining positions, the values are copied from the parent in the order of the two cut-off points
+	 * from the copied area
+	 * 
+	 * @param padre1	[ES] Primer padre.
+	 * 					[EN] First parent.
+	 * 
+	 * @param padre2	[ES] Segundo padre.
+	 * 					[EN] Second parent.
+	 */	 
 	protected void cruzaPadres(Individuo padre1, Individuo padre2) {
 		
 		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Integer> cromoPadre2 = padre2.getCromosoma();
 		
-		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>();
-		cromoPadre1Aux.addAll(cromoPadre1);
+		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>(longCromo);
+		ArrayList<Integer> cromoPadre2Aux = new ArrayList<Integer>(longCromo);
 		
-		ArrayList<Integer> cromoPadre2Aux = new ArrayList<Integer>();
-		cromoPadre2Aux.addAll(cromoPadre2);
-		
-		ArrayList<Integer> cromoHijo1 = new ArrayList<Integer>();
-		cromoHijo1.addAll(cromoPadre1Aux);
-		HashSet<Integer> setHijo1 = new HashSet<Integer>(26);
+		ArrayList<Integer> cromoHijo1 = new ArrayList<Integer>(longCromo);
+		HashSet<Integer> setHijo1 = new HashSet<Integer>(longCromo);
 
-		ArrayList<Integer> cromoHijo2 = new ArrayList<Integer>();
-		cromoHijo2.addAll(cromoPadre2Aux);
-		HashSet<Integer> setHijo2 = new HashSet<Integer>(26);
+		ArrayList<Integer> cromoHijo2 = new ArrayList<Integer>(longCromo);
+		HashSet<Integer> setHijo2 = new HashSet<Integer>(longCromo);
 		
-		int longitudCromo = 26;
+		for (int i = 0; i < longCromo; i++) {
+			
+			cromoPadre1Aux.add(cromoPadre1.get(i));
+			cromoPadre2Aux.add(cromoPadre2.get(i));
+			
+			cromoHijo1.add(cromoPadre1.get(i));
+			cromoHijo2.add(cromoPadre2.get(i));
+		}
+		
 		int longi = this.punto1;
 		int added1 = 0, added2 = 0;
 		while (longi <= this.punto2) {
@@ -115,4 +150,7 @@ public class CrucePorOrden extends Cruce{
 		
 		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
 	}
+	
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }

@@ -1,10 +1,8 @@
 package algoritmoGenetico.cruces;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 
@@ -26,7 +24,23 @@ import algoritmoGenetico.individuos.Individuo;
  *
  */
 public class CruceCX extends Cruce {
+	
+	/**************************** ATRIBUTTES *******************************/
 
+	/**************************** CONSTRUCTOR ******************************/
+	
+	/***************************** METHODS ********************************/
+	/**
+	 * [ES] Esta función selecciona los individuos a cruzar y los cruza dos a dos aplicando cruce por ciclos.
+	 * 
+	 * [EN] This function selects the individuals to cross and crosses them by pairs applying cicle crossover.
+	 * 
+	 * @param poblacion	[ES] La población original.
+	 * 					[EN] The original population.
+	 * 
+	 * @param probCruce	[ES] La probabilidad de cruce.
+	 * 					[EN] Cross probability.
+	 */
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
@@ -38,38 +52,32 @@ public class CruceCX extends Cruce {
 		this.seleccionaIndividuos(poblacion);
 		
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
-			
+			this.numCruce++;
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
 		}
 	}
-
+	
+	/**
+	 * [ES] Un padre comienza heredando la primera posicion del otro. Para la posicion original que ha sido 
+	 * sustituida, se consulta su ubicacion en el otro padre y "se baja" al padre actual siguiente un ciclo hasta
+	 * que termina.
+	 * 
+	 * 
+	 * [EN] One parent begins by inheriting the first position from the other. For the original position 
+	 * that has been substituted, its location in the other parent is queried and "down-cycled" to the
+	 * until it ends.
+	 * 
+	 * @param padre1	[ES] Primer padre.
+	 * 					[EN] First parent.
+	 * 
+	 * @param padre2	[ES] Segundo padre.
+	 * 					[EN] Second parent.
+	 */	
 	@Override
 	protected void cruzaPadres(Individuo padre1, Individuo padre2) {
 		
 		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Integer> cromoPadre2 = padre2.getCromosoma();
-		/*ArrayList<Integer> cromoPadre1 = new ArrayList<Integer>();
-		ArrayList<Integer> cromoPadre2 = new ArrayList<Integer>();
-		
-		cromoPadre1.add(1);
-		cromoPadre1.add(2);
-		cromoPadre1.add(3);
-		cromoPadre1.add(4);
-		cromoPadre1.add(5);
-		cromoPadre1.add(6);
-		cromoPadre1.add(7);
-		cromoPadre1.add(8);
-		cromoPadre1.add(9);
-		
-		cromoPadre2.add(4);
-		cromoPadre2.add(1);
-		cromoPadre2.add(2);
-		cromoPadre2.add(8);
-		cromoPadre2.add(7);
-		cromoPadre2.add(6);
-		cromoPadre2.add(9);
-		cromoPadre2.add(3);
-		cromoPadre2.add(5);*/
 		
 		int longCromo = cromoPadre1.size();
 		
@@ -113,11 +121,6 @@ public class CruceCX extends Cruce {
 			mapaIndices2.remove(toAdd);
 		}
 		
-		//Probar iterando por el hashmap
-		/*for (Integer num : mapaIndices1.) {
-			
-		}*/
-		
 		int a = 0;
 		int b = 0;
 		for (int i = 0; i < longCromo; i++) {
@@ -135,4 +138,6 @@ public class CruceCX extends Cruce {
 		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
 	}
 
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }

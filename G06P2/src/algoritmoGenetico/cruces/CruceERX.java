@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 
@@ -28,8 +27,24 @@ import algoritmoGenetico.individuos.Individuo;
  */
 public class CruceERX extends Cruce{
 
+	/**************************** ATRIBUTTES *******************************/
 	private int longCromo;
 	private boolean encontrado;
+	
+	/**************************** CONSTRUCTOR ******************************/
+	
+	/***************************** METHODS ********************************/
+	/**
+	 * [ES] Esta función selecciona los individuos a cruzar y los cruza dos a dos aplicando recombinacion de rutas.
+	 * 
+	 * [EN] This function selects the individuals to cross and crosses them by pairs applying rute recalculation.
+	 * 
+	 * @param poblacion	[ES] La población original.
+	 * 					[EN] The original population.
+	 * 
+	 * @param probCruce	[ES] La probabilidad de cruce.
+	 * 					[EN] Cross probability.
+	 */
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
@@ -41,11 +56,26 @@ public class CruceERX extends Cruce{
 		this.seleccionaIndividuos(poblacion);
 		
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
-			
+			this.numCruce++;
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
 		}
 	}
-
+	
+	/**
+	 * [ES] Para cada dos progenitores se calcula la matriz de adyacencia(matriz con los vecinos).
+	 * Una vez construida, para cada posicion que se quiera intercambiar se seleccionará.
+	 * La siguiente posición  será aquella con conexiones minimas en la tabla de adyacencia.
+	 * 
+	 * [EN] For both of the two parents, the adjacent matrix (matrix with neighbours) is calculated.
+	 * Once built, for each position to be exchanged, it will cross.
+	 * The next position will be the one with minimal connections in the adjacency table.
+	 * 
+	 * @param poblacion	[ES] La población original.
+	 * 					[EN] The original population.
+	 * 
+	 * @param probCruce	[ES] La probabilidad de cruce.
+	 * 					[EN] Cross probability.
+	 */
 	@Override
 	protected void cruzaPadres(Individuo padre1, Individuo padre2) {
 		
@@ -114,79 +144,7 @@ public class CruceERX extends Cruce{
 		encontrado = false;
 		this.funcionRecursiva(cromoHijo2Aux, setCromoHijo2, 1, tablaConectividades, cromoHijo2);
 		
-		int p = 0;
-		
 		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
-		/*ArrayList<Integer> cromoHijo1 = new ArrayList<Integer>(longCromo);
-		HashSet<Integer> setCromoHijo1 = new HashSet<Integer>(longCromo);
-		Random rand = new Random();
-		
-		int added = 1;
-		cromoHijo1.add(cromoPadre1.get(0));
-		setCromoHijo1.add(cromoPadre1.get(0));
-		while (added < longCromo) {
-			
-			ArrayList<Integer> array = new ArrayList<Integer>(2);
-			int minSize = Integer.MAX_VALUE;
-			int size;
-			for (int toAdd : tablaConectividades.get(cromoHijo1.get(added - 1))) {
-				
-				size = tablaConectividades.get(toAdd).size();
-				if (!setCromoHijo1.contains(toAdd)) {
-					if (size == minSize) {
-						
-						array.add(toAdd);
-					}
-					if (size < minSize) {
-						
-						minSize = size;
-						array.clear();
-						array.add(toAdd);
-					}
-				}
-			}
-			
-			int finalAdd = array.get(rand.nextInt(array.size()));
-			cromoHijo1.add(finalAdd);
-			setCromoHijo1.add(finalAdd);
-			added++;
-		}
-		
-		ArrayList<Integer> cromoHijo2 = new ArrayList<Integer>(longCromo);
-		HashSet<Integer> setCromoHijo2 = new HashSet<Integer>(longCromo);
-		
-		added = 1;
-		cromoHijo2.add(cromoPadre2.get(0));
-		setCromoHijo2.add(cromoPadre2.get(0));
-		while (added < longCromo) {
-			
-			ArrayList<Integer> array = new ArrayList<Integer>(2);
-			int minSize = Integer.MAX_VALUE;
-			int size;
-			for (int toAdd : tablaConectividades.get(cromoHijo2.get(added - 1))) {
-				
-				size = tablaConectividades.get(toAdd).size();
-				if (!setCromoHijo2.contains(toAdd)) {
-					if (size == minSize) {
-						
-						array.add(toAdd);
-					}
-					if (size < minSize) {
-						
-						minSize = size;
-						array.clear();
-						array.add(toAdd);
-					}
-				}
-			}
-			
-			int finalAdd = array.get(rand.nextInt(array.size()));
-			cromoHijo2.add(finalAdd);
-			setCromoHijo2.add(finalAdd);
-			added++;
-		}
-		
-		int pp = 1;*/
 	}
 
 	private void funcionRecursiva(ArrayList<Integer> cromosoma, HashSet<Integer> setCromosoma, int numAdded,
@@ -226,4 +184,6 @@ public class CruceERX extends Cruce{
 			}
 		}
 	}
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }

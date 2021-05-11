@@ -25,10 +25,28 @@ import algoritmoGenetico.individuos.Individuo;
  */
 public class CruceOXPP extends Cruce {
 
+	/**************************** ATRIBUTTES *******************************/
 	private int[] puntos;
 	private final int numPuntos = 6;
 	private int longCromo;
 	private HashSet<Integer> setPuntos;
+	
+	/**************************** CONSTRUCTOR ******************************/
+	
+	/***************************** METHODS ********************************/
+	
+	/**
+	 * [ES] Variante del cruce por orden con posiciones prioritarias
+	 * 
+	 * 
+	 * [EN] Variant of the order crossover with priority positions.
+	 * 
+	 * @param poblacion	[ES] Poblacion original.
+	 * 					[EN] Original population.
+	 * 
+	 * @param probCruce	[ES] Probabilidad de cruce
+	 * 					[EN] Crossover probability.
+	 */	 
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 
@@ -57,7 +75,7 @@ public class CruceOXPP extends Cruce {
 		}
 		
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
-			
+			this.numCruce++;
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
 		}
 	}
@@ -67,33 +85,6 @@ public class CruceOXPP extends Cruce {
 		
 		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Integer> cromoPadre2 = padre2.getCromosoma();
-		
-		/*this.longCromo = 9;
-		ArrayList<Integer> cromoPadre1 = new ArrayList<Integer>(longCromo);
-		ArrayList<Integer> cromoPadre2 = new ArrayList<Integer>(longCromo);
-		for (int i = 0; i < longCromo; i++) {
-			cromoPadre1.add(i + 1);
-		}
-		cromoPadre2.add(4);
-		cromoPadre2.add(5);
-		cromoPadre2.add(2);
-		cromoPadre2.add(1);
-		cromoPadre2.add(8);
-		cromoPadre2.add(7);
-		cromoPadre2.add(6);
-		cromoPadre2.add(9);
-		cromoPadre2.add(3);
-		
-		this.puntos[0] = 2;
-		this.puntos[1] = 3;
-		this.puntos[2] = 5;
-		this.puntos[3] = 8;
-		
-		this.setPuntos.clear();
-		this.setPuntos.add(3);
-		this.setPuntos.add(4);
-		this.setPuntos.add(6);
-		this.setPuntos.add(9);*/
 		
 		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>(longCromo);
 		ArrayList<Integer> cromoPadre2Aux = new ArrayList<Integer>(longCromo);
@@ -147,4 +138,6 @@ public class CruceOXPP extends Cruce {
 		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
 	}
 
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }

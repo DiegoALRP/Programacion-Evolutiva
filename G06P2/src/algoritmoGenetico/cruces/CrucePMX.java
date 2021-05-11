@@ -25,10 +25,26 @@ import algoritmoGenetico.individuos.Individuo;
  */
 public class CrucePMX extends Cruce {
 
+	/**************************** ATRIBUTTES *******************************/
 	private int punto1;
 	private int punto2;
-	private final int longCromosoma = 26;
+	private final int longCromo = 26;
 	
+	/**************************** CONSTRUCTOR ******************************/
+	
+	
+	/***************************** METHODS ********************************/
+	/**
+	 * [ES] Esta función selecciona los individuos a cruzar y los cruza dos a dos aplicando cruce PLX.
+	 * 
+	 * [EN] This function selects the individuals to cross and crosses them by pairs applying PMX.
+	 * 
+	 * @param poblacion	[ES] La población original.
+	 * 					[EN] The original population.
+	 * 
+	 * @param probCruce	[ES] La probabilidad de cruce.
+	 * 					[EN] Cross probability.
+	 */
 	@Override
 	public void cruza(ArrayList<Individuo> poblacion, double probCruce) {
 		
@@ -41,35 +57,60 @@ public class CrucePMX extends Cruce {
 		
 		Random rand = new Random();
 		punto1 = rand.nextInt(20);
-		punto2 = rand.nextInt(26 - punto1) + punto1;
+		punto2 = rand.nextInt(longCromo - punto1) + punto1;
 		
 		for (int i = 0; i < this.num_selec_cruce; i += 2) {
 			
+			this.numCruce++;
 			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
 		}
 	}
 	
+	/**
+	 * [ES] Seleccionar dos puntos de corte e intercambiar las posiciones de los cromosomas entre dichos puntos.
+	 * Para el resto de posiciones, si la posicion que se quiere intercambiar no está en la subcadena, se copia.
+	 * Si la posición si esta en la subcadena, se copia el valor del otro padre. 
+	 * 
+	 * 
+	 * [EN] Select two cut points and swap the chromosome positions between them.
+	 * For the rest of the positions, if the position to be exchanged is not in the substring, it is copied.
+	 * If the position is in the substring, the value of the other parent is copied. 
+	 * 
+	 * @param padre1	[ES] Primer padre.
+	 * 					[EN] First parent.
+	 * 
+	 * @param padre2	[ES] Segundo padre.
+	 * 					[EN] Second parent.
+	 */	 
 	protected void cruzaPadres(Individuo padre1, Individuo padre2) {
 		
 		ArrayList<Integer> cromoPadre1 = padre1.getCromosoma();
 		ArrayList<Integer> cromoPadre2 = padre2.getCromosoma();
 		
-		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>();
-		cromoPadre1Aux.addAll(cromoPadre1);
+		ArrayList<Integer> cromoPadre1Aux = new ArrayList<Integer>(longCromo);
+		ArrayList<Integer> cromoPadre2Aux = new ArrayList<Integer>(longCromo);
 		
-		ArrayList<Integer> cromoPadre2Aux = new ArrayList<Integer>();
-		cromoPadre2Aux.addAll(cromoPadre2);
-		
-		ArrayList<Integer> cromoHijo1 = new ArrayList<Integer>();
-		cromoHijo1.addAll(cromoPadre1Aux);
-		HashSet<Integer> setHijo1 = new HashSet<Integer>(26);
+		ArrayList<Integer> cromoHijo1 = new ArrayList<Integer>(longCromo);
+		HashSet<Integer> setHijo1 = new HashSet<Integer>(longCromo);
 
-		ArrayList<Integer> cromoHijo2 = new ArrayList<Integer>();
-		cromoHijo2.addAll(cromoPadre2Aux);
-		HashSet<Integer> setHijo2 = new HashSet<Integer>(26);
+		ArrayList<Integer> cromoHijo2 = new ArrayList<Integer>(longCromo);
+		HashSet<Integer> setHijo2 = new HashSet<Integer>(longCromo);
 		
-		ArrayList<Integer> cromoHijo1Aux = new ArrayList<>();
-		ArrayList<Integer> cromoHijo2Aux = new ArrayList<Integer>();
+		ArrayList<Integer> cromoHijo1Aux = new ArrayList<Integer>(longCromo);
+		ArrayList<Integer> cromoHijo2Aux = new ArrayList<Integer>(longCromo);
+		
+		int a;
+		int b;
+		for (int i = 0; i < longCromo; i++) {
+			
+			a = cromoPadre1.get(i);
+			b = cromoPadre2.get(i);
+			
+			cromoPadre1Aux.add(a);
+			cromoPadre2Aux.add(b);
+			cromoHijo1.add(a);
+			cromoHijo2.add(b);
+		}
 		
 		int longi = this.punto1;
 		int added1 = 0, added2 = 0;
@@ -86,8 +127,8 @@ public class CrucePMX extends Cruce {
 			longi++;
 		}
 		
-		int i1 = (this.punto2 + 1)%longCromosoma;
-		while (added1 < longCromosoma) {
+		int i1 = (this.punto2 + 1)%longCromo;
+		while (added1 < longCromo) {
 			
 			int toAdd = cromoPadre1Aux.get(i1);
 			if (!setHijo1.contains(toAdd)) {
@@ -110,11 +151,11 @@ public class CrucePMX extends Cruce {
 				setHijo1.add(toAdd);
 				added1++;
 			}
-			i1 = (i1 + 1)%longCromosoma;
+			i1 = (i1 + 1)%longCromo;
 		}
 		
-		int i2 = (this.punto2 + 1)%longCromosoma;
-		while (added2 < longCromosoma) {
+		int i2 = (this.punto2 + 1)%longCromo;
+		while (added2 < longCromo) {
 			
 			int toAdd = cromoPadre2Aux.get(i2);
 			if (!setHijo2.contains(toAdd)) {
@@ -137,10 +178,12 @@ public class CrucePMX extends Cruce {
 				setHijo2.add(toAdd);
 				added2++;
 			}
-			i2 = (i2 + 1)%longCromosoma;
+			i2 = (i2 + 1)%longCromo;
 		}
 		
 		sustituyePadres(padre1, padre2, cromoHijo1, cromoHijo2, cromoPadre1Aux, cromoPadre2Aux);
 	}
 
+	
+	/**************************** GETTERS & SETTERS ********************************/
 }

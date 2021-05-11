@@ -12,7 +12,7 @@ import algoritmoGenetico.individuos.Individuo;
  * Profesor:
  * 	-Carlos Cervigon Ruckauer.
  * 
- * Clase Mutacion.
+ * Clase Abstracta Mutacion.
  * 
  * @author 
  * Grupo G06:
@@ -20,17 +20,20 @@ import algoritmoGenetico.individuos.Individuo;
  * 	-Diego Alejandro Rodríguez Pereira.
  *
  */
-
 public abstract class Mutacion {
 
+	
 	/**************************** ATRIBUTTES *******************************/
 	protected double probMutacion;
+	protected int numMutaciones;
+	
 	
 	/**************************** CONSTRUCTOR *******************************/
+	
+	
 	/***************************** METHODS ********************************/
 	public void muta(ArrayList<Individuo> poblacion, double probMutacion) {
 		
-		//TODO: probar seleccionando a toda la poblacion
 		this.probMutacion = probMutacion;
 		
 		Random rand = new Random();
@@ -38,6 +41,7 @@ public abstract class Mutacion {
 			
 			if (rand.nextDouble() < this.probMutacion) {
 				
+				this.numMutaciones++;
 				mutaIndividuo(poblacion.get(i));
 			}
 		}
@@ -47,5 +51,9 @@ public abstract class Mutacion {
 	protected abstract void mutaIndividuo(Individuo individuo);
 	
 	
-	/**************************** GET & SET ********************************/
+	/**************************** GETTERS & SETTERS ********************************/
+	
+	public int getNumMutaciones() {
+		return this.numMutaciones;
+	}
 }

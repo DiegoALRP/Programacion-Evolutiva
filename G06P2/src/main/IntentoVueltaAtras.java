@@ -16,7 +16,7 @@ public class IntentoVueltaAtras {
 	public IntentoVueltaAtras() {
 		
 		ng = new NGramas();
-		ng.loadHashs();
+		ng.loadNGrams();
 		
 		StringBuilder st = new StringBuilder("Eqa ycwe aqqt aqcit v aqqtwecwb wecwb zn v aqqtwecwb wqcit wecwb aqqt?  Zr aqcit wecwb vii rep aqqt revr v aqqtwecwb wqcit, zn v aqqtwecwb wqcit wecwb aqqt.");
 		StringBuilder st2 = new StringBuilder();

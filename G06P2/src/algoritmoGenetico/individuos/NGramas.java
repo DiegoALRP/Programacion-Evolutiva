@@ -12,7 +12,7 @@ import java.util.Scanner;
  * Profesor:
  * 	-Carlos Cervigon Ruckauer.
  * 
- * Clase Mutacion.
+ * Clase NGramas.
  * 
  * @author 
  * Grupo G06:
@@ -23,6 +23,7 @@ import java.util.Scanner;
 
 public class NGramas {
 
+	
 	/**************************** ATRIBUTTES *******************************/
 	protected HashMap<String, Double> frecuenciaMonogramas;
 	protected HashMap<String, Double> frecuenciaBigramas;
@@ -37,8 +38,10 @@ public class NGramas {
 	private final int tamCuadragrama = 389373;
 	private final int tamQuintagrama = 4354914;
 	private final int tamPalabras = 706375;
-	/**************************** CONSTRUCTOR *******************************/
 	
+	
+	
+	/**************************** CONSTRUCTOR *******************************/
 	public NGramas() {
 		
 		this.frecuenciaMonogramas = new HashMap<String, Double>(tamMonograma);
@@ -48,9 +51,11 @@ public class NGramas {
 		this.frecuenciaQuintagramas = new HashMap<String, Double>(tamQuintagrama);
 		this.frecuenciaPalabras = new HashMap<String, Double>(tamPalabras);
 	}
-	/***************************** METHODS ********************************/
 	
-	public void loadHashs() {
+	
+	
+	/***************************** METHODS ********************************/
+	public void loadNGrams() {
 		
 		try {
 			
@@ -60,6 +65,8 @@ public class NGramas {
 			this.loadQuadgrams();
 			this.loadQuintgrams();
 			this.loadWords();
+			
+			System.out.println("Terminado carga de TODOS los ficheros, gracias por la espera");
 			
 		} catch (FileNotFoundException e) {
 			
@@ -71,8 +78,9 @@ public class NGramas {
 	  * 
 	  * @throws FileNotFoundException
 	  */
-	public void loadMonograms() throws FileNotFoundException {
+	private void loadMonograms() throws FileNotFoundException {
 		
+		System.out.println("Cargando Monogramas....");
 		FileInputStream file = new FileInputStream("frecuencies/english_monograms_frecuencies.txt");
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(file);
@@ -82,16 +90,18 @@ public class NGramas {
 			this.frecuenciaMonogramas.put(st[0], Double.parseDouble(st[1]));
 		}
 		
-		System.out.println("Monosize: " + this.frecuenciaMonogramas.size());
+		System.out.println("Terminado carga Monogramas, número de palabras: " + this.frecuenciaMonogramas.size());
 	}
 	
 	/**
 	 * 
 	 * @throws FileNotFoundException
 	 */
-	public void loadBigrams() throws FileNotFoundException {
+	private void loadBigrams() throws FileNotFoundException {
 		
+		System.out.println("Cargando Bigramas....");
 		FileInputStream file = new FileInputStream("frecuencies/english_bigrams_frecuencies.txt");
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(file);
 		
 		while (sc.hasNextLine()) {
@@ -99,16 +109,18 @@ public class NGramas {
 			this.frecuenciaBigramas.put(st[0], Double.parseDouble(st[1]));
 		}
 		
-		System.out.println("Bisize: " + this.frecuenciaBigramas.size());
+		System.out.println("Terminado carga Bigramas , número de palabras: " + this.frecuenciaBigramas.size());
 	}
 	
 	/**
 	 * 
 	 * @throws FileNotFoundException
 	 */
-	public void loadTrigrams() throws FileNotFoundException {
+	private void loadTrigrams() throws FileNotFoundException {
 		
+		System.out.println("Cargando Trigramas....");
 		FileInputStream file = new FileInputStream("frecuencies/english_trigrams_frecuencies.txt");
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(file);
 		
 		while (sc.hasNextLine()) {
@@ -116,16 +128,18 @@ public class NGramas {
 			this.frecuenciaTrigramas.put(st[0], Double.parseDouble(st[1]));
 		}
 		
-		System.out.println("Trisize: " + this.frecuenciaTrigramas.size());
+		System.out.println("Terminado carga Trigramas , número de palabras: " + this.frecuenciaTrigramas.size());
 	}
 
 	/**
 	 * 
 	 * @throws FileNotFoundException
 	 */
-	public void loadQuadgrams() throws FileNotFoundException {
+	private void loadQuadgrams() throws FileNotFoundException {
 		
+		System.out.println("Cargando Cuadragramas....");
 		FileInputStream file = new FileInputStream("frecuencies/english_quadgrams_frecuencies.txt");
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(file);
 		
 		while (sc.hasNextLine()) {
@@ -133,16 +147,18 @@ public class NGramas {
 			this.frecuenciaCuadragramas.put(st[0], Double.parseDouble(st[1]));
 		}
 		
-		System.out.println("Quadsize: " + this.frecuenciaCuadragramas.size());
+		System.out.println("Terminado carga Cuadragramas , número de palabras: " + this.frecuenciaCuadragramas.size());
 	}
 	
 	/**
 	 * 
 	 * @throws FileNotFoundException
 	 */
-	public void loadQuintgrams() throws FileNotFoundException {
+	private void loadQuintgrams() throws FileNotFoundException {
 		
+		System.out.println("Cargando Quintagramas............. Por favor espere...");
 		FileInputStream file = new FileInputStream("frecuencies/english_quintgrams_frecuencies.txt");
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(file);
 		
 		while (sc.hasNextLine()) {
@@ -150,16 +166,18 @@ public class NGramas {
 			this.frecuenciaQuintagramas.put(st[0], Double.parseDouble(st[1]));
 		}
 		
-		System.out.println("Quintsize: " + this.frecuenciaQuintagramas.size());
+		System.out.println("Terminado carga Quintagramas , número de palabras: " + this.frecuenciaQuintagramas.size());
 	}
 	
 	/**
 	 * 
 	 * @throws FileNotFoundException
 	 */
-	public void loadWords() throws FileNotFoundException {
+	private void loadWords() throws FileNotFoundException {
 		
+		System.out.println("Cargando Palabras del Inglés........ Por favor espere...");
 		FileInputStream file = new FileInputStream("frecuencies/english_words_frecuencies.txt");
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(file);
 		
 		while (sc.hasNextLine()) {
@@ -167,8 +185,8 @@ public class NGramas {
 			this.frecuenciaPalabras.put(st[0], Double.parseDouble(st[1]));
 		}
 		
-		System.out.println("Wordssize: " + this.frecuenciaPalabras.size());
+		System.out.println("Terminado carga palabras, número de palabras: " + this.frecuenciaPalabras.size());
 	}
 	
-	/**************************** GET & SET ********************************/
+	/**************************** GETTERS & SETTERS ********************************/
 }

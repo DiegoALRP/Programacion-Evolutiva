@@ -3,30 +3,36 @@ package algoritmoGenetico;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Random;
 
 import algoritmoGenetico.cruces.Cruce;
-import algoritmoGenetico.cruces.CruceCO;
-import algoritmoGenetico.cruces.CruceCX;
-import algoritmoGenetico.cruces.CruceERX;
-import algoritmoGenetico.cruces.CruceOXPP;
 import algoritmoGenetico.cruces.CrucePMX;
-import algoritmoGenetico.cruces.CrucePorOrden;
 import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.NGramas;
 import algoritmoGenetico.individuos.Texto;
 import algoritmoGenetico.mutaciones.Mutacion;
-import algoritmoGenetico.mutaciones.MutacionHeuristica;
-import algoritmoGenetico.mutaciones.MutacionInsersion;
 import algoritmoGenetico.mutaciones.MutacionIntercambio;
-import algoritmoGenetico.mutaciones.MutacionInversion;
 import algoritmoGenetico.seleccion.Seleccion;
 import algoritmoGenetico.seleccion.SeleccionTorneo;
-import algoritmoGenetico.seleccion.SeleccionTorneoProbabilistico;
 
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Práctica 2
+ * 
+ * Clase Algoritmo Genético.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class AlgoritmoGenetico {
 	
 	/**************************** ATRIBUTTES *******************************/
@@ -41,17 +47,17 @@ public class AlgoritmoGenetico {
 	
 	private NGramas ngramas;
 	private Texto claseTexto;
-	private StringBuilder texto;
 	
 	private ArrayList<Individuo> poblacion;
 	private ArrayList<Individuo> elite;
-	private HashMap<Individuo, Double> plebe;
+	private ArrayList<Individuo> plebe;
 	private int generacionActual;
+	private int generacionSolucion;
 	
 	/** Individuo **/
 	//Mejor Individuo Absoluto
 	private Individuo mejorIndividuoAbsoluto;
-	private ArrayList<Integer> mejorCromosomaAbsoluto;
+	private String mejorCromosomaAbsoluto;
 	private StringBuilder mejorFenotipoAbsoluto;
 	private double mejorFitnessAbsoluto;
 	private double[] arrayMejorAbsoluto;
@@ -70,11 +76,26 @@ public class AlgoritmoGenetico {
 	private double mediaFitnessTotal;
 	private double[] mediaFitnessGeneracion;
 	
+	//Presion Selecctiva
+	private double presionSelecitiva;
+	private double[] presionSelectivaArray;
+	
+	//Apocalipsis
+	private boolean apocalipsis;
+	private int contadorApocalipsis;
+	private final int numGeneracionesApocalipsis = 50;
+	
+	//Pruebas
+	private boolean plebeBool;
+	
+	//Desastre Natural
+	private boolean desastre;
+	
 	/**************************** CONSTRUCTOR *******************************/
-	public AlgoritmoGenetico() {
+	public AlgoritmoGenetico(NGramas ngrama, boolean desastre, boolean plebeBool) {
 		
-		this.tamPoblacion = 700;
-		this.numGeneraciones = 300;
+		this.tamPoblacion = 120;
+		this.numGeneraciones = 200;
 		this.metodoSeleccion = new SeleccionTorneo();
 		this.metodoCruce = new CrucePMX();
 		this.porcCruce = 0.8;
@@ -82,52 +103,36 @@ public class AlgoritmoGenetico {
 		this.porcMutacion = 0.7;
 		this.porcElite = 0.02;
 		
-		//StringBuilder st = new StringBuilder("Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue.");
-		//StringBuilder st2 = new StringBuilder("Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue. Gtunfwveqw: Mfdue fw gtd, mfdue fw zrtpr, twb xtue fw enr Wtefqwtx Xrtvor Rtue.");
-		
-		/** texto 2*/
-		/*StringBuilder st = new StringBuilder("Oslv xesvh trc xhyhr ahtvx tqs slv otmkhvx zvslqkm osvmk sr mkpx esrmprhrm t rhg rtmpsr, esrehpyhc pr Jpzhvma, trc chcpetmhc ms mkh dvsdsxpmpsr mktm tjj ihr tvh evhtmhc hnltj. " +  
-				" Rsg gh tvh hrqtqhc pr t qvhtm epypj gtv, mhxmprq gkhmkhv mktm rtmpsr, sv tra rtmpsr, xs esrehpyhc trc xs chcpetmhc, etr jsrq hrclvh. Gh tvh ihm sr t qvhtm ztmmjh-ophjc so mktm gtv. Gh ktyh esih ms chcpetmh t dsvmpsr so mktm ophjc, tx t oprtj vhxmprq djteh osv mksxh gks khvh qtyh mkhpv jpyhx mktm mktm rtmpsr ipqkm jpyh. Pm px tjmsqhmkhv opmmprq trc dvsdhv mktm gh xksljc cs mkpx. " +  
+		/** Texto 2*/
+		/*StringBuilder st = new StringBuilder("Oslv xesvh trc xhyhr ahtvx tqs slv otmkhvx zvslqkm osvmk sr mkpx esrmprhrm t rhg rtmpsr, esrehpyhc pr Jpzhvma, trc chcpetmhc ms mkh dvsdsxpmpsr mktm tjj ihr tvh evhtmhc hnltj." + 
+				" Rsg gh tvh hrqtqhc pr t qvhtm epypj gtv, mhxmprq gkhmkhv mktm rtmpsr, sv tra rtmpsr, xs esrehpyhc trc xs chcpetmhc, etr jsrq hrclvh. Gh tvh ihm sr t qvhtm ztmmjh-ophjc so mktm gtv. Gh ktyh esih ms chcpetmh t dsvmpsr so mktm ophjc, tx t oprtj vhxmprq djteh osv mksxh gks khvh qtyh mkhpv jpyhx mktm mktm rtmpsr ipqkm jpyh. Pm px tjmsqhmkhv opmmprq trc dvsdhv mktm gh xksljc cs mkpx." + 
 				" Zlm, pr t jtvqhv xhrxh, gh etr rsm chcpetmh -- gh etr rsm esrxhevtmh -- gh etr rsm ktjjsg -- mkpx qvslrc. Mkh zvtyh ihr, jpyprq trc chtc, gks xmvlqqjhc khvh, ktyh esrxhevtmhc pm, otv tzsyh slv dssv dsghv ms tcc sv chmvtem. Mkh gsvjc gpjj jpmmjh rsmh, rsv jsrq vhihizhv gktm gh xta khvh, zlm pm etr rhyhv osvqhm gktm mkha cpc khvh. Pm px osv lx mkh jpyprq, vtmkhv, ms zh chcpetmhc khvh ms mkh lroprpxkhc gsvu gkpek mkha gks oslqkm khvh ktyh mklx otv xs rszja tcytrehc. Pm px vtmkhv osv lx ms zh khvh chcpetmhc ms mkh qvhtm mtxu vhitprprq zhosvh lx -- mktm ovsi mkhxh ksrsvhc chtc gh mtuh prevhtxhc chysmpsr ms mktm etlxh osv gkpek mkha qtyh mkh jtxm oljj ihtxlvh so chysmpsr -- mktm gh khvh kpqkja vhxsjyh mktm mkhxh chtc xktjj rsm ktyh cphc pr ytpr -- mktm mkpx rtmpsr, lrchv Qsc, xktjj ktyh t rhg zpvmk so ovhhcsi -- trc mktm qsyhvrihrm so mkh dhsdjh, za mkh dhsdjh, osv mkh dhsdjh, xktjj rsm dhvpxk ovsi mkh htvmk.");
-		StringBuilder st2 = new StringBuilder("mpsrrmkhsomk mkkhprhvtrvhhxsrxm gsljc smkhv ahtvx dhsdjh clvprq zhosvh mkvslqk tqtprxm nlhxmpsr cpypxpsr isxnlh ismpytmpsr dlwwjh dtvugta zjtru hfsmpe szbhempsr xloopf ohchf vhbspr bhghjjhva epmpwhrx itqtwprh vhdlzjpetr gsvu gsvuprq mkh so trc ms blxm jpuh syhv mkhi ahtv clvprq zteu aslv qtih zhosvh xekssj ksghyhv mkvslqk zhmghhr tvslrc ursg qsyhvrihrm ovsi isvh dhsdjh djteh dlzjpe opvxm otipja osjjsgprq lrpyhvxpma eslrma tjgtax dsjpeh ehrmhv xhvypeh osjjsgprq");
-		/*StringBuilder st2 = new StringBuilder("Oslv xesvh trc xhyhr ahtvx tqs slv otmkhvx zvslqkm osvmk sr mkpx esrmprhrm t rhg rtmpsr, esrehpyhc pr Jpzhvma, trc chcpetmhc ms mkh dvsdsxpmpsr mktm tjj ihr tvh evhtmhc hnltj. " + 
-				" Rsg gh tvh hrqtqhc pr t qvhtm epypj gtv, mhxmprq gkhmkhv mktm rtmpsr, sv tra rtmpsr, xs esrehpyhc trc xs chcpetmhc, etr jsrq hrclvh. Gh tvh ihm sr t qvhtm ztmmjh-ophjc so mktm gtv. Gh ktyh esih ms chcpetmh t dsvmpsr so mktm ophjc, tx t oprtj vhxmprq djteh osv mksxh gks khvh qtyh mkhpv jpyhx mktm mktm rtmpsr ipqkm jpyh. Pm px tjmsqhmkhv opmmprq trc dvsdhv mktm gh xksljc cs mkpx. " + 
-				" Zlm, pr t jtvqhv xhrxh, gh etr rsm chcpetmh -- gh etr rsm esrxhevtmh -- gh etr rsm ktjjsg -- mkpx qvslrc. Mkh zvtyh ihr, jpyprq trc chtc, gks xmvlqqjhc khvh, ktyh esrxhevtmhc pm, otv tzsyh slv dssv dsghv ms tcc sv chmvtem. Mkh gsvjc gpjj jpmmjh rsmh, rsv jsrq vhihizhv gktm gh xta khvh, zlm pm etr rhyhv osvqhm gktm mkha cpc khvh. Pm px osv lx mkh jpyprq, vtmkhv, ms zh chcpetmhc khvh ms mkh lroprpxkhc gsvu gkpek mkha gks oslqkm khvh ktyh mklx otv xs rszja tcytrehc. Pm px vtmkhv osv lx ms zh khvh chcpetmhc ms mkh qvhtm mtxu vhitprprq zhosvh lx -- mktm ovsi mkhxh ksrsvhc chtc gh mtuh prevhtxhc chysmpsr ms mktm etlxh osv gkpek mkha qtyh mkh jtxm oljj ihtxlvh so chysmpsr -- mktm gh khvh kpqkja vhxsjyh mktm mkhxh chtc xktjj rsm ktyh cphc pr ytpr -- mktm mkpx rtmpsr, lrchv Qsc, xktjj ktyh t rhg zpvmk so ovhhcsi -- trc mktm qsyhvrihrm so mkh dhsdjh, za mkh dhsdjh, osv mkh dhsdjh, xktjj rsm dhvpxk ovsi mkh htvmk." +
-				"Oslv xesvh trc xhyhr ahtvx tqs slv otmkhvx zvslqkm osvmk sr mkpx esrmprhrm t rhg rtmpsr, esrehpyhc pr Jpzhvma, trc chcpetmhc ms mkh dvsdsxpmpsr mktm tjj ihr tvh evhtmhc hnltj. " +
-				"Rsg gh tvh hrqtqhc pr t qvhtm epypj gtv, mhxmprq gkhmkhv mktm rtmpsr, sv tra rtmpsr, xs esrehpyhc trc xs chcpetmhc, etr jsrq hrclvh. Gh tvh ihm sr t qvhtm ztmmjh-ophjc so mktm gtv. Gh ktyh esih ms chcpetmh t dsvmpsr so mktm ophjc, tx t oprtj vhxmprq djteh osv mksxh gks khvh qtyh mkhpv jpyhx mktm mktm rtmpsr ipqkm jpyh. Pm px tjmsqhmkhv opmmprq trc dvsdhv mktm gh xksljc cs mkpx. " +
-				"Zlm, pr t jtvqhv xhrxh, gh etr rsm chcpetmh -- gh etr rsm esrxhevtmh -- gh etr rsm ktjjsg -- mkpx qvslrc. Mkh zvtyh ihr, jpyprq trc chtc, gks xmvlqqjhc khvh, ktyh esrxhevtmhc pm, otv tzsyh slv dssv dsghv ms tcc sv chmvtem. Mkh gsvjc gpjj jpmmjh rsmh, rsv jsrq vhihizhv gktm gh xta khvh, zlm pm etr rhyhv osvqhm gktm mkha cpc khvh. Pm px osv lx mkh jpyprq, vtmkhv, ms zh chcpetmhc khvh ms mkh lroprpxkhc gsvu gkpek mkha gks oslqkm khvh ktyh mklx otv xs rszja tcytrehc. Pm px vtmkhv osv lx ms zh khvh chcpetmhc ms mkh qvhtm mtxu vhitprprq zhosvh lx -- mktm ovsi mkhxh ksrsvhc chtc gh mtuh prevhtxhc chysmpsr ms mktm etlxh osv gkpek mkha qtyh mkh jtxm oljj ihtxlvh so chysmpsr -- mktm gh khvh kpqkja vhxsjyh mktm mkhxh chtc xktjj rsm ktyh cphc pr ytpr -- mktm mkpx rtmpsr, lrchv Qsc, xktjj ktyh t rhg zpvmk so ovhhcsi -- trc mktm qsyhvrihrm so mkh dhsdjh, za mkh dhsdjh, osv mkh dhsdjh, xktjj rsm dhvpxk ovsi mkh htvmk.");
 		*/
-		/** texto 3*/
-		/*StringBuilder st = new StringBuilder("GNX NVMVNL XP G QUEVNLV NGSCV PM WYZGS GOXUEUX"
-				+ "UVL US ONVGXUSC EULYGT, GYQUXPNH PN KVNMPNZUSC GNXUMGOXL. XWVLV GNXFPNBL VJKNVLL XWV GYXWPN'L UZGCUSGXUEV PN XVOWSUOGT LBUTT. GNX UL USXVSQVQ XP IV GKKNVOUGXVQ MPN UXL IVGYXH PN VZPXUPSGT KPFVN. US XWVUN ZPLX CVSVNGT MPNZ XWVLV GOXUEUXUVL USOTYQV XWV KNPQYOXUPS PM FPNBL PM GNX, XWV ONUXUOULZ PM GNX, XWV LXYQH PM XWV WULXPNH PM GNX, GSQ XWV GVLXWVXUO QULLVZUSGXUPS PM GNX. " + 
-				"GNX WGL WGQ G CNVGX SYZIVN PM QUMMVNVSX MYSOXUPSL XWNPYCWPYX UXL WULXPNH, ZGBUSC UXL KYNKPLV QUMMUOYTX XP GILXNGOX PN RYGSXUMH XP GSH LUSCTV OPSOVKX. XWUL QPVL SPX UZKTH XWGX XWV KYNKPLV PM GNX UL \"EGCYV\", IYX XWGX UX WGL WGQ ZGSH YSURYV, QUMMVNVSX NVGLPSL MPN IVUSC ONVGXVQ. " + 
-				"GNX OGS WGEV G KVNLPSGT MYSOXUPS, UX UL GS VJKNVLLUPS PM IGLUO WYZGS USLXUSOX MPN WGNZPSH, IGTGSOV, NWHXWZ. GNX GX XWUL TVEVT UL SPX GS GOXUPS PN GS PIDVOX, IYX GS USXVNSGT GKKNVOUGXUPS PM IGTGSOV GSQ WGNZPSH (IVGYXH), GSQ XWVNVMPNV GS GLKVOX PM IVUSC WYZGS IVHPSQ YXUTUXH. GNX GTLP KNPEUQVL G FGH XP VJKVNUVSOV PSV'L LVTM US NVTGXUPS XP XWV YSUEVNLV. XWUL VJKVNUVSOV ZGH PMXVS OPZV YSZPXUEGXVQ, GL PSV GKKNVOUGXVL GNX, ZYLUO PN KPVXNH. " + 
-				"PS XWV PXWVN WGSQ GNX ZGH WGEV G LPOUGT MYSOXUPS. GX UXL LUZKTVLX, GNX UL G MPNZ PM OPZZYSUOGXUPS. UX LVVBL XP VSXVNXGUS GSQ INUSC GIPYX G KGNXUOYTGN VZPXUPS PN ZPPQ, MPN XWV KYNKPLV PM NVTGJUSC PN VSXVNXGUSUSC XWV EUVFVN. GNX ZGH GTLP IV GS VJKNVLLUPS PM LPOUGT KNPXVLX, LVVBUSC XP RYVLXUPS GLKVOXL PM LPOUVXH. " + 
-				"XWV PTQVLX MPNZ PM GNX GNV EULYGT GNXL, FWUOW USOTYQV ONVGXUPS PM UZGCVL PN PIDVOXL US MUVTQL USOTYQUSC KGUSXUSC, LOYTKXYNV, KNUSXZGBUSC, KWPXPCNGKWH, GSQ PXWVN EULYGT ZVQUG. GNOWUXVOXYNV UL PMXVS USOTYQVQ GL PSV PM XWV EULYGT GNXL; WPFVEVN, TUBV XWV QVOPNGXUEV GNXL, UX USEPTEVL XWV ONVGXUPS PM PIDVOXL FWVNV XWV KNGOXUOGT OPSLUQVNGXUPSL PM YLV GNV VLLVSXUGT, US G FGH XWGX XWVH YLYGTTH GNV SPX US G KGUSXUSC, MPN VJGZKTV. ");
-		StringBuilder st2 = new StringBuilder("gnx nvmvnl xp g quevnlv ngscv pm wyzgs goxueuxuvl us onvgxusc eulygt, gyquxpnh pn kvnmpnzusc gnxumgoxl. xwvlv gnxgpnbl vjknvll xwv gyxwpn'l uzgcusgxuev pn xvowsuogt lbutt. gnx ul usxvsqvq xp iv gkknvougxvq mpn uxl ivgyxh pn vzpxupsgt kpgvn. us xwvun zplx cvsvngt mpnz xwvlv goxueuxuvl usotyqv xwv knpqyoxups pm gpnbl pm gnx, xwv onuxuoulz pm gnx, xwv lxyqh pm xwv wulxpnh pm gnx, gsq xwv gvlxwvxuo qullvzusgxups pm gnx. gnx wgl wgq g cnvgx syzivn pm qummvnvsx mysoxupsl xwnpycwpyx uxl wulxpnh, zgbusc uxl kynkplv qummuoytx xp gilxngox pn rygsxumh xp gsh lusctv opsovkx. xwul qpvl spx uzkth xwgx xwv kynkplv pm gnx ul 'egcyv', iyx xwgx ux wgl wgq zgsh ysuryv, qummvnvsx nvglpsl mpn ivusc onvgxvq. gnx ogs wgev g kvnlpsgt mysoxups, ux ul gs vjknvllups pm igluo wyzgs uslxusox mpn wgnzpsh, igtgsov, nwhxwz. gnx gx xwul tvevt ul spx gs goxups pn gs pidvox, iyx gs usxvnsgt gkknvougxups pm igtgsov gsq wgnzpsh (ivgyxh), gsq xwvnvmpnv gs glkvox pm ivusc wyzgs ivhpsq yxutuxh. gnx gtlp knpeuqvl g ggh xp vjkvnuvsov psv'l lvtm us nvtgxups xp xwv ysuevnlv. xwul vjkvnuvsov zgh pmxvs opzv yszpxuegxvq, gl psv gkknvougxvl gnx, zyluo pn kpvxnh. ps xwv pxwvn wgsq gnx zgh wgev g lpougt mysoxups. gx uxl luzktvlx, gnx ul g mpnz pm opzzysuogxups. ux lvvbl xp vsxvnxgus gsq inusc gipyx g kgnxuoytgn vzpxups pn zppq, mpn xwv kynkplv pm nvtgjusc pn vsxvnxgususc xwv euvgvn. gnx zgh gtlp iv gs vjknvllups pm lpougt knpxvlx, lvvbusc xp ryvlxups glkvoxl pm lpouvxh. xwv ptqvlx mpnz pm gnx gnv eulygt gnxl, gwuow usotyqv onvgxups pm uzgcvl pn pidvoxl us muvtql usotyqusc kgusxusc, loytkxynv, knusxzgbusc, kwpxpcngkwh, gsq pxwvn eulygt zvqug. gnowuxvoxynv ul pmxvs usotyqvq gl psv pm xwv eulygt gnxl; wpgvevn, tubv xwv qvopngxuev gnxl, ux useptevl xwv onvgxups pm pidvoxl gwvnv xwv kngoxuogt opsluqvngxupsl pm ylv gnv vllvsxugt, us g ggh xwgx xwvh ylygtth gnv spx us g kgusxusc, mpn vjgzktv. gpytq pxwvn hvgnl kvpktv qynusc ivmpnv xwnpycw gcguslx ryvlxups queulups zplryv zpxuegxups kyaatv kgnbggh itgsb vjpxuo pidvoxups lymmuj mvqvj nvdpus dvgvttvnh ouxuavsl zgcgausv nvkyituogs.");
-		*/
+		/** Texto 3*/
+		StringBuilder st = new StringBuilder("GNX NVMVNL XP G QUEVNLV NGSCV PM WYZGS GOXUEUXUVL US ONVGXUSC EULYGT, GYQUXPNH PN KVNMPNZUSC GNXUMGOXL. XWVLV GNXFPNBL VJKNVLL XWV GYXWPN'L UZGCUSGXUEV PN XVOWSUOGT LBUTT. GNX UL USXVSQVQ XP IV GKKNVOUGXVQ MPN UXL IVGYXH PN VZPXUPSGT KPFVN. US XWVUN ZPLX CVSVNGT MPNZ XWVLV GOXUEUXUVL USOTYQV XWV KNPQYOXUPS PM FPNBL PM GNX, XWV ONUXUOULZ PM GNX, XWV LXYQH PM XWV WULXPNH PM GNX, GSQ XWV GVLXWVXUO QULLVZUSGXUPS PM GNX." + 
+				"GNX WGL WGQ G CNVGX SYZIVN PM QUMMVNVSX MYSOXUPSL XWNPYCWPYX UXL WULXPNH, ZGBUSC UXL KYNKPLV QUMMUOYTX XP GILXNGOX PN RYGSXUMH XP GSH LUSCTV OPSOVKX. XWUL QPVL SPX UZKTH XWGX XWV KYNKPLV PM GNX UL \"EGCYV\", IYX XWGX UX WGL WGQ ZGSH YSURYV, QUMMVNVSX NVGLPSL MPN IVUSC ONVGXVQ." + 
+				"GNX OGS WGEV G KVNLPSGT MYSOXUPS, UX UL GS VJKNVLLUPS PM IGLUO WYZGS USLXUSOX MPN WGNZPSH, IGTGSOV, NWHXWZ. GNX GX XWUL TVEVT UL SPX GS GOXUPS PN GS PIDVOX, IYX GS USXVNSGT GKKNVOUGXUPS PM IGTGSOV GSQ WGNZPSH (IVGYXH), GSQ XWVNVMPNV GS GLKVOX PM IVUSC WYZGS IVHPSQ YXUTUXH. GNX GTLP KNPEUQVL G FGH XP VJKVNUVSOV PSV'L LVTM US NVTGXUPS XP XWV YSUEVNLV. XWUL VJKVNUVSOV ZGH PMXVS OPZV YSZPXUEGXVQ, GL PSV GKKNVOUGXVL GNX, ZYLUO PN KPVXNH." + 
+				"PS XWV PXWVN WGSQ GNX ZGH WGEV G LPOUGT MYSOXUPS. GX UXL LUZKTVLX, GNX UL G MPNZ PM OPZZYSUOGXUPS. UX LVVBL XP VSXVNXGUS GSQ INUSC GIPYX G KGNXUOYTGN VZPXUPS PN ZPPQ, MPN XWV KYNKPLV PM NVTGJUSC PN VSXVNXGUSUSC XWV EUVFVN. GNX ZGH GTLP IV GS VJKNVLLUPS PM LPOUGT KNPXVLX, LVVBUSC XP RYVLXUPS GLKVOXL PM LPOUVXH." + 
+				"XWV PTQVLX MPNZ PM GNX GNV EULYGT GNXL, FWUOW USOTYQV ONVGXUPS PM UZGCVL PN PIDVOXL US MUVTQL USOTYQUSC KGUSXUSC, LOYTKXYNV, KNUSXZGBUSC, KWPXPCNGKWH, GSQ PXWVN EULYGT ZVQUG. GNOWUXVOXYNV UL PMXVS USOTYQVQ GL PSV PM XWV EULYGT GNXL; WPFVEVN, TUBV XWV QVOPNGXUEV GNXL, UX USEPTEVL XWV ONVGXUPS PM PIDVOXL FWVNV XWV KNGOXUOGT OPSLUQVNGXUPSL PM YLV GNV VLLVSXUGT, US G FGH XWGX XWVH YLYGTTH GNV SPX US G KGUSXUSC, MPN VJGZKTV.");
+		
 		/** texto 4*/
-		//StringBuilder st = new StringBuilder("QY CIND TIVNMQIO QT ZBIOG MRW YQSW YZTMWTM QO UWFQHRWDQOG MRW MWKM, CIN EQVV GWM Z FIUW ZT Z DWEZDU MRZM EQVV TWDSW MI QBHDISW CIND GDZUW. MDC MI YQOW-MNOW MRW YQMOWTT YNOFMQIO TI MRZM MRW ZVGIDQMRB EIDJT YZTM. GIIU VNFJ.");
-		//StringBuilder st2 = new StringBuilder("qy cind tivnmqio qt zbiog mrw yqsw yztmwtm qo uwfqhrwdqog mrw mwkm, cin eqvv gwm z fiuw zt z dwezdu mrzm eqvv twdsw mi qbhdisw cind gdzuw. mdc mi yqow-mnow mrw yqmowtt ynofmqio ti mrzm mrw zvgidqmrb eidjt yztm. giiu vnfj. mrw iy zou mi antm vqjw iswd mrwb cwzd undqog lzfj cind gzbw lwyidw tfriiv riewswd mrdingr lwmewwo zdinou joie giswdobwom ydib bidw hwihvw hvzfw hnlvqf yqdtm yzbqvc yivvieqog noqswdtqmc finomc zvezct hivqfw fwomwd twdsqfw yivvieqog");
-		//StringBuilder st2 = new StringBuilder("qy cind tivnmqio qt zbiog mrw yqsw yztmwtm qo uwfqhrwdqog mrw mwkm, cin eqvv gwm z fiuw zt z dwezdu mrzm eqvv twdsw mi qbhdisw cind gdzuw. mdc mi yqow-mnow mrw yqmowtt ynofmqio ti mrzm mrw zvgidqmrb eidjt yztm. giiu vnfj. mrw iy zou mi antm vqjw iswd mrwb cwzd undqog lzfj cind gzbw lwyidw tfriiv riewswd mrdingr lwmewwo zdinou");
+		/*StringBuilder st = new StringBuilder("QY CIND TIVNMQIO QT ZBIOG MRW YQSW YZTMWTM QO UWFQHRWDQOG MRW MWKM, CIN EQVV GWM Z FIUW ZT Z DWEZDU MRZM EQVV TWDSW MI QBHDISW CIND GDZUW. " + 
+				"MDC MI YQOW-MNOW MRW YQMOWTT YNOFMQIO TI MRZM MRW ZVGIDQMRB EIDJT YZTM. GIIU VNFJ.");
+		StringBuilder st2 = new StringBuilder("qy cind tivnmqio qt zbiog mrw yqsw yztmwtm qo uwfqhrwdqog mrw mwkm, cin eqvv gwm z fiuw zt z dwezdu mrzm eqvv twdsw mi qbhdisw cind gdzuw. mdc mi yqow-mnow mrw yqmowtt ynofmqio ti mrzm mrw zvgidqmrb eidjt yztm. giiu vnfj. mrw iy zou mi antm vqjw iswd mrwb cwzd undqog lzfj cind gzbw lwyidw tfriiv riewswd mrdingr lwmewwo zdinou joie giswdobwom ydib bidw hwihvw hvzfw hnlvqf yqdtm yzbqvc yivvieqog noqswdtqmc finomc zvezct hivqfw fwomwd twdsqfw yivvieqog");
+		*/
+		StringBuilder st2 = new StringBuilder(st);
 		
-		StringBuilder st = new StringBuilder("Eqa ycwe aqqt aqcit v aqqtwecwb wecwb zn v aqqtwecwb wqcit wecwb aqqt?  Zr aqcit wecwb vii rep aqqt revr v aqqtwecwb wqcit, zn v aqqtwecwb wqcit wecwb aqqt.");
-		StringBuilder st2 = new StringBuilder();
-		st2.append(st);
-		st2.append("aqqt aqqtwecwb aqqtwecwb wecwb");
-		//st2.append(" ");
-		//st2.append(st);
-		
-		this.ngramas = new NGramas();
-		this.ngramas.loadHashs();
+		this.ngramas = ngrama;
 		this.claseTexto = new Texto(st, st2);
+		this.desastre = desastre;
+		this.plebeBool = plebeBool;
 		
 		this.inicializaVariables();
 	}
 	
 	public AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, Seleccion metodoSeleccion, 
 			Cruce metodoCruce, double porcCruce, Mutacion metodoMutacion, double porcMutacion, double porcElite,
-			NGramas ngramas, Texto claseTexto) {
+			NGramas ngramas, Texto claseTexto, boolean apocalipsis, boolean desastre) {
 		
 		this.tamPoblacion = tamPoblacion;
 		this.numGeneraciones = numGeneraciones;
@@ -141,13 +146,40 @@ public class AlgoritmoGenetico {
 		this.ngramas = ngramas;
 		this.claseTexto = claseTexto;
 		
-		System.out.println(claseTexto.getTextoOriginal());
-		System.out.println(claseTexto.getTextoAyuda());
+		this.apocalipsis = apocalipsis;
+		this.desastre = desastre;
+		if (claseTexto.getTextoOriginal().length() < 160) {
+			
+			this.porcCruce *= 2;
+			this.porcMutacion *= 2;
+		}
+		this.plebeBool = true;
+		
 		this.inicializaVariables();
 	}
 	
-	/***************************** METHODS ********************************/
+	/********************************** METHODS **********************************/
 	
+	/**
+	 * [ES] Método principal del algoritmo genético.
+	 * Aquí se ejecutan:
+	 * 	-Selección
+	 * 	-Cruce
+	 * 	-Mutación
+	 * 	-Elitismo (si procede)
+	 * 	-Desaste Natural (si procede)
+	 *  -Apocalipsis (si procede)
+	 *  
+	 * [EN] This is the main method of genetic algorithm
+	 * Here we execute:
+	 * 	-Selection
+	 * 	-Crossover
+	 * 	-Mutation
+	 * 	-Elitism (if applicable)
+	 * 	-Natural Disaster (if applicable)
+	 * 	-Apocalipsis (if applicable)
+	 * 
+	 */
 	public void startAlgorithm() {
 		
 		inicializaPoblacion();
@@ -158,86 +190,54 @@ public class AlgoritmoGenetico {
 			this.metodoCruce.cruza(poblacion, porcCruce);
 			this.metodoMutacion.muta(poblacion, porcMutacion);
 			
-			this.desastreNatural();
-			//this.evaluaFitnessPoblacion();
+			if (desastre) {
+				this.desastreNatural();
+			}
+			else {
+				this.evaluaFitnessPoblacion();
+			}
 			reintroduceElite();
 			this.evaluaFitnessPoblacion();
 			
-			System.out.println(this.mejorFenotipoGeneracion[generacionActual]);
-			System.out.println(this.mejorFitnessGeneracion[generacionActual]);
+			//System.out.println("Presion: " + this.presionSelectivaArray[generacionActual]);
+			
+			/*System.out.println("Feno: " + this.mejorFenotipoGeneracion[generacionActual]);
+			System.out.println("Fitness: " + this.mejorFitnessGeneracion[generacionActual]);
+			System.out.println("Presion: " + this.presionSelectivaArray[generacionActual]);
+			System.out.println("Media: " + this.mediaFitnessGeneracion[generacionActual]);
+			System.out.println("Peor: " + this.peorFitnessGeneracion[generacionActual]);*/
+			
+			if (this.apocalipsis) {
+				this.apocalipsis();
+			}
 			this.generacionActual++;
 		}
 		
-		imprimeMejor();
+		/*System.out.println("Cromosoma: " + this.mejorIndividuoAbsoluto.getCromosomaLetra());
+		System.out.println("FitnessMaximo: " + this.mejorFitnessAbsoluto);
+		System.out.println("PeorFitness: " + this.peorFitnessAbsoluto);
+		this.mediaFitnessTotal = mediaFitnessTotal/2;
+		this.mediaFitnessTotal = mediaFitnessTotal/numGeneraciones;
+		System.out.println("MediaFitness: " + this.mediaFitnessTotal);
+		System.out.println("NUMERO DE CRUCES: " + this.metodoCruce.getNumCruces());
+		System.out.println("NUMERO DE MUTACIONES: " + this.metodoMutacion.getNumMutaciones());*/
+		
 	}
 	
-	private void inicializaVariables() {
-		
-		arrayMejorAbsoluto = new double[numGeneraciones];
-		
-		mejorIndividuoGeneracion = new Individuo[numGeneraciones];
-		mejorCromosomaGeneracion = new ArrayList<ArrayList<Integer>>(numGeneraciones);
-		mejorFenotipoGeneracion = new StringBuilder[numGeneraciones];
-		mejorFitnessGeneracion = new double[numGeneraciones];
-		
-		peorFitnessGeneracion = new double[numGeneraciones];
-		
-		mediaFitnessGeneracion = new double[numGeneraciones];
-	}
-	
-	private void inicializaPoblacion() {
-		
-		this.poblacion = new ArrayList<Individuo>(tamPoblacion);
-		for (int i = 0; i < tamPoblacion; i++) {
-			
-			Individuo ind = new Individuo(claseTexto, ngramas);
-			poblacion.add(ind);
-		}
-	}
-	
-	private void imprimePoblacion() {
-		
-		double maxFitness = 0;
-		int index = 0;
-		
-		for (Individuo ind : this.poblacion) {
-			
-			/*System.out.println(ind.getFenotipe());
-			System.out.println(ind.getFitness());*/
-			double fitness = ind.getFitness();
-			if(fitness > maxFitness) {
-				
-				maxFitness = fitness;
-				index = poblacion.indexOf(ind);
-			}
-		}
-		
-		System.out.println(poblacion.get(index).getFenotipe());
-		System.out.println(poblacion.get(index).getFitness());
-	}
-	
-	private void imprimeMejor() {
-		
-		double maxFitness = 0;
-		int index = 0;
-		
-		for (Individuo ind : this.poblacion) {
-			
-			/*System.out.println(ind.getFenotipe());
-			System.out.println(ind.getFitness());*/
-			double fitness = ind.getFitness();
-			if(fitness > maxFitness) {
-				
-				maxFitness = fitness;
-				index = poblacion.indexOf(ind);
-			}
-		}
-		
-		System.out.println(poblacion.get(index).getFenotipe());
-		System.out.println(poblacion.get(index).getFitness());
-		System.out.println(poblacion.get(index).getCromosoma());
-	}
-	
+	/**
+	 * [ES] Este metodo evalua el valor de aptitud/fitness de la población.
+	 * Para ello primero se actualiza el valor de fitness de cada individuo.
+	 * Una vez actualizado, buscamos el mejor individuo de toda la población.
+	 * Y por último guardamos el valor del mejor individuo en los respectivos 
+	 * atributos de clase. (MejorIndividuoGeneracion, MejorIndividuoAbsoluto, ...)
+	 * 
+	 * [EN] This method evaluates population's fitness value.
+	 * It updates the fitness value of each individual.
+	 * Once updated, we search for the best individual in all the population.
+	 * Y last, we store the value of the best individual in the respective class's
+	 * attributes. (MejorIndividuoGeneracion, MejorIndividuoAbsoluto, ...)
+	 * 
+	 */
 	private void evaluaFitnessPoblacion() {
 		
 		double mejorGeneracion = -Double.MAX_VALUE;
@@ -254,6 +254,7 @@ public class AlgoritmoGenetico {
 			if (fitness > mejorGeneracion) {
 				mejorGeneracion = fitness;
 				mejorIndividuo = ind;
+				
 			}
 			//Peor Generacion
 			if (fitness < peorGeneracion) {
@@ -269,16 +270,22 @@ public class AlgoritmoGenetico {
 		
 		this.mejorIndividuoGeneracion[generacionActual] = new Individuo(claseTexto, ngramas, mejorIndividuo.getCromosoma());
 		
-		this.mediaFitnessGeneracion[generacionActual] = mediaGeneracion;
-		this.mediaFitnessTotal += mediaGeneracion;
+		this.mediaFitnessGeneracion[generacionActual] = mediaGeneracion/tamPoblacion;
+		this.mediaFitnessTotal += this.mediaFitnessGeneracion[generacionActual];
+		
+		this.presionSelecitiva = mejorGeneracion/(mediaGeneracion/tamPoblacion);
+		this.presionSelectivaArray[generacionActual] = mejorGeneracion/(mediaGeneracion/tamPoblacion);
 		
 		if (this.generacionActual == 0 || 
 				mejorGeneracion > this.arrayMejorAbsoluto[generacionActual - 1]) {
-			
 			this.arrayMejorAbsoluto[generacionActual] = mejorGeneracion;
+
+			if(this.generacionActual != 0 && (arrayMejorAbsoluto[this.generacionActual] - arrayMejorAbsoluto[this.generacionActual -1 ]) > 0.5)
+					this.generacionSolucion = this.generacionActual;
+
 			this.mejorFitnessAbsoluto = mejorGeneracion;
 			
-			this.mejorCromosomaAbsoluto = new ArrayList<Integer>(mejorIndividuo.getCromosoma());
+			this.mejorCromosomaAbsoluto = mejorIndividuo.getCromosomaLetra().toString();
 			this.mejorFenotipoAbsoluto = new StringBuilder(mejorIndividuo.getFenotipe());
 			this.mejorFitnessAbsoluto = mejorGeneracion;
 			
@@ -295,9 +302,13 @@ public class AlgoritmoGenetico {
 		this.peorFitnessGeneracion[generacionActual] = peorGeneracion;
 	}
 	
+	/**
+	 * [ES] Desastre natural reinicia individuos que estén consecutivos y
+	 * que tengan valores cercanos de fitness.
+	 * Para seleccionar los individuos, se 
+	 * 
+	 */
 	private void desastreNatural() {
-		
-		int contador = 0;
 		
 		ArrayList<Individuo> array = new ArrayList<Individuo>(5);
 		double menorFitness = 0;
@@ -307,7 +318,7 @@ public class AlgoritmoGenetico {
 			
 			fitness = ind.calculateFitness();
 			
-			if (fitness >= (menorFitness - (20+Math.log(generacionActual))) && fitness <= (mayorFitness + (20+Math.log(generacionActual)))) {
+			if (fitness >= (menorFitness - (15*this.presionSelecitiva+Math.log(generacionActual))) && fitness <= (mayorFitness + (15*this.presionSelecitiva+Math.log(generacionActual)))) {
 				
 				array.add(ind);
 				
@@ -334,34 +345,76 @@ public class AlgoritmoGenetico {
 					if (rand.nextBoolean()) {
 						
 						array.get(i).restartCromosome();
-						//System.out.println("RESTART");
-						contador++;
 					}
 				}
 			}
 		}
-		
-		System.out.println(contador);
 	}
 	
 	private void apocalipsis() {
 		
-		for (int i = 0; i < this.tamPoblacion; i++) {
+		if (this.generacionActual == 0 || this.mejorFitnessGeneracion[generacionActual] == this.mejorFitnessGeneracion[generacionActual - 1]) {
 			
-			if (i%5!=0) {
+			this.contadorApocalipsis += 1;
+		}
+		else {
+			
+			this.contadorApocalipsis = 0;
+		}
+		
+		if (this.contadorApocalipsis != 0 && this.contadorApocalipsis%this.numGeneracionesApocalipsis == 0) {
+			
+			System.out.println("\n APOCALIPSIS \n");
+			
+			Collections.sort(this.poblacion, new Comparator<Individuo>() {
+
+				@Override
+				public int compare(Individuo o1, Individuo o2) {
+					
+					return Double.compare(o2.getFitness(), o1.getFitness());
+				}
+			});
+			
+			int contador = 0;
+			for (int i = 0; i < this.tamPoblacion; i++) {
 				
-				this.poblacion.get(i).restartCromosome();
+				if (i < this.tamPoblacion*this.porcElite*2) {
+					
+					this.poblacion.get(i).restartCromosome();
+				}
+				else {
+					
+					if (contador < 5) {
+						
+						this.poblacion.get(i).restartCromosome();
+						contador++;
+					}
+					else {
+						
+						contador = 0;
+					}
+				}
 			}
+			
+			this.contadorApocalipsis = 0;
 		}
 	}
 	
-	public void generaElite() {
+	/**
+	 * [ES] Función que genera la élite de la población.
+	 * Recorre toda la población y se queda con los mejores individuos.
+	 * Aquí hemos agregado nuestra propia creación que hemos llamados "La Plebe"
+	 * Es básicamente lo mismo que 
+	 * 
+	 * 
+	 */
+	private void generaElite() {
 		
 		int numElite = (int) Math.ceil(this.tamPoblacion*this.porcElite);
-		int numPlebe = numElite*2;
+		int numPlebe = numElite*3;
 		
 		this.elite = new ArrayList<Individuo>(numElite);
-		this.plebe = new HashMap<Individuo, Double>(numPlebe);
+		this.plebe = new ArrayList<Individuo>(numPlebe);
 		
 		ArrayList<Individuo> poblacionAuxiliar = new ArrayList<Individuo>(this.poblacion);
 		Collections.sort(poblacionAuxiliar, new Comparator<Individuo>() {
@@ -376,16 +429,10 @@ public class AlgoritmoGenetico {
 		for (int i = 0; i < numElite; i++) {
 			
 			elite.add(poblacionAuxiliar.get(i));
-			//System.out.println(poblacionAuxiliar.get(i).getCromosoma());
-			//System.out.println("F1 :" + poblacionAuxiliar.get(i).calculateFitness());
-			//System.out.println("F2 :" + poblacionAuxiliar.get(i).calculateFitness());
-			//System.out.println("F3 :" + poblacionAuxiliar.get(i).calculateFitness());
 		}
 		for (int i = 0; i < numPlebe; i++) {
 			
-			//Individuo ind = poblacionAuxiliar.get(tamPoblacion/2 - i - 1);
-			Individuo ind = poblacionAuxiliar.get(i);
-			plebe.put(ind, ind.getFitness());
+			plebe.add(poblacionAuxiliar.get(tamPoblacion - i - 1));
 		}
 	}
 	
@@ -407,8 +454,6 @@ public class AlgoritmoGenetico {
 			indexAdded.add(index);
 			
 			Individuo eli = this.elite.get(numAdded);
-			//System.out.println(eli.getCromosoma());
-			//double fitnessEli = eli.getFitness();
 			double fitnessEli = eli.calculateFitness();
 			Individuo ple = this.poblacion.get(index);
 			double fitnessPle = ple.getFitness();
@@ -421,31 +466,70 @@ public class AlgoritmoGenetico {
 			}
 		}
 		
-		for (Map.Entry<Individuo, Double> ind : this.plebe.entrySet()) {
+		for (Individuo indPlebe : this.plebe) {
 			
-			double oldFitness = ind.getValue();
-			double newFitness = ind.getKey().getFitness();
-			//System.out.println(ind);
-			//System.out.println(ind.getKey());
-			//System.out.println(ind.getKey().getCromosoma());
+			index = rand.nextInt(this.tamPoblacion);
+			while (indexAdded.contains(index)) {
+				
+				index = rand.nextInt(this.tamPoblacion);
+			}
 			
-			for (Individuo indP : this.poblacion) {
+			indexAdded.add(index);
+			
+			double fitnessPlebe = indPlebe.getFitness();
+			Individuo indComparado = this.poblacion.get(index);
+			double fitnessComparado = indComparado.getFitness();
+			
+			if (fitnessPlebe > fitnessComparado && this.plebeBool) {
 				
-				if (indP.equals(ind.getKey())) {
-					System.out.println("!!!");
-				}
-			}
-			if (this.poblacion.contains(ind.getKey())) {
-				System.out.println("SI");
-			}
-			if (newFitness < oldFitness) {
-				
-				Individuo newInd = ind.getKey();
-				newInd = new Individuo(claseTexto, ngramas);
+				indComparado.setCromosoma(indPlebe.getCromosoma());
+				indComparado.calculateFitness();
 			}
 		}
 	}
-	/**************************** GET & SET ********************************/
+	
+	/***************************** AUXILIAR METHODS ********************************/
+	
+	/**
+	 * [ES] Esta función auxiliar inicializa los atributos de la clase.
+	 * [EN] This auxiliary function initialize the class's attributes.
+	 * 
+	 */
+	private void inicializaVariables() {
+		
+		arrayMejorAbsoluto = new double[numGeneraciones];
+		
+		mejorIndividuoGeneracion = new Individuo[numGeneraciones];
+		mejorCromosomaGeneracion = new ArrayList<ArrayList<Integer>>(numGeneraciones);
+		mejorFenotipoGeneracion = new StringBuilder[numGeneraciones];
+		mejorFitnessGeneracion = new double[numGeneraciones];
+		
+		peorFitnessGeneracion = new double[numGeneraciones];
+		
+		mediaFitnessGeneracion = new double[numGeneraciones];
+		
+		this.presionSelectivaArray = new double[numGeneraciones];
+	}
+	
+	/**
+	 * [ES] Inicializa la población, creando tantos nuevos individuos como el
+	 * tamaño de la población.
+	 * 
+	 * [EN] Initializes the population, creating as many new individual as
+	 * the size of the population.
+	 * 
+	 */
+	private void inicializaPoblacion() {
+		
+		this.poblacion = new ArrayList<Individuo>(tamPoblacion);
+		for (int i = 0; i < tamPoblacion; i++) {
+			
+			Individuo ind = new Individuo(claseTexto, ngramas);
+			poblacion.add(ind);
+		}
+	}
+	
+	/**************************** GETTERS & SETTERS ********************************/
 
 	public int getGeneracionActual() {
 		return generacionActual;
@@ -455,7 +539,7 @@ public class AlgoritmoGenetico {
 		return mejorIndividuoAbsoluto;
 	}
 
-	public ArrayList<Integer> getMejorCromosomaAbsoluto() {
+	public String getMejorCromosomaAbsoluto() {
 		return mejorCromosomaAbsoluto;
 	}
 
@@ -503,6 +587,12 @@ public class AlgoritmoGenetico {
 		return mediaFitnessGeneracion;
 	}
 	
+	public double[] getPresionSelectivaArray() {
+		return presionSelectivaArray;
+	}
 	
+	public String getMejorGeneracion() {
+		return "" + this.generacionSolucion;
+	}
 
 }

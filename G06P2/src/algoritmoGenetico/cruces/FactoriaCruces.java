@@ -1,9 +1,5 @@
 package algoritmoGenetico.cruces;
 
-import algoritmoGenetico.mutaciones.MutacionHeuristica;
-import algoritmoGenetico.mutaciones.MutacionInsersion;
-import algoritmoGenetico.mutaciones.MutacionIntercambio;
-
 /**
  * Universidad Complutense de Madrid.
  * Programación Evolutiva.
