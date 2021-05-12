@@ -32,6 +32,7 @@ public class Individuo {
 	private String metodoIni;
 	
 	private int fitness;
+	private int fitnessRanking;
 	private Pair casilla;
 	private ArrayList<Pair> comida;
 	private ArrayList<Pair> camino;
@@ -100,7 +101,6 @@ public class Individuo {
 			}
 			
 			String accion = terminales.get(pivote % terminales.size());
-			//String accion = siguienteAccion(terminales, pivote);
 			this.casilla = ejecutaAccion(accion);
 			
 			this.camino.add(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1));
@@ -199,6 +199,18 @@ public class Individuo {
 	
 	public ArrayList<Pair> getCamino(){
 		return this.camino;
+	}
+	
+	public String getInicializacion() {
+		return this.metodoIni;
+	}
+	public ArrayList<Pair> getComida() {
+		return this.comida;
+	}
+
+	public void setFitnessRanking(double probOfIth) {		//TODO
+		this.fitnessRanking = (int) Math.floor(probOfIth);
+		
 	}
 	
 }
