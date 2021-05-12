@@ -14,6 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import algoritmoGenetico.individuos.Individuo;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
@@ -50,7 +53,7 @@ public class panelPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1004, 788);
+		frame.setBounds(20, 20, 1004, 788);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.setVisible(true);
@@ -195,10 +198,22 @@ public class panelPrincipal {
 
 		panelHormiga hormiga = new panelHormiga(comida);
 		
-		ArrayList<Pair> a = new ArrayList<Pair>();
-		a.add(new Pair(4,5));
+		Individuo ind1 = new Individuo("Completo", 2, comida);
+		System.out.println("Antes 1: " + ind1.printFenotipo());
 		
-		hormiga.setCaminoHormiga(a);
+		
+		for(int i = 0; i < ind1.getTerminales().size(); i++) {
+			System.out.println(ind1.getTerminales().get(i));
+		}
+		
+		ind1.calculateFitness();
+		/*for(int i = 0; i < ind1.getCamino().size(); i++) {
+			System.out.println("Casilla X : " + ind1.getCamino().get(i).get_first());
+			System.out.println("Casilla Y : " + ind1.getCamino().get(i).get_second());
+			System.out.println("---");
+		}*/
+		System.out.println("Comida: " + ind1.getFitness());
+		hormiga.setCaminoHormiga(ind1.getCamino());
 		graficas gr = new graficas();
 		tabbedPane.addTab("Hormiga", hormiga);
 		tabbedPane.addTab("Grafica", gr.getPlot());
