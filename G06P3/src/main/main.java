@@ -7,24 +7,25 @@ import javax.swing.JOptionPane;
 
 import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.Operando;
+import algoritmoGenetico.individuos.RastroSantaFe;
 import interfaz.panelPrincipal;
-import misc.rastroSantaFe;
+import misc.Pair;
 
 public class main {
 
 	public static void main(String[] args) {
 		
-		/*EventQueue.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					rastroSantaFe sf = new rastroSantaFe();
+					RastroSantaFe sf = new RastroSantaFe();
 					panelPrincipal window = new panelPrincipal(sf.getComida());
 					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		});*/
+		});
 		
 		/*ArrayList<Integer> list = new ArrayList<Integer>();
 		list.add(1);
@@ -43,14 +44,23 @@ public class main {
 			//count++;
 		}
 		System.out.println(list);*/
-		
-		Individuo ind1 = new Individuo("Completo", 2);
+		/*RastroSantaFe sf = new RastroSantaFe();
+		Individuo ind1 = new Individuo("Completo", 2, sf.getComida());
 		System.out.println("Antes 1: " + ind1.printFenotipo());
-		Individuo ind2 = new Individuo("Completo", 2);
+		Individuo ind2 = new Individuo("Completo", 2, new ArrayList<Pair>());
 		System.out.println("Antes 2: " + ind2.printFenotipo());
 		
 		ind2.copyFenotipe(ind1.copyFenotipe());
 		System.out.println("Despues 1: " + ind1.printFenotipo());
 		System.out.println("Despues 2: " + ind2.printFenotipo());
+		
+		
+		for(int i = 0; i < ind1.getTerminales().size(); i++) {
+			System.out.println(ind1.getTerminales().get(i));
+		}
+		
+		ind1.calculateFitness();
+		System.out.println(ind1.getFitness());
+		*/
 	}
 }

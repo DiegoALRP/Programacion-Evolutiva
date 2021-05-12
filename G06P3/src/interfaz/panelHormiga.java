@@ -35,13 +35,13 @@ public class panelHormiga extends JPanel{
 		 g.setColor(Color.black);
 		 
 		 for(Pair p : casillasComida) {
-			 g.fillRect(tamañoCelda * p.get_first() + 1, tamañoCelda * p.get_second() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
+			 g.fillRect(tamañoCelda * p.get_y() + 1, tamañoCelda * p.get_x() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
 		 }
 		 
 		 g.setColor(Color.yellow);
 		 
 		 for(Pair p : casillasHormiga) {
-			 g.fillRect(tamañoCelda * p.get_first() + 1, tamañoCelda * p.get_second() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
+			 g.fillRect(tamañoCelda * p.get_y() + 1, tamañoCelda * p.get_x() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
 		 }
 	}
 	
@@ -49,7 +49,7 @@ public class panelHormiga extends JPanel{
 		g.setColor(Color.yellow);
 		 
 		 for(Pair p : casillasComida) {
-			 g.fillRect(tamañoCelda * p.get_first() + 1, tamañoCelda * p.get_second() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
+			 g.fillRect(tamañoCelda * p.get_y() + 1, tamañoCelda * p.get_x() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
 		 }
 	}*/
 	
@@ -57,7 +57,7 @@ public class panelHormiga extends JPanel{
 		g.setColor(Color.yellow);
 		 
 		 for(Pair p : casillasHormiga) {
-			 g.fillRect(tamañoCelda * p.get_first() + 1, tamañoCelda * p.get_second() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
+			 g.fillRect(tamañoCelda * p.get_y() + 1, tamañoCelda * p.get_x() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
 		 }
 	}
 	
