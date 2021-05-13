@@ -32,6 +32,6 @@ public class Pair {
 	}
 	
 	public boolean equals(Pair other) {
-		return this.x == other.get_x() + 1 && this.y == other.get_y() + 1;
+		return this.x == other.get_x() && this.y == other.get_y();
 	}
 }

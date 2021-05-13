@@ -48,12 +48,14 @@ public class Individuo {
 		
 		this.metodoIni = metodoIni;
 		this.profundidad = profundidad;
-		this.comida = comida;
+		this.comida = new ArrayList<Pair>(comida);
 		this.camino = new ArrayList<Pair>();
 		this.casilla = new Pair(0, 0);
 		this.direccion = new Pair(0, 1);
 		this.orientacionActual = "ESTE";
 		this.fitness = 0;
+		
+		this.camino.add(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1));
 		
 		this.inicializaCromosoma();
 	}
@@ -93,7 +95,8 @@ public class Individuo {
 		for(int i = 0; i < Individuo.numPasos; i++) {
 			
 			for(int j = 0; j < this.comida.size(); j++) {
-				if(this.comida.get(j).equals(casilla)) {
+				if(this.comida.get(j).equals(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1))) {
+
 					fitness++;
 					this.comida.remove(j);
 					break;
@@ -104,7 +107,6 @@ public class Individuo {
 			this.casilla = ejecutaAccion(accion);
 			
 			this.camino.add(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1));
-			
 			System.out.println("Casilla X : " + this.camino.get(i).get_x());
 			System.out.println("Casilla Y : " + this.camino.get(i).get_y());
 			System.out.println("Nueva orientacion: " + this.orientacionActual);
@@ -133,28 +135,28 @@ public class Individuo {
 	private Pair ejecutaAccion(String accion) {
 		
 		if((this.orientacionActual == "OESTE" && accion == "IZQUIERDA") || (this.orientacionActual == "ESTE" && accion == "DERECHA")) {
-			this.direccion = new Pair(1, 0);
+			this.direccion = new Pair(0, 1);
 			this.orientacionActual = "SUR";
 			
 		} else if((this.orientacionActual == "NORTE" && accion == "IZQUIERDA") || (this.orientacionActual == "SUR" && accion == "DERECHA")) {
-			this.direccion = new Pair(0, -1);
+			this.direccion = new Pair(-1, 0);
 			this.orientacionActual = "OESTE";
 			
 		} else if((this.orientacionActual == "ESTE" && accion == "IZQUIERDA") || (this.orientacionActual == "OESTE" && accion == "DERECHA")) {
-			this.direccion = new Pair(-1, 0);
+			this.direccion = new Pair(-0, -1);
 			this.orientacionActual = "NORTE";
 			
 		} else if((this.orientacionActual == "SUR" && accion == "IZQUIERDA") || (this.orientacionActual == "NORTE" && accion == "DERECHA")) {
-			this.direccion = new Pair(0, 1);
+			this.direccion = new Pair(1, 0);
 			this.orientacionActual = "ESTE";
 		}
 		
 		Pair casillaActual = new Pair(this.casilla.get_y(),this.casilla.get_x());
 		
 		if(accion == "AVANZA") {
-			casillaActual = new Pair(this.casilla.get_y() + this.direccion.get_y(), this.casilla.get_x() + this.direccion.get_x());
+			casillaActual = new Pair(this.casilla.get_x() + this.direccion.get_x(), this.casilla.get_y() + this.direccion.get_y());
 		
-			if(casillaActual.get_x() < 0) {					//casilla x
+			if(casillaActual.get_x() < 0) {						//casilla x
 				casillaActual.set_x(this.xSize);
 				
 			}else if(casillaActual.get_x() > this.xSize) {		//casilla x
