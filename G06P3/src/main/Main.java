@@ -11,7 +11,7 @@ import algoritmoGenetico.individuos.RastroSantaFe;
 import interfaz.panelPrincipal;
 import misc.Pair;
 
-public class main {
+public class Main {
 
 	public static void main(String[] args) {
 		
