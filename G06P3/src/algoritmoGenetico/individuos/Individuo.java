@@ -213,6 +213,11 @@ public class Individuo {
 	
 	
 	/**************************** GETTERS & SETTERS ****************************/
+	public Arbol getCromosoma() {
+		
+		return this.cromosoma;
+	}
+	
 	public ArrayList<Operando> getRefFenotipe() {
 		
 		return this.fenotipo;

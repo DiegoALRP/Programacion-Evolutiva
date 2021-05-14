@@ -36,6 +36,14 @@ public class Arbol {
 
 	
 	/******************************* CONSTRUCTOR ********************************/
+	
+	/**
+	 * Constructora 1
+	 * 
+	 * @param padre
+	 * @param raiz
+	 * @param max_prof
+	 */
 	public Arbol(Arbol padre, Operando raiz, int max_prof) {
 		
 		this.padre = padre;
@@ -67,6 +75,12 @@ public class Arbol {
 		}
 	}
 	
+	/**
+	 * Constructora 2
+	 * 
+	 * @param treeArray
+	 * @param max_prof
+	 */
 	public Arbol(ArrayList<Operando> treeArray, int max_prof) {
 		
 		this.padre = null;
@@ -84,6 +98,13 @@ public class Arbol {
 		}
 	}
 	
+	/**
+	 * Constructora 3
+	 * 
+	 * @param padre
+	 * @param treeArray
+	 * @param max_prof
+	 */
 	public Arbol(Arbol padre, ArrayList<Operando> treeArray, int max_prof) {
 		
 		this.padre = padre;
@@ -161,6 +182,16 @@ public class Arbol {
 	}
 	
 	public Arbol getSubTree(double probCruce) {
+	
+		for (int i = 0; i < numHijos; i++) {
+			
+			return this.hijos.get(i).getSubTreeAux(probCruce);
+		}
+		
+		return null;
+	}
+	
+	public Arbol getSubTreeAux(double probCruce) {
 		
 		Random rand = new Random();
 		double random = rand.nextDouble();
@@ -173,12 +204,30 @@ public class Arbol {
 			
 			if (this.numHijos < 1) {
 				
-				return this.padre.getSubTree(probCruce);
+				return this.padre;
 			}
 			else {
-				return this.hijos.get(rand.nextInt(this.numHijos)).getSubTree(probCruce);
+				
+				return this.hijos.get(rand.nextInt(this.numHijos)).getSubTreeAux(probCruce);
 			}
 		}
+	}
+	
+	public int getIndex(Operando op) {
+		
+		for (int i = 0; i < this.numHijos; i++) {
+			
+			if (hijos.get(i).getRaiz().equals(op)) {
+				
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	public void insertNewTree(Arbol a, int index) {
+		
+		hijos.set(index, a);
 	}
 	
 	/********************************* AUXILIARY METHODS *********************************/
@@ -339,5 +388,4 @@ public class Arbol {
 	public void setEsRaiz(boolean esRaiz) {
 		this.esRaiz = esRaiz;
 	}
-	
 }

@@ -3,6 +3,7 @@ package algoritmoGenetico.cruces;
 import java.util.ArrayList;
 import java.util.Random;
 
+import algoritmoGenetico.individuos.Arbol;
 import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.Operando;
 
@@ -46,9 +47,16 @@ public class Cruce {
 		this.seleccionaIndividuos(poblacion);
 	}
 	
-	private void cruzaPadres(Individuo padre1, Individuo padre2) {
+	public void cruzaPadres(Individuo padre1, Individuo padre2) {
 		
-		ArrayList<Operando> 
+		Arbol asub1 = padre1.getCromosoma().getSubTree(this.probCruce);
+		Arbol asub1Padre = asub1.getPadre();
+		
+		Arbol asub2 = padre2.getCromosoma().getSubTree(this.probCruce);
+		Arbol asub2Padre = asub2.getPadre();
+		
+		asub1Padre.insertNewTree(asub2, asub1Padre.getIndex(asub1.getRaiz()));
+		asub2Padre.insertNewTree(asub1, asub2Padre.getIndex(asub2.getRaiz()));
 	}
 	
 	/********************************* AUXILIARY METHODS *********************************/
@@ -120,7 +128,7 @@ public class Cruce {
 	}
 	
 	
-	protected void sustituyePadres(Individuo padre1, Individuo padre2, ArrayList<Integer> cromoHijo1, ArrayList<Integer>  cromoHijo2,
+	/*protected void sustituyePadres(Individuo padre1, Individuo padre2, ArrayList<Integer> cromoHijo1, ArrayList<Integer>  cromoHijo2,
 			ArrayList<Integer>  cromoPadre1Aux, ArrayList<Integer>  cromoPadre2Aux) {
 		
 		double fitnessP1 = padre1.getFitness();
@@ -134,7 +142,7 @@ public class Cruce {
 		
 		if (fitnessP1 > fitnessH1) padre1.setCromosoma(cromoPadre1Aux);
 		if (fitnessP2 > fitnessH2) padre2.setCromosoma(cromoPadre2Aux);
-	}
+	}*/
 	
 	
 	/**************************** GETTERS & SETTERS ****************************/
