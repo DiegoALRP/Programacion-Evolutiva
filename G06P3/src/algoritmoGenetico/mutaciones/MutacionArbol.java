@@ -5,7 +5,7 @@ import algoritmoGenetico.individuos.Individuo;
 public class MutacionArbol extends Mutacion{
 
 	@Override
-	protected void mutaIndividuo(Individuo individuo) {
+	public void mutaIndividuo(Individuo individuo) {
 		// TODO Auto-generated method stub
 		
 	}
