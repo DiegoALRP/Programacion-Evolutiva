@@ -210,7 +210,11 @@ public class Individuo {
 		return terminales;
 	}
 	
-	
+	/********************** AUXILIARY METHODS - Crossover **********************/
+	public void mutaTerminalSimple() {
+		
+		this.cromosoma.mutaTerminalSimple();
+	}
 	
 	/**************************** GETTERS & SETTERS ****************************/
 	public Arbol getCromosoma() {

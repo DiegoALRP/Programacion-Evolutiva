@@ -51,6 +51,30 @@ public class Operando {
 		}
 	}
 	
+	public Operando(boolean isTerminal, String op) {
+		
+		Random rand = new Random();
+		int index = rand.nextInt(numTerminales);
+		if (isTerminal) {
+			
+			this.operando = terminales[index];
+			while (this.operando.equals(op)) {
+				
+				index = rand.nextInt(numTerminales);
+				this.operando = terminales[index];
+			}
+		}
+		else {
+			
+			this.operando = funciones[index];
+			while (this.operando.equals(op)) {
+				
+				index = rand.nextInt(numTerminales);
+				this.operando = funciones[index];
+			}
+		}
+	}
+	
 	/********************************* METHODS *********************************/
 	public boolean isTerminal() {
 		

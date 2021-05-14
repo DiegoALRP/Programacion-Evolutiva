@@ -10,6 +10,8 @@ import algoritmoGenetico.individuos.Arbol;
 import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.Operando;
 import algoritmoGenetico.individuos.RastroSantaFe;
+import algoritmoGenetico.mutaciones.Mutacion;
+import algoritmoGenetico.mutaciones.MutacionTerminalSimple;
 import algoritmoGenetico.selecciones.Seleccion;
 import algoritmoGenetico.selecciones.SeleccionTorneo;
 import interfaz.panelPrincipal;
@@ -46,8 +48,12 @@ public class Main {
 		ArrayList<Operando> antes2 = new ArrayList<Operando>();
 		ind1.getCromosoma().toArrayAux(antes1);
 		ind2.getCromosoma().toArrayAux(antes2);
-		Cruce cruce = new Cruce();
-		cruce.cruzaPadres(ind1, ind2);
+		
+		MutacionTerminalSimple mutacion = new MutacionTerminalSimple();
+		mutacion.mutaIndividuo(ind1);
+		mutacion.mutaIndividuo(ind2);
+		//Cruce cruce = new Cruce();
+		//cruce.cruzaPadres(ind1, ind2);
 		
 		ArrayList<Operando> despues1 = new ArrayList<Operando>();
 		ArrayList<Operando> despues2 = new ArrayList<Operando>();

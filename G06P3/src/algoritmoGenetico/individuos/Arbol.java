@@ -310,6 +310,20 @@ public class Arbol {
 		}
 	}
 	
+	/********************** AUXILIARY METHODS - Crossover **********************/
+	public void mutaTerminalSimple() {
+		
+		if (this.raiz.isTerminal()) {
+			
+			this.raiz = new Operando(true, this.raiz.toString());
+		}
+		else {
+			
+			Random rand = new Random();
+			hijos.get(rand.nextInt(numHijos)).mutaTerminalSimple();;
+		}
+	}
+	
 	/**************************** GETTERS & SETTERS ****************************/
 	public Arbol getPadre() {
 		
