@@ -254,6 +254,15 @@ public class Arbol {
 		return profundidad;
 	}
 	
+	public void inicializaArbol(String metodo) {
+		
+		if (metodo.equals("Completo")) {
+			
+			System.out.println("ENTRO");
+			this.inicializaCompleto();
+		}
+	}
+	
 	protected void inicializaCompleto() {
 		
 		if (this.max_prof > 1) {

@@ -11,6 +11,7 @@ import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.Operando;
 import algoritmoGenetico.individuos.RastroSantaFe;
 import algoritmoGenetico.mutaciones.Mutacion;
+import algoritmoGenetico.mutaciones.MutacionArbol;
 import algoritmoGenetico.mutaciones.MutacionFuncionalSimple;
 import algoritmoGenetico.mutaciones.MutacionTerminalSimple;
 import algoritmoGenetico.selecciones.Seleccion;
@@ -40,31 +41,33 @@ public class Main {
 			
 			System.out.println(ind.calculateFitness());
 		}*/
+		
+		for (int i = 0; i < 100; i++) {
+			RastroSantaFe rastro = new RastroSantaFe();
+			Individuo ind1 = new Individuo("Completo", 3, rastro.getComida());
+			Individuo ind2 = new Individuo("Completo", 3, rastro.getComida());
 			
-		RastroSantaFe rastro = new RastroSantaFe();
-		Individuo ind1 = new Individuo("Completo", 3, rastro.getComida());
-		Individuo ind2 = new Individuo("Completo", 3, rastro.getComida());
-		
-		ArrayList<Operando> antes1 = new ArrayList<Operando>();
-		ArrayList<Operando> antes2 = new ArrayList<Operando>();
-		ind1.getCromosoma().toArrayAux(antes1);
-		ind2.getCromosoma().toArrayAux(antes2);
-		
-		Mutacion mutacion = new MutacionFuncionalSimple();
-		mutacion.mutaIndividuo(ind1);
-		mutacion.mutaIndividuo(ind2);
-		//Cruce cruce = new Cruce();
-		//cruce.cruzaPadres(ind1, ind2);
-		
-		ArrayList<Operando> despues1 = new ArrayList<Operando>();
-		ArrayList<Operando> despues2 = new ArrayList<Operando>();
-		ind1.getCromosoma().toArrayAux(despues1);
-		ind2.getCromosoma().toArrayAux(despues2);
-		
-		System.out.println("ANTES1: " + antes1);
-		System.out.println("DESPU1: " + despues1);
-		System.out.println("ANTES2: " + antes2);
-		System.out.println("DESPU2: " + despues2);
+			ArrayList<Operando> antes1 = new ArrayList<Operando>();
+			ArrayList<Operando> antes2 = new ArrayList<Operando>();
+			ind1.getCromosoma().toArrayAux(antes1);
+			ind2.getCromosoma().toArrayAux(antes2);
+			
+			Mutacion mutacion = new MutacionArbol();
+			mutacion.mutaIndividuo(ind1);
+			mutacion.mutaIndividuo(ind2);
+			//Cruce cruce = new Cruce();
+			//cruce.cruzaPadres(ind1, ind2);
+			
+			ArrayList<Operando> despues1 = new ArrayList<Operando>();
+			ArrayList<Operando> despues2 = new ArrayList<Operando>();
+			ind1.getCromosoma().toArrayAux(despues1);
+			ind2.getCromosoma().toArrayAux(despues2);
+			
+			System.out.println("ANTES1: " + antes1);
+			System.out.println("DESPU1: " + despues1);
+			System.out.println("ANTES2: " + antes2);
+			System.out.println("DESPU2: " + despues2);
+		}
 		
 		/*Operando op1 = new Operando("AVANZA");
 		Operando op2 = new Operando("AVANZA");
