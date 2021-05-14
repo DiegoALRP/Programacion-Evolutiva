@@ -1,6 +1,7 @@
 package algoritmoGenetico.individuos;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import misc.Pair;
 
@@ -214,6 +215,11 @@ public class Individuo {
 	public void mutaTerminalSimple() {
 		
 		this.cromosoma.mutaTerminalSimple();
+	}
+	
+	public void mutaFuncionSimple(double probMutacion) {
+		
+		this.cromosoma.mutaFuncionSimple(probMutacion, false);
 	}
 	
 	/**************************** GETTERS & SETTERS ****************************/

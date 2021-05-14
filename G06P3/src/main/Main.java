@@ -11,6 +11,7 @@ import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.Operando;
 import algoritmoGenetico.individuos.RastroSantaFe;
 import algoritmoGenetico.mutaciones.Mutacion;
+import algoritmoGenetico.mutaciones.MutacionFuncionalSimple;
 import algoritmoGenetico.mutaciones.MutacionTerminalSimple;
 import algoritmoGenetico.selecciones.Seleccion;
 import algoritmoGenetico.selecciones.SeleccionTorneo;
@@ -39,7 +40,7 @@ public class Main {
 			
 			System.out.println(ind.calculateFitness());
 		}*/
-		
+			
 		RastroSantaFe rastro = new RastroSantaFe();
 		Individuo ind1 = new Individuo("Completo", 3, rastro.getComida());
 		Individuo ind2 = new Individuo("Completo", 3, rastro.getComida());
@@ -49,7 +50,7 @@ public class Main {
 		ind1.getCromosoma().toArrayAux(antes1);
 		ind2.getCromosoma().toArrayAux(antes2);
 		
-		MutacionTerminalSimple mutacion = new MutacionTerminalSimple();
+		Mutacion mutacion = new MutacionFuncionalSimple();
 		mutacion.mutaIndividuo(ind1);
 		mutacion.mutaIndividuo(ind2);
 		//Cruce cruce = new Cruce();

@@ -324,6 +324,58 @@ public class Arbol {
 		}
 	}
 	
+	public void mutaFuncionSimple(double probMutacion, boolean up) {
+		
+		if (this.raiz.isTerminal()) {
+			
+			this.padre.mutaFuncionSimple(probMutacion, true);
+		}
+		else {
+			
+			if (up) {
+				
+				boolean encontrado = false;
+				for (int i = 0; i < numHijos && !encontrado; i++) {
+					
+					if (this.raiz.equalsProgN2()) {
+						
+						this.raiz = new Operando("SIComida");
+						encontrado = true;
+					}
+					else if (this.raiz.equalsSiComida()) {
+						
+						this.raiz = new Operando("PROGN2");
+						encontrado = true;
+					}
+				}
+				
+				if (!encontrado && this.padre != null) {
+					
+					this.padre.mutaFuncionSimple(probMutacion, true);
+				}
+			}
+			else {
+				
+				Random rand = new Random();
+				if (this.raiz.equalsProgN3() || (rand.nextDouble() > probMutacion)) {
+					
+					this.hijos.get(rand.nextInt(numHijos)).mutaFuncionSimple(probMutacion, up);
+				}
+				else {
+					
+					if (this.raiz.equalsProgN2()) {
+						
+						this.raiz = new Operando("SIComida");
+					}
+					else if (this.raiz.equalsSiComida()) {
+						
+						this.raiz = new Operando("PROGN2");
+					}
+				}
+			}
+		}
+	}
+	
 	/**************************** GETTERS & SETTERS ****************************/
 	public Arbol getPadre() {
 		
