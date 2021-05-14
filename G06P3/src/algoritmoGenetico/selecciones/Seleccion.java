@@ -12,7 +12,7 @@ public abstract class Seleccion {
 	
 	public void addIndividuo(ArrayList<Individuo> nuevaPoblacion, Individuo individuo) {
 		
-		Individuo nuevoIndividuo = new Individuo(individuo.getInicializacion(), individuo.getMaxProf(), individuo.getComida());
+		Individuo nuevoIndividuo = new Individuo(individuo.copyFenotipe(), individuo.getMaxProf(), individuo.getComida());
 		nuevaPoblacion.add(nuevoIndividuo);
 	}
 	

@@ -60,6 +60,22 @@ public class Individuo {
 		this.inicializaCromosoma();
 	}
 	
+	public Individuo(ArrayList<Operando> fenotipo, int profundidad, ArrayList<Pair> comida) {
+		
+		this.profundidad = profundidad;
+		this.comida = comida;
+		this.camino = new ArrayList<Pair>();
+		this.casilla = new Pair(0, 0);
+		this.direccion = new Pair(0, 1);
+		this.orientacionActual = "ESTE";
+		
+		this.fenotipo = new ArrayList<Operando>(fenotipo);
+		this.cromosoma = new Arbol(null, this.fenotipo, this.profundidad);
+		
+		this.calculateFitness();
+	}
+	
+	
 	/********************************* METHODS *********************************/
 	private void inicializaCromosoma() {
 		
@@ -90,6 +106,8 @@ public class Individuo {
 	}
 	
 	public int calculateFitness() {
+		
+		this.fitness = 0;
 		int pivote = 0;
 		ArrayList<String> terminales = this.getTerminales();
 		for(int i = 0; i < Individuo.numPasos; i++) {
@@ -107,18 +125,19 @@ public class Individuo {
 			this.casilla = ejecutaAccion(accion);
 			
 			this.camino.add(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1));
-			System.out.println("Casilla X : " + this.camino.get(i).get_x());
+			/*System.out.println("Casilla X : " + this.camino.get(i).get_x());
 			System.out.println("Casilla Y : " + this.camino.get(i).get_y());
 			System.out.println("Nueva orientacion: " + this.orientacionActual);
 			System.out.println("Accion: " + accion);
-			System.out.println("---");
+			System.out.println("---");*/
 			
 			pivote++;
 		}
 		return this.fitness;
 	}
-	/********************************* AUXILIARY METHODS *********************************/
 	
+	
+	/********************************* AUXILIARY METHODS *********************************/
 	/*
 	 * 	Recorrido circular sobre los teminales del individuo
 	 */
