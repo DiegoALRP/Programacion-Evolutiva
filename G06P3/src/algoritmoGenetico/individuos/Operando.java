@@ -88,6 +88,14 @@ public class Operando {
 		return funciones[rand.nextInt(numFunciones)];
 	}
 	
+	/********************************* AUXILIARY METHODS *********************************/
+	@Override
+	public boolean equals(Object obj) {
+		
+		return this.operando == obj.toString();
+	}
+	
+	
 	public boolean equalsAvanza() {
 		
 		return operando.equals(terminales[0]);

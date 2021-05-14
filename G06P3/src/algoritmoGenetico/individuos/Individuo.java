@@ -209,7 +209,15 @@ public class Individuo {
 		this.cromosoma.getTerminales(this.cromosoma.getHijos(), terminales);
 		return terminales;
 	}
+	
+	
+	
 	/**************************** GETTERS & SETTERS ****************************/
+	public ArrayList<Operando> getRefFenotipe() {
+		
+		return this.fenotipo;
+	}
+	
 	public int getMaxProf() {
 		return this.profundidad;
 	}

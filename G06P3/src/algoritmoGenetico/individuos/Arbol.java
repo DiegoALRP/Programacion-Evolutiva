@@ -43,14 +43,12 @@ public class Arbol {
 		this.max_prof = max_prof;
 		hijos = new ArrayList<Arbol>(this.numHijos);
 		
-		//if (raiz.equals(Funciones.PROGN2) || raiz.equals(Funciones.SIComida)) {
 		if (this.raiz.equalsProgN2() || this.raiz.equalsSiComida()) {
 			
 			this.numHijos = 2;
 			this.profundidad = 1;
 			this.esHoja = false;
 		}
-		//else if (raiz.equals(Funciones.PROGN3)) {
 		else if (this.raiz.equalsProgN3()) {
 			
 			this.numHijos = 3;

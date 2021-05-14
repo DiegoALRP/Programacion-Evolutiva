@@ -28,13 +28,18 @@ public class Main {
 			}
 		});*/
 		
-		RastroSantaFe rastro = new RastroSantaFe();
+		/*RastroSantaFe rastro = new RastroSantaFe();
 		Individuo ind = new Individuo("Completo", 2, rastro.getComida());
 		
 		for (int i = 0; i < 50; i++) {
 			
 			System.out.println(ind.calculateFitness());
-		}
+		}*/
+		
+		Operando op1 = new Operando("AVANZA");
+		Operando op2 = new Operando("AVANZA");
+		
+		System.out.println(op1.equals(op2));
 		
 		/*RastroSantaFe rastro = new RastroSantaFe();
 		int numIndividuos = 10;
