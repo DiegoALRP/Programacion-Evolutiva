@@ -61,6 +61,10 @@ public class Arbol {
 			this.profundidad = 0;
 			this.esHoja = true;
 		}
+		
+		if (raiz.isFunction()) {
+			this.inicializaCompleto();
+		}
 	}
 	
 	public Arbol(ArrayList<Operando> treeArray, int max_prof) {
@@ -156,6 +160,26 @@ public class Arbol {
 		}
 	}
 	
+	public Arbol getSubTree(double probCruce) {
+		
+		Random rand = new Random();
+		double random = rand.nextDouble();
+		
+		if (random < probCruce*this.profundidad) {
+			
+			return this;
+		}
+		else {
+			
+			if (this.numHijos < 1) {
+				
+				return this.padre.getSubTree(probCruce);
+			}
+			else {
+				return this.hijos.get(rand.nextInt(this.numHijos)).getSubTree(probCruce);
+			}
+		}
+	}
 	
 	/********************************* AUXILIARY METHODS *********************************/
 	public void toArrayAux(ArrayList<Operando> array) {
@@ -189,7 +213,7 @@ public class Arbol {
 				
 				Operando op = new Operando(false);
 				Arbol a = new Arbol(this, op, max_prof - 1);
-				a.inicializaCompleto();
+				//a.inicializaCompleto();
 				hijos.add(a);
 			}
 		}
