@@ -107,12 +107,13 @@ public class Individuo {
 			this.casilla = ejecutaAccion(accion);
 			
 			this.camino.add(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1));
-			System.out.println("Casilla X : " + this.camino.get(i).get_x());
+			
+			/*System.out.println("Casilla X : " + this.camino.get(i).get_x());
 			System.out.println("Casilla Y : " + this.camino.get(i).get_y());
 			System.out.println("Nueva orientacion: " + this.orientacionActual);
 			System.out.println("Accion: " + accion);
 			System.out.println("---");
-			
+			*/
 			pivote++;
 		}
 		return this.fitness;
@@ -135,23 +136,23 @@ public class Individuo {
 	private Pair ejecutaAccion(String accion) {
 		
 		if((this.orientacionActual == "OESTE" && accion == "IZQUIERDA") || (this.orientacionActual == "ESTE" && accion == "DERECHA")) {
-			this.direccion = new Pair(0, 1);
+			this.direccion = new Pair(1, 0);
 			this.orientacionActual = "SUR";
 			
 		} else if((this.orientacionActual == "NORTE" && accion == "IZQUIERDA") || (this.orientacionActual == "SUR" && accion == "DERECHA")) {
-			this.direccion = new Pair(-1, 0);
+			this.direccion = new Pair(0, -1);
 			this.orientacionActual = "OESTE";
 			
 		} else if((this.orientacionActual == "ESTE" && accion == "IZQUIERDA") || (this.orientacionActual == "OESTE" && accion == "DERECHA")) {
-			this.direccion = new Pair(-0, -1);
+			this.direccion = new Pair(-1, 0);
 			this.orientacionActual = "NORTE";
 			
 		} else if((this.orientacionActual == "SUR" && accion == "IZQUIERDA") || (this.orientacionActual == "NORTE" && accion == "DERECHA")) {
-			this.direccion = new Pair(1, 0);
+			this.direccion = new Pair(0, 1);
 			this.orientacionActual = "ESTE";
 		}
 		
-		Pair casillaActual = new Pair(this.casilla.get_y(),this.casilla.get_x());
+		Pair casillaActual = new Pair(this.casilla.get_x(),this.casilla.get_y());
 		
 		if(accion == "AVANZA") {
 			casillaActual = new Pair(this.casilla.get_x() + this.direccion.get_x(), this.casilla.get_y() + this.direccion.get_y());
@@ -188,6 +189,20 @@ public class Individuo {
 		
 		ArrayList<String> terminales = new ArrayList<String>();
 		this.cromosoma.getTerminales(this.cromosoma.getHijos(), terminales);
+		
+		/*
+		terminales.add("AVANZA");
+		terminales.add("DERECHA");
+		terminales.add("IZQUIERDA");
+		terminales.add("DERECHA");
+		terminales.add("IZQUIERDA");
+		terminales.add("DERECHA");
+		terminales.add("DERECHA");
+		terminales.add("DERECHA");
+		terminales.add("DERECHA");
+		terminales.add("AVANZA");
+		*/
+		
 		return terminales;
 	}
 	/**************************** GETTERS & SETTERS ****************************/
@@ -213,6 +228,18 @@ public class Individuo {
 	public void setFitnessRanking(double probOfIth) {		//TODO
 		this.fitnessRanking = (int) Math.floor(probOfIth);
 		
+	}
+	
+	public void reinicia(ArrayList<Pair> comida) {
+		
+		this.comida = new ArrayList<Pair>(comida);
+		this.camino = new ArrayList<Pair>();
+		this.casilla = new Pair(0, 0);
+		this.direccion = new Pair(0, 1);
+		this.orientacionActual = "ESTE";
+		this.fitness = 0;
+		
+		this.camino.add(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1));
 	}
 	
 }

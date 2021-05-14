@@ -198,7 +198,7 @@ public class panelPrincipal {
 
 		panelHormiga hormiga = new panelHormiga(comida);
 		
-		Individuo ind1 = new Individuo("Completo", 2, comida);
+		Individuo ind1 = new Individuo("Completo", 3, comida);
 		System.out.println("Antes 1: " + ind1.printFenotipo());
 		
 		
@@ -206,12 +206,20 @@ public class panelPrincipal {
 			System.out.println(ind1.getTerminales().get(i));
 		}
 		
-		ind1.calculateFitness();
+		
+		for(int i = 0; i < 50; i++) {
+			ind1.reinicia(new ArrayList<Pair>(comida));
+
+			System.out.println(ind1.calculateFitness());
+		}
+		
+		
 		/*for(int i = 0; i < ind1.getCamino().size(); i++) {
 			System.out.println("Casilla X : " + ind1.getCamino().get(i).get_first());
 			System.out.println("Casilla Y : " + ind1.getCamino().get(i).get_second());
 			System.out.println("---");
 		}*/
+		//ind1.calculateFitness();
 		System.out.println("Comida: " + ind1.getFitness());
 		hormiga.setCaminoHormiga(ind1.getCamino());
 		graficas gr = new graficas();
