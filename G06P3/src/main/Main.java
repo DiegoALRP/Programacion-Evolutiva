@@ -36,8 +36,10 @@ public class Main {
 				}
 			}
 		});*/
+		
+		RastroSantaFe santaFe = new RastroSantaFe();
 	
-		for (int j = 0; j < 2; j++) {
+		/*for (int j = 0; j < 2; j++) {
 			
 			System.out.println("ITERACION: " + j);
 			RastroSantaFe rastro = new RastroSantaFe();
@@ -57,7 +59,7 @@ public class Main {
 				System.out.println("Feno2: " + ind2.printFenotipo());
 				System.out.println("F2: " + ind2.calculateFitness());
 			}
-		}
+		}*/
 		
 		/*for (int i = 0; i < 1000; i++) {
 			RastroSantaFe rastro = new RastroSantaFe();
