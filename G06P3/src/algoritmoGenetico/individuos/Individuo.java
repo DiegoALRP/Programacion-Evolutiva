@@ -1,6 +1,8 @@
 package algoritmoGenetico.individuos;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+
 import algoritmoGenetico.misc.Pair;
 
 /**
@@ -38,6 +40,7 @@ public class Individuo {
 	
 	private Pair<Integer, Integer> pos;
 	private Direccion direccion;
+	private HashSet<Pair<Integer, Integer>> setPos;
 	
 	private int numMaximoPasos;
 	private int numPasos;
@@ -188,12 +191,14 @@ public class Individuo {
 		this.fitness = 1;
 		this.pos = new Pair<Integer, Integer>(0, 0);
 		this.direccion = Direccion.ESTE;
+		this.setPos = new HashSet<Pair<Integer,Integer>>();
 	}
 	
 	private boolean hayComida() {
 		
-		if (this.tablero[pos.getFirst()][pos.getSecond()] ==  1) {
+		if (this.tablero[pos.getFirst()][pos.getSecond()] ==  1 && !setPos.contains(pos)) {
 			
+			this.setPos.add(pos);
 			return true;
 		}
 		
@@ -206,7 +211,7 @@ public class Individuo {
 		
 		if (direccion.equals(Direccion.ESTE)) {
 			
-			pos = new Pair<Integer, Integer>(this.pos.getFirst() + 1, this.pos.getSecond());
+			pos = new Pair<Integer, Integer>((this.pos.getFirst() + 1)%tamTablero, this.pos.getSecond());
 		}
 		else if (direccion.equals(Direccion.OESTE)) {
 			
@@ -218,7 +223,7 @@ public class Individuo {
 		}
 		else {
 			
-			pos = new Pair<Integer, Integer>(this.pos.getFirst(), this.pos.getSecond() + 1);
+			pos = new Pair<Integer, Integer>(this.pos.getFirst(), (this.pos.getSecond() + 1)%tamTablero);
 		}
 		
 		if (this.tablero[pos.getFirst()][pos.getSecond()] == 1) {
@@ -260,7 +265,7 @@ public class Individuo {
 		}
 		else {
 			
-			pos = new Pair<Integer, Integer>(this.pos.getFirst(), this.pos.getSecond() + 1);
+			pos = new Pair<Integer, Integer>(this.pos.getFirst(), (this.pos.getSecond() + 1)%tamTablero);
 		}
 		
 		if (printCamino) {
