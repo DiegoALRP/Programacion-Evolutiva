@@ -192,6 +192,7 @@ public class Individuo {
 		this.pos = new Pair<Integer, Integer>(0, 0);
 		this.direccion = Direccion.ESTE;
 		this.setPos = new HashSet<Pair<Integer,Integer>>();
+		this.setPos.add(pos);
 	}
 	
 	private boolean hayComida() {
