@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import algoritmoGenetico.cruces.Cruce;
 import algoritmoGenetico.individuos.Individuo;
+import algoritmoGenetico.individuos.RastroSantaFe;
 import algoritmoGenetico.mutaciones.Mutacion;
 import algoritmoGenetico.selecciones.Seleccion;
 
@@ -88,7 +89,7 @@ public class AlgoritmoGenetico {
 	 */
 	public AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, Seleccion metodoSeleccion,
 			Cruce metodoCruce, double porcCruce, Mutacion metodoMutacion, double porcMutacion,
-			double porcElite, String metodoInicializacion, int profundidadMaxima) {
+			double porcElite, String metodoInicializacion, int profundidadMaxima, RastroSantaFe santaFe) {
 		
 		this.tamPoblacion = tamPoblacion;
 		this.numGeneraciones = numGeneraciones;
