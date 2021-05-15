@@ -1,5 +1,8 @@
 package algoritmoGenetico.misc;
 
+import java.util.Comparator;
+import java.util.Objects;
+
 /**
  * Universidad Complutense de Madrid.
  * Programación Evolutiva.
@@ -45,4 +48,13 @@ public class Pair<T1, T2> {
 		return _second;
 	}
 
+	public int hashCode() {
+        return Objects.hash(this._first, this._second);
+    }
+	
+	public boolean equals(Object obj) {
+
+        Pair<T1, T2> that = (Pair<T1, T2>) obj;
+        return this._first == that._first && this._second == that._second;
+    }
 }
