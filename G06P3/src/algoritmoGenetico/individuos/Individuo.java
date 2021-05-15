@@ -23,70 +23,80 @@ import misc.Pair;
  */
 public class Individuo {
 	
+	/****************************************************************************/
 	/******************************** ATRIBUTTES ********************************/
+	/****************************************************************************/
+	
 	protected Arbol cromosoma;
 	protected ArrayList<Operando> fenotipo;
 	protected String stringFenotipo;
 	
-	private int profundidad;
+	private int profMaxima;
 	private String metodoIni;
 	
 	private int fitness;
 	private int fitnessRanking;
-	private Pair casilla;
-	private ArrayList<Pair> comida;
-	private ArrayList<Pair> copyComida;
-	private ArrayList<Pair> camino;
-	private Pair direccion;
-	private String orientacionActual;
-	private static final int numPasos = 400;
+	
+	private int[][] pos;
+	private Direccion direccion;
+	
+	private int numPasos;
 	
 	private final int xSize = 31;
 	private final int ySize = 31;
 	
+	private RastroSantaFe santaFe;
+	
+	
+	
+	/****************************************************************************/
 	/******************************* CONSTRUCTOR ********************************/
-	public Individuo(String metodoIni, int profundidad, ArrayList<Pair> comida) {
+	/****************************************************************************/
+	
+	public Individuo(String metodoIni, int profMaxima, int numPasos, RastroSantaFe santaFe) {
 		
 		this.metodoIni = metodoIni;
-		this.profundidad = profundidad;
-		this.comida = new ArrayList<Pair>(comida);
-		this.copyComida = new ArrayList<Pair>(comida);
-		this.camino = new ArrayList<Pair>();
-		this.casilla = new Pair(0, 0);
-		this.direccion = new Pair(0, 1);
-		this.orientacionActual = "ESTE";
+		
+		this.profMaxima = profMaxima;
+		
+		this.numPasos = numPasos;
+		
+		this.santaFe = santaFe;
+		
 		this.fitness = 0;
 		
-		this.camino.add(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1));
-		
 		this.inicializaCromosoma();
+		this.calculateFenotipo();
+		this.calculateFitness();
 	}
 	
-	public Individuo(ArrayList<Operando> fenotipo, int profundidad, ArrayList<Pair> comida) {
+	public Individuo(ArrayList<Operando> fenotipo, String metodoIni, int profMaxima, int numPasos, RastroSantaFe santaFe) {
 		
-		this.profundidad = profundidad;
-		this.comida = comida;
-		this.copyComida = new ArrayList<Pair>(comida);
-		this.camino = new ArrayList<Pair>();
-		this.casilla = new Pair(0, 0);
-		this.direccion = new Pair(0, 1);
-		this.orientacionActual = "ESTE";
+		this.metodoIni = metodoIni;
+		
+		this.profMaxima = profMaxima;
+		
+		this.numPasos = numPasos;
+		
+		this.santaFe = santaFe;
+		
+		this.fitness = 0;
 		
 		this.fenotipo = new ArrayList<Operando>(fenotipo);
-		this.cromosoma = new Arbol(null, this.fenotipo, this.profundidad);
+		this.cromosoma = new Arbol(null, this.fenotipo, this.profMaxima);
 		
 		this.calculateFitness();
 	}
 	/********************************* METHODS *********************************/
 	private void inicializaCromosoma() {
 		
-		if (profundidad == 0) {
+		if (profMaxima == 0) {
 			
-			cromosoma = new Arbol(null, new Operando(true), profundidad);
+			cromosoma = new Arbol(null, new Operando(true), profMaxima);
 		}
 		else {
 			
-			cromosoma = new Arbol(null, new Operando(false), profundidad);
+			cromosoma = new Arbol(null, new Operando(false), profMaxima);
 		}
 		
 		if (metodoIni.equals("Completo")) {
