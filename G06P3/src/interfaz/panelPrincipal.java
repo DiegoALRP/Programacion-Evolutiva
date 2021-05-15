@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import algoritmoGenetico.individuos.Individuo;
+import algoritmoGenetico.individuos.RastroSantaFe;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -23,8 +24,6 @@ import javax.swing.JSpinner;
 import javax.swing.JProgressBar;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
-
-import misc.Pair;
 
 import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
@@ -37,14 +36,10 @@ public class panelPrincipal {
 	private JTextField textField_2;
 	private JTextField porc_cruce;
 
-	private ArrayList<Pair> comida;
-
-
 	/**
 	 * Create the application.
 	 */
-	public panelPrincipal(ArrayList<Pair> comida) {
-		this.comida = comida;
+	public panelPrincipal() {
 		initialize();
 	}
 
@@ -196,32 +191,13 @@ public class panelPrincipal {
 		
 		///////////////////////////////////////////////////// 			TABBED PANE
 
-		panelHormiga hormiga = new panelHormiga(comida);
+		//panelHormiga hormiga = new panelHormiga(comida);
 		
-		Individuo ind1 = new Individuo("Completo", 3, comida);
-		System.out.println("Antes 1: " + ind1.printFenotipo());
+		RastroSantaFe santaFe = new RastroSantaFe();
+		Individuo ind1 = new Individuo("Completo", 4, 400, santaFe);
 		
-		
-		for(int i = 0; i < ind1.getTerminales().size(); i++) {
-			System.out.println(ind1.getTerminales().get(i));
-		}
-		
-		
-		for(int i = 0; i < 50; i++) {
-			//ind1.reinicia(new ArrayList<Pair>(comida));
-
-			System.out.println(ind1.calculateFitness());
-		}
-		
-		
-		/*for(int i = 0; i < ind1.getCamino().size(); i++) {
-			System.out.println("Casilla X : " + ind1.getCamino().get(i).get_first());
-			System.out.println("Casilla Y : " + ind1.getCamino().get(i).get_second());
-			System.out.println("---");
-		}*/
-		//ind1.calculateFitness();
+		panelHormiga hormiga = new panelHormiga(santaFe.getTablero(), ind1.getCamino());
 		System.out.println("Comida: " + ind1.getFitness());
-		hormiga.setCaminoHormiga(ind1.getCamino());
 		graficas gr = new graficas();
 		tabbedPane.addTab("Hormiga", hormiga);
 		tabbedPane.addTab("Grafica", gr.getPlot());

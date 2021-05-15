@@ -2,10 +2,13 @@ package main;
 
 import java.awt.EventQueue;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import javax.swing.JOptionPane;
 
 import algoritmoGenetico.individuos.RastroSantaFe;
+import algoritmoGenetico.misc.Pair;
 import interfaz.panelPrincipal;
 
 
@@ -14,23 +17,31 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		/*EventQueue.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RastroSantaFe sf = new RastroSantaFe();
-					panelPrincipal window = new panelPrincipal(sf.getComida());
+					//RastroSantaFe sf = new RastroSantaFe();
+					//panelPrincipal window = new panelPrincipal(sf.getComida());
+					panelPrincipal window = new panelPrincipal();
 					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		});*/
+		});
 		
+		/*Pair<Integer, Integer> p1 = new Pair<Integer, Integer>(0, 0);
+		Pair<Integer, Integer> p2 = new Pair<Integer, Integer>(0, 0);
+		
+		HashSet<Pair<Integer, Integer>> set = new HashSet<Pair<Integer,Integer>>();
+		
+		set.add(p1);
+		set.add(p2);
+		
+		System.out.println(set);
+		
+		System.out.println(p1.equals(p2));*/
 		//RastroSantaFe santaFe = new RastroSantaFe();
-		
-		int i = -1;
-		
-		System.out.println(Math.floorMod(i, 32));
 	
 		/*for (int j = 0; j < 2; j++) {
 			
