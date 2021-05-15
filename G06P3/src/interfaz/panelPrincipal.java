@@ -208,7 +208,7 @@ public class panelPrincipal {
 		
 		
 		for(int i = 0; i < 50; i++) {
-			ind1.reinicia(new ArrayList<Pair>(comida));
+			//ind1.reinicia(new ArrayList<Pair>(comida));
 
 			System.out.println(ind1.calculateFitness());
 		}

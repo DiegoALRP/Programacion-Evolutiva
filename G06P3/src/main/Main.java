@@ -19,6 +19,7 @@ import algoritmoGenetico.mutaciones.MutacionTerminalSimple;
 import algoritmoGenetico.selecciones.Seleccion;
 import algoritmoGenetico.selecciones.SeleccionTorneo;
 import interfaz.panelPrincipal;
+import misc.Pair;
 
 public class Main {
 
@@ -35,14 +36,27 @@ public class Main {
 				}
 			}
 		});*/
-		
-		/*RastroSantaFe rastro = new RastroSantaFe();
-		Individuo ind = new Individuo("Completo", 2, rastro.getComida());
-		
-		for (int i = 0; i < 50; i++) {
+	
+		for (int j = 0; j < 2; j++) {
 			
-			System.out.println(ind.calculateFitness());
-		}*/
+			System.out.println("ITERACION: " + j);
+			RastroSantaFe rastro = new RastroSantaFe();
+			Individuo ind = new Individuo("Completo", 4, rastro.getComida());
+			
+			ArrayList<Operando> arr = new ArrayList<Operando>();
+			ind.getCromosoma().toArrayAux(arr);
+			
+			Individuo ind2 = new Individuo(arr, 4, rastro.getComida());
+			
+			for (int i = 0; i < 10; i++) {
+				
+				//ind.reinicia(new ArrayList<Pair>(rastro.getComida()));
+				System.out.println("F1: " + ind.calculateFitness());
+				System.out.println("Feno1: " + ind.printFenotipo());
+				System.out.println("Feno2: " + ind2.printFenotipo());
+				System.out.println("F2: " + ind2.calculateFitness());
+			}
+		}
 		
 		/*for (int i = 0; i < 1000; i++) {
 			RastroSantaFe rastro = new RastroSantaFe();
@@ -119,7 +133,7 @@ public class Main {
 		System.out.println("Arbol antes: " + fasti2);
 		System.out.println("Arbol despu: " + pp2);*/
 		
-		RastroSantaFe rastro = new RastroSantaFe();
+		/*RastroSantaFe rastro = new RastroSantaFe();
 		int numIndividuos = 10;
 		ArrayList<Individuo> poblacion = new ArrayList<Individuo>();
 		
@@ -143,6 +157,6 @@ public class Main {
 			
 			System.out.println(poblacion.get(i).printFenotipo());
 			System.out.println(poblacion.get(i).calculateFitness());
-		}
+		}*/
 	}
 }

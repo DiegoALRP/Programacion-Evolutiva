@@ -1,25 +1,24 @@
 package algoritmoGenetico.individuos;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import misc.Pair;
 
 /**
  * Universidad Complutense de Madrid.
- * Programaciï¿½n Evolutiva.
+ * Programación Evolutiva.
  * Grupo A 2021.
  * Profesor:
  * 	-Carlos Cervigon Ruckauer.
  * 
- * Prï¿½ctica 3
+ * Práctica 3
  * 
  * Clase Individuo.
  * 
  * @author 
  * Grupo G06:
  * 	-Miguel Robledo.
- * 	-Diego Alejandro Rodrï¿½guez Pereira.
+ * 	-Diego Alejandro Rodríguez Pereira.
  *
  */
 public class Individuo {
@@ -36,6 +35,7 @@ public class Individuo {
 	private int fitnessRanking;
 	private Pair casilla;
 	private ArrayList<Pair> comida;
+	private ArrayList<Pair> copyComida;
 	private ArrayList<Pair> camino;
 	private Pair direccion;
 	private String orientacionActual;
@@ -50,6 +50,7 @@ public class Individuo {
 		this.metodoIni = metodoIni;
 		this.profundidad = profundidad;
 		this.comida = new ArrayList<Pair>(comida);
+		this.copyComida = new ArrayList<Pair>(comida);
 		this.camino = new ArrayList<Pair>();
 		this.casilla = new Pair(0, 0);
 		this.direccion = new Pair(0, 1);
@@ -65,6 +66,7 @@ public class Individuo {
 		
 		this.profundidad = profundidad;
 		this.comida = comida;
+		this.copyComida = new ArrayList<Pair>(comida);
 		this.camino = new ArrayList<Pair>();
 		this.casilla = new Pair(0, 0);
 		this.direccion = new Pair(0, 1);
@@ -75,8 +77,6 @@ public class Individuo {
 		
 		this.calculateFitness();
 	}
-	
-	
 	/********************************* METHODS *********************************/
 	private void inicializaCromosoma() {
 		
@@ -108,16 +108,16 @@ public class Individuo {
 	
 	public int calculateFitness() {
 		
-		this.fitness = 0;
+		this.reinicia();
 		int pivote = 0;
 		ArrayList<String> terminales = this.getTerminales();
 		for(int i = 0; i < Individuo.numPasos; i++) {
 			
-			for(int j = 0; j < this.comida.size(); j++) {
-				if(this.comida.get(j).equals(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1))) {
+			for(int j = 0; j < this.copyComida.size(); j++) {
+				if(this.copyComida.get(j).equals(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1))) {
 
 					fitness++;
-					this.comida.remove(j);
+					this.copyComida.remove(j);
 					break;
 				}
 			}
@@ -137,9 +137,8 @@ public class Individuo {
 		}
 		return this.fitness;
 	}
-	
-	
 	/********************************* AUXILIARY METHODS *********************************/
+	
 	/*
 	 * 	Recorrido circular sobre los teminales del individuo
 	 */
@@ -272,9 +271,10 @@ public class Individuo {
 		
 	}
 	
-	public void reinicia(ArrayList<Pair> comida) {
+	//public void reinicia(ArrayList<Pair> comida) {
+	public void reinicia() {
 		
-		this.comida = new ArrayList<Pair>(comida);
+		this.copyComida = new ArrayList<Pair>(comida);
 		this.camino = new ArrayList<Pair>();
 		this.casilla = new Pair(0, 0);
 		this.direccion = new Pair(0, 1);
