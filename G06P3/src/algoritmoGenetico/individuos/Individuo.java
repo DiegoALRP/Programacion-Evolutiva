@@ -89,7 +89,7 @@ public class Individuo {
 		this.fitness = 0;
 		
 		this.fenotipo = new ArrayList<Operando>(fenotipo);
-		this.cromosoma = new Arbol(null, this.fenotipo, this.profMaxima);
+		this.cromosoma = new Arbol(null, new ArrayList<Operando>(fenotipo), this.profMaxima);
 		
 		this.calculateFitness();
 	}
@@ -333,16 +333,25 @@ public class Individuo {
 		return this.profMaxima;
 	}
 	
+	public int getMaxPasos() {
+		return this.numMaximoPasos;
+	}
+	
 	public int getFitness() {
 		return this.fitness;
 	}
 	
-	public String getInicializacion() {
+	public String getMetodoIni() {
 		return this.metodoIni;
 	}
 
 	public void setFitnessRanking(double probOfIth) {		//TODO
 		this.fitnessRanking = (int) Math.floor(probOfIth);
 		
+	}
+	
+	public RastroSantaFe getSantaFe() {
+		
+		return this.santaFe;
 	}
 }
