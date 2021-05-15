@@ -87,7 +87,13 @@ public class Individuo {
 		
 		this.calculateFitness();
 	}
+	
+	
+	
+	/***************************************************************************/
 	/********************************* METHODS *********************************/
+	/***************************************************************************/
+	
 	private void inicializaCromosoma() {
 		
 		if (profMaxima == 0) {
@@ -99,10 +105,7 @@ public class Individuo {
 			cromosoma = new Arbol(null, new Operando(false), profMaxima);
 		}
 		
-		if (metodoIni.equals("Completo")) {
-			
-			this.cromosoma.inicializaCompleto();
-		}
+		cromosoma.inicializaArbol(metodoIni);
 	}
 	
 	private void calculateFenotipo() {
