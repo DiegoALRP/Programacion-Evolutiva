@@ -21,7 +21,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		/*EventQueue.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					//RastroSantaFe sf = new RastroSantaFe();
@@ -32,7 +32,7 @@ public class Main {
 					e.printStackTrace();
 				}
 			}
-		});*/
+		});
 		
 		/*Pair<Integer, Integer> p1 = new Pair<Integer, Integer>(0, 0);
 		Pair<Integer, Integer> p2 = new Pair<Integer, Integer>(0, 0);
@@ -144,7 +144,7 @@ public class Main {
 		System.out.println("Arbol antes: " + fasti2);
 		System.out.println("Arbol despu: " + pp2);*/
 		
-		RastroSantaFe rastro = new RastroSantaFe();
+		/*RastroSantaFe rastro = new RastroSantaFe();
 		int numIndividuos = 10;
 		ArrayList<Individuo> poblacion = new ArrayList<Individuo>();
 		
@@ -169,7 +169,7 @@ public class Main {
 			System.out.println(poblacion.get(i).printFenotipo());
 			System.out.println(poblacion.get(i).calculateFitness());
 		}
-		
+		*/
 		
 		/*for (int j = 0; j < 2; j++) {
 			

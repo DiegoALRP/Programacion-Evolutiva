@@ -48,18 +48,7 @@ public class panelHormiga extends JPanel{
 			 }
 			 
 		 }
-		 
-		 g.setColor(Color.yellow);
-		 
-		 for (Pair<Integer, Integer> pos : camino) {
-			 
-			 int x = pos.getFirst();
-			 int y = pos.getSecond();
-			 
-			 g.fillRect(tamañoCelda * x + tamañoCelda, tamañoCelda * y + tamañoCelda*2, tamañoCelda - 1, tamañoCelda - 1);
-		 }
-		 
-		 g.setColor(Color.red);
+
 		 
 		 for (Pair<Integer, Integer> pos : camino) {
 			 
@@ -68,8 +57,15 @@ public class panelHormiga extends JPanel{
 			 
 			 if (tablero[x][y] == 1) {
 				 
+				 g.setColor(Color.red);
 				 g.fillRect(tamañoCelda * x + tamañoCelda, tamañoCelda * y + tamañoCelda*2, tamañoCelda - 1, tamañoCelda - 1);
 			 }
+			 else {
+				 
+				 g.setColor(Color.yellow);
+				 g.fillRect(tamañoCelda * x + tamañoCelda, tamañoCelda * y + tamañoCelda*2, tamañoCelda - 1, tamañoCelda - 1);
+			 }
+			 g.fillRect(tamañoCelda * x + tamañoCelda, tamañoCelda * y + tamañoCelda*2, tamañoCelda - 1, tamañoCelda - 1);
 		 }
 		 
 		/* for(Pair p : casillasComida) {
