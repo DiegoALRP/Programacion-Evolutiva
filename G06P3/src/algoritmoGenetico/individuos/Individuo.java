@@ -1,9 +1,6 @@
 package algoritmoGenetico.individuos;
 
 import java.util.ArrayList;
-
-import com.sun.org.apache.bcel.internal.generic.D2I;
-
 import algoritmoGenetico.misc.Pair;
 
 /**
@@ -50,6 +47,8 @@ public class Individuo {
 	private RastroSantaFe santaFe;
 	private int[][] tablero;
 	
+	private boolean printCamino;
+	private ArrayList<Pair<Integer, Integer>> camino;
 	
 	/****************************************************************************/
 	/******************************* CONSTRUCTOR ********************************/
@@ -168,6 +167,20 @@ public class Individuo {
 			}
 		}
 	}
+	
+	public ArrayList<Pair<Integer, Integer>> getCamino() {
+		
+		camino = new ArrayList<Pair<Integer,Integer>>(numMaximoPasos);
+		
+		this.inicializaFitness();
+		camino.add(pos);
+		
+		this.printCamino = true;
+		
+		this.calculateFitness();
+		
+		return camino;
+	}
 	/********************************* AUXILIARY METHODS *********************************/
 	private void inicializaFitness() {
 		
@@ -249,6 +262,11 @@ public class Individuo {
 			
 			pos = new Pair<Integer, Integer>(this.pos.getFirst(), this.pos.getSecond() + 1);
 		}
+		
+		if (printCamino) {
+			
+			camino.add(pos);
+		}
 	}
 	
 	private void ejecutaCambioDireccion(Operando accion) {
@@ -271,46 +289,6 @@ public class Individuo {
 		}
 	}
 	
-	/*private Pair ejecutaAccion(String accion) {
-		
-		if((this.orientacionActual == "OESTE" && accion == "IZQUIERDA") || (this.orientacionActual == "ESTE" && accion == "DERECHA")) {
-			this.direccion = new Pair(1, 0);
-			this.orientacionActual = "SUR";
-			
-		} else if((this.orientacionActual == "NORTE" && accion == "IZQUIERDA") || (this.orientacionActual == "SUR" && accion == "DERECHA")) {
-			this.direccion = new Pair(0, -1);
-			this.orientacionActual = "OESTE";
-			
-		} else if((this.orientacionActual == "ESTE" && accion == "IZQUIERDA") || (this.orientacionActual == "OESTE" && accion == "DERECHA")) {
-			this.direccion = new Pair(-1, 0);
-			this.orientacionActual = "NORTE";
-			
-		} else if((this.orientacionActual == "SUR" && accion == "IZQUIERDA") || (this.orientacionActual == "NORTE" && accion == "DERECHA")) {
-			this.direccion = new Pair(0, 1);
-			this.orientacionActual = "ESTE";
-		}
-		
-		Pair casillaActual = new Pair(this.casilla.get_x(),this.casilla.get_y());
-		
-		if(accion == "AVANZA") {
-			casillaActual = new Pair(this.casilla.get_x() + this.direccion.get_x(), this.casilla.get_y() + this.direccion.get_y());
-		
-			if(casillaActual.get_x() < 0) {						//casilla x
-				casillaActual.set_x(this.xSize);
-				
-			}else if(casillaActual.get_x() > this.xSize) {		//casilla x
-				casillaActual.set_x(0);
-				
-			}else if(casillaActual.get_y() < 0) {				//casilla y
-					casillaActual.set_y(this.ySize);
-					
-			}else if(casillaActual.get_y() > this.ySize) {		//casilla y
-				casillaActual.set_y(0);
-			}
-		}
-		
-		return casillaActual;
-	}*/
 	public ArrayList<Operando> copyFenotipe(){
 		
 		this.calculateFenotipo();
@@ -320,28 +298,7 @@ public class Individuo {
 	public void copyFenotipe(ArrayList<Operando> fenotipo) {
 		
 		this.fenotipo = new ArrayList<Operando>(fenotipo);
-		this.cromosoma = new Arbol(null, this.fenotipo, this.profundidad);
-	}
-	
-	public ArrayList<String> getTerminales(){
-		
-		ArrayList<String> terminales = new ArrayList<String>();
-		this.cromosoma.getTerminales(this.cromosoma.getHijos(), terminales);
-		
-		/*
-		terminales.add("AVANZA");
-		terminales.add("DERECHA");
-		terminales.add("IZQUIERDA");
-		terminales.add("DERECHA");
-		terminales.add("IZQUIERDA");
-		terminales.add("DERECHA");
-		terminales.add("DERECHA");
-		terminales.add("DERECHA");
-		terminales.add("DERECHA");
-		terminales.add("AVANZA");
-		*/
-		
-		return terminales;
+		this.cromosoma = new Arbol(null, this.fenotipo, this.profMaxima);
 	}
 	
 	/********************** AUXILIARY METHODS - Crossover **********************/
@@ -367,22 +324,15 @@ public class Individuo {
 	}
 	
 	public int getMaxProf() {
-		return this.profundidad;
+		return this.profMaxima;
 	}
 	
 	public int getFitness() {
 		return this.fitness;
 	}
 	
-	public ArrayList<Pair> getCamino(){
-		return this.camino;
-	}
-	
 	public String getInicializacion() {
 		return this.metodoIni;
-	}
-	public ArrayList<Pair> getComida() {
-		return this.comida;
 	}
 
 	public void setFitnessRanking(double probOfIth) {		//TODO
