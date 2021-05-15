@@ -26,7 +26,11 @@ import algoritmoGenetico.selecciones.Seleccion;
  */
 public class AlgoritmoGenetico {
 
+	/****************************************************************************/
 	/******************************** ATRIBUTTES ********************************/
+	/****************************************************************************/
+	
+	/** Algoritmo Genetico **/
 	private int tamPoblacion;			//Tamanho de la poblacion.
 	private int numGeneraciones;		//Numero de generaciones que se van a ejecutar.
 	private Seleccion metodoSeleccion;	//Metodo de Seleccion.
@@ -36,6 +40,7 @@ public class AlgoritmoGenetico {
 	private double porcMutacion;		//Porcentaje de Mutacion.
 	private double porcElitismo;		//Porcentaje de Elitismo.
 	
+	
 	/** Poblacion **/
 	private ArrayList<Individuo> poblacion;	//Poblacion.
 	private ArrayList<Individuo> elite;		//Poblacion de Elite.
@@ -43,6 +48,7 @@ public class AlgoritmoGenetico {
 	private int generacionActual;			//Generacion en la que estamos actualmente.
 	private int generacionSolucion;			//Generacion en la que se obtuvo la solucion.
 
+	
 	/** Individuo **/
 	//Mejor Individuo Absoluto
 	private Individuo mejorIndividuoAbsoluto;	//Mejor Individuo Absoluto.
@@ -61,7 +67,10 @@ public class AlgoritmoGenetico {
 	
 	
 	
+	/****************************************************************************/
 	/******************************* CONSTRUCTOR ********************************/
+	/****************************************************************************/
+	
 	/**
 	 * Constructora del Algoritmo Genetico.
 	 * 
@@ -87,11 +96,30 @@ public class AlgoritmoGenetico {
 		this.metodoMutacion = metodoMutacion;
 		this.porcMutacion = porcMutacion;
 		this.porcElitismo = porcElite;
+		
+		this.inicializaVariables();
 	}
 	
-	/********************************* METHODS *********************************/
 	
+	
+	/***************************************************************************/
+	/********************************* METHODS *********************************/
+	/***************************************************************************/
+	
+	public void startAlgorithm() {
+		
+		
+	}
+	/***************************************************************************/
 	/**************************** AUXILIARY METHODS ****************************/
+	/***************************************************************************/
+	
+	/**
+	 * 
+	 * [ES] Esta función auxiliar inicializa los atributos de la clase.
+	 * [EN] This auxiliary function initialize the class's attributes.
+	 * 
+	 */
 	private void inicializaVariables() {
 		
 		this.arrayMejorFitnessAbsoluto = new double[numGeneraciones];
@@ -103,5 +131,13 @@ public class AlgoritmoGenetico {
 		this.presionSelectiva = new double[numGeneraciones];
 	}
 	
+	
+	private void inicializaPoblacion() {
+		
+		
+	}
+	
+	/***************************************************************************/
 	/**************************** GETTERS & SETTERS ****************************/
+	/***************************************************************************/
 }

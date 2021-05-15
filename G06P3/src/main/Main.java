@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import algoritmoGenetico.AlgoritmoGenetico;
 import algoritmoGenetico.cruces.Cruce;
 import algoritmoGenetico.individuos.Arbol;
 import algoritmoGenetico.individuos.Individuo;
@@ -43,7 +44,7 @@ public class Main {
 			System.out.println(ind.calculateFitness());
 		}*/
 		
-		for (int i = 0; i < 1000; i++) {
+		/*for (int i = 0; i < 1000; i++) {
 			RastroSantaFe rastro = new RastroSantaFe();
 			Individuo ind1 = new Individuo("Completo", 3, rastro.getComida());
 			Individuo ind2 = new Individuo("Completo", 3, rastro.getComida());
@@ -68,7 +69,7 @@ public class Main {
 			System.out.println("DESPU1: " + despues1);
 			System.out.println("ANTES2: " + antes2);
 			System.out.println("DESPU2: " + despues2);
-		}
+		}*/
 		
 		/*Operando op1 = new Operando("AVANZA");
 		Operando op2 = new Operando("AVANZA");
@@ -118,7 +119,7 @@ public class Main {
 		System.out.println("Arbol antes: " + fasti2);
 		System.out.println("Arbol despu: " + pp2);*/
 		
-		/*RastroSantaFe rastro = new RastroSantaFe();
+		RastroSantaFe rastro = new RastroSantaFe();
 		int numIndividuos = 10;
 		ArrayList<Individuo> poblacion = new ArrayList<Individuo>();
 		
@@ -142,6 +143,6 @@ public class Main {
 			
 			System.out.println(poblacion.get(i).printFenotipo());
 			System.out.println(poblacion.get(i).calculateFitness());
-		}*/
+		}
 	}
 }
