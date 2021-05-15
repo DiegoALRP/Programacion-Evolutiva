@@ -5,21 +5,10 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import algoritmoGenetico.AlgoritmoGenetico;
-import algoritmoGenetico.cruces.Cruce;
-import algoritmoGenetico.individuos.Arbol;
-import algoritmoGenetico.individuos.Individuo;
-import algoritmoGenetico.individuos.Operando;
 import algoritmoGenetico.individuos.RastroSantaFe;
-import algoritmoGenetico.mutaciones.Mutacion;
-import algoritmoGenetico.mutaciones.MutacionArbol;
-import algoritmoGenetico.mutaciones.MutacionFuncionalSimple;
-import algoritmoGenetico.mutaciones.MutacionPermutacion;
-import algoritmoGenetico.mutaciones.MutacionTerminalSimple;
-import algoritmoGenetico.selecciones.Seleccion;
-import algoritmoGenetico.selecciones.SeleccionTorneo;
 import interfaz.panelPrincipal;
-import misc.Pair;
+
+
 
 public class Main {
 
@@ -37,7 +26,11 @@ public class Main {
 			}
 		});*/
 		
-		RastroSantaFe santaFe = new RastroSantaFe();
+		//RastroSantaFe santaFe = new RastroSantaFe();
+		
+		int i = -1;
+		
+		System.out.println(Math.floorMod(i, 32));
 	
 		/*for (int j = 0; j < 2; j++) {
 			

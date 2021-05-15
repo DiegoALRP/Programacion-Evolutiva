@@ -2,7 +2,9 @@ package algoritmoGenetico.individuos;
 
 import java.util.ArrayList;
 
-import misc.Pair;
+import com.sun.org.apache.bcel.internal.generic.D2I;
+
+import algoritmoGenetico.misc.Pair;
 
 /**
  * Universidad Complutense de Madrid.
@@ -37,16 +39,16 @@ public class Individuo {
 	private int fitness;
 	private int fitnessRanking;
 	
-	private int[][] pos;
+	private Pair<Integer, Integer> pos;
 	private Direccion direccion;
 	
+	private int numMaximoPasos;
 	private int numPasos;
 	
-	private final int xSize = 31;
-	private final int ySize = 31;
+	private final int tamTablero = 32;
 	
 	private RastroSantaFe santaFe;
-	
+	private int[][] tablero;
 	
 	
 	/****************************************************************************/
@@ -59,10 +61,11 @@ public class Individuo {
 		
 		this.profMaxima = profMaxima;
 		
-		this.numPasos = numPasos;
+		this.numMaximoPasos = numPasos;
 		
 		this.santaFe = santaFe;
 		
+		this.tablero = santaFe.getTablero();
 		this.fitness = 0;
 		
 		this.inicializaCromosoma();
@@ -76,10 +79,11 @@ public class Individuo {
 		
 		this.profMaxima = profMaxima;
 		
-		this.numPasos = numPasos;
+		this.numMaximoPasos = numPasos;
 		
 		this.santaFe = santaFe;
 		
+		this.tablero = santaFe.getTablero();
 		this.fitness = 0;
 		
 		this.fenotipo = new ArrayList<Operando>(fenotipo);
@@ -121,51 +125,153 @@ public class Individuo {
 	
 	public int calculateFitness() {
 		
-		this.reinicia();
-		int pivote = 0;
-		ArrayList<String> terminales = this.getTerminales();
-		for(int i = 0; i < Individuo.numPasos; i++) {
+		this.inicializaFitness();
+		
+		while (numPasos < numMaximoPasos) {
 			
-			for(int j = 0; j < this.copyComida.size(); j++) {
-				if(this.copyComida.get(j).equals(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1))) {
-
-					fitness++;
-					this.copyComida.remove(j);
-					break;
-				}
-			}
-			
-			String accion = terminales.get(pivote % terminales.size());
-			this.casilla = ejecutaAccion(accion);
-			
-			this.camino.add(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1));
-			
-			/*System.out.println("Casilla X : " + this.camino.get(i).get_x());
-			System.out.println("Casilla Y : " + this.camino.get(i).get_y());
-			System.out.println("Nueva orientacion: " + this.orientacionActual);
-			System.out.println("Accion: " + accion);
-			System.out.println("---");
-			*/
-			pivote++;
+			recorreArbol(cromosoma);
 		}
+		
 		return this.fitness;
 	}
-	/********************************* AUXILIARY METHODS *********************************/
 	
-	/*
-	 * 	Recorrido circular sobre los teminales del individuo
-	 */
-	private String siguienteAccion(ArrayList<String> terminales, int pivote) {
+	private void recorreArbol(Arbol a) {
 		
-		
-		if(pivote  == terminales.size()) {
-			pivote = 0;
+		if (numPasos < numMaximoPasos) {
+			
+			Operando raiz = a.getRaiz();
+			if (raiz.isFunction()) {
+				
+				if (raiz.equalsSiComida()) {
+					
+					if (calculaSiComida()) {
+						
+						recorreArbol(a.getHijos().get(0));
+					}
+					else {
+						
+						recorreArbol(a.getHijos().get(1));
+					}
+				}
+				else {
+					
+					int numHijos = a.getNumHijos();
+					for (int i = 0; i < numHijos; i++) {
+						
+						recorreArbol(a.getHijos().get(i));
+					}
+				}
+			}
+			else {
+				
+				ejecutaAccion(raiz);
+			}
 		}
-		return terminales.get(pivote);
+	}
+	/********************************* AUXILIARY METHODS *********************************/
+	private void inicializaFitness() {
 		
+		this.numPasos = 0;
+		this.fitness = 1;
+		this.pos = new Pair<Integer, Integer>(0, 0);
+		this.direccion = Direccion.ESTE;
 	}
 	
-	private Pair ejecutaAccion(String accion) {
+	private boolean hayComida() {
+		
+		if (this.tablero[pos.getFirst()][pos.getSecond()] ==  1) {
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private boolean calculaSiComida() {
+		
+		Pair<Integer, Integer> pos;
+		
+		if (direccion.equals(Direccion.ESTE)) {
+			
+			pos = new Pair<Integer, Integer>(this.pos.getFirst() + 1, this.pos.getSecond());
+		}
+		else if (direccion.equals(Direccion.OESTE)) {
+			
+			pos = new Pair<Integer, Integer>(Math.floorMod(this.pos.getFirst() - 1, tamTablero), this.pos.getSecond());
+		}
+		else if (direccion.equals(Direccion.NORTE)) {
+			
+			pos = new Pair<Integer, Integer>(this.pos.getFirst(), Math.floorMod(this.pos.getSecond() - 1, tamTablero));
+		}
+		else {
+			
+			pos = new Pair<Integer, Integer>(this.pos.getFirst(), this.pos.getSecond() + 1);
+		}
+		
+		if (this.tablero[pos.getFirst()][pos.getSecond()] == 1) {
+			
+			return true;
+		}
+		return false;
+	}
+	
+	private void ejecutaAccion(Operando accion) {
+		
+		if (accion.equalsAvanza()) {
+			
+			this.ejecutaAvanza();
+			
+			if (hayComida()) fitness++;
+		}
+		else {
+			
+			this.ejecutaCambioDireccion(accion);
+		}
+		
+		this.numPasos++;
+	}
+	
+	private void ejecutaAvanza() {
+		
+		if (direccion.equals(Direccion.ESTE)) {
+			
+			pos = new Pair<Integer, Integer>((this.pos.getFirst() + 1)%tamTablero, this.pos.getSecond());
+		}
+		else if (direccion.equals(Direccion.OESTE)) {
+			
+			pos = new Pair<Integer, Integer>(Math.floorMod(this.pos.getFirst() - 1, tamTablero), this.pos.getSecond());
+		}
+		else if (direccion.equals(Direccion.NORTE)) {
+			
+			pos = new Pair<Integer, Integer>(this.pos.getFirst(), Math.floorMod(this.pos.getSecond() - 1, tamTablero));
+		}
+		else {
+			
+			pos = new Pair<Integer, Integer>(this.pos.getFirst(), this.pos.getSecond() + 1);
+		}
+	}
+	
+	private void ejecutaCambioDireccion(Operando accion) {
+		
+		if ((direccion.equals(Direccion.ESTE) && accion.equalsIzquierda()) || (direccion.equals(Direccion.OESTE) && accion.equalsDerecha())) {
+			
+			this.direccion = Direccion.NORTE;
+		}
+		else if ((direccion.equals(Direccion.OESTE) && accion.equalsIzquierda()) || (direccion.equals(Direccion.ESTE) && accion.equalsDerecha())) {
+			
+			this.direccion = Direccion.SUR;
+		}
+		else if ((direccion.equals(Direccion.SUR) && accion.equalsIzquierda()) || (direccion.equals(Direccion.NORTE) && accion.equalsDerecha())) {
+			
+			this.direccion = Direccion.ESTE;
+		}
+		else {
+			
+			this.direccion = Direccion.OESTE;
+		}
+	}
+	
+	/*private Pair ejecutaAccion(String accion) {
 		
 		if((this.orientacionActual == "OESTE" && accion == "IZQUIERDA") || (this.orientacionActual == "ESTE" && accion == "DERECHA")) {
 			this.direccion = new Pair(1, 0);
@@ -204,7 +310,7 @@ public class Individuo {
 		}
 		
 		return casillaActual;
-	}
+	}*/
 	public ArrayList<Operando> copyFenotipe(){
 		
 		this.calculateFenotipo();
@@ -283,18 +389,4 @@ public class Individuo {
 		this.fitnessRanking = (int) Math.floor(probOfIth);
 		
 	}
-	
-	//public void reinicia(ArrayList<Pair> comida) {
-	public void reinicia() {
-		
-		this.copyComida = new ArrayList<Pair>(comida);
-		this.camino = new ArrayList<Pair>();
-		this.casilla = new Pair(0, 0);
-		this.direccion = new Pair(0, 1);
-		this.orientacionActual = "ESTE";
-		this.fitness = 0;
-		
-		this.camino.add(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1));
-	}
-	
 }
