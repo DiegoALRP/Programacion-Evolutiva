@@ -36,6 +36,14 @@ public class Arbol {
 
 	
 	/******************************* CONSTRUCTOR ********************************/
+	
+	/**
+	 * Constructora 1
+	 * 
+	 * @param padre
+	 * @param raiz
+	 * @param max_prof
+	 */
 	public Arbol(Arbol padre, Operando raiz, int max_prof) {
 		
 		this.padre = padre;
@@ -43,14 +51,12 @@ public class Arbol {
 		this.max_prof = max_prof;
 		hijos = new ArrayList<Arbol>(this.numHijos);
 		
-		//if (raiz.equals(Funciones.PROGN2) || raiz.equals(Funciones.SIComida)) {
 		if (this.raiz.equalsProgN2() || this.raiz.equalsSiComida()) {
 			
 			this.numHijos = 2;
 			this.profundidad = 1;
 			this.esHoja = false;
 		}
-		//else if (raiz.equals(Funciones.PROGN3)) {
 		else if (this.raiz.equalsProgN3()) {
 			
 			this.numHijos = 3;
@@ -63,8 +69,18 @@ public class Arbol {
 			this.profundidad = 0;
 			this.esHoja = true;
 		}
+		
+		if (raiz.isFunction()) {
+			this.inicializaCompleto();
+		}
 	}
 	
+	/**
+	 * Constructora 2
+	 * 
+	 * @param treeArray
+	 * @param max_prof
+	 */
 	public Arbol(ArrayList<Operando> treeArray, int max_prof) {
 		
 		this.padre = null;
@@ -82,6 +98,13 @@ public class Arbol {
 		}
 	}
 	
+	/**
+	 * Constructora 3
+	 * 
+	 * @param padre
+	 * @param treeArray
+	 * @param max_prof
+	 */
 	public Arbol(Arbol padre, ArrayList<Operando> treeArray, int max_prof) {
 		
 		this.padre = padre;
@@ -158,6 +181,54 @@ public class Arbol {
 		}
 	}
 	
+	public Arbol getSubTree(double probCruce) {
+	
+		for (int i = 0; i < numHijos; i++) {
+			
+			return this.hijos.get(i).getSubTreeAux(probCruce);
+		}
+		
+		return null;
+	}
+	
+	public Arbol getSubTreeAux(double probCruce) {
+		
+		Random rand = new Random();
+		double random = rand.nextDouble();
+		
+		if (random < probCruce*this.profundidad) {
+			
+			return this;
+		}
+		else {
+			
+			if (this.numHijos < 1) {
+				
+				return this.padre;
+			}
+			else {
+				
+				return this.hijos.get(rand.nextInt(this.numHijos)).getSubTreeAux(probCruce);
+			}
+		}
+	}
+	
+	public int getIndex(Operando op) {
+		
+		for (int i = 0; i < this.numHijos; i++) {
+			
+			if (hijos.get(i).getRaiz().equals(op)) {
+				
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	public void insertNewTree(Arbol a, int index) {
+		
+		hijos.set(index, a);
+	}
 	
 	/********************************* AUXILIARY METHODS *********************************/
 	public void toArrayAux(ArrayList<Operando> array) {
@@ -183,6 +254,15 @@ public class Arbol {
 		return profundidad;
 	}
 	
+	public void inicializaArbol(String metodo) {
+		
+		if (metodo.equals("Completo")) {
+			
+			System.out.println("ENTRO");
+			this.inicializaCompleto();
+		}
+	}
+	
 	protected void inicializaCompleto() {
 		
 		if (this.max_prof > 1) {
@@ -191,7 +271,7 @@ public class Arbol {
 				
 				Operando op = new Operando(false);
 				Arbol a = new Arbol(this, op, max_prof - 1);
-				a.inicializaCompleto();
+				//a.inicializaCompleto();
 				hijos.add(a);
 			}
 		}
@@ -235,6 +315,72 @@ public class Arbol {
 				nodos.add(hijos.get(i).getRaiz().getOperando());
 			} else{
 				getTerminales(hijos.get(i).getHijos(), nodos);
+			}
+		}
+	}
+	
+	/********************** AUXILIARY METHODS - Crossover **********************/
+	public void mutaTerminalSimple() {
+		
+		if (this.raiz.isTerminal()) {
+			
+			this.raiz = new Operando(true, this.raiz.toString());
+		}
+		else {
+			
+			Random rand = new Random();
+			hijos.get(rand.nextInt(numHijos)).mutaTerminalSimple();;
+		}
+	}
+	
+	public void mutaFuncionSimple(double probMutacion, boolean up) {
+		
+		if (this.raiz.isTerminal()) {
+			
+			this.padre.mutaFuncionSimple(probMutacion, true);
+		}
+		else {
+			
+			if (up) {
+				
+				boolean encontrado = false;
+				for (int i = 0; i < numHijos && !encontrado; i++) {
+					
+					if (this.raiz.equalsProgN2()) {
+						
+						this.raiz = new Operando("SIComida");
+						encontrado = true;
+					}
+					else if (this.raiz.equalsSiComida()) {
+						
+						this.raiz = new Operando("PROGN2");
+						encontrado = true;
+					}
+				}
+				
+				if (!encontrado && this.padre != null) {
+					
+					this.padre.mutaFuncionSimple(probMutacion, true);
+				}
+			}
+			else {
+				
+				Random rand = new Random();
+				if (this.raiz.equalsProgN3() || (rand.nextDouble() > probMutacion)) {
+					
+					this.hijos.get(rand.nextInt(numHijos)).mutaFuncionSimple(probMutacion, up);
+				}
+				else {
+					
+					if (this.raiz.equalsProgN2()) {
+						
+						this.raiz = new Operando("SIComida");
+					}
+					else if (this.raiz.equalsSiComida()) {
+						
+						this.raiz = new Operando("PROGN2");
+					}
+				}
 			}
 		}
 	}
@@ -317,5 +463,4 @@ public class Arbol {
 	public void setEsRaiz(boolean esRaiz) {
 		this.esRaiz = esRaiz;
 	}
-	
 }

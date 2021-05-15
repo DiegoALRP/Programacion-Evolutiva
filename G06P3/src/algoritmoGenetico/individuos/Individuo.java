@@ -32,8 +32,10 @@ public class Individuo {
 	private String metodoIni;
 	
 	private int fitness;
+	private int fitnessRanking;
 	private Pair casilla;
 	private ArrayList<Pair> comida;
+	private ArrayList<Pair> copyComida;
 	private ArrayList<Pair> camino;
 	private Pair direccion;
 	private String orientacionActual;
@@ -47,16 +49,34 @@ public class Individuo {
 		
 		this.metodoIni = metodoIni;
 		this.profundidad = profundidad;
-		this.comida = comida;
+		this.comida = new ArrayList<Pair>(comida);
+		this.copyComida = new ArrayList<Pair>(comida);
 		this.camino = new ArrayList<Pair>();
 		this.casilla = new Pair(0, 0);
 		this.direccion = new Pair(0, 1);
 		this.orientacionActual = "ESTE";
 		this.fitness = 0;
 		
+		this.camino.add(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1));
+		
 		this.inicializaCromosoma();
 	}
 	
+	public Individuo(ArrayList<Operando> fenotipo, int profundidad, ArrayList<Pair> comida) {
+		
+		this.profundidad = profundidad;
+		this.comida = comida;
+		this.copyComida = new ArrayList<Pair>(comida);
+		this.camino = new ArrayList<Pair>();
+		this.casilla = new Pair(0, 0);
+		this.direccion = new Pair(0, 1);
+		this.orientacionActual = "ESTE";
+		
+		this.fenotipo = new ArrayList<Operando>(fenotipo);
+		this.cromosoma = new Arbol(null, this.fenotipo, this.profundidad);
+		
+		this.calculateFitness();
+	}
 	/********************************* METHODS *********************************/
 	private void inicializaCromosoma() {
 		
@@ -87,30 +107,32 @@ public class Individuo {
 	}
 	
 	public int calculateFitness() {
+		
+		this.reinicia();
 		int pivote = 0;
 		ArrayList<String> terminales = this.getTerminales();
 		for(int i = 0; i < Individuo.numPasos; i++) {
 			
-			for(int j = 0; j < this.comida.size(); j++) {
-				if(this.comida.get(j).equals(casilla)) {
+			for(int j = 0; j < this.copyComida.size(); j++) {
+				if(this.copyComida.get(j).equals(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1))) {
+
 					fitness++;
-					this.comida.remove(j);
+					this.copyComida.remove(j);
 					break;
 				}
 			}
 			
 			String accion = terminales.get(pivote % terminales.size());
-			//String accion = siguienteAccion(terminales, pivote);
 			this.casilla = ejecutaAccion(accion);
 			
 			this.camino.add(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1));
 			
-			System.out.println("Casilla X : " + this.camino.get(i).get_x());
+			/*System.out.println("Casilla X : " + this.camino.get(i).get_x());
 			System.out.println("Casilla Y : " + this.camino.get(i).get_y());
 			System.out.println("Nueva orientacion: " + this.orientacionActual);
 			System.out.println("Accion: " + accion);
 			System.out.println("---");
-			
+			*/
 			pivote++;
 		}
 		return this.fitness;
@@ -149,12 +171,12 @@ public class Individuo {
 			this.orientacionActual = "ESTE";
 		}
 		
-		Pair casillaActual = new Pair(this.casilla.get_y(),this.casilla.get_x());
+		Pair casillaActual = new Pair(this.casilla.get_x(),this.casilla.get_y());
 		
 		if(accion == "AVANZA") {
-			casillaActual = new Pair(this.casilla.get_y() + this.direccion.get_y(), this.casilla.get_x() + this.direccion.get_x());
+			casillaActual = new Pair(this.casilla.get_x() + this.direccion.get_x(), this.casilla.get_y() + this.direccion.get_y());
 		
-			if(casillaActual.get_x() < 0) {					//casilla x
+			if(casillaActual.get_x() < 0) {						//casilla x
 				casillaActual.set_x(this.xSize);
 				
 			}else if(casillaActual.get_x() > this.xSize) {		//casilla x
@@ -186,9 +208,45 @@ public class Individuo {
 		
 		ArrayList<String> terminales = new ArrayList<String>();
 		this.cromosoma.getTerminales(this.cromosoma.getHijos(), terminales);
+		
+		/*
+		terminales.add("AVANZA");
+		terminales.add("DERECHA");
+		terminales.add("IZQUIERDA");
+		terminales.add("DERECHA");
+		terminales.add("IZQUIERDA");
+		terminales.add("DERECHA");
+		terminales.add("DERECHA");
+		terminales.add("DERECHA");
+		terminales.add("DERECHA");
+		terminales.add("AVANZA");
+		*/
+		
 		return terminales;
 	}
+	
+	/********************** AUXILIARY METHODS - Crossover **********************/
+	public void mutaTerminalSimple() {
+		
+		this.cromosoma.mutaTerminalSimple();
+	}
+	
+	public void mutaFuncionSimple(double probMutacion) {
+		
+		this.cromosoma.mutaFuncionSimple(probMutacion, false);
+	}
+	
 	/**************************** GETTERS & SETTERS ****************************/
+	public Arbol getCromosoma() {
+		
+		return this.cromosoma;
+	}
+	
+	public ArrayList<Operando> getRefFenotipe() {
+		
+		return this.fenotipo;
+	}
+	
 	public int getMaxProf() {
 		return this.profundidad;
 	}
@@ -199,6 +257,31 @@ public class Individuo {
 	
 	public ArrayList<Pair> getCamino(){
 		return this.camino;
+	}
+	
+	public String getInicializacion() {
+		return this.metodoIni;
+	}
+	public ArrayList<Pair> getComida() {
+		return this.comida;
+	}
+
+	public void setFitnessRanking(double probOfIth) {		//TODO
+		this.fitnessRanking = (int) Math.floor(probOfIth);
+		
+	}
+	
+	//public void reinicia(ArrayList<Pair> comida) {
+	public void reinicia() {
+		
+		this.copyComida = new ArrayList<Pair>(comida);
+		this.camino = new ArrayList<Pair>();
+		this.casilla = new Pair(0, 0);
+		this.direccion = new Pair(0, 1);
+		this.orientacionActual = "ESTE";
+		this.fitness = 0;
+		
+		this.camino.add(new Pair(this.casilla.get_x() + 1, this.casilla.get_y() + 1));
 	}
 	
 }

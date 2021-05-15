@@ -27,7 +27,7 @@ public class panelHormiga extends JPanel{
 			 for ( int y = tamañoCelda; y <= 640; y += tamañoCelda ) 
 			 { 
 				 g.setColor(Color.black);
-				 g.drawRect( x, y + tamañoCelda, tamañoCelda, tamañoCelda);
+				 g.drawRect(x, y + tamañoCelda, tamañoCelda, tamañoCelda);
 				 g.setColor(Color.gray);
 				 g.fill3DRect(x + 1, y + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1, true);
 				
@@ -43,16 +43,18 @@ public class panelHormiga extends JPanel{
 		 for(Pair p : casillasHormiga) {
 			 g.fillRect(tamañoCelda * p.get_y() + 1, tamañoCelda * p.get_x() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
 		 }
-	}
-	
-	/*public void pintaCamino(Graphics g, ArrayList<Pair> casillasComida) {
-		g.setColor(Color.yellow);
 		 
-		 for(Pair p : casillasComida) {
-			 g.fillRect(tamañoCelda * p.get_y() + 1, tamañoCelda * p.get_x() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
+		 g.setColor(Color.red);
+		 
+		 for(Pair comida : casillasComida) {
+			 for(Pair hormiga : casillasHormiga) {
+				 if(comida.equals(hormiga)) {
+					 g.fillRect(tamañoCelda * comida.get_y(), tamañoCelda * comida.get_x() + tamañoCelda , tamañoCelda - 1, tamañoCelda - 1);
+				 }
+			 }
 		 }
-	}*/
-	
+	}
+
 	public void repaint(Graphics g) {
 		g.setColor(Color.yellow);
 		 

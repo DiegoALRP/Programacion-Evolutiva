@@ -34,7 +34,7 @@ public class RastroSantaFe {
 		        	for(int i = 0; i < line.length; i++) {
 		        		tablero[x][i] = line[i];
 		        		if(line[i].equals("#")) {
-		        			comida.add(new Pair(i + 1 , x + 1));
+		        			comida.add(new Pair(x + 1 , i + 1));
 		        		}
 		        	}
 		            lineaLeida = in.readLine();
