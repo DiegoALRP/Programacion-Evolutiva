@@ -46,7 +46,8 @@ public class Main {
 			ArrayList<Operando> arr = new ArrayList<Operando>();
 			ind.getCromosoma().toArrayAux(arr);
 			
-			Individuo ind2 = new Individuo(arr, 4, rastro.getComida());
+			Individuo ind2 = new Individuo(ind.copyFenotipe(), 4, rastro.getComida());
+			//Individuo ind2 = new Individuo(arr, 4, rastro.getComida());
 			
 			for (int i = 0; i < 10; i++) {
 				

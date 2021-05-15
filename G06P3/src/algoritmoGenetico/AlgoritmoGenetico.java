@@ -39,6 +39,8 @@ public class AlgoritmoGenetico {
 	private Mutacion metodoMutacion;	//Metodo de Mutacion.
 	private double porcMutacion;		//Porcentaje de Mutacion.
 	private double porcElitismo;		//Porcentaje de Elitismo.
+	private String metodoInicializacion;//Metodo de Inicializacion.
+	private int profundidadMaxima;		//Profundidad Maxima del Arbol.
 	
 	
 	/** Poblacion **/
@@ -86,7 +88,7 @@ public class AlgoritmoGenetico {
 	 */
 	public AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, Seleccion metodoSeleccion,
 			Cruce metodoCruce, double porcCruce, Mutacion metodoMutacion, double porcMutacion,
-			double porcElite) {
+			double porcElite, String metodoInicializacion, int profundidadMaxima) {
 		
 		this.tamPoblacion = tamPoblacion;
 		this.numGeneraciones = numGeneraciones;
@@ -134,7 +136,12 @@ public class AlgoritmoGenetico {
 	
 	private void inicializaPoblacion() {
 		
+		this.poblacion = new ArrayList<Individuo>(tamPoblacion);
 		
+		for (int i = 0; i < tamPoblacion; i++) {
+			
+			//Individuo ind = new Individuo(metodoIni, profundidad, comida)
+		}
 	}
 	
 	/***************************************************************************/
