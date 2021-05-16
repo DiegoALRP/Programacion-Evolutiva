@@ -207,6 +207,7 @@ public class AlgoritmoGenetico {
 		
 		for (int i = 0; i < tamPoblacion; i++) {
 			
+			if (i%2 == 0);
 			Individuo ind = new Individuo(metodoInicializacion, profundidadMaxima, numeroPasos, santaFe);
 			poblacion.add(ind);
 		}
