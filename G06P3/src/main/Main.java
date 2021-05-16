@@ -2,42 +2,52 @@ package main;
 
 import java.awt.EventQueue;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import javax.swing.JOptionPane;
 
-import algoritmoGenetico.AlgoritmoGenetico;
-import algoritmoGenetico.cruces.Cruce;
-import algoritmoGenetico.individuos.Arbol;
 import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.Operando;
 import algoritmoGenetico.individuos.RastroSantaFe;
-import algoritmoGenetico.mutaciones.Mutacion;
-import algoritmoGenetico.mutaciones.MutacionArbol;
-import algoritmoGenetico.mutaciones.MutacionFuncionalSimple;
-import algoritmoGenetico.mutaciones.MutacionPermutacion;
-import algoritmoGenetico.mutaciones.MutacionTerminalSimple;
+import algoritmoGenetico.misc.Pair;
 import algoritmoGenetico.selecciones.Seleccion;
 import algoritmoGenetico.selecciones.SeleccionTorneo;
 import interfaz.panelPrincipal;
-import misc.Pair;
+
+
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		/*EventQueue.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RastroSantaFe sf = new RastroSantaFe();
-					panelPrincipal window = new panelPrincipal(sf.getComida());
+					//RastroSantaFe sf = new RastroSantaFe();
+					//panelPrincipal window = new panelPrincipal(sf.getComida());
+					panelPrincipal window = new panelPrincipal();
 					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		});*/
+		});
+		
+		/*Pair<Integer, Integer> p1 = new Pair<Integer, Integer>(0, 0);
+		Pair<Integer, Integer> p2 = new Pair<Integer, Integer>(0, 0);
+		
+		HashSet<Pair<Integer, Integer>> set = new HashSet<Pair<Integer,Integer>>();
+		
+		set.add(p1);
+		set.add(p2);
+		
+		System.out.println(set);
+		
+		System.out.println(p1.equals(p2));*/
+		//RastroSantaFe santaFe = new RastroSantaFe();
 	
-		for (int j = 0; j < 2; j++) {
+		/*for (int j = 0; j < 2; j++) {
 			
 			System.out.println("ITERACION: " + j);
 			RastroSantaFe rastro = new RastroSantaFe();
@@ -46,7 +56,8 @@ public class Main {
 			ArrayList<Operando> arr = new ArrayList<Operando>();
 			ind.getCromosoma().toArrayAux(arr);
 			
-			Individuo ind2 = new Individuo(arr, 4, rastro.getComida());
+			Individuo ind2 = new Individuo(ind.copyFenotipe(), 4, rastro.getComida());
+			//Individuo ind2 = new Individuo(arr, 4, rastro.getComida());
 			
 			for (int i = 0; i < 10; i++) {
 				
@@ -56,7 +67,7 @@ public class Main {
 				System.out.println("Feno2: " + ind2.printFenotipo());
 				System.out.println("F2: " + ind2.calculateFitness());
 			}
-		}
+		}*/
 		
 		/*for (int i = 0; i < 1000; i++) {
 			RastroSantaFe rastro = new RastroSantaFe();
@@ -139,7 +150,7 @@ public class Main {
 		
 		for (int i = 0; i < numIndividuos; i++) {
 			
-			poblacion.add(new Individuo("Completo", 3, rastro.getComida()));
+			poblacion.add(new Individuo("Completo", 4, 400, rastro));
 		}
 		
 		System.out.println("\n --------------- \n Poblacion Antes: ");
@@ -157,6 +168,30 @@ public class Main {
 			
 			System.out.println(poblacion.get(i).printFenotipo());
 			System.out.println(poblacion.get(i).calculateFitness());
+		}
+		*/
+		
+		/*for (int j = 0; j < 2; j++) {
+			
+			System.out.println("ITERACION: " + j);
+			RastroSantaFe rastro = new RastroSantaFe();
+			Individuo ind = new Individuo("Completo", 4, 400, rastro);
+			
+			ArrayList<Operando> arr = new ArrayList<Operando>();
+			ind.getCromosoma().toArrayAux(arr);
+			
+			//Individuo ind2 = new Individuo(ind.copyFenotipe(), 4, rastro.getComida());
+			Individuo ind2 = new Individuo(arr, "Completo", 4, 400, rastro);
+			//Individuo ind2 = new Individuo(arr, 4, rastro.getComida());
+			
+			for (int i = 0; i < 10; i++) {
+				
+				//ind.reinicia(new ArrayList<Pair>(rastro.getComida()));
+				System.out.println("F1: " + ind.calculateFitness());
+				System.out.println("Feno1: " + ind.printFenotipo());
+				System.out.println("Feno2: " + ind2.printFenotipo());
+				System.out.println("F2: " + ind2.calculateFitness());
+			}
 		}*/
 	}
 }

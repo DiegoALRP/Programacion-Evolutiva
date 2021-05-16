@@ -1,55 +1,85 @@
 package algoritmoGenetico.individuos;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
-import misc.Pair;
-
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Clase Tablero Rastro Santa Fe.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class RastroSantaFe {
 
-	private ArrayList<Pair> comida;
-	private String[][] tablero;
+	/****************************************************************************/
+	/******************************** ATRIBUTTES ********************************/
+	/****************************************************************************/
 	
-	private final static int tamañoTablero = 32;
+	private int[][] tablero;
+	private final static int tamTablero = 32;
 	
+	private final String filepath = "src/RastroDeSantaFe";
+	
+	
+	/****************************************************************************/
+	/******************************* CONSTRUCTOR ********************************/
+	/****************************************************************************/
 	public RastroSantaFe() {
 		
-		comida = new ArrayList<Pair>();
-		tablero = new String[tamañoTablero][tamañoTablero];
+		this.tablero = new int[tamTablero][tamTablero];
 		
-		int x = 0;
-		String pathString = System.getProperty("user.dir") + File.separator + "src" + File.separator + "Rastro de Santa Fe";
-		File fichero = new File(pathString);
-		
-		 try {
-		        BufferedReader in;
-		        in = new BufferedReader(new FileReader(fichero));
-		        
-		        String lineaLeida = in.readLine();
-		        
-		        while (lineaLeida != null) {
-		        	String[] line = lineaLeida.split(" ");
-		        	for(int i = 0; i < line.length; i++) {
-		        		tablero[x][i] = line[i];
-		        		if(line[i].equals("#")) {
-		        			comida.add(new Pair(x + 1 , i + 1));
-		        		}
-		        	}
-		            lineaLeida = in.readLine();
-		            x++;
-		        }
-		    } catch (Exception ex) {
-		        ex.printStackTrace();
-		    }
+		try {
+			
+			this.loadData();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public ArrayList<Pair> getComida(){
-		return this.comida;
+	
+	/***************************************************************************/
+	/********************************* METHODS *********************************/
+	/***************************************************************************/
+	private void loadData() throws FileNotFoundException {
+		
+		FileInputStream file = new FileInputStream(filepath);
+		Scanner sc = new Scanner(file);
+		
+		int j = 0;
+		while (sc.hasNextLine()) {
+			
+			String[] st = sc.nextLine().split(" ");
+			for (int i = 0; i < tamTablero; i++) {
+				
+				if (st[i].equals("#")) {
+					tablero[i][j] = 1;
+				}
+				else {
+					tablero[i][j] = 0;
+				}
+			}
+			j++;
+		}
 	}
 	
-	public String[][] getTablero(){
+	
+	/***************************************************************************/
+	/**************************** GETTERS & SETTERS ****************************/
+	/***************************************************************************/
+	
+	public int[][] getTablero(){
+		
 		return this.tablero;
 	}
 }
