@@ -5,7 +5,7 @@ import java.util.Random;
 import algoritmoGenetico.individuos.Arbol;
 import algoritmoGenetico.individuos.Individuo;
 
-public class MutacionContracción extends Mutacion{
+public class MutacionContraccion extends Mutacion{
 
 	@Override
 	public void mutaIndividuo(Individuo individuo) {

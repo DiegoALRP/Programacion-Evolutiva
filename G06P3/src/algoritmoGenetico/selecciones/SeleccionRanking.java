@@ -63,7 +63,7 @@ public class SeleccionRanking extends Seleccion{
 			}
 			
 			Individuo Padre = poblacion.get(pos_super);
-			Individuo individuo = new Individuo(Padre.getInicializacion(), Padre.getMaxProf(), Padre.getComida());
+			Individuo individuo = new Individuo(Padre.getMetodoIni(), Padre.getMaxProf(), Padre.getMaxPasos(), Padre.getSantaFe());
 			individuo.copyFenotipe(Padre.copyFenotipe());
 			
 			nuevaPoblacion.add(individuo);

@@ -258,7 +258,6 @@ public class Arbol {
 		
 		if (metodo.equals("Completo")) {
 			
-			System.out.println("ENTRO");
 			this.inicializaCompleto();
 		}
 	}
@@ -307,16 +306,6 @@ public class Arbol {
 		}
 		
 		return sb;
-	}
-	
-	public void getTerminales(ArrayList<Arbol> hijos, ArrayList<String> nodos) {
-		for(int i = 0; i < hijos.size(); i++){
-			if(hijos.get(i).isEsHoja()){
-				nodos.add(hijos.get(i).getRaiz().getOperando());
-			} else{
-				getTerminales(hijos.get(i).getHijos(), nodos);
-			}
-		}
 	}
 	
 	/********************** AUXILIARY METHODS - Crossover **********************/
