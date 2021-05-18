@@ -374,6 +374,26 @@ public class Arbol {
 		}
 	}
 	
+	public void randomTerminal() {
+		Random rand = new Random();
+		
+		switch(rand.nextInt(3)) {
+		case 0: this.raiz = new Operando("AVANZA");break;
+		case 1: this.raiz = new Operando("DERECHA");break;
+		case 2: this.raiz = new Operando("IZQUIERDA");break;
+		}
+	}
+	
+	public void randomFuncion() {
+		Random rand = new Random();
+		
+		switch(rand.nextInt(3)) {
+		case 0: this.raiz = new Operando("SIAvanza");break;
+		case 1: this.raiz = new Operando("PROGN2");break;
+		case 2: this.raiz = new Operando("PROGN3");break;
+		}
+	}
+	
 	/**************************** GETTERS & SETTERS ****************************/
 	public Arbol getPadre() {
 		

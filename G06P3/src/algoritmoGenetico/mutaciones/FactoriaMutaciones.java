@@ -23,6 +23,14 @@ public class FactoriaMutaciones {
 				return new MutacionArbol();
 			case "Permutacion":
 				return new MutacionPermutacion();
+			case "Contracción":
+				return new MutacionContraccion();
+			case "Expansion":
+				return new MutacionExpansion();
+			case "Hoist":
+				return new MutacionHoist();
+			case "Subarbol":
+				return new MutacionSubarbol();
 			default:
 				return new MutacionTerminalSimple();
 		}

@@ -346,8 +346,11 @@ public class Individuo {
 	}
 
 	public void setFitnessRanking(double probOfIth) {		//TODO
-		this.fitnessRanking = (int) Math.floor(probOfIth);
-		
+		this.fitnessRanking = (int) Math.floor(probOfIth);	
+	}
+	
+	public void setCromosoma(Arbol a) {
+		this.cromosoma = a;
 	}
 	
 	public RastroSantaFe getSantaFe() {

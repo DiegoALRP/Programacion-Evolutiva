@@ -161,7 +161,7 @@ public class panelPrincipal {
 		controlPanel.add(mutacion);
 		
 		JComboBox comboBox_mutacion = new JComboBox();
-		comboBox_mutacion.setModel(new DefaultComboBoxModel(new String[] {"Terminal simple", "Funcional simple", "Arbol", "Permutacion"}));
+		comboBox_mutacion.setModel(new DefaultComboBoxModel(new String[] {"Terminal simple", "Funcional simple", "Arbol", "Permutacion", "Contraccion", "Expansion", "Hoist", "Subarbol"}));
 		comboBox_mutacion.setBounds(97, 394, 109, 21);
 		controlPanel.add(comboBox_mutacion);
 		
