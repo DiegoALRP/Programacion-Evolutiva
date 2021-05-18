@@ -258,7 +258,6 @@ public class Arbol {
 		
 		if (metodo.equals("Completo")) {
 			
-			System.out.println("ENTRO");
 			this.inicializaCompleto();
 		}
 	}

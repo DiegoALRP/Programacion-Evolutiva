@@ -38,9 +38,9 @@ public class Individuo {
 	private int fitness;
 	private int fitnessRanking;
 	
-	private Pair<Integer, Integer> pos;
+	private Pair pos;
 	private Direccion direccion;
-	private HashSet<Pair<Integer, Integer>> setPos;
+	private HashSet<Pair> setPos;
 	
 	private int numMaximoPasos;
 	private int numPasos;
@@ -51,7 +51,7 @@ public class Individuo {
 	private int[][] tablero;
 	
 	private boolean printCamino;
-	private ArrayList<Pair<Integer, Integer>> camino;
+	private ArrayList<Pair> camino;
 	
 	/****************************************************************************/
 	/******************************* CONSTRUCTOR ********************************/
@@ -171,9 +171,9 @@ public class Individuo {
 		}
 	}
 	
-	public ArrayList<Pair<Integer, Integer>> getCamino() {
+	public ArrayList<Pair> getCamino() {
 		
-		camino = new ArrayList<Pair<Integer,Integer>>(numMaximoPasos);
+		camino = new ArrayList<Pair>(numMaximoPasos);
 		
 		this.inicializaFitness();
 		camino.add(pos);
@@ -189,9 +189,9 @@ public class Individuo {
 		
 		this.numPasos = 0;
 		this.fitness = 1;
-		this.pos = new Pair<Integer, Integer>(0, 0);
+		this.pos = new Pair(0, 0);
 		this.direccion = Direccion.ESTE;
-		this.setPos = new HashSet<Pair<Integer,Integer>>();
+		this.setPos = new HashSet<Pair>();
 		this.setPos.add(pos);
 	}
 	
@@ -208,23 +208,23 @@ public class Individuo {
 	
 	private boolean calculaSiComida() {
 		
-		Pair<Integer, Integer> pos;
+		Pair pos;
 		
 		if (direccion.equals(Direccion.ESTE)) {
 			
-			pos = new Pair<Integer, Integer>((this.pos.getFirst() + 1)%tamTablero, this.pos.getSecond());
+			pos = new Pair((this.pos.getFirst() + 1)%tamTablero, this.pos.getSecond());
 		}
 		else if (direccion.equals(Direccion.OESTE)) {
 			
-			pos = new Pair<Integer, Integer>(Math.floorMod(this.pos.getFirst() - 1, tamTablero), this.pos.getSecond());
+			pos = new Pair(Math.floorMod(this.pos.getFirst() - 1, tamTablero), this.pos.getSecond());
 		}
 		else if (direccion.equals(Direccion.NORTE)) {
 			
-			pos = new Pair<Integer, Integer>(this.pos.getFirst(), Math.floorMod(this.pos.getSecond() - 1, tamTablero));
+			pos = new Pair(this.pos.getFirst(), Math.floorMod(this.pos.getSecond() - 1, tamTablero));
 		}
 		else {
 			
-			pos = new Pair<Integer, Integer>(this.pos.getFirst(), (this.pos.getSecond() + 1)%tamTablero);
+			pos = new Pair(this.pos.getFirst(), (this.pos.getSecond() + 1)%tamTablero);
 		}
 		
 		if (this.tablero[pos.getFirst()][pos.getSecond()] == 1) {
@@ -254,19 +254,19 @@ public class Individuo {
 		
 		if (direccion.equals(Direccion.ESTE)) {
 			
-			pos = new Pair<Integer, Integer>((this.pos.getFirst() + 1)%tamTablero, this.pos.getSecond());
+			pos = new Pair((this.pos.getFirst() + 1)%tamTablero, this.pos.getSecond());
 		}
 		else if (direccion.equals(Direccion.OESTE)) {
 			
-			pos = new Pair<Integer, Integer>(Math.floorMod(this.pos.getFirst() - 1, tamTablero), this.pos.getSecond());
+			pos = new Pair(Math.floorMod(this.pos.getFirst() - 1, tamTablero), this.pos.getSecond());
 		}
 		else if (direccion.equals(Direccion.NORTE)) {
 			
-			pos = new Pair<Integer, Integer>(this.pos.getFirst(), Math.floorMod(this.pos.getSecond() - 1, tamTablero));
+			pos = new Pair(this.pos.getFirst(), Math.floorMod(this.pos.getSecond() - 1, tamTablero));
 		}
 		else {
 			
-			pos = new Pair<Integer, Integer>(this.pos.getFirst(), (this.pos.getSecond() + 1)%tamTablero);
+			pos = new Pair(this.pos.getFirst(), (this.pos.getSecond() + 1)%tamTablero);
 		}
 		
 		if (printCamino) {

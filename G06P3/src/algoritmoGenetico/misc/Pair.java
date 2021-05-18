@@ -20,18 +20,18 @@ import java.util.Objects;
  * 	-Diego Alejandro Rodríguez Pereira.
  *
  */
-public class Pair<T1, T2> {
+public class Pair {
 	
 	/****************************************************************************/
 	/******************************** ATRIBUTTES ********************************/
-	private T1 _first;
-	private T2 _second;
+	private int _first;
+	private int _second;
 
 	
 	
 	/****************************************************************************/
 	/******************************* CONSTRUCTOR ********************************/
-	public Pair(T1 first, T2 second) {
+	public Pair(int first, int second) {
 		_first = first;
 		_second = second;
 	}
@@ -40,11 +40,11 @@ public class Pair<T1, T2> {
 	
 	/***************************************************************************/
 	/********************************* METHODS *********************************/
-	public T1 getFirst() {
+	public int getFirst() {
 		return _first;
 	}
 
-	public T2 getSecond() {
+	public int getSecond() {
 		return _second;
 	}
 
@@ -54,7 +54,7 @@ public class Pair<T1, T2> {
 	
 	public boolean equals(Object obj) {
 
-        Pair<T1, T2> that = (Pair<T1, T2>) obj;
+        Pair that = (Pair) obj;
         return this._first == that._first && this._second == that._second;
     }
 }

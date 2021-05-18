@@ -36,10 +36,12 @@ public class panelPrincipal {
 	private JTextField textField_2;
 	private JTextField porc_cruce;
 
+	private RastroSantaFe santaFe;
 	/**
 	 * Create the application.
 	 */
-	public panelPrincipal() {
+	public panelPrincipal(RastroSantaFe sf) {
+		this.santaFe = sf;
 		initialize();
 	}
 
@@ -193,7 +195,6 @@ public class panelPrincipal {
 
 		//panelHormiga hormiga = new panelHormiga(comida);
 		
-		RastroSantaFe santaFe = new RastroSantaFe();
 		Individuo ind1 = new Individuo("Completo", 2, 400, santaFe);
 		
 		panelHormiga hormiga = new panelHormiga(santaFe.getTablero(), ind1.getCamino());

@@ -15,9 +15,9 @@ public class panelHormiga extends JPanel{
 	private final static int tamañoTablero = 32;
 	
 	private int[][] tablero;
-	private ArrayList<Pair<Integer, Integer>> camino;
+	private ArrayList<Pair> camino;
 	
-	 public panelHormiga(int[][] tablero, ArrayList<Pair<Integer, Integer>> camino) {
+	 public panelHormiga(int[][] tablero, ArrayList<Pair> camino) {
 		 
 		 setVisible(true);
 		 this.tablero = tablero;
@@ -28,7 +28,7 @@ public class panelHormiga extends JPanel{
 		
 		 for ( int x = tamañoCelda; x <= tamañoCelda * tamañoTablero; x += tamañoCelda) {
 			 
-			 for ( int y = tamañoCelda; y <= 640; y += tamañoCelda ) 
+			 for ( int y = tamañoCelda; y <= tamañoCelda * tamañoTablero; y += tamañoCelda ) 
 			 { 
 				 g.setColor(Color.black);
 				 g.drawRect(x, y + tamañoCelda, tamañoCelda, tamañoCelda);
@@ -50,7 +50,7 @@ public class panelHormiga extends JPanel{
 		 }
 
 		 
-		 for (Pair<Integer, Integer> pos : camino) {
+		 for (Pair pos : camino) {
 			 
 			 int x = pos.getFirst();
 			 int y = pos.getSecond();
