@@ -1,10 +1,15 @@
 package algoritmoGenetico;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Random;
 
 import algoritmoGenetico.cruces.Cruce;
 import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.RastroSantaFe;
+import algoritmoGenetico.misc.Pair;
 import algoritmoGenetico.mutaciones.Mutacion;
 import algoritmoGenetico.selecciones.Seleccion;
 
@@ -70,7 +75,8 @@ public class AlgoritmoGenetico {
 	//Presion Selectiva
 	private double[] presionSelectiva;			//Array con la presion selectiva de cada generacion.
 	
-	
+	private boolean plebeBool;
+	private ArrayList<Pair> mejorCaminoHormiga;
 	
 	/****************************************************************************/
 	/******************************* CONSTRUCTOR ********************************/
@@ -98,16 +104,17 @@ public class AlgoritmoGenetico {
 		this.numGeneraciones = numGeneraciones;
 		this.metodoSeleccion = metodoSeleccion;
 		this.metodoCruce = metodoCruce;
-		this.porcCruce = porcCruce;
+		this.porcCruce = porcCruce/100;
 		this.metodoMutacion = metodoMutacion;
-		this.porcMutacion = porcMutacion;
-		this.porcElitismo = porcElite;
+		this.porcMutacion = porcMutacion/100;
+		this.porcElitismo = porcElite/100;
 		
 		this.metodoInicializacion = metodoInicializacion;
 		this.profundidadMaxima = profundidadMaxima;
 		this.numeroPasos = numeroPasos;
 		this.santaFe = santaFe;
 		
+		this.plebeBool = true;
 		this.inicializaVariables();
 	}
 	
@@ -123,19 +130,98 @@ public class AlgoritmoGenetico {
 		
 		while (this.generacionActual < this.numGeneraciones) {
 			
-			//GeneraElite
+			this.generaElite();
 			this.poblacion = this.metodoSeleccion.seleccionar(poblacion);
 			this.metodoCruce.cruza(poblacion, porcCruce);
 			this.metodoMutacion.muta(poblacion, porcMutacion);
 			
+			this.reintroduceElite();
 			this.evaluaFitnessPoblacion();
 			
 			generacionActual++;
+			System.out.println(this.generacionActual);
 		}
 	}
 	
+	private void generaElite() {
+			
+			int numElite = (int) Math.ceil(this.tamPoblacion*this.porcElitismo);
+			int numPlebe = numElite*3;
+			
+			this.elite = new ArrayList<Individuo>(numElite);
+			this.plebe = new ArrayList<Individuo>(numPlebe);
+			
+			ArrayList<Individuo> poblacionAuxiliar = new ArrayList<Individuo>(this.poblacion);
+			Collections.sort(poblacionAuxiliar, new Comparator<Individuo>() {
 	
+				@Override
+				public int compare(Individuo o1, Individuo o2) {
+					
+					return Double.compare(o2.getFitness(), o1.getFitness());
+				}
+			});
+			
+			for (int i = 0; i < numElite; i++) {
+				
+				elite.add(poblacionAuxiliar.get(i));
+			}
+			for (int i = 0; i < numPlebe; i++) {
+				
+				plebe.add(poblacionAuxiliar.get(tamPoblacion - i - 1));
+			}
+		}
 	
+		public void reintroduceElite() {
+		
+			int numElite = (int) Math.ceil(this.tamPoblacion*this.porcElitismo);
+			HashSet<Integer> indexAdded = new HashSet<Integer>(numElite);
+			int numAdded = 0;
+			int index;
+			Random rand = new Random();
+			while (numAdded < numElite && indexAdded.size() < this.tamPoblacion) {
+				
+				index = rand.nextInt(this.tamPoblacion);
+				while (indexAdded.contains(index)) {
+					
+					index = rand.nextInt(this.tamPoblacion);
+				}
+				
+				indexAdded.add(index);
+				
+				Individuo eli = this.elite.get(numAdded);
+				double fitnessEli = eli.calculateFitness();
+				Individuo ple = this.poblacion.get(index);
+				double fitnessPle = ple.getFitness();
+				if (fitnessEli > fitnessPle) {
+					
+					ple.setCromosoma(eli.getCromosoma());
+					ple.calculateFitness();
+					
+					numAdded++;
+				}
+			}
+			
+			for (Individuo indPlebe : this.plebe) {
+				
+				index = rand.nextInt(this.tamPoblacion);
+				while (indexAdded.contains(index)) {
+					
+					index = rand.nextInt(this.tamPoblacion);
+				}
+				
+				indexAdded.add(index);
+				
+				double fitnessPlebe = indPlebe.getFitness();
+				Individuo indComparado = this.poblacion.get(index);
+				double fitnessComparado = indComparado.getFitness();
+				
+				if (fitnessPlebe > fitnessComparado && this.plebeBool) {
+					
+					indComparado.setCromosoma(indPlebe.getCromosoma());
+					indComparado.calculateFitness();
+				}
+			}
+		}
 	private void evaluaFitnessPoblacion() {
 		
 		int mejorGeneracion = -Integer.MAX_VALUE;
@@ -172,6 +258,7 @@ public class AlgoritmoGenetico {
 			
 			this.mejorIndividuoAbsoluto = new Individuo(mejorIndividuo.copyFenotipe(), metodoInicializacion, 
 					profundidadMaxima, numeroPasos, santaFe);
+			this.mejorCaminoHormiga = mejorIndividuo.getCamino();
 		}
 		else {
 			
@@ -213,6 +300,9 @@ public class AlgoritmoGenetico {
 		}
 	}
 	
+	public ArrayList<Pair> getCaminoHormiga(){
+		return this.mejorCaminoHormiga;
+	}
 	/***************************************************************************/
 	/**************************** GETTERS & SETTERS ****************************/
 	/***************************************************************************/

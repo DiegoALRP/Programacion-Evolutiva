@@ -3,6 +3,8 @@ package interfaz;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -14,9 +16,16 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
+import algoritmoGenetico.AlgoritmoGenetico;
+import algoritmoGenetico.cruces.Cruce;
 import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.RastroSantaFe;
+import algoritmoGenetico.mutaciones.FactoriaMutaciones;
+import algoritmoGenetico.mutaciones.Mutacion;
+import algoritmoGenetico.selecciones.FactoriaSeleccion;
+import algoritmoGenetico.selecciones.Seleccion;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -37,6 +46,8 @@ public class panelPrincipal {
 	private JTextField porc_cruce;
 
 	private RastroSantaFe santaFe;
+	
+	private panelHormiga hormiga;
 	/**
 	 * Create the application.
 	 */
@@ -88,7 +99,7 @@ public class panelPrincipal {
 		n.setBounds(10, 33, 109, 19);
 		controlPanel.add(n);
 		
-		textField = new JTextField();
+		textField = new JTextField("100");
 		textField.setBounds(149, 33, 96, 19);
 		controlPanel.add(textField);
 		textField.setColumns(10);
@@ -98,7 +109,7 @@ public class panelPrincipal {
 		numGeneraciones.setBounds(10, 83, 109, 19);
 		controlPanel.add(numGeneraciones);
 		
-		textField_1 = new JTextField();
+		textField_1 = new JTextField("100");
 		textField_1.setBounds(149, 83, 96, 19);
 		controlPanel.add(textField_1);
 		textField_1.setColumns(10);
@@ -108,7 +119,7 @@ public class panelPrincipal {
 		elite.setBounds(30, 134, 89, 19);
 		controlPanel.add(elite);
 		
-		textField_2 = new JTextField();
+		textField_2 = new JTextField("2");
 		textField_2.setBounds(149, 134, 96, 19);
 		controlPanel.add(textField_2);
 		textField_2.setColumns(10);
@@ -137,7 +148,7 @@ public class panelPrincipal {
 		comboBox_cruce.setBounds(97, 354, 109, 21);
 		controlPanel.add(comboBox_cruce);
 		
-		JTextField porc_mutacion = new JTextField();
+		JTextField porc_mutacion = new JTextField("40");
 		porc_mutacion.setBounds(216, 395, 45, 19);
 		controlPanel.add(porc_mutacion);
 		porc_mutacion.setColumns(10);
@@ -146,7 +157,7 @@ public class panelPrincipal {
 		lblNewLabel_1.setBounds(264, 398, 10, 13);
 		controlPanel.add(lblNewLabel_1);
 		
-		porc_cruce = new JTextField();
+		porc_cruce = new JTextField("60");
 		porc_cruce.setColumns(10);
 		porc_cruce.setBounds(216, 355, 45, 19);
 		controlPanel.add(porc_cruce);
@@ -197,12 +208,50 @@ public class panelPrincipal {
 		
 		Individuo ind1 = new Individuo("Completo", 2, 400, santaFe);
 		
-		panelHormiga hormiga = new panelHormiga(santaFe.getTablero(), ind1.getCamino());
+		hormiga = new panelHormiga(santaFe.getTablero(), new ArrayList<>());
 		System.out.println("Comida: " + ind1.getFitness());
 		System.out.println("Fenotipo: " + ind1.printFenotipo());
 		graficas gr = new graficas();
 		tabbedPane.addTab("Hormiga", hormiga);
 		tabbedPane.addTab("Grafica", gr.getPlot());
+		
+		
+		start_buton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int tam = Integer.parseInt(textField.getText());
+				int generaciones = Integer.parseInt(textField_1.getText());
+				int elite = Integer.parseInt(textField_2.getText());
+				
+				Seleccion metodoSeleccion = FactoriaSeleccion.getAlgoritmoDeSeleccion(comboBox_seleccion.getSelectedItem().toString());
+				Cruce metodoCruce = new Cruce();
+				Mutacion metodoMutacion = FactoriaMutaciones.getAlgoritmoDeMutacion(comboBox_mutacion.getSelectedItem().toString());
+	
+				double probCruce = Double.parseDouble(porc_cruce.getText());
+				double probMutacion = Double.parseDouble(porc_mutacion.getText());
+				
+				String inicializacion = (String) comboBox_inicializacion.getSelectedItem();
+				int profundidad = (int) spinner.getValue();
+				
+				AlgoritmoGenetico AG = new AlgoritmoGenetico(tam, generaciones, metodoSeleccion, metodoCruce, probCruce,
+										metodoMutacion, probMutacion, elite, inicializacion, profundidad, 400, santaFe);
+				
+				
+				AG.startAlgorithm();
+				
+				hormiga.setCaminoHormiga(AG.getCaminoHormiga());
+				SwingUtilities.windowForComponent(start_buton).repaint();
+
+				/*
+				 * int tamPoblacion, int numGeneraciones, Seleccion metodoSeleccion,
+			Cruce metodoCruce, double porcCruce, Mutacion metodoMutacion, double porcMutacion,
+			double porcElite, String metodoInicializacion, int profundidadMaxima, 
+			int numeroPasos, RastroSantaFe santaFe
+				 */
+			}
+		});
 	
 	}
 

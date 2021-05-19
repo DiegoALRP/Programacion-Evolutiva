@@ -96,4 +96,8 @@ public class panelHormiga extends JPanel{
 			 g.fillRect(tamañoCelda * p.get_y() + 1, tamañoCelda * p.get_x() + tamañoCelda + 1, tamañoCelda - 1, tamañoCelda - 1);
 		 }
 	}*/
+	
+	public void setCaminoHormiga(ArrayList<Pair> camino) {
+		this.camino = camino;
+	}
 }

@@ -235,8 +235,10 @@ public class Arbol {
 		
 		array.add(this.getRaiz());
 		
-		for(int i = 0; i < this.hijos.size(); i++){
-			this.hijos.get(i).toArrayAux(array);
+		if(this.hijos != null) {
+			for(int i = 0; i < this.hijos.size(); i++){
+				this.hijos.get(i).toArrayAux(array);
+			}
 		}
 	}
 	
