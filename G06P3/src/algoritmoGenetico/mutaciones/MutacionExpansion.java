@@ -10,10 +10,8 @@ public class MutacionExpansion extends Mutacion{
 	@Override
 	public void mutaIndividuo(Individuo individuo) {
 		
-		
 		Arbol arbol = individuo.getCromosoma();
 		Random rand = new Random();
-		boolean arbolMuta = false;
 		for(int i = 0; i < arbol.getNumHijos(); i++) {
 			if(rand.nextDouble() < this.probMutacion) {
 				Arbol mutado = arbol.getHijos().get(i);

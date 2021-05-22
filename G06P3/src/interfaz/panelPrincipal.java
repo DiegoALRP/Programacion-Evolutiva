@@ -206,11 +206,11 @@ public class panelPrincipal {
 
 		//panelHormiga hormiga = new panelHormiga(comida);
 		
-		Individuo ind1 = new Individuo("Completo", 2, 400, santaFe);
+		//Individuo ind1 = new Individuo("Completo", 2, 400, santaFe);
 		
 		hormiga = new panelHormiga(santaFe.getTablero(), new ArrayList<>());
-		System.out.println("Comida: " + ind1.getFitness());
-		System.out.println("Fenotipo: " + ind1.printFenotipo());
+		//System.out.println("Comida: " + ind1.getFitness());
+		//System.out.println("Fenotipo: " + ind1.printFenotipo());
 		graficas gr = new graficas();
 		tabbedPane.addTab("Hormiga", hormiga);
 		tabbedPane.addTab("Grafica", gr.getPlot());
