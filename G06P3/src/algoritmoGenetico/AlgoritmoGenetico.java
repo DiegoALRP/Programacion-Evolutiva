@@ -139,7 +139,7 @@ public class AlgoritmoGenetico {
 			this.evaluaFitnessPoblacion();
 			
 			generacionActual++;
-			System.out.println(this.generacionActual);
+			//System.out.println(this.generacionActual);
 		}
 	}
 	
