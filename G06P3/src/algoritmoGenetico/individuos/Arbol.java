@@ -268,6 +268,7 @@ public class Arbol {
 		
 		if (this.max_prof > 1) {
 			
+			hijos.clear();
 			for (int i = 0; i < numHijos; i++) {
 				
 				Operando op = new Operando(false);
@@ -278,6 +279,7 @@ public class Arbol {
 		}
 		else {
 			
+			hijos.clear();
 			for (int i = 0; i < numHijos; i++) {
 				
 				Operando op = new Operando(true);

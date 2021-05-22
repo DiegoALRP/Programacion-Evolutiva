@@ -191,7 +191,7 @@ public class Individuo {
 		this.fitness = 1;
 		this.pos = new Pair(0, 0);
 		this.direccion = Direccion.ESTE;
-		this.setPos = new HashSet<Pair>();
+		this.setPos = new HashSet<Pair>(100);
 		this.setPos.add(pos);
 	}
 	
