@@ -130,50 +130,50 @@ public class panelPrincipal {
 		
 		JLabel seleccion = new JLabel("Seleccion");
 		seleccion.setHorizontalAlignment(SwingConstants.RIGHT);
-		seleccion.setBounds(10, 311, 66, 17);
+		seleccion.setBounds(10, 331, 66, 17);
 		controlPanel.add(seleccion);
 		
 		JComboBox comboBox_seleccion = new JComboBox();
 		comboBox_seleccion.setModel(new DefaultComboBoxModel(new String[] {"Ruleta", "Torneo", "Torneo Probabilistico", "Estocastico", "Restos", "Truncamiento", "Ranking"}));
-		comboBox_seleccion.setBounds(97, 309, 109, 21);
+		comboBox_seleccion.setBounds(97, 339, 109, 21);
 		controlPanel.add(comboBox_seleccion);
 		
 		JLabel cruce = new JLabel("Cruce");
 		cruce.setHorizontalAlignment(SwingConstants.RIGHT);
-		cruce.setBounds(10, 356, 66, 17);
+		cruce.setBounds(10, 386, 66, 17);
 		controlPanel.add(cruce);
 		
 		JComboBox comboBox_cruce = new JComboBox();
 		comboBox_cruce.setModel(new DefaultComboBoxModel(new String[] {"Unico"}));
-		comboBox_cruce.setBounds(97, 354, 109, 21);
+		comboBox_cruce.setBounds(97, 384, 109, 21);
 		controlPanel.add(comboBox_cruce);
 		
 		JTextField porc_mutacion = new JTextField("40");
-		porc_mutacion.setBounds(216, 395, 45, 19);
+		porc_mutacion.setBounds(216, 425, 45, 19);
 		controlPanel.add(porc_mutacion);
 		porc_mutacion.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("%");
-		lblNewLabel_1.setBounds(264, 398, 10, 13);
+		lblNewLabel_1.setBounds(264, 428, 10, 13);
 		controlPanel.add(lblNewLabel_1);
 		
 		porc_cruce = new JTextField("60");
 		porc_cruce.setColumns(10);
-		porc_cruce.setBounds(216, 355, 45, 19);
+		porc_cruce.setBounds(216, 385, 45, 19);
 		controlPanel.add(porc_cruce);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("%");
-		lblNewLabel_1_1.setBounds(264, 358, 10, 13);
+		lblNewLabel_1_1.setBounds(264, 388, 10, 13);
 		controlPanel.add(lblNewLabel_1_1);
 		
 		JLabel mutacion = new JLabel("Mutacion");
 		mutacion.setHorizontalAlignment(SwingConstants.RIGHT);
-		mutacion.setBounds(10, 396, 66, 17);
+		mutacion.setBounds(10, 426, 66, 17);
 		controlPanel.add(mutacion);
 		
 		JComboBox comboBox_mutacion = new JComboBox();
 		comboBox_mutacion.setModel(new DefaultComboBoxModel(new String[] {"Terminal simple", "Funcional simple", "Arbol", "Permutacion", "Contraccion", "Expansion", "Hoist", "Subarbol"}));
-		comboBox_mutacion.setBounds(97, 394, 109, 21);
+		comboBox_mutacion.setBounds(97, 424, 109, 21);
 		controlPanel.add(comboBox_mutacion);
 		
 		JLabel ProfundidadArbol = new JLabel("Profundidad Arbol");
@@ -186,14 +186,24 @@ public class panelPrincipal {
 		spinner.setBounds(149, 185, 42, 20);
 		controlPanel.add(spinner);
 		
+		JLabel numPasos = new JLabel("Num Pasos");
+		numPasos.setHorizontalAlignment(SwingConstants.RIGHT);
+		numPasos.setBounds(10, 230, 109, 19);
+		controlPanel.add(numPasos);
+		
+		JTextField numPasos_tf = new JTextField("400");
+		numPasos_tf.setBounds(149, 230, 96, 19);
+		controlPanel.add(numPasos_tf);
+		numPasos_tf.setColumns(10);
+		
 		JLabel Inicializacion = new JLabel("Inicializacion");
 		Inicializacion.setHorizontalAlignment(SwingConstants.RIGHT);
-		Inicializacion.setBounds(0, 273, 76, 17);
+		Inicializacion.setBounds(0, 303, 76, 17);
 		controlPanel.add(Inicializacion);
 		
 		JComboBox comboBox_inicializacion = new JComboBox();
 		comboBox_inicializacion.setModel(new DefaultComboBoxModel(new String[] {"Completo", "Creciente", "Ramped and Half"}));
-		comboBox_inicializacion.setBounds(97, 271, 109, 21);
+		comboBox_inicializacion.setBounds(97, 301, 109, 21);
 		controlPanel.add(comboBox_inicializacion);
 		
 		JButton start_buton = new JButton("START");
@@ -201,6 +211,9 @@ public class panelPrincipal {
 		controlPanel.add(start_buton);
 		frame.getContentPane().setLayout(groupLayout);
 		
+		JLabel fitness = new JLabel("La hormiga ha comido: ");
+		fitness.setBounds(7, 522, 262, 21);
+		controlPanel.add(fitness);
 		
 		///////////////////////////////////////////////////// 			TABBED PANE
 
@@ -224,6 +237,7 @@ public class panelPrincipal {
 				int tam = Integer.parseInt(textField.getText());
 				int generaciones = Integer.parseInt(textField_1.getText());
 				int elite = Integer.parseInt(textField_2.getText());
+				int numeroPasos = Integer.parseInt(numPasos_tf.getText());
 				
 				Seleccion metodoSeleccion = FactoriaSeleccion.getAlgoritmoDeSeleccion(comboBox_seleccion.getSelectedItem().toString());
 				Cruce metodoCruce = new Cruce();
@@ -236,20 +250,17 @@ public class panelPrincipal {
 				int profundidad = (int) spinner.getValue();
 				
 				AlgoritmoGenetico AG = new AlgoritmoGenetico(tam, generaciones, metodoSeleccion, metodoCruce, probCruce,
-										metodoMutacion, probMutacion, elite, inicializacion, profundidad, 400, santaFe);
+										metodoMutacion, probMutacion, elite, inicializacion, profundidad, numeroPasos, santaFe);
 				
 				
 				AG.startAlgorithm();
 				
 				hormiga.setCaminoHormiga(AG.getCaminoHormiga());
 				SwingUtilities.windowForComponent(start_buton).repaint();
+				
+				gr.actualiza(Integer.parseInt(textField_1.getText()), AG.getArrayMejorAbsoluto(), AG.getMejorFitnessGeneracion(), AG.getMediaFitnessGeneracion(), AG.getPresionSelectiva());
 
-				/*
-				 * int tamPoblacion, int numGeneraciones, Seleccion metodoSeleccion,
-			Cruce metodoCruce, double porcCruce, Mutacion metodoMutacion, double porcMutacion,
-			double porcElite, String metodoInicializacion, int profundidadMaxima, 
-			int numeroPasos, RastroSantaFe santaFe
-				 */
+				fitness.setText("La hormiga ha comido: " + (int)AG.getMejorFitness() + "/89 piezas de comida");
 			}
 		});
 	

@@ -49,10 +49,10 @@ public class Cruce {
 	
 	public void cruzaPadres(Individuo padre1, Individuo padre2) {
 		
-		Arbol asub1 = padre1.getCromosoma().getSubTree(this.probCruce);
+		Arbol asub1 = padre1.getCromosoma().getSubTree(90);
 		Arbol asub1Padre = asub1.getPadre();
 		
-		Arbol asub2 = padre2.getCromosoma().getSubTree(this.probCruce);
+		Arbol asub2 = padre2.getCromosoma().getSubTree(90);
 		Arbol asub2Padre = asub2.getPadre();
 		
 		asub1Padre.insertNewTree(asub2, asub1Padre.getIndex(asub1.getRaiz()));

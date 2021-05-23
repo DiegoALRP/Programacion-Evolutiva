@@ -300,10 +300,32 @@ public class AlgoritmoGenetico {
 		}
 	}
 	
-	public ArrayList<Pair> getCaminoHormiga(){
-		return this.mejorCaminoHormiga;
-	}
+
 	/***************************************************************************/
 	/**************************** GETTERS & SETTERS ****************************/
 	/***************************************************************************/
+	
+	public ArrayList<Pair> getCaminoHormiga(){
+		return this.mejorCaminoHormiga;
+	}
+	
+	public double getMejorFitness() {
+		return this.mejorFitnessAbsoluto;
+	}
+	
+	public double[] getPresionSelectiva() {
+		return this.presionSelectiva;
+	}
+	
+	public double[] getArrayMejorAbsoluto() {
+		return this.arrayMejorFitnessAbsoluto;
+	}
+	
+	public double[] getMejorFitnessGeneracion() {
+		return this.mejorFitnessGeneracion;
+	}
+	
+	public double[] getMediaFitnessGeneracion() {
+		return this.mediaFitnessGeneracion;
+	}
 }
