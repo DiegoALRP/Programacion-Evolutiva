@@ -8,7 +8,6 @@ import java.util.Random;
 
 import algoritmoGenetico.cruces.Cruce;
 import algoritmoGenetico.individuos.Individuo;
-import algoritmoGenetico.individuos.Operando;
 import algoritmoGenetico.individuos.RastroSantaFe;
 import algoritmoGenetico.misc.Pair;
 import algoritmoGenetico.mutaciones.Mutacion;
@@ -172,7 +171,6 @@ public class AlgoritmoGenetico {
 				
 				mejorGeneracion = fitness;
 				mejorIndividuo = ind;
-				System.out.println("Mejor: " + ind.printFenotipo());
 			}
 			
 			mediaGeneracion += fitness;

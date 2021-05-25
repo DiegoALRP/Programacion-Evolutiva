@@ -190,7 +190,7 @@ public class Individuo {
 	private void inicializaFitness() {
 		
 		this.numPasos = 0;
-		this.fitness = 1;
+		this.fitness = 0;
 		this.pos = new Pair(0, 0);
 		this.direccion = Direccion.ESTE;
 		this.setPos = new HashSet<Pair>(100);
