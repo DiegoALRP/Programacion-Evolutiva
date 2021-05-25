@@ -59,6 +59,13 @@ public class Individuo {
 	/******************************* CONSTRUCTOR ********************************/
 	/****************************************************************************/
 	
+	/**
+	 * 
+	 * @param metodoIni
+	 * @param profMaxima
+	 * @param numPasos
+	 * @param santaFe
+	 */
 	public Individuo(String metodoIni, int profMaxima, int numPasos, RastroSantaFe santaFe) {
 		
 		this.metodoIni = metodoIni;
@@ -77,6 +84,15 @@ public class Individuo {
 		this.calculateFitness();
 	}
 	
+	
+	/**
+	 * 
+	 * @param fenotipo
+	 * @param metodoIni
+	 * @param profMaxima
+	 * @param numPasos
+	 * @param santaFe
+	 */
 	public Individuo(ArrayList<Operando> fenotipo, String metodoIni, int profMaxima, int numPasos, RastroSantaFe santaFe) {
 		
 		this.metodoIni = metodoIni;
@@ -186,7 +202,11 @@ public class Individuo {
 		
 		return camino;
 	}
+	
+	
+	/*************************************************************************************/
 	/********************************* AUXILIARY METHODS *********************************/
+	/*************************************************************************************/
 	private void inicializaFitness() {
 		
 		this.numPasos = 0;
@@ -309,7 +329,11 @@ public class Individuo {
 		this.cromosoma = new Arbol(null, this.fenotipo, this.profMaxima);
 	}
 	
+	
+	
+	/***************************************************************************/
 	/********************** AUXILIARY METHODS - Crossover **********************/
+	/***************************************************************************/
 	public void mutaTerminalSimple() {
 		
 		this.cromosoma.mutaTerminalSimple();
@@ -320,7 +344,10 @@ public class Individuo {
 		this.cromosoma.mutaFuncionSimple(probMutacion, false);
 	}
 	
+	
+	/***************************************************************************/
 	/**************************** GETTERS & SETTERS ****************************/
+	/***************************************************************************/
 	public Arbol getCromosoma() {
 		
 		return this.cromosoma;

@@ -22,28 +22,38 @@ import java.util.Random;
  */
 public class Arbol {
 
+	
+	/****************************************************************************/
 	/******************************** ATRIBUTTES ********************************/
-	private Arbol padre;
-	private Operando raiz;
-	private ArrayList<Arbol> hijos;
-	private int numHijos;
-	private int numNodos;
-	private int max_prof;
-	private int profundidad;
-	private boolean useIF;
-	private boolean esHoja;
-	private boolean esRaiz;
-	private String metodoIni;
+	/****************************************************************************/
+	private Arbol padre;				//Puntero al nodo padre.
+	private Operando raiz;				//Raíz del subárbol
+	private ArrayList<Arbol> hijos;		//Array que contiene los hijos del subárbol
+	private int numHijos;				//Número de hijos (directos) que contiene
+	private int numNodos;				//Número de nodos que contiene el árbol	
+	private int max_prof;				//Profundidad máxima
+	private int profundidad;			//Profundidad total
+	private boolean useIF;				//useIF
+	private boolean esHoja;				//Booleano que nos indica si el nodo es hoja o no
+	private boolean esRaiz;				//Booleano que nos indica si el nodo es raíz del árbol o no
+	private String metodoIni;			//Método de Inicialización
 
 	
+	/****************************************************************************/
 	/******************************* CONSTRUCTOR ********************************/
+	/****************************************************************************/
 	
 	/**
 	 * Constructora 1
 	 * 
-	 * @param padre
-	 * @param raiz
-	 * @param max_prof
+	 * @param padre	[ES] Puntero al nodo padre (si es raíz del árbol no tiene puntero).
+	 * 				[EN] Father's node pointer (doesn't have pointer if it is tree's root).
+	 * 
+	 * @param raiz	[ES] Nodo raíz del subárbol.
+	 * 				[ES] Subtree's root.
+	 * 
+	 * @param max_prof	[ES] Máxima profundidad (restante) del subárbol.
+	 * 					[EN] Subtree's maximum depth (remaining).
 	 */
 	public Arbol(Arbol padre, Operando raiz, int max_prof, String metodoIni) {
 		
@@ -82,33 +92,16 @@ public class Arbol {
 	
 	/**
 	 * Constructora 2
+	 * (Recibe como parametro de entrada el arbol a construir)
 	 * 
-	 * @param treeArray
-	 * @param max_prof
-	 */
-	public Arbol(ArrayList<Operando> treeArray, int max_prof) {
-		
-		this.padre = null;
-		this.raiz = treeArray.get(0);
-		treeArray.remove(0);
-		this.max_prof = max_prof;
-		
-		hijos = new ArrayList<Arbol>();
-		for (int i = 0; i < treeArray.size(); i++) {
-			
-			Operando raiz = treeArray.get(0);
-			treeArray.remove(0);
-			//Arbol a = new Arbol(this, raiz, treeArray, max_prof - 1);
-			//hijos.add(a);
-		}
-	}
-	
-	/**
-	 * Constructora 3
+	 * @param padre	[ES] Puntero al nodo padre (si es raíz del árbol no tiene puntero).
+	 * 				[EN] Father's node pointer (doesn't have pointer if it is tree's root).
 	 * 
-	 * @param padre
-	 * @param treeArray
-	 * @param max_prof
+	 * @param treeArray [ES] Array que contiene la estructura del árbol que vamos a construir.
+	 * 					[EN] Array that contains the tree's structure that we are going to build.
+	 * 
+	 * @param max_prof	[ES] Máxima profundidad (restante) del subárbol.
+	 * 					[EN] Subtree's maximum depth (remaining).
 	 */
 	public Arbol(Arbol padre, ArrayList<Operando> treeArray, int max_prof) {
 		
@@ -141,15 +134,25 @@ public class Arbol {
 			hijos = new ArrayList<Arbol>();
 			for (int i = 0; i < this.numHijos; i++) {
 				
-				//Operando raizH = treeArray.get(0);
-				//treeArray.remove(0);
-				//Poner aqui uncamente el remove
 				Arbol a = new Arbol(this, treeArray, max_prof - 1);
 				hijos.add(a);
 			}
 		}
 	}
+	
+	
+	
+	/***************************************************************************/
 	/********************************* METHODS *********************************/
+	/***************************************************************************/
+	
+	/**
+	 * [ES] Inserta un operando en el árbol.
+	 * [EN] Inserts an operand in the tree.
+	 * 
+	 * @param raiz	[ES] Operando que queremos añadir.
+	 * 				[EN] Operand that we want to add.
+	 */
 	public void insert(Operando raiz) {
 		
 		boolean encontrado = false;
@@ -186,12 +189,36 @@ public class Arbol {
 		}
 	}
 	
+	/**
+	 * [ES] Método que nos devuelve un subárbol del árbol principal.
+	 * (Se utiliza principalmente para la función de cruce).
+	 * 
+	 * [EN] Method that returns a subtree of the main tree.
+	 * (Mainly used in the crossover function).
+	 * 
+	 * @param probCruce	[ES] Probabilidad de coger un subárbol.
+	 * 					[EN] Probability of get a subtree.
+	 * 
+	 * @return	[ES] Un subárbol del árbol principal.
+	 * 			[EN] A subtree of the main tree.
+	 */
 	public Arbol getSubTree(double probCruce) {
 	
 		Random rand = new Random();
 		return this.hijos.get(rand.nextInt(numHijos)).getSubTreeAux(probCruce);
 	}
 	
+	/**
+	 * [ES] Método auxiliar que nos devuelve un subárbol.
+	 * 
+	 * [EN] Method that returns a subtree.
+	 * 
+	 * @param probCruce	[ES] Probabilidad de coger un subárbol.
+	 * 					[EN] Probability of get a subtree.
+	 * 
+	 * @return	[ES] Un subárbol.
+	 * 			[EN] A subtree.
+	 */
 	public Arbol getSubTreeAux(double probCruce) {
 		
 		Random rand = new Random();
@@ -235,7 +262,11 @@ public class Arbol {
 		hijos.set(index, a);
 	}
 	
-	/********************************* AUXILIARY METHODS *********************************/
+	
+	
+	/***************************************************************************/
+	/**************************** AUXILIARY METHODS ****************************/
+	/***************************************************************************/
 	public void toArrayAux(ArrayList<Operando> array) {
 		
 		array.add(this.getRaiz());
@@ -245,20 +276,6 @@ public class Arbol {
 				this.hijos.get(i).toArrayAux(array);
 			}
 		}
-	}
-	
-	public int actualizaProfundidad() {
-		
-		this.profundidad = 0;
-		for (int i = 0; i < numHijos; i++) {
-			
-			if (!hijos.get(i).esHoja) {
-				
-				this.profundidad += actualizaProfundidad();
-			}
-		}
-		
-		return profundidad;
 	}
 	
 	public void inicializaArbol(String metodo) {
@@ -277,6 +294,10 @@ public class Arbol {
 		
 		this.metodoIni = metodo;
 		if (metodo.equalsIgnoreCase("Completo")) {
+			
+			this.cambiaArbolCompleto();
+		}
+		else if (metodo.equalsIgnoreCase("Creciente")) {
 			
 			this.cambiaArbolCompleto();
 		}
@@ -378,7 +399,12 @@ public class Arbol {
 		return sb;
 	}
 	
+	
+	
+	
+	/***************************************************************************/
 	/********************** AUXILIARY METHODS - Crossover **********************/
+	/***************************************************************************/
 	public void mutaTerminalSimple() {
 		
 		if (this.raiz.isTerminal()) {
@@ -452,7 +478,11 @@ public class Arbol {
 		this.raiz = new Operando(false);
 	}
 	
+	
+	
+	/***************************************************************************/
 	/**************************** GETTERS & SETTERS ****************************/
+	/***************************************************************************/
 	public Arbol getPadre() {
 		
 		return this.padre;
