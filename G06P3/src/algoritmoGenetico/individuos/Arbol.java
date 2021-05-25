@@ -184,7 +184,7 @@ public class Arbol {
 	public Arbol getSubTree(double probCruce) {
 	
 		for (int i = 0; i < numHijos; i++) {
-			
+
 			return this.hijos.get(i).getSubTreeAux(probCruce);
 		}
 		
@@ -195,6 +195,10 @@ public class Arbol {
 		
 		Random rand = new Random();
 		double random = rand.nextDouble();
+		
+		if(this.esHoja || this.esRaiz) {
+			probCruce = 1 - probCruce;
+		}
 		
 		if (random < probCruce*this.profundidad) {
 			
