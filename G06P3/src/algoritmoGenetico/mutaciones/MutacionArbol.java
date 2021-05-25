@@ -52,7 +52,7 @@ public class MutacionArbol extends Mutacion{
 			}
 		}
 		
-		hijo.inicializaArbol("Completo");
+		hijo.cambiaArbol("Completo");
 	}
 
 	/***************************** AUXILIARY METHODS *****************************/

@@ -8,6 +8,7 @@ import java.util.Random;
 
 import algoritmoGenetico.cruces.Cruce;
 import algoritmoGenetico.individuos.Individuo;
+import algoritmoGenetico.individuos.Operando;
 import algoritmoGenetico.individuos.RastroSantaFe;
 import algoritmoGenetico.misc.Pair;
 import algoritmoGenetico.mutaciones.Mutacion;
@@ -134,21 +135,22 @@ public class AlgoritmoGenetico {
 		
 		while (this.generacionActual < this.numGeneraciones) {
 			
-			//this.generaElite();
+			this.generaElite();
 			this.poblacion = this.metodoSeleccion.seleccionar(poblacion);
-			System.out.println("A");
+			//System.out.println("A");
 			this.metodoCruce.cruza(poblacion, porcCruce);
-			System.out.println("B");
+			//System.out.println("B");
 			this.metodoMutacion.muta(poblacion, porcMutacion);
-			System.out.println("C");
+			//System.out.println("C");
 			
-			//this.reintroduceElite();
-			System.out.println("D");
 			this.evaluaFitnessPoblacion();
-			System.out.println("E");
-			System.out.println("MediaAltura: " + this.mediaAlturaGeneracion[generacionActual]);
+			this.reintroduceElite();
+			//System.out.println("D");
+			this.evaluaFitnessPoblacion();
+			//System.out.println("E");
+			//System.out.println("MediaAltura: " + this.mediaAlturaGeneracion[generacionActual]);
 			this.bloating();
-			System.out.println(generacionActual);
+			//System.out.println(generacionActual);
 			generacionActual++;
 			//System.out.println(this.generacionActual);
 		}
@@ -170,6 +172,7 @@ public class AlgoritmoGenetico {
 				
 				mejorGeneracion = fitness;
 				mejorIndividuo = ind;
+				System.out.println("Mejor: " + ind.printFenotipo());
 			}
 			
 			mediaGeneracion += fitness;
@@ -214,9 +217,10 @@ public class AlgoritmoGenetico {
 		Random rand = new Random();
 		for (Individuo ind : poblacion) {
 			
-			if (ind.getTreeSizeConst() > this.mediaAlturaGeneracion[generacionActual] && rand.nextBoolean()) {
+			int altura = ind.getTreeSizeConst();
+			if (altura > this.mediaAlturaGeneracion[generacionActual] && rand.nextBoolean()) {
 				
-				ind.setFitness(ind.getFitness()/2);
+				//ind.setFitness((int) (ind.getFitness() - (altura - mediaAlturaGeneracion[generacionActual])));
 			}
 		}
 	}
@@ -227,7 +231,7 @@ public class AlgoritmoGenetico {
 			int numPlebe = numElite*3;
 			
 			this.elite = new ArrayList<Individuo>(numElite);
-			this.plebe = new ArrayList<Individuo>(numPlebe);
+			//this.plebe = new ArrayList<Individuo>(numPlebe);
 			
 			ArrayList<Individuo> poblacionAuxiliar = new ArrayList<Individuo>(this.poblacion);
 			Collections.sort(poblacionAuxiliar, new Comparator<Individuo>() {
@@ -243,10 +247,10 @@ public class AlgoritmoGenetico {
 				
 				elite.add(poblacionAuxiliar.get(i));
 			}
-			for (int i = 0; i < numPlebe; i++) {
+			/*for (int i = 0; i < numPlebe; i++) {
 				
 				plebe.add(poblacionAuxiliar.get(tamPoblacion - i - 1));
-			}
+			}*/
 		}
 	
 		public void reintroduceElite() {
@@ -279,7 +283,7 @@ public class AlgoritmoGenetico {
 				}
 			}
 			
-			for (Individuo indPlebe : this.plebe) {
+			/*for (Individuo indPlebe : this.plebe) {
 				
 				index = rand.nextInt(this.tamPoblacion);
 				while (indexAdded.contains(index)) {
@@ -298,7 +302,7 @@ public class AlgoritmoGenetico {
 					indComparado.setCromosoma(indPlebe.getCromosoma());
 					indComparado.calculateFitness();
 				}
-			}
+			}*/
 		}
 	
 	
@@ -333,7 +337,22 @@ public class AlgoritmoGenetico {
 		
 		for (int i = 0; i < tamPoblacion; i++) {
 			
-			if (i%2 == 0);
+			//if (i%2 == 0);
+			/*ArrayList<Operando> fenotipo = new ArrayList<Operando>();
+			fenotipo.add(new Operando("SIComida"));
+			fenotipo.add(new Operando("AVANZA"));
+			fenotipo.add(new Operando("PROGN3"));
+			fenotipo.add(new Operando("DERECHA"));
+			fenotipo.add(new Operando("SIComida"));
+			fenotipo.add(new Operando("IZQUIERDA"));
+			fenotipo.add(new Operando("DERECHA"));
+			fenotipo.add(new Operando("PROGN3"));
+			fenotipo.add(new Operando("DERECHA"));
+			fenotipo.add(new Operando("SIComida"));
+			fenotipo.add(new Operando("AVANZA"));
+			fenotipo.add(new Operando("DERECHA"));
+			fenotipo.add(new Operando("AVANZA"));
+			Individuo ind = new Individuo(fenotipo, metodoInicializacion, profundidadMaxima, numeroPasos, santaFe);*/
 			Individuo ind = new Individuo(metodoInicializacion, profundidadMaxima, numeroPasos, santaFe);
 			poblacion.add(ind);
 		}

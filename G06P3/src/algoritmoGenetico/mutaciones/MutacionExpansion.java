@@ -16,7 +16,7 @@ public class MutacionExpansion extends Mutacion{
 			if(rand.nextDouble() < this.probMutacion) {
 				Arbol mutado = arbol.getHijos().get(i);
 				mutado.randomFuncion();
-				mutado.inicializaArbol("Completo");
+				mutado.cambiaArbol("Completo");
 				break;
 			}
 		}

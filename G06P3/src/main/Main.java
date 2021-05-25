@@ -16,6 +16,7 @@ import algoritmoGenetico.mutaciones.Mutacion;
 import algoritmoGenetico.mutaciones.MutacionArbol;
 import algoritmoGenetico.mutaciones.MutacionExpansion;
 import algoritmoGenetico.mutaciones.MutacionHoist;
+import algoritmoGenetico.mutaciones.MutacionPermutacion;
 import algoritmoGenetico.selecciones.Seleccion;
 import algoritmoGenetico.selecciones.SeleccionTorneo;
 import interfaz.panelPrincipal;
@@ -47,10 +48,15 @@ public class Main {
 		
 		System.out.println(ind1.getTreeSize());
 		System.out.println(ind2.getTreeSize());
+		
 		//Cruce cruce = new Cruce();
 		//cruce.cruzaPadres(ind1, ind2);
+		//MutacionPermutacion muta = new MutacionPermutacion();
+		//muta.mutaIndividuo(ind1);
+		//muta.mutaIndividuo(ind2);
 		
-		//System.out.println(ind1.printFenotipo());
-		//System.out.println(ind2.printFenotipo());*/
+		
+		System.out.println(ind1.printFenotipo());
+		System.out.println(ind2.printFenotipo());*/
 	}
 }

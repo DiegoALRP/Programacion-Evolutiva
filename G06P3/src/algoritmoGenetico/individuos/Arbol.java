@@ -184,7 +184,7 @@ public class Arbol {
 	public Arbol getSubTree(double probCruce) {
 	
 		for (int i = 0; i < numHijos; i++) {
-
+			
 			return this.hijos.get(i).getSubTreeAux(probCruce);
 		}
 		
@@ -268,11 +268,19 @@ public class Arbol {
 		}
 	}
 	
-	protected void inicializaCompleto() {
+	public void cambiaArbol(String metodo) {
+		
+		if (metodo.equals("Completo")) {
+			
+			this.cambiaArbolCompleto();
+		}
+	}
+	
+	private void cambiaArbolCompleto() {
 		
 		if (this.max_prof > 1) {
 			
-			hijos.clear();
+			//if (this.hijos != null) hijos.clear();
 			for (int i = 0; i < numHijos; i++) {
 				
 				Operando op = new Operando(false);
@@ -283,7 +291,7 @@ public class Arbol {
 		}
 		else {
 			
-			hijos.clear();
+			//if (this.hijos != null) hijos.clear();
 			for (int i = 0; i < numHijos; i++) {
 				
 				Operando op = new Operando(true);
@@ -294,7 +302,33 @@ public class Arbol {
 		}
 	}
 	
-	protected StringBuilder arbolToString() {
+	protected void inicializaCompleto() {
+		
+		if (this.max_prof > 1) {
+			
+			if (this.hijos != null) hijos.clear();
+			for (int i = 0; i < numHijos; i++) {
+				
+				Operando op = new Operando(false);
+				Arbol a = new Arbol(this, op, max_prof - 1);
+				//a.inicializaCompleto();
+				hijos.add(a);
+			}
+		}
+		else {
+			
+			if (this.hijos != null) hijos.clear();
+			for (int i = 0; i < numHijos; i++) {
+				
+				Operando op = new Operando(true);
+				Arbol a = new Arbol(this, op, max_prof - 1);
+				hijos.add(a);
+			}
+			
+		}
+	}
+	
+	public StringBuilder arbolToString() {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append(raiz.getOperando());

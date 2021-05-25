@@ -113,7 +113,7 @@ public class Individuo {
 			cromosoma = new Arbol(null, new Operando(false), profMaxima);
 		}
 		
-		cromosoma.inicializaArbol(metodoIni);
+		//cromosoma.inicializaArbol(metodoIni);
 	}
 	
 	private void calculateFenotipo() {
