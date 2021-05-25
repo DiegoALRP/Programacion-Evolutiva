@@ -161,6 +161,9 @@ public class AlgoritmoGenetico {
 		Individuo mejorIndividuo = null;
 		int mediaGeneracion = 0;
 		int mediaAltura = 0;
+		int altura = 0;
+		int maxAltura = 0;
+		String alto = "";
 		
 		int fitness;
 		for (Individuo ind : poblacion) {
@@ -174,8 +177,16 @@ public class AlgoritmoGenetico {
 			}
 			
 			mediaGeneracion += fitness;
-			mediaAltura += ind.getTreeSize();
+			altura = ind.getTreeSize();
+			mediaAltura += altura;
+			if (altura > maxAltura) {
+				maxAltura = altura;
+				alto = ind.printFenotipo();
+			}
 		}
+		
+		System.out.println("MaximaAltura: " + maxAltura);
+		//System.out.println("Feno: " + alto);
 		
 		this.mejorFitnessGeneracion[generacionActual] = mejorGeneracion;
 		
@@ -183,6 +194,7 @@ public class AlgoritmoGenetico {
 		this.mediaFitnessTotal += this.mediaFitnessGeneracion[generacionActual];
 		
 		this.mediaAlturaGeneracion[generacionActual] = mediaAltura/tamPoblacion;
+		System.out.println("MediaAltura: " + this.mediaAlturaGeneracion[generacionActual]);
 		
 		this.presionSelectiva[generacionActual] = mejorGeneracion/(mediaGeneracion/tamPoblacion);
 		
@@ -218,7 +230,7 @@ public class AlgoritmoGenetico {
 			int altura = ind.getTreeSizeConst();
 			if (altura > this.mediaAlturaGeneracion[generacionActual] && rand.nextBoolean()) {
 				
-				//ind.setFitness((int) (ind.getFitness() - (altura - mediaAlturaGeneracion[generacionActual])));
+				ind.setFitness((int) (ind.getFitness() - (altura - mediaAlturaGeneracion[generacionActual])));
 			}
 		}
 	}
