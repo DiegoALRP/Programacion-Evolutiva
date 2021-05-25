@@ -353,8 +353,25 @@ public class AlgoritmoGenetico {
 			fenotipo.add(new Operando("DERECHA"));
 			fenotipo.add(new Operando("AVANZA"));
 			Individuo ind = new Individuo(fenotipo, metodoInicializacion, profundidadMaxima, numeroPasos, santaFe);*/
-			Individuo ind = new Individuo(metodoInicializacion, profundidadMaxima, numeroPasos, santaFe);
-			poblacion.add(ind);
+			
+			if (metodoInicializacion.equals("Ramped and Half")) {
+				
+				if (i%2==0) {
+					
+					Individuo ind = new Individuo("Completo", profundidadMaxima, numeroPasos, santaFe);
+					poblacion.add(ind);
+				}
+				else {
+					
+					Individuo ind = new Individuo("Creciente", profundidadMaxima, numeroPasos, santaFe);
+					poblacion.add(ind);
+				}
+			}
+			else {
+				
+				Individuo ind = new Individuo(metodoInicializacion, profundidadMaxima, numeroPasos, santaFe);
+				poblacion.add(ind);
+			}
 		}
 	}
 	

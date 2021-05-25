@@ -267,6 +267,10 @@ public class Arbol {
 			
 			this.inicializaCompleto();
 		}
+		else if (metodo.equalsIgnoreCase("Creciente")) {
+			
+			this.inicializaCreciente();
+		}
 	}
 	
 	public void cambiaArbol(String metodo) {
@@ -327,6 +331,28 @@ public class Arbol {
 				hijos.add(a);
 			}
 			
+		}
+	}
+	
+	protected void inicializaCreciente() {
+		
+		if (this.max_prof > 1) {
+			
+			for (int i = 0; i < numHijos; i++) {
+				
+				Operando op = new Operando(); //Operando Aleatorio
+				Arbol a = new Arbol(this, op, max_prof - 1, "Creciente");
+				hijos.add(a);
+			}
+		}
+		else {
+			
+			for (int i = 0; i < numHijos; i++) {
+				
+				Operando op = new Operando(true);
+				Arbol a = new Arbol(this, op, max_prof - 1, "Creciente");
+				hijos.add(a);
+			}
 		}
 	}
 	
