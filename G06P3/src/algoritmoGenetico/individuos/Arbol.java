@@ -433,8 +433,30 @@ public class Arbol {
 		this.max_prof = max_prof;
 	}
 
+	public int getProfundidadConst() {
+		return this.profundidad;
+	}
 	public int getProfundidad() {
+		
+		calculaProfundidad(this, 0);
 		return profundidad;
+	}
+	
+	public void calculaProfundidad(Arbol a, int profundidad) {
+		
+		profundidad++;
+		if (a.getRaiz().isTerminal()) {
+			
+			if (this.profundidad < profundidad) {
+				this.profundidad = profundidad;
+			}
+		}
+		else {
+			
+			for (int i = 0; i < a.getNumHijos(); i++) {
+				calculaProfundidad(a.getHijos().get(i), profundidad);
+			}
+		}
 	}
 
 	public void setProfundidad(int profundidad) {

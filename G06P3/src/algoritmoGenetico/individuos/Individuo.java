@@ -53,6 +53,8 @@ public class Individuo {
 	private boolean printCamino;
 	private ArrayList<Pair> camino;
 	
+	
+	
 	/****************************************************************************/
 	/******************************* CONSTRUCTOR ********************************/
 	/****************************************************************************/
@@ -341,6 +343,10 @@ public class Individuo {
 		return this.fitness;
 	}
 	
+	public void setFitness(int fitness) {
+		this.fitness = fitness;
+	}
+	
 	public String getMetodoIni() {
 		return this.metodoIni;
 	}
@@ -356,5 +362,13 @@ public class Individuo {
 	public RastroSantaFe getSantaFe() {
 		
 		return this.santaFe;
+	}
+	
+	public int getTreeSize() {
+		return this.cromosoma.getProfundidad();
+	}
+	
+	public int getTreeSizeConst() {
+		return this.cromosoma.getProfundidadConst();
 	}
 }

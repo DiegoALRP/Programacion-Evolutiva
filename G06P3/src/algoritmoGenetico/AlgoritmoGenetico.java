@@ -49,6 +49,7 @@ public class AlgoritmoGenetico {
 	private int profundidadMaxima;		//Profundidad Maxima del Arbol.
 	private int numeroPasos;			//Numero de movimientos a realizar;
 	private RastroSantaFe santaFe;		//Tablero
+	private String metodoBloating;		//Metodo de control de Bloating
 	
 	
 	/** Poblacion **/
@@ -71,6 +72,7 @@ public class AlgoritmoGenetico {
 	//Media Individuos
 	private double mediaFitnessTotal;			//Media de todos los individuos de todas las generaciones.
 	private double[] mediaFitnessGeneracion;	//Array con la media de la poblacion en cada generacion.
+	private double[] mediaAlturaGeneracion;
 	
 	//Presion Selectiva
 	private double[] presionSelectiva;			//Array con la presion selectiva de cada generacion.
@@ -114,6 +116,8 @@ public class AlgoritmoGenetico {
 		this.numeroPasos = numeroPasos;
 		this.santaFe = santaFe;
 		
+		this.metodoBloating = "Tarpeian";
+		
 		this.plebeBool = true;
 		this.inicializaVariables();
 	}
@@ -130,16 +134,90 @@ public class AlgoritmoGenetico {
 		
 		while (this.generacionActual < this.numGeneraciones) {
 			
-			this.generaElite();
+			//this.generaElite();
 			this.poblacion = this.metodoSeleccion.seleccionar(poblacion);
+			System.out.println("A");
 			this.metodoCruce.cruza(poblacion, porcCruce);
+			System.out.println("B");
 			this.metodoMutacion.muta(poblacion, porcMutacion);
+			System.out.println("C");
 			
-			this.reintroduceElite();
+			//this.reintroduceElite();
+			System.out.println("D");
 			this.evaluaFitnessPoblacion();
-			
+			System.out.println("E");
+			System.out.println("MediaAltura: " + this.mediaAlturaGeneracion[generacionActual]);
+			this.bloating();
+			System.out.println(generacionActual);
 			generacionActual++;
 			//System.out.println(this.generacionActual);
+		}
+	}
+	
+	private void evaluaFitnessPoblacion() {
+		
+		int mejorGeneracion = -Integer.MAX_VALUE;
+		Individuo mejorIndividuo = null;
+		int mediaGeneracion = 0;
+		int mediaAltura = 0;
+		
+		int fitness;
+		for (Individuo ind : poblacion) {
+			
+			fitness = ind.calculateFitness();
+			
+			if (fitness > mejorGeneracion) {
+				
+				mejorGeneracion = fitness;
+				mejorIndividuo = ind;
+			}
+			
+			mediaGeneracion += fitness;
+			mediaAltura += ind.getTreeSize();
+		}
+		
+		this.mejorFitnessGeneracion[generacionActual] = mejorGeneracion;
+		
+		this.mediaFitnessGeneracion[generacionActual] = mediaGeneracion/tamPoblacion;
+		this.mediaFitnessTotal += this.mediaFitnessGeneracion[generacionActual];
+		
+		this.mediaAlturaGeneracion[generacionActual] = mediaAltura/tamPoblacion;
+		
+		this.presionSelectiva[generacionActual] = mejorGeneracion/(mediaGeneracion/tamPoblacion);
+		
+		if (this.generacionActual == 0 ||
+				mejorGeneracion > this.arrayMejorFitnessAbsoluto[generacionActual - 1]) {
+			
+			this.arrayMejorFitnessAbsoluto[generacionActual] = mejorGeneracion;
+			
+			this.mejorFitnessAbsoluto = mejorGeneracion;
+			
+			this.mejorIndividuoAbsoluto = new Individuo(mejorIndividuo.copyFenotipe(), metodoInicializacion, 
+					profundidadMaxima, numeroPasos, santaFe);
+			this.mejorCaminoHormiga = mejorIndividuo.getCamino();
+		}
+		else {
+			
+			this.arrayMejorFitnessAbsoluto[generacionActual] = this.arrayMejorFitnessAbsoluto[generacionActual - 1];
+		}
+	}
+	
+	private void bloating() {
+		
+		if (metodoBloating.equalsIgnoreCase("tarpeian")) {
+			bloatingTarpeian();
+		}
+	}
+	
+	private void bloatingTarpeian() {
+		
+		Random rand = new Random();
+		for (Individuo ind : poblacion) {
+			
+			if (ind.getTreeSizeConst() > this.mediaAlturaGeneracion[generacionActual] && rand.nextBoolean()) {
+				
+				ind.setFitness(ind.getFitness()/2);
+			}
 		}
 	}
 	
@@ -222,49 +300,7 @@ public class AlgoritmoGenetico {
 				}
 			}
 		}
-	private void evaluaFitnessPoblacion() {
-		
-		int mejorGeneracion = -Integer.MAX_VALUE;
-		Individuo mejorIndividuo = null;
-		int mediaGeneracion = 0;
-		
-		int fitness;
-		for (Individuo ind : poblacion) {
-			
-			fitness = ind.calculateFitness();
-			
-			if (fitness > mejorGeneracion) {
-				
-				mejorGeneracion = fitness;
-				mejorIndividuo = ind;
-			}
-			
-			mediaGeneracion += fitness;
-		}
-		
-		this.mejorFitnessGeneracion[generacionActual] = mejorGeneracion;
-		
-		this.mediaFitnessGeneracion[generacionActual] = mediaGeneracion/tamPoblacion;
-		this.mediaFitnessTotal += this.mediaFitnessGeneracion[generacionActual];
-		
-		this.presionSelectiva[generacionActual] = mejorGeneracion/(mediaGeneracion/tamPoblacion);
-		
-		if (this.generacionActual == 0 ||
-				mejorGeneracion > this.arrayMejorFitnessAbsoluto[generacionActual - 1]) {
-			
-			this.arrayMejorFitnessAbsoluto[generacionActual] = mejorGeneracion;
-			
-			this.mejorFitnessAbsoluto = mejorGeneracion;
-			
-			this.mejorIndividuoAbsoluto = new Individuo(mejorIndividuo.copyFenotipe(), metodoInicializacion, 
-					profundidadMaxima, numeroPasos, santaFe);
-			this.mejorCaminoHormiga = mejorIndividuo.getCamino();
-		}
-		else {
-			
-			this.arrayMejorFitnessAbsoluto[generacionActual] = this.arrayMejorFitnessAbsoluto[generacionActual - 1];
-		}
-	}
+	
 	
 	/***************************************************************************/
 	/**************************** AUXILIARY METHODS ****************************/
@@ -284,7 +320,10 @@ public class AlgoritmoGenetico {
 		
 		this.mediaFitnessGeneracion = new double[numGeneraciones];
 		
+		this.mediaAlturaGeneracion = new double[numGeneraciones];
+		
 		this.presionSelectiva = new double[numGeneraciones];
+		
 	}
 	
 	
