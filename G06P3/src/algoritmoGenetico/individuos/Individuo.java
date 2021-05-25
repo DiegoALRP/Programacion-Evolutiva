@@ -106,11 +106,11 @@ public class Individuo {
 		
 		if (profMaxima == 0) {
 			
-			cromosoma = new Arbol(null, new Operando(true), profMaxima);
+			cromosoma = new Arbol(null, new Operando(true), profMaxima, metodoIni);
 		}
 		else {
 			
-			cromosoma = new Arbol(null, new Operando(false), profMaxima);
+			cromosoma = new Arbol(null, new Operando(false), profMaxima, metodoIni);
 		}
 		
 		//cromosoma.inicializaArbol(metodoIni);

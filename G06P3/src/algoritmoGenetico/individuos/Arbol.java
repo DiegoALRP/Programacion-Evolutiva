@@ -33,6 +33,7 @@ public class Arbol {
 	private boolean useIF;
 	private boolean esHoja;
 	private boolean esRaiz;
+	private String metodoIni;
 
 	
 	/******************************* CONSTRUCTOR ********************************/
@@ -44,11 +45,15 @@ public class Arbol {
 	 * @param raiz
 	 * @param max_prof
 	 */
-	public Arbol(Arbol padre, Operando raiz, int max_prof) {
+	public Arbol(Arbol padre, Operando raiz, int max_prof, String metodoIni) {
 		
+		if (padre == null) {
+			this.esRaiz = true;
+		}
 		this.padre = padre;
 		this.raiz = raiz;
 		this.max_prof = max_prof;
+		this.metodoIni = metodoIni;
 		hijos = new ArrayList<Arbol>(this.numHijos);
 		
 		if (this.raiz.equalsProgN2() || this.raiz.equalsSiComida()) {
@@ -71,7 +76,7 @@ public class Arbol {
 		}
 		
 		if (raiz.isFunction()) {
-			this.inicializaCompleto();
+			this.inicializaArbol(metodoIni);
 		}
 	}
 	
@@ -155,7 +160,7 @@ public class Arbol {
 			
 			if (this.hijos.get(i).raiz.isTerminal()) {
 				
-				Arbol a = new Arbol(this, raiz, this.max_prof - 1);
+				Arbol a = new Arbol(this, raiz, this.max_prof - 1, this.metodoIni);
 				this.hijos.set(i, a);
 				encontrado = true;
 			}
@@ -183,12 +188,8 @@ public class Arbol {
 	
 	public Arbol getSubTree(double probCruce) {
 	
-		for (int i = 0; i < numHijos; i++) {
-			
-			return this.hijos.get(i).getSubTreeAux(probCruce);
-		}
-		
-		return null;
+		Random rand = new Random();
+		return this.hijos.get(rand.nextInt(numHijos)).getSubTreeAux(probCruce);
 	}
 	
 	public Arbol getSubTreeAux(double probCruce) {
@@ -196,7 +197,7 @@ public class Arbol {
 		Random rand = new Random();
 		double random = rand.nextDouble();
 		
-		if(this.esHoja || this.esRaiz) {
+		if(this.raiz.isTerminal() || this.esRaiz) {
 			probCruce = 1 - probCruce;
 		}
 		
@@ -270,7 +271,8 @@ public class Arbol {
 	
 	public void cambiaArbol(String metodo) {
 		
-		if (metodo.equals("Completo")) {
+		this.metodoIni = metodo;
+		if (metodo.equalsIgnoreCase("Completo")) {
 			
 			this.cambiaArbolCompleto();
 		}
@@ -284,7 +286,7 @@ public class Arbol {
 			for (int i = 0; i < numHijos; i++) {
 				
 				Operando op = new Operando(false);
-				Arbol a = new Arbol(this, op, max_prof - 1);
+				Arbol a = new Arbol(this, op, max_prof - 1, this.metodoIni);
 				//a.inicializaCompleto();
 				hijos.add(a);
 			}
@@ -295,7 +297,7 @@ public class Arbol {
 			for (int i = 0; i < numHijos; i++) {
 				
 				Operando op = new Operando(true);
-				Arbol a = new Arbol(this, op, max_prof - 1);
+				Arbol a = new Arbol(this, op, max_prof - 1, this.metodoIni);
 				hijos.add(a);
 			}
 			
@@ -306,22 +308,22 @@ public class Arbol {
 		
 		if (this.max_prof > 1) {
 			
-			if (this.hijos != null) hijos.clear();
+			//if (this.hijos != null) hijos.clear();
 			for (int i = 0; i < numHijos; i++) {
 				
 				Operando op = new Operando(false);
-				Arbol a = new Arbol(this, op, max_prof - 1);
+				Arbol a = new Arbol(this, op, max_prof - 1, this.metodoIni);
 				//a.inicializaCompleto();
 				hijos.add(a);
 			}
 		}
 		else {
 			
-			if (this.hijos != null) hijos.clear();
+			//if (this.hijos != null) hijos.clear();
 			for (int i = 0; i < numHijos; i++) {
 				
 				Operando op = new Operando(true);
-				Arbol a = new Arbol(this, op, max_prof - 1);
+				Arbol a = new Arbol(this, op, max_prof - 1, metodoIni);
 				hijos.add(a);
 			}
 			
