@@ -228,7 +228,10 @@ public class AlgoritmoGenetico {
 		for (Individuo ind : poblacion) {
 			
 			int altura = ind.getTreeSizeConst();
-			if (altura > this.mediaAlturaGeneracion[generacionActual] && rand.nextBoolean()) {
+			if (altura > (profundidadMaxima+1)*2 + 1) {
+				ind.setFitness(0);
+			}
+			else if (altura > this.mediaAlturaGeneracion[generacionActual] && rand.nextBoolean()) {
 				
 				ind.setFitness((int) (ind.getFitness() - (altura - mediaAlturaGeneracion[generacionActual])));
 			}
