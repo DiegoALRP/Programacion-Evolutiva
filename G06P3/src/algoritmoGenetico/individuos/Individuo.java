@@ -53,6 +53,8 @@ public class Individuo {
 	private boolean printCamino;
 	private ArrayList<Pair> camino;
 	
+	
+	
 	/****************************************************************************/
 	/******************************* CONSTRUCTOR ********************************/
 	/****************************************************************************/
@@ -104,14 +106,14 @@ public class Individuo {
 		
 		if (profMaxima == 0) {
 			
-			cromosoma = new Arbol(null, new Operando(true), profMaxima);
+			cromosoma = new Arbol(null, new Operando(true), profMaxima, metodoIni);
 		}
 		else {
 			
-			cromosoma = new Arbol(null, new Operando(false), profMaxima);
+			cromosoma = new Arbol(null, new Operando(false), profMaxima, metodoIni);
 		}
 		
-		cromosoma.inicializaArbol(metodoIni);
+		//cromosoma.inicializaArbol(metodoIni);
 	}
 	
 	private void calculateFenotipo() {
@@ -188,10 +190,10 @@ public class Individuo {
 	private void inicializaFitness() {
 		
 		this.numPasos = 0;
-		this.fitness = 1;
+		this.fitness = 0;
 		this.pos = new Pair(0, 0);
 		this.direccion = Direccion.ESTE;
-		this.setPos = new HashSet<Pair>();
+		this.setPos = new HashSet<Pair>(100);
 		this.setPos.add(pos);
 	}
 	
@@ -341,6 +343,10 @@ public class Individuo {
 		return this.fitness;
 	}
 	
+	public void setFitness(int fitness) {
+		this.fitness = fitness;
+	}
+	
 	public String getMetodoIni() {
 		return this.metodoIni;
 	}
@@ -356,5 +362,13 @@ public class Individuo {
 	public RastroSantaFe getSantaFe() {
 		
 		return this.santaFe;
+	}
+	
+	public int getTreeSize() {
+		return this.cromosoma.getProfundidad();
+	}
+	
+	public int getTreeSizeConst() {
+		return this.cromosoma.getProfundidadConst();
 	}
 }

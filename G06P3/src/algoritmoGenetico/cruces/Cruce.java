@@ -45,14 +45,20 @@ public class Cruce {
 		this.tamPoblacion = poblacion.size();
 		
 		this.seleccionaIndividuos(poblacion);
+		
+		for (int i = 0; i < this.num_selec_cruce; i += 2) {
+			
+			this.numCruce++;
+			cruzaPadres(poblacion.get(selec_cruce.get(i)), poblacion.get(selec_cruce.get(i + 1)));
+		}
 	}
 	
 	public void cruzaPadres(Individuo padre1, Individuo padre2) {
 		
-		Arbol asub1 = padre1.getCromosoma().getSubTree(90);
+		Arbol asub1 = padre1.getCromosoma().getSubTree(this.probCruce);
 		Arbol asub1Padre = asub1.getPadre();
 		
-		Arbol asub2 = padre2.getCromosoma().getSubTree(90);
+		Arbol asub2 = padre2.getCromosoma().getSubTree(this.probCruce);
 		Arbol asub2Padre = asub2.getPadre();
 		
 		asub1Padre.insertNewTree(asub2, asub1Padre.getIndex(asub1.getRaiz()));

@@ -49,6 +49,7 @@ public class AlgoritmoGenetico {
 	private int profundidadMaxima;		//Profundidad Maxima del Arbol.
 	private int numeroPasos;			//Numero de movimientos a realizar;
 	private RastroSantaFe santaFe;		//Tablero
+	private String metodoBloating;		//Metodo de control de Bloating
 	
 	
 	/** Poblacion **/
@@ -71,6 +72,7 @@ public class AlgoritmoGenetico {
 	//Media Individuos
 	private double mediaFitnessTotal;			//Media de todos los individuos de todas las generaciones.
 	private double[] mediaFitnessGeneracion;	//Array con la media de la poblacion en cada generacion.
+	private double[] mediaAlturaGeneracion;
 	
 	//Presion Selectiva
 	private double[] presionSelectiva;			//Array con la presion selectiva de cada generacion.
@@ -114,6 +116,8 @@ public class AlgoritmoGenetico {
 		this.numeroPasos = numeroPasos;
 		this.santaFe = santaFe;
 		
+		this.metodoBloating = "Tarpeian";
+		
 		this.plebeBool = true;
 		this.inicializaVariables();
 	}
@@ -132,14 +136,105 @@ public class AlgoritmoGenetico {
 			
 			this.generaElite();
 			this.poblacion = this.metodoSeleccion.seleccionar(poblacion);
+			//System.out.println("A");
 			this.metodoCruce.cruza(poblacion, porcCruce);
+			//System.out.println("B");
 			this.metodoMutacion.muta(poblacion, porcMutacion);
+			//System.out.println("C");
 			
-			this.reintroduceElite();
 			this.evaluaFitnessPoblacion();
-			
+			this.reintroduceElite();
+			//System.out.println("D");
+			this.evaluaFitnessPoblacion();
+			//System.out.println("E");
+			//System.out.println("MediaAltura: " + this.mediaAlturaGeneracion[generacionActual]);
+			this.bloating();
+			//System.out.println(generacionActual);
 			generacionActual++;
-			System.out.println(this.generacionActual);
+			//System.out.println(this.generacionActual);
+		}
+	}
+	
+	private void evaluaFitnessPoblacion() {
+		
+		int mejorGeneracion = -Integer.MAX_VALUE;
+		Individuo mejorIndividuo = null;
+		int mediaGeneracion = 0;
+		int mediaAltura = 0;
+		int altura = 0;
+		int maxAltura = 0;
+		String alto = "";
+		
+		int fitness;
+		for (Individuo ind : poblacion) {
+			
+			fitness = ind.calculateFitness();
+			
+			if (fitness > mejorGeneracion) {
+				
+				mejorGeneracion = fitness;
+				mejorIndividuo = ind;
+			}
+			
+			mediaGeneracion += fitness;
+			altura = ind.getTreeSize();
+			mediaAltura += altura;
+			if (altura > maxAltura) {
+				maxAltura = altura;
+				alto = ind.printFenotipo();
+			}
+		}
+		
+		System.out.println("MaximaAltura: " + maxAltura);
+		//System.out.println("Feno: " + alto);
+		
+		this.mejorFitnessGeneracion[generacionActual] = mejorGeneracion;
+		
+		this.mediaFitnessGeneracion[generacionActual] = mediaGeneracion/tamPoblacion;
+		this.mediaFitnessTotal += this.mediaFitnessGeneracion[generacionActual];
+		
+		this.mediaAlturaGeneracion[generacionActual] = mediaAltura/tamPoblacion;
+		System.out.println("MediaAltura: " + this.mediaAlturaGeneracion[generacionActual]);
+		
+		this.presionSelectiva[generacionActual] = mejorGeneracion/(mediaGeneracion/tamPoblacion);
+		
+		if (this.generacionActual == 0 ||
+				mejorGeneracion > this.arrayMejorFitnessAbsoluto[generacionActual - 1]) {
+			
+			this.arrayMejorFitnessAbsoluto[generacionActual] = mejorGeneracion;
+			
+			this.mejorFitnessAbsoluto = mejorGeneracion;
+			
+			this.mejorIndividuoAbsoluto = new Individuo(mejorIndividuo.copyFenotipe(), metodoInicializacion, 
+					profundidadMaxima, numeroPasos, santaFe);
+			this.mejorCaminoHormiga = mejorIndividuo.getCamino();
+		}
+		else {
+			
+			this.arrayMejorFitnessAbsoluto[generacionActual] = this.arrayMejorFitnessAbsoluto[generacionActual - 1];
+		}
+	}
+	
+	private void bloating() {
+		
+		if (metodoBloating.equalsIgnoreCase("tarpeian")) {
+			bloatingTarpeian();
+		}
+	}
+	
+	private void bloatingTarpeian() {
+		
+		Random rand = new Random();
+		for (Individuo ind : poblacion) {
+			
+			int altura = ind.getTreeSizeConst();
+			if (altura > (profundidadMaxima+1)*2 + 1) {
+				ind.setFitness(0);
+			}
+			else if (altura > this.mediaAlturaGeneracion[generacionActual] && rand.nextBoolean()) {
+				
+				ind.setFitness((int) (ind.getFitness() - (altura - mediaAlturaGeneracion[generacionActual])));
+			}
 		}
 	}
 	
@@ -149,7 +244,7 @@ public class AlgoritmoGenetico {
 			int numPlebe = numElite*3;
 			
 			this.elite = new ArrayList<Individuo>(numElite);
-			this.plebe = new ArrayList<Individuo>(numPlebe);
+			//this.plebe = new ArrayList<Individuo>(numPlebe);
 			
 			ArrayList<Individuo> poblacionAuxiliar = new ArrayList<Individuo>(this.poblacion);
 			Collections.sort(poblacionAuxiliar, new Comparator<Individuo>() {
@@ -165,10 +260,10 @@ public class AlgoritmoGenetico {
 				
 				elite.add(poblacionAuxiliar.get(i));
 			}
-			for (int i = 0; i < numPlebe; i++) {
+			/*for (int i = 0; i < numPlebe; i++) {
 				
 				plebe.add(poblacionAuxiliar.get(tamPoblacion - i - 1));
-			}
+			}*/
 		}
 	
 		public void reintroduceElite() {
@@ -201,7 +296,7 @@ public class AlgoritmoGenetico {
 				}
 			}
 			
-			for (Individuo indPlebe : this.plebe) {
+			/*for (Individuo indPlebe : this.plebe) {
 				
 				index = rand.nextInt(this.tamPoblacion);
 				while (indexAdded.contains(index)) {
@@ -220,51 +315,9 @@ public class AlgoritmoGenetico {
 					indComparado.setCromosoma(indPlebe.getCromosoma());
 					indComparado.calculateFitness();
 				}
-			}
+			}*/
 		}
-	private void evaluaFitnessPoblacion() {
-		
-		int mejorGeneracion = -Integer.MAX_VALUE;
-		Individuo mejorIndividuo = null;
-		int mediaGeneracion = 0;
-		
-		int fitness;
-		for (Individuo ind : poblacion) {
-			
-			fitness = ind.calculateFitness();
-			
-			if (fitness > mejorGeneracion) {
-				
-				mejorGeneracion = fitness;
-				mejorIndividuo = ind;
-			}
-			
-			mediaGeneracion += fitness;
-		}
-		
-		this.mejorFitnessGeneracion[generacionActual] = mejorGeneracion;
-		
-		this.mediaFitnessGeneracion[generacionActual] = mediaGeneracion/tamPoblacion;
-		this.mediaFitnessTotal += this.mediaFitnessGeneracion[generacionActual];
-		
-		this.presionSelectiva[generacionActual] = mejorGeneracion/(mediaGeneracion/tamPoblacion);
-		
-		if (this.generacionActual == 0 ||
-				mejorGeneracion > this.arrayMejorFitnessAbsoluto[generacionActual - 1]) {
-			
-			this.arrayMejorFitnessAbsoluto[generacionActual] = mejorGeneracion;
-			
-			this.mejorFitnessAbsoluto = mejorGeneracion;
-			
-			this.mejorIndividuoAbsoluto = new Individuo(mejorIndividuo.copyFenotipe(), metodoInicializacion, 
-					profundidadMaxima, numeroPasos, santaFe);
-			this.mejorCaminoHormiga = mejorIndividuo.getCamino();
-		}
-		else {
-			
-			this.arrayMejorFitnessAbsoluto[generacionActual] = this.arrayMejorFitnessAbsoluto[generacionActual - 1];
-		}
-	}
+	
 	
 	/***************************************************************************/
 	/**************************** AUXILIARY METHODS ****************************/
@@ -284,7 +337,10 @@ public class AlgoritmoGenetico {
 		
 		this.mediaFitnessGeneracion = new double[numGeneraciones];
 		
+		this.mediaAlturaGeneracion = new double[numGeneraciones];
+		
 		this.presionSelectiva = new double[numGeneraciones];
+		
 	}
 	
 	
@@ -294,9 +350,41 @@ public class AlgoritmoGenetico {
 		
 		for (int i = 0; i < tamPoblacion; i++) {
 			
-			if (i%2 == 0);
-			Individuo ind = new Individuo(metodoInicializacion, profundidadMaxima, numeroPasos, santaFe);
-			poblacion.add(ind);
+			//if (i%2 == 0);
+			/*ArrayList<Operando> fenotipo = new ArrayList<Operando>();
+			fenotipo.add(new Operando("SIComida"));
+			fenotipo.add(new Operando("AVANZA"));
+			fenotipo.add(new Operando("PROGN3"));
+			fenotipo.add(new Operando("DERECHA"));
+			fenotipo.add(new Operando("SIComida"));
+			fenotipo.add(new Operando("IZQUIERDA"));
+			fenotipo.add(new Operando("DERECHA"));
+			fenotipo.add(new Operando("PROGN3"));
+			fenotipo.add(new Operando("DERECHA"));
+			fenotipo.add(new Operando("SIComida"));
+			fenotipo.add(new Operando("AVANZA"));
+			fenotipo.add(new Operando("DERECHA"));
+			fenotipo.add(new Operando("AVANZA"));
+			Individuo ind = new Individuo(fenotipo, metodoInicializacion, profundidadMaxima, numeroPasos, santaFe);*/
+			
+			if (metodoInicializacion.equals("Ramped and Half")) {
+				
+				if (i%2==0) {
+					
+					Individuo ind = new Individuo("Completo", profundidadMaxima, numeroPasos, santaFe);
+					poblacion.add(ind);
+				}
+				else {
+					
+					Individuo ind = new Individuo("Creciente", profundidadMaxima, numeroPasos, santaFe);
+					poblacion.add(ind);
+				}
+			}
+			else {
+				
+				Individuo ind = new Individuo(metodoInicializacion, profundidadMaxima, numeroPasos, santaFe);
+				poblacion.add(ind);
+			}
 		}
 	}
 	

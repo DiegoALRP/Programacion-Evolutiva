@@ -11,17 +11,22 @@ public class MutacionHoist extends Mutacion{
 	public void mutaIndividuo(Individuo individuo) {
 		
 		Random rand = new Random();
-		Arbol arbol = individuo.getCromosoma();
-		boolean mutado = false;
+		Arbol cromosoma = individuo.getCromosoma();
 		
-		while(!mutado) {
-			for(int i = 0; i < arbol.getNumHijos(); i++) {
-				if(rand.nextDouble() < this.probMutacion) {
-					individuo.setCromosoma(arbol.getHijos().get(i));
-					mutado = true;
-				}
+		Arbol hijo = cromosoma.getHijos().get(rand.nextInt(cromosoma.getNumHijos()));
+		
+		while (rand.nextDouble() > this.probMutacion || hijo.getNumHijos() < 1) {
+			
+			if (hijo.getNumHijos() < 1) {
+				
+				hijo = hijo.getPadre();
+			}
+			else {
+				
+				hijo = hijo.getHijos().get(rand.nextInt(hijo.getNumHijos()));
 			}
 		}
+		
+		individuo.setCromosoma(hijo);
 	}
-
 }

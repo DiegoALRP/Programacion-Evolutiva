@@ -38,9 +38,9 @@ public class MutacionPermutacion extends Mutacion{
 		
 		Arbol a = individuo.getCromosoma();
 		
-		while (rand.nextDouble() > 0.5) {
+		while (rand.nextDouble() > 0.5 || a.getNumHijos() < 1) {
 			
-			if (a.getNumHijos() < 1) {
+			if (a.getNumHijos() < 1 || a.getRaiz().isTerminal()) {
 				
 				a = a.getPadre();
 			}
@@ -50,6 +50,7 @@ public class MutacionPermutacion extends Mutacion{
 			}
 		}
 		
+		//System.out.println(a.arbolToString().toString());
 		ArrayList<Arbol> hijos = a.getHijos();
 		
 		ArrayList<Arbol> nuevoHijos = new ArrayList<Arbol>();

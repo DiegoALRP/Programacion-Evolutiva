@@ -32,6 +32,25 @@ public class Operando {
 	
 	
 	/******************************* CONSTRUCTOR ********************************/
+	
+	/**
+	 * Constructora que devuelve un operando aleatorio
+	 * 
+	 */
+	public Operando() {
+		
+		Random rand = new Random();
+		int index = rand.nextInt(numTerminales);
+		
+		if (rand.nextBoolean()) {
+			
+			this.operando = terminales[index];
+		}
+		else {
+			
+			this.operando = funciones[index];
+		}
+	}
 	public Operando(String operando) {
 		
 		this.operando = operando;
