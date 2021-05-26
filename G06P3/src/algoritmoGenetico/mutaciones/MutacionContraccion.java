@@ -12,6 +12,7 @@ public class MutacionContraccion extends Mutacion{
 		
 		Random rand = new Random();
 		Arbol arbol = individuo.getCromosoma();
+		@SuppressWarnings("unused")
 		Arbol arbolMuta = null;
 		boolean mutado = false;
 		

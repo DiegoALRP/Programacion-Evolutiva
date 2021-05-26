@@ -57,11 +57,11 @@ public class AlgoritmoGenetico {
 	private ArrayList<Individuo> elite;		//Poblacion de Elite.
 	private ArrayList<Individuo> plebe;		//Poblacion de Plebenhos.
 	private int generacionActual;			//Generacion en la que estamos actualmente.
-	private int generacionSolucion;			//Generacion en la que se obtuvo la solucion.
 
 	
 	/** Individuo **/
 	//Mejor Individuo Absoluto
+	@SuppressWarnings("unused")
 	private Individuo mejorIndividuoAbsoluto;	//Mejor Individuo Absoluto.
 	private double mejorFitnessAbsoluto;		//Fitness del mejor individuo absoluto.
 	private double[] arrayMejorFitnessAbsoluto;	//Array que contiene el fitness del mejor individuo absoluto por generacion.
@@ -70,11 +70,12 @@ public class AlgoritmoGenetico {
 	private double[] mejorFitnessGeneracion;	//Array que contiene el mejor individuo de esa generacion.
 	
 	//Media Individuos
+	@SuppressWarnings("unused")
 	private double mediaFitnessTotal;			//Media de todos los individuos de todas las generaciones.
 	private double[] mediaFitnessGeneracion;	//Array con la media de la poblacion en cada generacion.
 	
 	//Presion Selectiva
-	private double[] presionSelectiva;			//Array con la presion selectiva de cada generacion.
+	private double[] presionSelectiva;			//Array con la presion selectiva de cada generación.
 	
 	//Bloating
 	private double[] mediaAlturaGeneracion;
@@ -82,8 +83,10 @@ public class AlgoritmoGenetico {
 	private int[] alturaIndividuos;
 	//private final double k = 0.1;
 	
+	@SuppressWarnings("unused")
 	private boolean plebeBool;
 	private ArrayList<Pair> mejorCaminoHormiga;
+	
 	
 	/****************************************************************************/
 	/******************************* CONSTRUCTOR ********************************/
@@ -93,7 +96,7 @@ public class AlgoritmoGenetico {
 	 * Constructora del Algoritmo Genetico.
 	 * 
 	 * 
-	 * @param tamPoblacion 		Tamanho de la poblacion.
+	 * @param tamPoblacion 		Tamaño de la población.
 	 * @param numGeneraciones	Numero de generaciones.
 	 * @param metodoSeleccion	Metodo de Deleccion.
 	 * @param metodoCruce		Metodo de Cruce.
@@ -104,7 +107,7 @@ public class AlgoritmoGenetico {
 	 */
 	public AlgoritmoGenetico(int tamPoblacion, int numGeneraciones, Seleccion metodoSeleccion,
 			Cruce metodoCruce, double porcCruce, Mutacion metodoMutacion, double porcMutacion,
-			double porcElite, String metodoInicializacion, int profundidadMaxima, 
+			double porcElite, String metodoInicializacion, String metodoBloating, int profundidadMaxima, 
 			int numeroPasos, RastroSantaFe santaFe) {
 		
 		this.tamPoblacion = tamPoblacion;
@@ -121,7 +124,7 @@ public class AlgoritmoGenetico {
 		this.numeroPasos = numeroPasos;
 		this.santaFe = santaFe;
 		
-		this.metodoBloating = "Penalizacion";
+		this.metodoBloating = metodoBloating;
 		
 		this.plebeBool = true;
 		this.inicializaVariables();
@@ -133,6 +136,22 @@ public class AlgoritmoGenetico {
 	/********************************* METHODS *********************************/
 	/***************************************************************************/
 	
+	/**
+	 * [ES] Método principal del algoritmo genético.
+	 * Aquí se ejecutan:
+	 * 	-Selección
+	 * 	-Cruce
+	 * 	-Mutación
+	 * 	-Elitismo (si procede)
+	 *  
+	 * [EN] This is the main method of genetic algorithm
+	 * Here we execute:
+	 * 	-Selection
+	 * 	-Crossover
+	 * 	-Mutation
+	 * 	-Elitism (if applicable)
+	 * 
+	 */
 	public void startAlgorithm() {
 		
 		inicializaPoblacion();
@@ -141,25 +160,33 @@ public class AlgoritmoGenetico {
 			
 			this.generaElite();
 			this.poblacion = this.metodoSeleccion.seleccionar(poblacion);
-			//System.out.println("A");
 			this.metodoCruce.cruza(poblacion, porcCruce);
-			//System.out.println("B");
 			this.metodoMutacion.muta(poblacion, porcMutacion);
-			//System.out.println("C");
 			
 			this.evaluaFitnessPoblacion();
 			this.reintroduceElite();
-			//System.out.println("D");
 			this.evaluaFitnessPoblacion();
-			//System.out.println("E");
-			System.out.println("MediaAltura: " + this.mediaAlturaGeneracion[generacionActual]);
 			this.bloating();
-			//System.out.println(generacionActual);
 			generacionActual++;
-			//System.out.println(this.generacionActual);
 		}
 	}
 	
+	
+	
+	/**
+	 * [ES] Este metodo evalua el valor de aptitud/fitness de la población.
+	 * Para ello primero se actualiza el valor de fitness de cada individuo.
+	 * Una vez actualizado, buscamos el mejor individuo de toda la población.
+	 * Y por último guardamos el valor del mejor individuo en los respectivos 
+	 * atributos de clase. (MejorIndividuoGeneracion, MejorIndividuoAbsoluto, ...)
+	 * 
+	 * [EN] This method evaluates population's fitness value.
+	 * It updates the fitness value of each individual.
+	 * Once updated, we search for the best individual in all the population.
+	 * Y last, we store the value of the best individual in the respective class's
+	 * attributes. (MejorIndividuoGeneracion, MejorIndividuoAbsoluto, ...)
+	 * 
+	 */
 	private void evaluaFitnessPoblacion() {
 		
 		int mejorGeneracion = -Integer.MAX_VALUE;
@@ -170,6 +197,7 @@ public class AlgoritmoGenetico {
 		int mediaAltura = 0;
 		int altura = 0;
 		int maxAltura = 0;
+		@SuppressWarnings("unused")
 		String alto = "";
 		fitnessIndividuos = new int[tamPoblacion];
 		alturaIndividuos = new int[tamPoblacion];
@@ -199,19 +227,12 @@ public class AlgoritmoGenetico {
 			i++;
 		}
 		
-		//System.out.println("MaximaAltura: " + maxAltura);
-		//System.out.println("Feno: " + alto);
-		
 		this.mejorFitnessGeneracion[generacionActual] = mejorGeneracion;
 		
 		this.mediaFitnessGeneracion[generacionActual] = mediaGeneracion/tamPoblacion;
 		this.mediaFitnessTotal += this.mediaFitnessGeneracion[generacionActual];
 		
 		this.mediaAlturaGeneracion[generacionActual] = mediaAltura/tamPoblacion;
-		//System.out.println("MediaAltura: " + this.mediaAlturaGeneracion[generacionActual]);
-		
-		//System.out.println("Media Generacion: " + mediaGeneracion);
-		//System.out.println("TamPoblacion: " + tamPoblacion);
 		double div = mediaGeneracion/tamPoblacion;
 		this.presionSelectiva[generacionActual] = mejorGeneracion/div;
 		
@@ -232,13 +253,20 @@ public class AlgoritmoGenetico {
 		}
 	}
 	
+	
+	/**
+	 * [ES] Función que genera la élite de la población.
+	 * Recorre toda la población y se queda con los mejores individuos.
+	 * Aquí hemos agregado nuestra propia creación que hemos llamados "La Plebe".
+	 * 
+	 */
 	private void generaElite() {
 			
 			int numElite = (int) Math.ceil(this.tamPoblacion*this.porcElitismo);
 			int numPlebe = numElite*3;
 			
 			this.elite = new ArrayList<Individuo>(numElite);
-			//this.plebe = new ArrayList<Individuo>(numPlebe);
+			this.plebe = new ArrayList<Individuo>(numPlebe);
 			
 			ArrayList<Individuo> poblacionAuxiliar = new ArrayList<Individuo>(this.poblacion);
 			Collections.sort(poblacionAuxiliar, new Comparator<Individuo>() {
@@ -254,63 +282,68 @@ public class AlgoritmoGenetico {
 				
 				elite.add(poblacionAuxiliar.get(i));
 			}
-			/*for (int i = 0; i < numPlebe; i++) {
+			for (int i = 0; i < numPlebe; i++) {
 				
 				plebe.add(poblacionAuxiliar.get(tamPoblacion - i - 1));
-			}*/
+			}
 		}
 	
-		public void reintroduceElite() {
-		
-			int numElite = (int) Math.ceil(this.tamPoblacion*this.porcElitismo);
-			HashSet<Integer> indexAdded = new HashSet<Integer>(numElite);
-			int numAdded = 0;
-			int index;
-			Random rand = new Random();
-			while (numAdded < numElite && indexAdded.size() < this.tamPoblacion) {
+	/**
+	 * [ES] Función que reintroduce la élite.
+	 * [EN] Function that reintroduces the elite.
+	 * 
+	 */
+	public void reintroduceElite() {
+	
+		int numElite = (int) Math.ceil(this.tamPoblacion*this.porcElitismo);
+		HashSet<Integer> indexAdded = new HashSet<Integer>(numElite);
+		int numAdded = 0;
+		int index;
+		Random rand = new Random();
+		while (numAdded < numElite && indexAdded.size() < this.tamPoblacion) {
+			
+			index = rand.nextInt(this.tamPoblacion);
+			while (indexAdded.contains(index)) {
 				
 				index = rand.nextInt(this.tamPoblacion);
-				while (indexAdded.contains(index)) {
-					
-					index = rand.nextInt(this.tamPoblacion);
-				}
-				
-				indexAdded.add(index);
-				
-				Individuo eli = this.elite.get(numAdded);
-				double fitnessEli = eli.calculateFitness();
-				Individuo ple = this.poblacion.get(index);
-				double fitnessPle = ple.getFitness();
-				if (fitnessEli > fitnessPle) {
-					
-					ple.setCromosoma(eli.getCromosoma());
-					ple.calculateFitness();
-					
-					numAdded++;
-				}
 			}
 			
-			/*for (Individuo indPlebe : this.plebe) {
+			indexAdded.add(index);
+			
+			Individuo eli = this.elite.get(numAdded);
+			double fitnessEli = eli.calculateFitness();
+			Individuo ple = this.poblacion.get(index);
+			double fitnessPle = ple.getFitness();
+			if (fitnessEli > fitnessPle) {
+				
+				ple.setCromosoma(eli.getCromosoma());
+				ple.calculateFitness();
+				
+				numAdded++;
+			}
+		}
+		
+		/*for (Individuo indPlebe : this.plebe) {
+			
+			index = rand.nextInt(this.tamPoblacion);
+			while (indexAdded.contains(index)) {
 				
 				index = rand.nextInt(this.tamPoblacion);
-				while (indexAdded.contains(index)) {
-					
-					index = rand.nextInt(this.tamPoblacion);
-				}
+			}
+			
+			indexAdded.add(index);
+			
+			double fitnessPlebe = indPlebe.getFitness();
+			Individuo indComparado = this.poblacion.get(index);
+			double fitnessComparado = indComparado.getFitness();
+			
+			if (fitnessPlebe > fitnessComparado && this.plebeBool) {
 				
-				indexAdded.add(index);
-				
-				double fitnessPlebe = indPlebe.getFitness();
-				Individuo indComparado = this.poblacion.get(index);
-				double fitnessComparado = indComparado.getFitness();
-				
-				if (fitnessPlebe > fitnessComparado && this.plebeBool) {
-					
-					indComparado.setCromosoma(indPlebe.getCromosoma());
-					indComparado.calculateFitness();
-				}
-			}*/
-		}
+				indComparado.setCromosoma(indPlebe.getCromosoma());
+				indComparado.calculateFitness();
+			}
+		}*/
+	}
 	
 	
 	/***************************************************************************/
@@ -338,28 +371,19 @@ public class AlgoritmoGenetico {
 	}
 	
 	
+	/**
+	 * [ES] Inicializa la población, creando tantos nuevos individuos como el
+	 * tamaño de la población.
+	 * 
+	 * [EN] Initializes the population, creating as many new individual as
+	 * the size of the population.
+	 * 
+	 */
 	private void inicializaPoblacion() {
 		
 		this.poblacion = new ArrayList<Individuo>(tamPoblacion);
 		
 		for (int i = 0; i < tamPoblacion; i++) {
-			
-			//if (i%2 == 0);
-			/*ArrayList<Operando> fenotipo = new ArrayList<Operando>();
-			fenotipo.add(new Operando("SIComida"));
-			fenotipo.add(new Operando("AVANZA"));
-			fenotipo.add(new Operando("PROGN3"));
-			fenotipo.add(new Operando("DERECHA"));
-			fenotipo.add(new Operando("SIComida"));
-			fenotipo.add(new Operando("IZQUIERDA"));
-			fenotipo.add(new Operando("DERECHA"));
-			fenotipo.add(new Operando("PROGN3"));
-			fenotipo.add(new Operando("DERECHA"));
-			fenotipo.add(new Operando("SIComida"));
-			fenotipo.add(new Operando("AVANZA"));
-			fenotipo.add(new Operando("DERECHA"));
-			fenotipo.add(new Operando("AVANZA"));
-			Individuo ind = new Individuo(fenotipo, metodoInicializacion, profundidadMaxima, numeroPasos, santaFe);*/
 			
 			if (metodoInicializacion.equals("Ramped and Half")) {
 				
@@ -389,12 +413,13 @@ public class AlgoritmoGenetico {
 	private void bloating() {
 		
 		if (metodoBloating.equalsIgnoreCase("Tarpeian")) {
-			System.out.println("Tarpeian");
 			bloatingTarpeian();
 		}
 		else if (metodoBloating.equalsIgnoreCase("Penalizacion")) {
-			//System.out.println("Penalizacion");
 			bloatingPenalizacion();
+		}
+		else {
+			bloatingCasero();
 		}
 		
 	}
@@ -462,6 +487,17 @@ public class AlgoritmoGenetico {
 		varianza = x/tamPoblacion;
 		
 		return varianza;
+	}
+	
+	private void bloatingCasero() {
+
+		for (Individuo ind : poblacion) {
+			
+			int altura = ind.getTreeSizeConst();
+			if (altura > (profundidadMaxima+1)*2 + 1) {
+				ind.setFitness(0);
+			}
+		}
 	}
 
 	/***************************************************************************/
