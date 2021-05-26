@@ -37,7 +37,7 @@ public class MutacionPermutacion extends Mutacion{
 		
 		Arbol a = individuo.getCromosoma();
 		
-		while (rand.nextDouble() > 0.5 || a.getNumHijos() < 1) {
+		while (rand.nextDouble() > this.probMutacion || a.getNumHijos() < 1) {
 			
 			if (a.getNumHijos() < 1 || a.getRaiz().isTerminal()) {
 				

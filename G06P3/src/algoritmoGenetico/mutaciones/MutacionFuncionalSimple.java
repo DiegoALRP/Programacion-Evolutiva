@@ -32,6 +32,7 @@ public class MutacionFuncionalSimple extends Mutacion{
 		
 		individuo.mutaFuncionSimple(this.probMutacion);
 		
+		
 		//Nota:
 		/*
 		 * Al igual que para mutación terminal simple, 
