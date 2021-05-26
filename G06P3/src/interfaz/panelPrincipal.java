@@ -269,7 +269,7 @@ public class panelPrincipal {
 				
 				gr.actualiza(Integer.parseInt(textField_1.getText()), AG.getArrayMejorAbsoluto(), AG.getMejorFitnessGeneracion(), AG.getMediaFitnessGeneracion(), AG.getPresionSelectiva());
 
-				fitness.setText("La hormiga comió: " + (int)AG.getMejorFitness() + "/90 piezas de comida");
+				fitness.setText("La hormiga comiï¿½: " + (int)AG.getMejorFitness() + "/90 piezas de comida");
 				
 				arbol.setText(AG.getMejorIndividuo().printFenotipo());
 			}
