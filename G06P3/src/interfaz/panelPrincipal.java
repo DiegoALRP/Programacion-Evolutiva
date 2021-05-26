@@ -10,6 +10,7 @@ import javax.swing.GroupLayout.Alignment;
 
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
