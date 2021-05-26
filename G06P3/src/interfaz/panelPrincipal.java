@@ -135,7 +135,7 @@ public class panelPrincipal {
 		
 		JLabel seleccion = new JLabel("Seleccion");
 		seleccion.setHorizontalAlignment(SwingConstants.RIGHT);
-		seleccion.setBounds(10, 331, 66, 17);
+		seleccion.setBounds(10, 340, 66, 17);
 		controlPanel.add(seleccion);
 		
 		JComboBox comboBox_seleccion = new JComboBox();
@@ -211,13 +211,23 @@ public class panelPrincipal {
 		comboBox_inicializacion.setBounds(97, 301, 109, 21);
 		controlPanel.add(comboBox_inicializacion);
 		
+		JLabel labelBloating = new JLabel("Bloating");
+		labelBloating.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelBloating.setBounds(0, 470, 76, 17);
+		controlPanel.add(labelBloating);
+		
+		JComboBox comboBox_Bloating = new JComboBox();
+		comboBox_Bloating.setModel(new DefaultComboBoxModel(new String[] {"Tarpeian", "Penalizacion bien fundamentada", "Casera"}));
+		comboBox_Bloating.setBounds(97, 470, 170, 21);
+		controlPanel.add(comboBox_Bloating);
+		
 		JButton start_buton = new JButton("START");
-		start_buton.setBounds(97, 472, 102, 21);
+		start_buton.setBounds(97, 530, 102, 21);
 		controlPanel.add(start_buton);
 		frame.getContentPane().setLayout(groupLayout);
 		
 		JLabel fitness = new JLabel("La hormiga ha comido: ");
-		fitness.setBounds(7, 522, 262, 21);
+		fitness.setBounds(7, 580, 262, 21);
 		controlPanel.add(fitness);
 		
 		/*JLabel arbol = new JLabel();
