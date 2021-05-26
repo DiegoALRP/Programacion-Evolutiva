@@ -185,7 +185,7 @@ public class AlgoritmoGenetico {
 			}
 		}
 		
-		System.out.println("MaximaAltura: " + maxAltura);
+		//System.out.println("MaximaAltura: " + maxAltura);
 		//System.out.println("Feno: " + alto);
 		
 		this.mejorFitnessGeneracion[generacionActual] = mejorGeneracion;
@@ -194,9 +194,12 @@ public class AlgoritmoGenetico {
 		this.mediaFitnessTotal += this.mediaFitnessGeneracion[generacionActual];
 		
 		this.mediaAlturaGeneracion[generacionActual] = mediaAltura/tamPoblacion;
-		System.out.println("MediaAltura: " + this.mediaAlturaGeneracion[generacionActual]);
+		//System.out.println("MediaAltura: " + this.mediaAlturaGeneracion[generacionActual]);
 		
-		this.presionSelectiva[generacionActual] = mejorGeneracion/(mediaGeneracion/tamPoblacion);
+		//System.out.println("Media Generacion: " + mediaGeneracion);
+		//System.out.println("TamPoblacion: " + tamPoblacion);
+		double div = mediaGeneracion/tamPoblacion;
+		this.presionSelectiva[generacionActual] = mejorGeneracion/div;
 		
 		if (this.generacionActual == 0 ||
 				mejorGeneracion > this.arrayMejorFitnessAbsoluto[generacionActual - 1]) {

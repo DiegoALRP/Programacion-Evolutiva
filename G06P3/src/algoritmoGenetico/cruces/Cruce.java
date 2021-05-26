@@ -61,6 +61,8 @@ public class Cruce {
 		Arbol asub2 = padre2.getCromosoma().getSubTree(this.probCruce);
 		Arbol asub2Padre = asub2.getPadre();
 		
+		//System.out.println("Padre1: " + asub1.arbolToString());
+		//System.out.println("Padre11: " + asub1Padre.arbolToString());
 		asub1Padre.insertNewTree(asub2, asub1Padre.getIndex(asub1.getRaiz()));
 		asub2Padre.insertNewTree(asub1, asub2Padre.getIndex(asub2.getRaiz()));
 	}
