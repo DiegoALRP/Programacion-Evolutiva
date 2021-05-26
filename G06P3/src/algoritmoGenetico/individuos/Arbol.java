@@ -368,7 +368,6 @@ public class Arbol {
 	 */
 	private void cambiaArbolCompleto() {
 		
-		System.out.println("Cambia Arbol");
 		if (this.max_prof > 1) {
 			
 			this.hijos = new ArrayList<Arbol>(numHijos);

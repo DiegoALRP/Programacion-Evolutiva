@@ -49,7 +49,6 @@ public class MutacionPermutacion extends Mutacion{
 			}
 		}
 		
-		//System.out.println(a.arbolToString().toString());
 		ArrayList<Arbol> hijos = a.getHijos();
 		
 		ArrayList<Arbol> nuevoHijos = new ArrayList<Arbol>();
