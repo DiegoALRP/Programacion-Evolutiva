@@ -55,7 +55,7 @@ public class MutacionArbol extends Mutacion{
 		hijo.cambiaArbol("Completo");
 	}
 
-	/***************************** AUXILIARY METHODS *****************************/
+	/**************************** AUXILIARY METHODS ****************************/
 	
 	/**************************** GETTERS & SETTERS ****************************/
 }

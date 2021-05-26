@@ -5,11 +5,35 @@ import java.util.Random;
 
 import algoritmoGenetico.individuos.Individuo;
 
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Práctica 3
+ * 
+ * Clase Abstracta Mutación.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public abstract class Mutacion {
 
+	
+	/******************************** ATRIBUTTES ********************************/
 	protected double probMutacion;
 	protected int numMutaciones;
 
+	
+	/******************************* CONSTRUCTOR ********************************/
+	
+	
+	/********************************* METHODS *********************************/
 	public void muta(ArrayList<Individuo> poblacion, double probMutacion) {
 		
 		this.probMutacion = probMutacion;
@@ -28,4 +52,8 @@ public abstract class Mutacion {
 	
 	public abstract void mutaIndividuo(Individuo individuo);
 
+
+	/**************************** AUXILIARY METHODS ****************************/
+	
+	/**************************** GETTERS & SETTERS ****************************/
 }

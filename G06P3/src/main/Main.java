@@ -40,8 +40,8 @@ public class Main {
 		});
 		
 		/*RastroSantaFe santaFe = new RastroSantaFe();
-		Individuo ind1 = new Individuo("Completo", 3, 400, santaFe);
-		Individuo ind2 = new Individuo("Completo", 3, 400, santaFe);
+		Individuo ind1 = new Individuo("Completo", 2, 400, santaFe);
+		Individuo ind2 = new Individuo("Completo", 2, 400, santaFe);
 		
 		System.out.println(ind1.printFenotipo());
 		System.out.println(ind2.printFenotipo());
@@ -54,9 +54,14 @@ public class Main {
 		//MutacionPermutacion muta = new MutacionPermutacion();
 		//muta.mutaIndividuo(ind1);
 		//muta.mutaIndividuo(ind2);
+		MutacionExpansion muta = new MutacionExpansion();
+		muta.mutaIndividuo(ind1);
+		muta.mutaIndividuo(ind2);
 		
 		
 		System.out.println(ind1.printFenotipo());
-		System.out.println(ind2.printFenotipo());*/
+		System.out.println(ind2.printFenotipo());
+		System.out.println(ind1.getTreeSize());
+		System.out.println(ind2.getTreeSize());*/
 	}
 }
