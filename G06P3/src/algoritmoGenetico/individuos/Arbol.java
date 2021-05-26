@@ -309,9 +309,10 @@ public class Arbol {
 	
 	private void cambiaArbolCompleto() {
 		
+		System.out.println("Cambia Arbol");
 		if (this.max_prof > 1) {
 			
-			if (this.hijos != null) hijos.clear();
+			this.hijos = new ArrayList<Arbol>(numHijos);
 			for (int i = 0; i < numHijos; i++) {
 				
 				Operando op = new Operando(false);
@@ -322,7 +323,7 @@ public class Arbol {
 		}
 		else {
 			
-			if (this.hijos != null) hijos.clear();
+			if (this.numHijos > 1) hijos.clear();
 			for (int i = 0; i < numHijos; i++) {
 				
 				Operando op = new Operando(true);
@@ -418,7 +419,7 @@ public class Arbol {
 		else {
 			
 			Random rand = new Random();
-			hijos.get(rand.nextInt(numHijos)).mutaTerminalSimple();;
+			hijos.get(rand.nextInt(numHijos)).mutaTerminalSimple();
 		}
 	}
 	
@@ -471,6 +472,37 @@ public class Arbol {
 					}
 				}
 			}
+		}
+	}
+	
+	public void expandeNodo() {
+		
+		this.raiz = new Operando(false);
+		this.max_prof += 2;
+		this.metodoIni = "Completo";
+		hijos = new ArrayList<Arbol>(this.numHijos);
+		
+		if (this.raiz.equalsProgN2() || this.raiz.equalsSiComida()) {
+			
+			this.numHijos = 2;
+			this.profundidad = 1;
+			this.esHoja = false;
+		}
+		else if (this.raiz.equalsProgN3()) {
+			
+			this.numHijos = 3;
+			this.profundidad = 1;
+			this.esHoja = false;
+		}
+		else {
+			
+			this.numHijos = 0;
+			this.profundidad = 0;
+			this.esHoja = true;
+		}
+		
+		if (raiz.isFunction()) {
+			this.inicializaArbol(metodoIni);
 		}
 	}
 	
