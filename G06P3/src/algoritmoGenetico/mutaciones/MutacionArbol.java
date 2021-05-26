@@ -40,7 +40,7 @@ public class MutacionArbol extends Mutacion{
 		
 		Arbol hijo = cromosoma.getHijos().get(rand.nextInt(cromosoma.getNumHijos()));
 		
-		while (rand.nextDouble() > 0.5) {
+		while (rand.nextDouble() > this.probMutacion) {
 			
 			if (hijo.getNumHijos() < 1) {
 				

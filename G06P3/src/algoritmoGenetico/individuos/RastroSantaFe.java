@@ -54,6 +54,7 @@ public class RastroSantaFe {
 	private void loadData() throws FileNotFoundException {
 		
 		FileInputStream file = new FileInputStream(filepath);
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(file);
 		
 		int j = 0;

@@ -1,9 +1,5 @@
 package interfaz;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,7 +18,6 @@ import javax.swing.SwingUtilities;
 
 import algoritmoGenetico.AlgoritmoGenetico;
 import algoritmoGenetico.cruces.Cruce;
-import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.RastroSantaFe;
 import algoritmoGenetico.mutaciones.FactoriaMutaciones;
 import algoritmoGenetico.mutaciones.Mutacion;
@@ -32,9 +27,6 @@ import algoritmoGenetico.selecciones.Seleccion;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
@@ -64,6 +56,7 @@ public class panelPrincipal {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(20, 20, 1004, 788);
@@ -250,14 +243,8 @@ public class panelPrincipal {
 		scroll.setBounds(7, 552, 262, 50);
 		controlPanel.add(scroll);
 		///////////////////////////////////////////////////// 			TABBED PANE
-
-		//panelHormiga hormiga = new panelHormiga(comida);
-		
-		//Individuo ind1 = new Individuo("Completo", 2, 400, santaFe);
 		
 		hormiga = new panelHormiga(santaFe.getTablero(), new ArrayList<>());
-		//System.out.println("Comida: " + ind1.getFitness());
-		//System.out.println("Fenotipo: " + ind1.printFenotipo());
 		graficas gr = new graficas();
 		tabbedPane.addTab("Hormiga", hormiga);
 		tabbedPane.addTab("Grafica", gr.getPlot());
@@ -281,10 +268,11 @@ public class panelPrincipal {
 				double probMutacion = Double.parseDouble(porc_mutacion.getText());
 				
 				String inicializacion = (String) comboBox_inicializacion.getSelectedItem();
+				String bloating = (String) comboBox_Bloating.getSelectedItem();
 				int profundidad = (int) spinner.getValue();
 				
 				AlgoritmoGenetico AG = new AlgoritmoGenetico(tam, generaciones, metodoSeleccion, metodoCruce, probCruce,
-										metodoMutacion, probMutacion, elite, inicializacion, profundidad, numeroPasos, santaFe);
+										metodoMutacion, probMutacion, elite, inicializacion, bloating, profundidad, numeroPasos, santaFe);
 				
 				
 				AG.startAlgorithm();
@@ -294,7 +282,7 @@ public class panelPrincipal {
 				
 				gr.actualiza(Integer.parseInt(textField_1.getText()), AG.getArrayMejorAbsoluto(), AG.getMejorFitnessGeneracion(), AG.getMediaFitnessGeneracion(), AG.getPresionSelectiva());
 
-				fitness.setText("La hormiga comió: " + (int)AG.getMejorFitness() + "/90 piezas de comida");
+				fitness.setText("La hormiga comiï¿½: " + (int)AG.getMejorFitness() + "/90 piezas de comida");
 				
 				arbol.setText(AG.getMejorIndividuo().printFenotipo());
 			}
