@@ -44,9 +44,11 @@ public class Main {
 		Individuo ind2 = new Individuo("Completo", 2, 400, santaFe);
 		
 		System.out.println(ind1.printFenotipo());
+		System.out.println(ind1.getNumNodosArbol());
 		System.out.println(ind2.printFenotipo());
+		System.out.println(ind2.getNumNodosArbol());
 		
-		System.out.println(ind1.getTreeSize());
+		/*System.out.println(ind1.getTreeSize());
 		System.out.println(ind2.getTreeSize());
 		
 		//Cruce cruce = new Cruce();

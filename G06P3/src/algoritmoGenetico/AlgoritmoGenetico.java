@@ -72,10 +72,15 @@ public class AlgoritmoGenetico {
 	//Media Individuos
 	private double mediaFitnessTotal;			//Media de todos los individuos de todas las generaciones.
 	private double[] mediaFitnessGeneracion;	//Array con la media de la poblacion en cada generacion.
-	private double[] mediaAlturaGeneracion;
 	
 	//Presion Selectiva
 	private double[] presionSelectiva;			//Array con la presion selectiva de cada generacion.
+	
+	//Bloating
+	private double[] mediaAlturaGeneracion;
+	private int[] fitnessIndividuos;
+	private int[] alturaIndividuos;
+	//private final double k = 0.1;
 	
 	private boolean plebeBool;
 	private ArrayList<Pair> mejorCaminoHormiga;
@@ -116,7 +121,7 @@ public class AlgoritmoGenetico {
 		this.numeroPasos = numeroPasos;
 		this.santaFe = santaFe;
 		
-		this.metodoBloating = "Tarpeian";
+		this.metodoBloating = "Penalizacion";
 		
 		this.plebeBool = true;
 		this.inicializaVariables();
@@ -147,7 +152,7 @@ public class AlgoritmoGenetico {
 			//System.out.println("D");
 			this.evaluaFitnessPoblacion();
 			//System.out.println("E");
-			//System.out.println("MediaAltura: " + this.mediaAlturaGeneracion[generacionActual]);
+			System.out.println("MediaAltura: " + this.mediaAlturaGeneracion[generacionActual]);
 			this.bloating();
 			//System.out.println(generacionActual);
 			generacionActual++;
@@ -160,12 +165,17 @@ public class AlgoritmoGenetico {
 		int mejorGeneracion = -Integer.MAX_VALUE;
 		Individuo mejorIndividuo = null;
 		int mediaGeneracion = 0;
+		
+		//Bloating
 		int mediaAltura = 0;
 		int altura = 0;
 		int maxAltura = 0;
 		String alto = "";
+		fitnessIndividuos = new int[tamPoblacion];
+		alturaIndividuos = new int[tamPoblacion];
 		
 		int fitness;
+		int i = 0;
 		for (Individuo ind : poblacion) {
 			
 			fitness = ind.calculateFitness();
@@ -183,6 +193,10 @@ public class AlgoritmoGenetico {
 				maxAltura = altura;
 				alto = ind.printFenotipo();
 			}
+			
+			fitnessIndividuos[i] = fitness;
+			alturaIndividuos[i] = altura;
+			i++;
 		}
 		
 		//System.out.println("MaximaAltura: " + maxAltura);
@@ -215,29 +229,6 @@ public class AlgoritmoGenetico {
 		else {
 			
 			this.arrayMejorFitnessAbsoluto[generacionActual] = this.arrayMejorFitnessAbsoluto[generacionActual - 1];
-		}
-	}
-	
-	private void bloating() {
-		
-		if (metodoBloating.equalsIgnoreCase("tarpeian")) {
-			bloatingTarpeian();
-		}
-	}
-	
-	private void bloatingTarpeian() {
-		
-		Random rand = new Random();
-		for (Individuo ind : poblacion) {
-			
-			int altura = ind.getTreeSizeConst();
-			if (altura > (profundidadMaxima+1)*2 + 1) {
-				ind.setFitness(0);
-			}
-			else if (altura > this.mediaAlturaGeneracion[generacionActual] && rand.nextBoolean()) {
-				
-				ind.setFitness((int) (ind.getFitness() - (altura - mediaAlturaGeneracion[generacionActual])));
-			}
 		}
 	}
 	
@@ -391,6 +382,87 @@ public class AlgoritmoGenetico {
 		}
 	}
 	
+	/***************************************************************************/
+	/*********************** AUXILIARY METHODS - Bloating **********************/
+	/***************************************************************************/
+	
+	private void bloating() {
+		
+		if (metodoBloating.equalsIgnoreCase("Tarpeian")) {
+			System.out.println("Tarpeian");
+			bloatingTarpeian();
+		}
+		else if (metodoBloating.equalsIgnoreCase("Penalizacion")) {
+			//System.out.println("Penalizacion");
+			bloatingPenalizacion();
+		}
+		
+	}
+	
+	private void bloatingTarpeian() {
+		
+		Random rand = new Random();
+		for (Individuo ind : poblacion) {
+			
+			int altura = ind.getTreeSizeConst();
+			if (altura > (profundidadMaxima+1)*2 + 1) {
+				ind.setFitness(0);
+			}
+			else if (altura > this.mediaAlturaGeneracion[generacionActual] && rand.nextBoolean()) {
+				
+				ind.setFitness((int) (ind.getFitness() - (altura - mediaAlturaGeneracion[generacionActual])));
+			}
+		}
+	}
+	
+	private void bloatingPenalizacion() {
+		
+		int fitness = 0;
+		for (Individuo ind : poblacion) {
+			
+			int altura = ind.getTreeSizeConst();
+			if (altura > (profundidadMaxima+1)*2 + 1) {
+				ind.setFitness(0);
+			}
+			else {
+				fitness = ind.getFitness();
+				double k = getCovarianza()/getVarianza();
+				ind.setFitness((int) (fitness - (k * ind.getNumNodosArbol())));
+			}
+		}
+	}
+	
+	private double getCovarianza() {
+		
+		double covarianza = 0;
+		
+		double x = 0;
+		double y = 0;
+		for (int i = 0; i < tamPoblacion; i++) {
+			
+			x += (alturaIndividuos[i] - mediaAlturaGeneracion[generacionActual]);
+			y += (fitnessIndividuos[i] - mediaFitnessGeneracion[generacionActual]);
+		}
+		
+		covarianza = (x*y)/tamPoblacion;
+		
+		return covarianza;
+	}
+	
+	private double getVarianza() {
+		
+		double varianza = 0;
+		
+		double x = 0;
+		for (int i = 0; i < tamPoblacion; i++) {
+			
+			x += Math.pow((alturaIndividuos[i] - mediaAlturaGeneracion[generacionActual]), 2);
+		}
+		
+		varianza = x/tamPoblacion;
+		
+		return varianza;
+	}
 
 	/***************************************************************************/
 	/**************************** GETTERS & SETTERS ****************************/
