@@ -6,7 +6,6 @@ import java.util.Random;
 import algoritmoGenetico.individuos.Arbol;
 import algoritmoGenetico.individuos.Individuo;
 
-
 /**
  * Universidad Complutense de Madrid.
  * Programación Evolutiva.
@@ -38,7 +37,7 @@ public class MutacionPermutacion extends Mutacion{
 		
 		Arbol a = individuo.getCromosoma();
 		
-		while (rand.nextDouble() > 0.5 || a.getNumHijos() < 1) {
+		while (rand.nextDouble() > this.probMutacion || a.getNumHijos() < 1) {
 			
 			if (a.getNumHijos() < 1 || a.getRaiz().isTerminal()) {
 				
@@ -50,7 +49,6 @@ public class MutacionPermutacion extends Mutacion{
 			}
 		}
 		
-		//System.out.println(a.arbolToString().toString());
 		ArrayList<Arbol> hijos = a.getHijos();
 		
 		ArrayList<Arbol> nuevoHijos = new ArrayList<Arbol>();

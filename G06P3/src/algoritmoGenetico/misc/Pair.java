@@ -1,6 +1,5 @@
 package algoritmoGenetico.misc;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 /**

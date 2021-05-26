@@ -2,13 +2,13 @@ package interfaz;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.List;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 import algoritmoGenetico.misc.Pair;
 
+@SuppressWarnings("serial")
 public class panelHormiga extends JPanel{
 
 	private final static int tamañoCelda = 20;

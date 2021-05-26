@@ -1,9 +1,5 @@
 package interfaz;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,6 +10,7 @@ import javax.swing.GroupLayout.Alignment;
 
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
@@ -22,7 +19,6 @@ import javax.swing.SwingUtilities;
 
 import algoritmoGenetico.AlgoritmoGenetico;
 import algoritmoGenetico.cruces.Cruce;
-import algoritmoGenetico.individuos.Individuo;
 import algoritmoGenetico.individuos.RastroSantaFe;
 import algoritmoGenetico.mutaciones.FactoriaMutaciones;
 import algoritmoGenetico.mutaciones.Mutacion;
@@ -32,9 +28,6 @@ import algoritmoGenetico.selecciones.Seleccion;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
@@ -64,6 +57,7 @@ public class panelPrincipal {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(20, 20, 1004, 788);
@@ -135,7 +129,7 @@ public class panelPrincipal {
 		
 		JLabel seleccion = new JLabel("Seleccion");
 		seleccion.setHorizontalAlignment(SwingConstants.RIGHT);
-		seleccion.setBounds(10, 340, 66, 17);
+		seleccion.setBounds(10, 340, 66, 17	);
 		controlPanel.add(seleccion);
 		
 		JComboBox comboBox_seleccion = new JComboBox();
@@ -227,37 +221,17 @@ public class panelPrincipal {
 		frame.getContentPane().setLayout(groupLayout);
 		
 		JLabel fitness = new JLabel("La hormiga ha comido: ");
-		fitness.setBounds(7, 580, 262, 21);
+		fitness.setBounds(7, 552, 262, 21);
 		controlPanel.add(fitness);
-		
-		/*JLabel arbol = new JLabel();
-		
-		JPanel panel_arbol = new JPanel();
-		panel_arbol.setBorder(BorderFactory.createLineBorder(Color.black));
-		panel_arbol.setPreferredSize(new Dimension(262, 250));
-		panel_arbol.add(arbol);
-		
-		JScrollPane scroll = new JScrollPane(panel_arbol);
-		scroll.setBounds(7, 552, 262, 21);
-		panel_arbol.setPreferredSize(new Dimension(262, 250));
-
-		controlPanel.add(scroll);
-		*/
 		
 		JTextArea arbol = new JTextArea();
 		
 		JScrollPane scroll = new JScrollPane(arbol, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scroll.setBounds(7, 552, 262, 50);
+		scroll.setBounds(7, 580, 262, 50);
 		controlPanel.add(scroll);
 		///////////////////////////////////////////////////// 			TABBED PANE
-
-		//panelHormiga hormiga = new panelHormiga(comida);
-		
-		//Individuo ind1 = new Individuo("Completo", 2, 400, santaFe);
 		
 		hormiga = new panelHormiga(santaFe.getTablero(), new ArrayList<>());
-		//System.out.println("Comida: " + ind1.getFitness());
-		//System.out.println("Fenotipo: " + ind1.printFenotipo());
 		graficas gr = new graficas();
 		tabbedPane.addTab("Hormiga", hormiga);
 		tabbedPane.addTab("Grafica", gr.getPlot());
@@ -281,10 +255,11 @@ public class panelPrincipal {
 				double probMutacion = Double.parseDouble(porc_mutacion.getText());
 				
 				String inicializacion = (String) comboBox_inicializacion.getSelectedItem();
+				String bloating = (String) comboBox_Bloating.getSelectedItem();
 				int profundidad = (int) spinner.getValue();
 				
 				AlgoritmoGenetico AG = new AlgoritmoGenetico(tam, generaciones, metodoSeleccion, metodoCruce, probCruce,
-										metodoMutacion, probMutacion, elite, inicializacion, profundidad, numeroPasos, santaFe);
+										metodoMutacion, probMutacion, elite, inicializacion, bloating, profundidad, numeroPasos, santaFe);
 				
 				
 				AG.startAlgorithm();

@@ -3,6 +3,23 @@ package algoritmoGenetico.mutaciones;
 import algoritmoGenetico.individuos.Arbol;
 import algoritmoGenetico.individuos.Individuo;
 
+/**
+ * Universidad Complutense de Madrid.
+ * Programación Evolutiva.
+ * Grupo A 2021.
+ * Profesor:
+ * 	-Carlos Cervigon Ruckauer.
+ * 
+ * Práctica 3
+ * 
+ * Clase Mutación Subárbol.
+ * 
+ * @author 
+ * Grupo G06:
+ * 	-Miguel Robledo.
+ * 	-Diego Alejandro Rodríguez Pereira.
+ *
+ */
 public class MutacionSubarbol extends Mutacion{
 
 	
