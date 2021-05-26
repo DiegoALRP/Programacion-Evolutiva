@@ -206,8 +206,6 @@ public class Arbol {
 	
 		Random rand = new Random();
 		Arbol hijo = this.hijos.get(rand.nextInt(numHijos)).getSubTreeAux(probCruce);
-		//System.out.println("Hijo: " + hijo.arbolToString());
-		//System.out.println("Padre: " + this.arbolToString());
 		return hijo;
 	}
 	
@@ -249,6 +247,18 @@ public class Arbol {
 		}
 	}
 	
+	/**
+	 * [ES] Función que calcula el índice en el que se encuentra el operador
+	 * solicitado.
+	 * [EN] Function that calculates the index where is the operator
+	 * requested.
+	 * 
+	 * @param op 	[ES] Operandor que se busca.
+	 * 				[EN] Operator searching for.
+	 * 
+	 * @return	[ES] El índice del operador buscado.
+	 * 			[EN] Index of the operator.
+	 */
 	public int getIndex(Operando op) {
 		
 		for (int i = 0; i < this.numHijos; i++) {
@@ -261,6 +271,16 @@ public class Arbol {
 		return 0;
 	}
 	
+	/**
+	 * [ES] Inserta un nuevo árbol en el índice indicado.
+	 * [EN] Inserts a new tree in the index indicated.
+	 * 
+	 * @param a	[ES] Árbol que queremos insertar.
+	 * 			[EN] Tree that we want to insert.
+	 * 
+	 * @param index	[ES] Ídice en el cual se inserta el árbol.
+	 * 				[EN] Index in which the tree will we inserted.
+	 */
 	public void insertNewTree(Arbol a, int index) {
 		
 		hijos.set(index, a);
@@ -515,6 +535,30 @@ public class Arbol {
 	}
 	
 	
+	/***************************************************************************/
+	/********************** AUXILIARY METHODS - Bloating ***********************/
+	/***************************************************************************/
+	
+	public int getNumNodos() {
+		
+		int numNodos = 0;
+		
+		numNodos += getNumNodosAux();
+		this.numNodos = numNodos;
+		return numNodos;
+	}
+	
+	private int getNumNodosAux() {
+		
+		int numNodos = 1;
+		
+		for (int i = 0; i < numHijos; i++) {
+			
+			numNodos += hijos.get(i).getNumNodos();
+		}
+		
+		return numNodos;
+	}
 	
 	/***************************************************************************/
 	/**************************** GETTERS & SETTERS ****************************/
@@ -547,10 +591,6 @@ public class Arbol {
 
 	public void setNumHijos(int numHijos) {
 		this.numHijos = numHijos;
-	}
-
-	public int getNumNodos() {
-		return numNodos;
 	}
 
 	public void setNumNodos(int numNodos) {
