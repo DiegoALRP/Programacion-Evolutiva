@@ -61,8 +61,6 @@ public class Cruce {
 		Arbol asub2 = padre2.getCromosoma().getSubTree(this.probCruce);
 		Arbol asub2Padre = asub2.getPadre();
 		
-		//System.out.println("Padre1: " + asub1.arbolToString());
-		//System.out.println("Padre11: " + asub1Padre.arbolToString());
 		asub1Padre.insertNewTree(asub2, asub1Padre.getIndex(asub1.getRaiz()));
 		asub2Padre.insertNewTree(asub1, asub2Padre.getIndex(asub2.getRaiz()));
 	}
@@ -136,6 +134,29 @@ public class Cruce {
 	}
 	
 	
+	/**
+	 * [ES] Esta funci�n utiliza la pol�tica de reemplazo "Reemplazar si es mejor".
+	 * Es decir, esta funci�n evalua la aptitud de ambos padres y ambos hijos.
+	 * Y s�lo se sustituye a los padres, en caso de que los hijos sean mejores que los padres.
+	 * En caso contrario, se mantiene a los padres y se descartan a los hijos.
+	 * 
+	 * [EN] This function uses the replacement policy "Replace if better".
+	 * In other words, this function evaluates the fitness value of both parents and both children.
+	 * And it only replaces the parents if the children are better than the parents.
+	 * Otherwise, the parents are keep and the children are discarded.
+	 * 
+	 * 
+	 * @param padre1	[ES] El primer individuo.
+	 * 					[EN] The first individual.
+	 * @param padre2	[ES] El segundo individuo.
+	 * 					[EN] The second individual.
+	 * @param cromoHijo1	[ES] Cromosoma del primer hijo.
+	 * 						[EN] Chromosome of the first child.
+	 * @param cromoHijo2	[ES] Cromsoma del segundo hijo.
+	 * 						[EN] Chormosome of the second child.
+	 * @param cromoPadre1Aux	[ES] Cromosoma del primer individuo.
+	 * @param cromoPadre2Aux	[EN] Chromosome of the first individual.
+	 */
 	/*protected void sustituyePadres(Individuo padre1, Individuo padre2, ArrayList<Integer> cromoHijo1, ArrayList<Integer>  cromoHijo2,
 			ArrayList<Integer>  cromoPadre1Aux, ArrayList<Integer>  cromoPadre2Aux) {
 		

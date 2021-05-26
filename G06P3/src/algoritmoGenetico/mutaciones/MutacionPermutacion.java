@@ -6,7 +6,6 @@ import java.util.Random;
 import algoritmoGenetico.individuos.Arbol;
 import algoritmoGenetico.individuos.Individuo;
 
-
 /**
  * Universidad Complutense de Madrid.
  * Programación Evolutiva.
