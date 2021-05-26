@@ -1,9 +1,6 @@
 package algoritmoGenetico.mutaciones;
 
-import java.util.Random;
-
 import algoritmoGenetico.individuos.Individuo;
-import algoritmoGenetico.individuos.Operando;
 
 /**
  * Universidad Complutense de Madrid.

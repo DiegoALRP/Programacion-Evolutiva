@@ -30,6 +30,7 @@ public class Arbol {
 	private Operando raiz;				//Raíz del subárbol
 	private ArrayList<Arbol> hijos;		//Array que contiene los hijos del subárbol
 	private int numHijos;				//Número de hijos (directos) que contiene
+	@SuppressWarnings("unused")
 	private int numNodos;				//Número de nodos que contiene el árbol	
 	private int max_prof;				//Profundidad máxima
 	private int profundidad;			//Profundidad total
