@@ -205,7 +205,10 @@ public class Arbol {
 	public Arbol getSubTree(double probCruce) {
 	
 		Random rand = new Random();
-		return this.hijos.get(rand.nextInt(numHijos)).getSubTreeAux(probCruce);
+		Arbol hijo = this.hijos.get(rand.nextInt(numHijos)).getSubTreeAux(probCruce);
+		//System.out.println("Hijo: " + hijo.arbolToString());
+		//System.out.println("Padre: " + this.arbolToString());
+		return hijo;
 	}
 	
 	/**
@@ -236,7 +239,8 @@ public class Arbol {
 			
 			if (this.numHijos < 1) {
 				
-				return this.padre;
+				return this;
+				//return this.padre;
 			}
 			else {
 				
@@ -307,7 +311,7 @@ public class Arbol {
 		
 		if (this.max_prof > 1) {
 			
-			//if (this.hijos != null) hijos.clear();
+			if (this.hijos != null) hijos.clear();
 			for (int i = 0; i < numHijos; i++) {
 				
 				Operando op = new Operando(false);
@@ -318,7 +322,7 @@ public class Arbol {
 		}
 		else {
 			
-			//if (this.hijos != null) hijos.clear();
+			if (this.hijos != null) hijos.clear();
 			for (int i = 0; i < numHijos; i++) {
 				
 				Operando op = new Operando(true);
