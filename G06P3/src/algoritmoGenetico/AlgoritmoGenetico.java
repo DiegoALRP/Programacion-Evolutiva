@@ -416,4 +416,8 @@ public class AlgoritmoGenetico {
 	public double[] getMediaFitnessGeneracion() {
 		return this.mediaFitnessGeneracion;
 	}
+	
+	public Individuo getMejorIndividuo() {
+		return this.mejorIndividuoAbsoluto;
+	}
 }

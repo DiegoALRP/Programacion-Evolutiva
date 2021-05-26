@@ -1,6 +1,7 @@
 package interfaz;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -14,6 +15,7 @@ import javax.swing.GroupLayout.Alignment;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -31,10 +33,13 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import javax.swing.SpinnerNumberModel;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 
 public class panelPrincipal {
@@ -215,6 +220,25 @@ public class panelPrincipal {
 		fitness.setBounds(7, 522, 262, 21);
 		controlPanel.add(fitness);
 		
+		/*JLabel arbol = new JLabel();
+		
+		JPanel panel_arbol = new JPanel();
+		panel_arbol.setBorder(BorderFactory.createLineBorder(Color.black));
+		panel_arbol.setPreferredSize(new Dimension(262, 250));
+		panel_arbol.add(arbol);
+		
+		JScrollPane scroll = new JScrollPane(panel_arbol);
+		scroll.setBounds(7, 552, 262, 21);
+		panel_arbol.setPreferredSize(new Dimension(262, 250));
+
+		controlPanel.add(scroll);
+		*/
+		
+		JTextArea arbol = new JTextArea();
+		
+		JScrollPane scroll = new JScrollPane(arbol, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll.setBounds(7, 552, 262, 50);
+		controlPanel.add(scroll);
 		///////////////////////////////////////////////////// 			TABBED PANE
 
 		//panelHormiga hormiga = new panelHormiga(comida);
@@ -260,7 +284,9 @@ public class panelPrincipal {
 				
 				gr.actualiza(Integer.parseInt(textField_1.getText()), AG.getArrayMejorAbsoluto(), AG.getMejorFitnessGeneracion(), AG.getMediaFitnessGeneracion(), AG.getPresionSelectiva());
 
-				fitness.setText("La hormiga ha comido: " + (int)AG.getMejorFitness() + "/89 piezas de comida");
+				fitness.setText("La hormiga comió: " + (int)AG.getMejorFitness() + "/90 piezas de comida");
+				
+				arbol.setText(AG.getMejorIndividuo().printFenotipo());
 			}
 		});
 	
